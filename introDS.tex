@@ -1,0 +1,112 @@
+% To compile:
+%   pdflatex introDS.tex
+%   makeindex introDS.idx
+%   pdflatex introDS.tex
+\documentclass[11pt]{book}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{bbding}  % for checkmark and X
+\usepackage{array}           % For double-column exercises.
+\usepackage{longtable}       % For double-column exercises.
+\usepackage[normalem]{ulem}  % For strikethrough.
+\usepackage{paralist}
+\usepackage{enumitem}        % To "resume" enumerated lists.
+\usepackage{epsfig}
+\usepackage[nokeyprefix]{refstyle}
+\usepackage{afterpage}
+\usepackage{aurical}
+\usepackage[T1]{fontenc}
+\usepackage{varwidth}
+\usepackage{multicol}
+\usepackage{fancybox}
+\usepackage[makeidx]{hvindex}
+\usepackage{textcomp}
+\usepackage{fancyvrb}
+\usepackage{footnote}
+\usepackage{makecell}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,latexsym}
+\usepackage{MnSymbol}
+\usepackage{wasysym}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage[hidelinks]{hyperref}
+\usepackage[width=.9\textwidth,singlelinecheck=true,skip=1pt,font=small,labelfont=bf]{caption}
+
+\newcommand{\freakingtilde}{\raisebox{0.5ex}{\texttildelow}}
+
+\makesavenoteenv{tabular}  % to allow footnotes in tables
+\makesavenoteenv{figure}  % to allow footnotes in tables
+
+\definecolor{darkgreen}{rgb}{0,.55,0}
+\definecolor{darkred}{rgb}{.75,0,0}
+
+
+%\captionsetup{width=.9\textwidth}
+
+%\usepackage{enumerate}
+
+% Crazy macro from:
+% https://tex.stackexchange.com/questions/36401/drawing-boxes-around-words
+% Used in "discovering" chapter.
+\def\bluebox#1{\leavevmode \setbox0=\hbox{#1}%
+   \dimen0=\wd0 \edef\posxA{\expandafter\ignorept\the\dimen0 \space}%
+   \hbox{\kern3pt\pdfliteral{q .8 .8 1 rg .8 .8 1 RG .9963 0 0 .9963 0 0 cm 1
+j 1 J 6 w
+                             0 0 m 0 5 l \posxA 5 l \posxA 0 l 0 0 l B Q}%
+         \box0 \kern3pt}%
+}
+{\lccode`\?=`\p \lccode`\!=`\t  \lowercase{\gdef\ignorept#1?!{#1}}}
+
+\makeindex
+
+\newenvironment{custommargins}[2]%
+  {\addtolength{\leftskip}{#1}\addtolength{\rightskip}{#2}}{\par}
+
+% Set left margin - The default is 1 inch, so the following
+% command sets a 2-inch left margin.
+\setlength{\oddsidemargin}{1in}
+\setlength{\evensidemargin}{0in}
+% Set width of the text - What is left will be the right margin.
+% In this case, right margin is 8.5in - 1.25in - 6in = 1.25in.
+\setlength{\textwidth}{5.5in}
+
+% Set top margin - The default is 1 inch, so the following
+% command sets a 0.75-inch top margin.
+\setlength{\topmargin}{.75in}
+
+% Set height of the text - What is left will be the bottom margin.
+% In this case, bottom margin is 11in - 0.75in - 9.5in = 0.75in
+\setlength{\textheight}{7.25in}
+
+\setlength{\parindent}{0pt}
+\setlength{\baselineskip}{1.5pt}
+\setlength{\parskip}{6pt}
+
+\begin{document}
+
+\title{{\Huge Introduction to the Science of Data}\\DATA 101 lecture notes\\
+{\small version 1.0}}
+\author{Stephen Davies, Ph.D.\\Computer Science Department\\University of Mary Washington}
+\date{}
+\maketitle
+
+\include{copyright}
+\frontmatter
+
+\renewcommand{\contentsname}{Contents}
+
+\setcounter{tocdepth}{0}
+\tableofcontents
+
+%\include{preface}
+
+\setcounter{chapter}{0}
+
+\mainmatter
+\include{intro}
+\include{atomicData}
+\include{aggregateData}
+
+\backmatter
+\printindex
+
+\end{document}

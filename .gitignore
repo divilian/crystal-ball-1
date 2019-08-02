@@ -1,0 +1,13 @@
+.gitignore
+src
+*.pdf
+*.aux
+*.idx
+*.ilg
+*.ind
+*.toc
+*.out
+*.log
+*.wmf
+.R*
+regex
