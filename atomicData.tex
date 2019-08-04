@@ -1,29 +1,108 @@
 
 \chapter{Three kinds of atomic data}
 
-\section{Atomic data types}
+\section{Atomic data}
 
-When we say that data is ``\textbf{atomic},'' we don't mean it's radioactive;
-we mean it's \textit{indivisible}.
+When we say that some data is ``\textbf{atomic},'' we don't mean it's
+radioactive; we mean it's \textit{indivisible}.
 
 The ancients spoke of ``atoms'' as the smallest possible bits of matter. If you
-divided up any physical object -- say, an apple -- into parts, you got its
-components: a stalk, a stem, skin, seeds, and the sweet juicy stuff. Cut up
-\textit{those} pieces with a knife and you get smaller pieces. If you continue
-to split and split and split, philosophers like Democritus reasoned, you'd
-eventually get to tiny indivisible bits that could not be further divided. This
-is where the physical world bottomed out at the finest degree of granularity.
+divide up any physical object -- say, an apple -- into parts, you get its
+components: a stalk, a stem, skin, seeds, and the sweet juicy stuff. Cut up any
+of \textit{those} pieces with a knife and you get smaller pieces. If you
+continue to split and split and split, philosophers like Democritus reasoned,
+you'll eventually get to tiny indivisible bits that can not be further
+dissected. This is where the physical world bottoms out at the finest degree of
+granularity.
 
-Similarly, a piece of atomic data is (typically) treated as an entire unit, not
-as something with internal structure that can be broken down. In this course,
-we'll principally deal with three of these, all of which will be familiar to
-you.
+Similarly, a piece of atomic data is typically treated as an entire unit, not
+as something with internal structure that can be broken down. In the next
+chapter we'll learn about various ways that these atoms of data can be strung
+together and organized into larger wholes; for now, though, we're just looking
+at the atoms themselves.
+
+\section{Environments and variables}
+
+A data analysis program -- of which we will write many in this course -- makes
+use of an \textbf{environment} as it runs. ``Environment'' just means ``all the
+data that is currently in view, and which the program can access.'' The
+environment consists of \textbf{variables}, each of which (usually) has a
+\textbf{name} and a \textbf{value}. For example, we might have a variable named
+\texttt{age} whose value is 21, and a variable named \texttt{slogan} whose
+value is \texttt{"Finger lickin' good"}.
+
+Each variable in the environment must have a \textit{distinct} name
+(\textit{i.e.}, no two variables can share the same name). Also, importantly,
+the reason these building blocks are called ``variables'' is that their value
+can \textit{change} as the program executes. Although we may initially create
+an \texttt{age} variable with the value \texttt{21}, later on in the program
+the variable's value might change to \texttt{22}, or \texttt{50}, or
+\texttt{0}. The variable's \textit{name} never changes, though.
+
+\section{Atomic data types}
+
+There's one other thing that a variable has in addition to its name and value:
+a \textbf{type}.\footnote{Strictly speaking, although in languages like Java
+variables indeed have types, in Python the \textit{values} have types, not the
+variables. This distinction will never be important for us though.}  In a
+programming language like Python, every piece of data has a specific type,
+which is necessary for determining how it behaves and what all you can do to
+it. A question you should ask yourself a lot is: ``okay, I've got a variable in
+my environment called \texttt{x}...now what is its type?'' You might have
+guessed (correctly) that our \texttt{age} and \texttt{slogan} variables from
+the previous section are of different types: one is a number, and the other is
+a phrase.
+
+In this course, we'll principally deal with three types of atomic data, all of
+which will be familiar to you.
+
 
 \subsection{Whole numbers}
 
+One very common type of data is whole numbers, or integers. These are usually
+positive, but can be negative, and have no decimal point. Things like a
+person's birth year, a candidate's vote total, or a social media post's number
+of ``likes'' are represented with this data type.
+
+
 \subsection{Real (fractional) numbers}
 
+You may remember from high school math that the so-called ``real numbers''
+include not only integers, but also numbers with digits after the decimal
+point. This type can therefore be used to store interest rates, temperature
+readings, and average movie ratings on a 1-to-5 scale.
+
+Since all whole numbers are themselves real numbers, you might wonder why we
+bother to define two different types for these. Why not just give both kinds of
+variables the same real number type? Basically, the answer is that something
+``feels wrong'' about that to the Data Science community. A Facebook user might
+have 240 friends, or 241, but it would never make sense for them to have 240.3
+friends. A consensus has thus arisen: variables that would only ever store
+whole numbers really ought to be of a type that's devoted to only whole
+numbers. You can violate this convention, but you'll be thought weird by your
+colleagues if you do so.
+
+
 \subsection{Text}
+
+Lastly, some values obviously aren't numeric at all, like a customer's name, a
+show title, or a tweet. So our third type of data is textual. Variables of this
+type have a sequence of characters as values. These characters are most often
+English letters, but can also include spaces, punctuation, and characters from
+other alphabets.
+
+By the way, this third data type can tiptoe right up to the ``atomic'' line and
+sometimes cross it. In other words, we will occasionally work with text values
+\textit{non}-atomically, by splitting them up into their constituent words or
+even letters. Most of the time, though, we'll treat a character sequence like
+\texttt{"Avengers:\ Endgame"} as a single, indivisible chunk just like we treat
+a number like \texttt{42}.
+
+What about other things a computer can store: images, song files, videos? It
+turns out that through clever tricks, all these kinds of media and more can be
+boiled down to a large number of integers, and stored in an aggregate data
+structure like those discussed in the next chapter. At the atomic level, we'll
+really only ever need to deal with the three types above.
 
 \section{The three kinds in Python}
 
