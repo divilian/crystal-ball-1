@@ -95,20 +95,108 @@ By the way, this third data type can tiptoe right up to the ``atomic'' line and
 sometimes cross it. In other words, we will occasionally work with text values
 \textit{non}-atomically, by splitting them up into their constituent words or
 even letters. Most of the time, though, we'll treat a character sequence like
-\texttt{"Avengers:\ Endgame"} as a single, indivisible chunk just like we treat
-a number like \texttt{42}.
+\texttt{"Avengers:\ Endgame"} as a single, indivisible chunk of data in the
+same way we treat a number like \texttt{42}.
+
+\subsection{But what about...?}
 
 What about other things a computer can store: images, song files, videos? It
 turns out that through clever tricks, all these kinds of media and more can be
 boiled down to a large number of integers, and stored in an aggregate data
 structure like those discussed in the next chapter. At the atomic level, we'll
-really only ever need to deal with the three types above.
+really only ever need to deal with the three types of this section.
 
 \section{The three kinds in Python}
 
+Now the three kinds of atomic data described above are
+\textbf{language-general}: this means that they're conceptual, not tied to any
+specific programming language or analysis tool. \textit{Any} technology used
+for Data Science will have the ability to deal with those three basic types.
+The specific ways they do so will differ somewhat from language to language.
+Let's learn about how Python implements them.
+
 \subsection{Whole numbers: \texttt{int}}
+
+One of the most basic Python data types is the ``\texttt{int},'' which stands
+for ``integer.'' It's what we use to represent whole numbers.
+
+In Python, you create a variable by simply typing its name, an equals sign, and
+then its initial value, like so:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+revolution = 1776
+\end{Verbatim}
+
+This is our first \textbf{line of code}\footnote{By the way, the word
+\textbf{code} is grammatically a mass noun, not a count noun. Hence it is
+proper to say ``I wrote some code last night,'' not ``I wrote some codes last
+night.'' If you misuse this, it will brand you as a newbie right away.}. As
+we'll see, lines of code are \textbf{executed} one by one -- there is a time
+before, and a time after, each line is actually carried out. This will turn out
+to be very important.
+
+Python variable names can be as long as you like, provided they consist only of
+upper and lower case letters, digits, and underscores. (You do have to be
+consistent with your capitalization and your spelling: you can't call a
+variable \texttt{Movie} in one line of code and \texttt{movie} in another.)
+Underscores are often used as pseudo-spaces, but no other weird punctuation
+marks are allowed in a variable's name.
+
+And while we're on the subject, let me encourage you to \textit{name your
+variables well}. This means that each variable name should reflect
+\textit{exactly} what the value that it stores represents. Example: if a
+variable is meant to store the rating (in ``stars'') that an IMDB user gave to
+a movie, don't name it \texttt{movie}. Name it \texttt{rating}. (Or even
+better, \texttt{movie\_rating}.) Trust me: when you're working on a complex
+program, there's enough hard stuff to think about without confusing yourself
+(and your colleagues) by close-but-not-exact variable names.\footnote{And I
+fully own up to the fact that the \texttt{revolution} variable isn't named very
+well. I chose it to make a different point shortly.}
+
+Now remember that a variable has three things -- a name, value, and type. The
+first two explicitly appear in the line of code itself. As for the type, how
+does Python know it should be an ``\texttt{int}?'' Because it's \textit{a
+number with no decimal point.}
+
+As a sanity check, we can ask Python to tell us the variable's type explicitly,
+by writing this code:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+type(revolution)
+\end{Verbatim}
+
+If this line of code is executed after the previous one is executed, Python
+responds with:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+int
+\end{Verbatim}
+
+So there you go.
+
+Here's another ``\textbf{code snippet}'' (a term that just means ``some lines
+of code I'm focusing on, which are generally only part of a larger program''):
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+revolution = 1776
+moon_landing = 1969
+revolution = 1917
+\end{Verbatim}
+
+Now if this were a math class, that set of equations would be nonsensical. How
+can the same variable (\texttt{revolution}) have two contradictory values? But
+in a \textit{program}, this is perfectly legit: it just means that immediately
+after the first line of code executes, \texttt{revolution} has the value
+\texttt{1776}, and moments later, after the third line executes, its value has
+changed to \texttt{1917}. Its value depends entirely on ``where the program
+is'' during its execution.
+
+
+
+%MAX_INT
 
 \subsection{Real (fractional) numbers: \texttt{float}}
 
-\subsection{Text: \texttt{string}}
+\subsection{Text: \texttt{str}}
 
+%length
