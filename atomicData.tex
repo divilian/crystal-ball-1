@@ -12,9 +12,13 @@
 
 \section{Atomic data}
 
+\index{atomic}
+\index{indivisible}
 When we say that some data is ``\textbf{atomic},'' we don't mean it's
 radioactive; we mean it's \textit{indivisible}.
 
+\index{Democritus}
+\index{apple}
 The ancients spoke of ``atoms'' as the smallest possible bits of matter. If you
 divide up any physical object -- say, an apple -- into parts, you get its
 components: a stalk, a stem, skin, seeds, and the sweet juicy stuff. Cut up any
@@ -32,14 +36,22 @@ at the atoms themselves.
 
 \section{Environments and variables}
 
+\index{environment}
+\index{variable}
+\index{variable!name}
+\index{variable!value}
 A data analysis program -- of which we will write many in this course -- makes
 use of an \textbf{environment} as it runs. ``Environment'' just means ``all the
-data that is currently in view, and which the program can access.'' The
-environment consists of \textbf{variables}, each of which (usually) has a
-\textbf{name} and a \textbf{value}. For example, we might have a variable named
-\texttt{age} whose value is 21, and a variable named \texttt{slogan} whose
-value is \texttt{"Finger lickin' good"}.
+data that is currently in view, and which the program can
+access.''\footnote{Confusingly, this use of the term ``environment'' is
+different from the term ``programming environment'' I introduced on
+p.\pageref{programmingEnvironment}.}  The environment consists of
+\textbf{variables}, each of which (usually) has a \textbf{name} and a
+\textbf{value}. For example, we might have a variable named \texttt{age} whose
+value is 21, and a variable named \texttt{slogan} whose value is
+\texttt{"Finger lickin' good"}.
 
+\index{variable!name}
 Each variable in the environment must have a \textit{distinct} name
 (\textit{i.e.}, no two variables can share the same name). Also, importantly,
 the reason these building blocks are called ``variables'' is that their value
@@ -50,6 +62,7 @@ the variable's value might change to \texttt{22}, or \texttt{50}, or
 
 \section{Atomic data types}
 
+\index{variable!type}
 There's one other thing that a variable has in addition to its name and value:
 a \textbf{type}.\footnote{Strictly speaking, although in languages like Java
 variables indeed have types, in Python the \textit{values} have types, not the
@@ -68,6 +81,10 @@ which will be familiar to you.
 
 \subsection{Whole numbers}
 
+\index{variable!whole number}
+\index{whole number}
+\index{likes@``likes''}
+\index{votes}
 One very common type of data is whole numbers, or integers. These are usually
 positive, but can be negative, and have no decimal point. Things like a
 person's birth year, a candidate's vote total, or a social media post's number
@@ -76,6 +93,13 @@ of ``likes'' are represented with this data type.
 
 \subsection{Real (fractional) numbers}
 
+\index{variable!real number}
+\index{real number}
+\index{fractional number}
+\index{Facebook}
+\index{movie rating}
+\index{interest rate}
+\index{temperature}
 You may remember from high school math that the so-called ``real numbers''
 include not only integers, but also numbers with digits after the decimal
 point. This type can therefore be used to store interest rates, temperature
@@ -94,12 +118,16 @@ fellow developers if you do so.
 
 \subsection{Text}
 
+\index{text}
+\index{variable!text}
 Lastly, some values obviously aren't numeric at all, like a customer's name, a
 show title, or a tweet. So our third type of data is textual. Variables of this
 type have a sequence of characters as values. These characters are most often
 English letters, but can also include spaces, punctuation, and characters from
 other alphabets.
 
+\index{atomic}
+\index{Avengers: Endgame}
 By the way, this third data type can tiptoe right up to the ``atomic'' line and
 sometimes cross it. In other words, we will occasionally work with text values
 \textit{non}-atomically, by splitting them up into their constituent words or
@@ -109,6 +137,9 @@ same way we treat a number like \texttt{42}.
 
 \subsection{But what about...?}
 
+\index{song file}
+\index{image file}
+\index{video file}
 What about other things a computer can store: images, song files, videos? It
 turns out that through clever tricks, all these kinds of media and more can be
 boiled down to a large number of integers, and stored in an aggregate data
@@ -117,6 +148,7 @@ really only ever need to deal with the three types of this section.
 
 \section{The three kinds in Python}
 
+\index{language-general}
 Now the three kinds of atomic data described above are
 \textbf{language-general}: this means that they're conceptual, not tied to any
 specific programming language or analysis tool. \textit{Any} technology used
@@ -126,9 +158,12 @@ Let's learn about how Python implements them.
 
 \subsection{Whole numbers: \texttt{int}}
 
+\index{int@\texttt{int}}
+\index{integer}
 One of the most basic Python data types is the ``\texttt{int},'' which stands
 for ``integer.'' It's what we use to represent whole numbers.
 
+\index{variable!value}
 In Python, you create a variable by simply typing its name, an equals sign, and
 then its initial value, like so:
 
@@ -136,6 +171,9 @@ then its initial value, like so:
 revolution = 1776
 \end{Verbatim}
 
+\index{line of code}
+\index{code}
+\index{execute@to execute (code)}
 This is our first \textbf{line of code}\footnote{By the way, the word
 \textbf{code} is grammatically a mass noun, not a count noun. Hence it is
 proper to say ``I wrote some code last night,'' not ``I wrote some codes last
@@ -144,6 +182,8 @@ we'll see, lines of code are \textbf{executed} one by one -- there is a time
 before, and a time after, each line is actually carried out. This will turn out
 to be very important.
 
+\index{variable!name}
+\index{underscore}
 Python variable names can be as long as you like, provided they consist only of
 upper and lower case letters, digits, and underscores. (You do have to be
 consistent with your capitalization and your spelling: you can't call a
@@ -151,6 +191,8 @@ variable \texttt{Movie} in one line of code and \texttt{movie} in another.)
 Underscores are often used as pseudo-spaces, but no other weird punctuation
 marks are allowed in a variable's name.
 
+\index{movie rating}
+\index{revolution@\texttt{revolution}}
 And while we're on the subject, let me encourage you to \textit{name your
 variables well}. This means that each variable name should reflect
 \textit{exactly} what the value that it stores represents. Example: if a
@@ -162,6 +204,7 @@ program, there's enough hard stuff to think about without confusing yourself
 fully own up to the fact that the \texttt{revolution} variable isn't named very
 well. I chose it to make a different point shortly.}
 
+\index{variable!type}
 Now remember that a variable has three things -- a name, value, and type. The
 first two explicitly appear in the line of code itself. As for the type, how
 does Python know that \texttt{revolution} should be an ``\texttt{int}?''
@@ -170,6 +213,7 @@ Simple: it's \textit{a number with no decimal point.}
 As a sanity check, we can ask Python to tell us the variable's type explicitly,
 by writing this code:
 
+\index{type@\texttt{type()}}
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 type(revolution)
 \end{Verbatim}
@@ -183,6 +227,8 @@ int
 
 So there you go.
 
+\label{code snippet}
+\label{snippet}
 Here's another ``\textbf{code snippet}'' (a term that just means ``some lines
 of code I'm focusing on, which are generally only part of a larger program''):
 
@@ -192,6 +238,7 @@ moon_landing = 1969
 revolution = 1917
 \end{Verbatim}
 
+\index{revolution@\texttt{revolution}}
 Now if this were a math class, that set of equations would be nonsensical. How
 could the same variable (\texttt{revolution}) have two contradictory values?
 But in a \textit{program}, this is perfectly legit: it just means that
@@ -202,6 +249,7 @@ program is'' during its execution.
 
 \subsection{Real (fractional) numbers: \texttt{float}}
 
+\index{float@\texttt{float}}
 The only odd thing about the second data type in Python is its name. In some
 other universe it might have been called a ``real'' or a ``decimal'' or a
 ``fractional'' variable, but for some bizarre historical reasons it is called a
@@ -212,6 +260,7 @@ implicitly at the far right-hand side of the string of digits. But with numbers
 like -5.2 or -.52 or -.000052 or even 520000, the decimal point has ``floated''
 away from this fixed position.}
 
+\index{decimal point}
 All the same rules and regulations pertain to \texttt{float}s as they do to
 \texttt{int}s; the only difference is you type a decimal point. So:
 
@@ -221,9 +270,11 @@ price_of_Christian_Louboutin_shoes = 895.95
 interest_rate = 6.
 \end{Verbatim}
 
+\index{interest rate}
 Note that the \texttt{interest\_rate} variable is indeed a \texttt{float} type
 (even though it has no fractional part) because we typed a period:
 
+\index{type@\texttt{type()}}
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 type(interest_rate)
 \end{Verbatim}
@@ -233,14 +284,19 @@ float
 
 \subsection{Text: \texttt{str}}
 
+\index{string}
+\index{str@\texttt{str}}
 Speaking of weird names, a Python text variable is of type \texttt{str}, which
 stands for ``\textbf{string}.'' You could think of it as a bunch of letters
 ``strung'' together like a beaded necklace.
 
+\index{quotation marks}
 Important: when specifying a \texttt{str} value, you must use \textbf{quotation
 marks} (either single or double). For one thing, this is how Python tells that
 you intend to create a \texttt{str} as opposed to some other type. Examples:
 
+\index{lit}
+\index{donut\_store@\texttt{donut\_store}}
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 slang = 'lit'
 grade = "3rd"
@@ -248,6 +304,8 @@ donut_store = "Paul's Bakery"
 url = 'http://umweagles.com'
 \end{Verbatim}
 
+\index{string!of digits}
+\index{type@\texttt{type()}}
 Notice, by the way, that a \textit{string of digits} is not the same as an
 integer. To wit:
 
@@ -272,6 +330,8 @@ See? The quotes make all the difference.
 
 \subsubsection{The length of a string}
 
+\index{string!length}
+\index{len@\texttt{len()}}
 We'll do many things with strings in this book. Probably the most basic is
 simply to inquire as to a string's \textbf{length}, or the number of characters
 it contains. To do this, we enclose the variable's name in parentheses after
@@ -301,6 +361,8 @@ len(schwarzenegger_weight)
 TypeError: object of type 'int' has no len()
 \end{Verbatim}
 
+\index{variable}
+\index{variable!value}
 One thing that students often get confused is the difference between a named
 string \textit{variable} and that of an (unnamed) string \textit{value}.
 Consider the difference in outputs of the following:
