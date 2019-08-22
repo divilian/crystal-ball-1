@@ -85,11 +85,11 @@ Since all whole numbers are themselves real numbers, you might wonder why we
 bother to define two different types for these. Why not just give both kinds of
 variables the same real number type? Basically, the answer is that something
 ``feels wrong'' about that to the Data Science community. A Facebook user might
-have 240 friends, or 241, but it would never make sense for them to have 240.3
+have 240 friends, or 241, but it would never make sense for her to have 240.3
 friends. A consensus has thus arisen: variables that would only ever store
 whole numbers really ought to be of a type that's devoted to only whole
 numbers. You can violate this convention, but you'll be thought weird by your
-colleagues if you do so.
+fellow developers if you do so.
 
 
 \subsection{Text}
@@ -164,8 +164,8 @@ well. I chose it to make a different point shortly.}
 
 Now remember that a variable has three things -- a name, value, and type. The
 first two explicitly appear in the line of code itself. As for the type, how
-does Python know it should be an ``\texttt{int}?'' Because it's \textit{a
-number with no decimal point.}
+does Python know that \texttt{revolution} should be an ``\texttt{int}?''
+Simple: it's \textit{a number with no decimal point.}
 
 As a sanity check, we can ask Python to tell us the variable's type explicitly,
 by writing this code:
@@ -193,19 +193,134 @@ revolution = 1917
 \end{Verbatim}
 
 Now if this were a math class, that set of equations would be nonsensical. How
-can the same variable (\texttt{revolution}) have two contradictory values? But
-in a \textit{program}, this is perfectly legit: it just means that immediately
-after the first line of code executes, \texttt{revolution} has the value
-\texttt{1776}, and moments later, after the third line executes, its value has
-changed to \texttt{1917}. Its value depends entirely on ``where the program
-is'' during its execution.
-
-
-
-%MAX_INT
+could the same variable (\texttt{revolution}) have two contradictory values?
+But in a \textit{program}, this is perfectly legit: it just means that
+immediately after the first line of code executes, \texttt{revolution} has the
+value \texttt{1776}, and moments later, after the third line executes, its
+value has changed to \texttt{1917}. Its value depends entirely on ``where the
+program is'' during its execution.
 
 \subsection{Real (fractional) numbers: \texttt{float}}
 
+The only odd thing about the second data type in Python is its name. In some
+other universe it might have been called a ``real'' or a ``decimal'' or a
+``fractional'' variable, but for some bizarre historical reasons it is called a
+\texttt{float}.\footnote{If you're curious, this is because in computer
+programming parlance a ``floating-point number'' means a number where the
+decimal point might be anywhere. With an integer like -52, the decimal point is
+implicitly at the far right-hand side of the string of digits. But with numbers
+like -5.2 or -.52 or -.000052 or even 520000, the decimal point has ``floated''
+away from this fixed position.}
+
+All the same rules and regulations pertain to \texttt{float}s as they do to
+\texttt{int}s; the only difference is you type a decimal point. So:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+GPA = 3.17
+price_of_Christian_Louboutin_shoes = 895.95
+interest_rate = 6.
+\end{Verbatim}
+
+Note that the \texttt{interest\_rate} variable is indeed a \texttt{float} type
+(even though it has no fractional part) because we typed a period:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+type(interest_rate)
+\end{Verbatim}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+float
+\end{Verbatim}
+
 \subsection{Text: \texttt{str}}
 
-%length
+Speaking of weird names, a Python text variable is of type \texttt{str}, which
+stands for ``\textbf{string}.'' You could think of it as a bunch of letters
+``strung'' together like a beaded necklace.
+
+Important: when specifying a \texttt{str} value, you must use \textbf{quotation
+marks} (either single or double). For one thing, this is how Python tells that
+you intend to create a \texttt{str} as opposed to some other type. Examples:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+slang = 'lit'
+grade = "3rd"
+donut_store = "Paul's Bakery"
+url = 'http://umweagles.com'
+\end{Verbatim}
+
+Notice, by the way, that a \textit{string of digits} is not the same as an
+integer. To wit:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+schwarzenegger_weight = 249
+action_movie = "300"
+
+type(schwarzenegger_weight)
+\end{Verbatim}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+int
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+type(action_movie)
+\end{Verbatim}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+str
+\end{Verbatim}
+
+See? The quotes make all the difference.
+
+\subsubsection{The length of a string}
+
+We'll do many things with strings in this book. Probably the most basic is
+simply to inquire as to a string's \textbf{length}, or the number of characters
+it contains. To do this, we enclose the variable's name in parentheses after
+the word \texttt{len}:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+len(slang)
+\end{Verbatim}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+3
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+len(donut_store)
+\end{Verbatim}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+13
+\end{Verbatim}
+
+You can't do this with an \texttt{int} or a \texttt{float} variable:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+len(schwarzenegger_weight)
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+TypeError: object of type 'int' has no len()
+\end{Verbatim}
+
+One thing that students often get confused is the difference between a named
+string \textit{variable} and that of an (unnamed) string \textit{value}.
+Consider the difference in outputs of the following:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+slang = 'lit'
+len(slang)
+\end{Verbatim}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+3
+\end{Verbatim}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+len('slang')
+\end{Verbatim}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+5
+\end{Verbatim}
+
+In the first example, we asked ``how long is the value being held in the
+\texttt{slang} variable?'' The answer was 3, since ``\texttt{lit}'' is three
+characters long. In the second example, we asked ``how long is the word
+\texttt{'slang'}?'' and the answer is 5. Remember: variable names never go in
+quotes. If something is in quotes, it's being taken \textit{literally}.
