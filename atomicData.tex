@@ -174,13 +174,16 @@ revolution = 1776
 \index{line of code}
 \index{code}
 \index{execute@to execute (code)}
+\index{statement}
 This is our first \textbf{line of code}\footnote{By the way, the word
 \textbf{code} is grammatically a mass noun, not a count noun. Hence it is
 proper to say ``I wrote some code last night,'' not ``I wrote some codes last
 night.'' If you misuse this, it will brand you as a newbie right away.}. As
 we'll see, lines of code are \textbf{executed} one by one -- there is a time
 before, and a time after, each line is actually carried out. This will turn out
-to be very important.
+to be very important. (Oh, and a ``line of code'' is sometimes also called a
+\textbf{statement}.)
+
 
 \index{variable!name}
 \index{underscore}
@@ -227,8 +230,8 @@ int
 
 So there you go.
 
-\label{code snippet}
-\label{snippet}
+\index{code snippet}
+\index{snippet}
 Here's another ``\textbf{code snippet}'' (a term that just means ``some lines
 of code I'm focusing on, which are generally only part of a larger program''):
 
@@ -351,15 +354,53 @@ len(donut_store)
 13
 \end{Verbatim}
 
-You can't do this with an \texttt{int} or a \texttt{float} variable:
+\index{lingo}
+\index{function}
+\index{argument}
+\index{calling a function@``calling'' a function}
+As we'll see, the \texttt{len()} operation (and many others like it) is an
+example of a \textbf{function} in Python. In proper lingo, when we write a line
+of code like \texttt{len(donut\_store)} we say we are ``\textbf{calling the
+function},'' which simply means to invoke or trigger it.
+
+\index{pass}
+\index{passing an argument@``passing'' an argument}
+\index{bananas (parentheses)}
+\index{()@\texttt{()} (bananas)}
+More lingo: for obscure reasons, the value inside the bananas
+(\texttt{donut\_store}, in this case) is called an \textbf{argument} to the
+function. And we say that we ``\textbf{pass}'' one or more arguments to a
+function when we call it.
+
+All these terms may seem pedantic, but they are precise and universally-used,
+so be sure to learn them. The preceding line of code can be completely summed
+up by saying:
+
+\begin{quote}
+``We are \textbf{calling} the \texttt{len()} \textbf{function},
+and \textbf{passing} it the \texttt{donut\_store} \textbf{variable} as an
+\textbf{argument}.''
+\end{quote}
+
+I recommend you say that sentence out loud at least four times in a row to get
+used to its rhythm.
+
+Note, by the way, that the \texttt{len()} function expects a \texttt{str}
+argument. You can't call \texttt{len()} with an \texttt{int} or a
+\texttt{float} variable as an argument:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+schwarzenegger_weight = 249
+
 len(schwarzenegger_weight)
 \end{Verbatim}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 TypeError: object of type 'int' has no len()
 \end{Verbatim}
+
+(You might think that the ``length'' of an \texttt{int} would be its number of
+digits, but nope.)
 
 \index{variable}
 \index{variable!value}
