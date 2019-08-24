@@ -427,3 +427,112 @@ In the first example, we asked ``how long is the value being held in the
 characters long. In the second example, we asked ``how long is the word
 \texttt{'slang'}?'' and the answer is 5. Remember: variable names never go in
 quotes. If something is in quotes, it's being taken \textit{literally}.
+
+
+\subsection{Combining and printing variables}
+
+\index{printing a variable}
+\index{print@\texttt{print()}}
+There's a whole lot of stuff you can do with variables other than just creating
+them. One thing you'll want to do frequently is \textbf{print} a variable,
+which means to dump its value to the page so you can see it. This is easily
+done by calling the \texttt{print()} function:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(donut_store)
+print(price_of_Christian_Louboutin_shoes)
+print("slang")
+print(slang)
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Paul's Bakery
+895.95
+slang
+lit
+\end{Verbatim}
+
+Again, don't miss the crucial difference between printing \texttt{"slang"} and
+printing \texttt{slang}. The former is literal and the latter is not. In the
+first of these, we're passing the \textit{word} ``\texttt{slang}'' as the
+argument, not the variable \texttt{slang}.
+
+\index{method}
+Often we'll want to combine bits of information into a single print statement.
+Typically one of the variables is a string that contains the overall message.
+There are several ways to accomplish this, but the most flexible will turn out
+to be the \texttt{.format()} \textbf{method}.
+
+\index{calling a method@``calling'' a method (on a variable)}
+\index{on@``on''}
+I hate to hit you with so much new lingo. A \textbf{method} is very similar to
+a function, but not exactly. The difference is in the syntax used to call it.
+When you call a function (like \texttt{type()} or \texttt{len()}) you simply
+type its name, followed by a pair of bananas inside of which you put the
+arguments (separated by commas, if there's more than one). But when you ``call
+a method,'' you put \textit{a variable} before a dot (``\texttt{.}'') and the
+method name, then the bananas. This is referred to as ``calling the method
+\textbf{on} the variable.''
+
+It sounds more confusing than it is. Here's an example of \texttt{.format()} in
+action:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+price_of_Christian_Louboutin_shoes = 895.95
+message = "Honey, I spent ${} today!"
+print(message.format(price_of_Christian_Louboutin_shoes))
+\end{Verbatim}
+
+\index{matching bananas}
+\index{double bananas@``double bananas''}
+Take note of how we write ``\texttt{message.format}'' instead of just
+``\texttt{format}''. This is because \texttt{.format()} is a method, not a
+function. We say that we are calling \texttt{.format()} ``on''
+\texttt{message}, and passing \texttt{price\_of\_Christian\_Louboutin\_shoes}
+as an argument.\footnote{Btw, in this book, whenever I refer to a method, I'll
+be sure to put a dot before its name. For example, it's not the
+``\texttt{format()}'' method, but the ``\texttt{.format()}'' method.} Also be
+sure to notice the \textit{double} bananas ``\texttt{))}'' at the end of that
+last line. We need both of them because in programming, every left-banana must
+match a corresponding right-banana. Since we're calling two functions/methods
+on one line (\texttt{print()} and \texttt{.format()}), we had two left-bananas
+on that line. Each one needs a partner.
+
+\index{\{\}@\texttt{\{\}} (curlies)}
+As for the specifics of how \texttt{.format()} works, you'll see that the
+string variable you call it on may include pairs of curlies (squiggly braces).
+These are placeholders for where to stick the values of other variables in the
+output. Those variables are then included as arguments to the
+\texttt{.format()} method. The above code produces this output:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Honey, I spent $895.95 today!
+\end{Verbatim}
+
+\pagebreak
+Often, instead of creating a new variable name to hold the pre-formatted
+string, we'll just \texttt{print()} it literally, like this:
+
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+print("Honey, I spent ${} today!".format(price_of_Christian_Louboutin_shoes))
+\end{Verbatim}
+
+(We're still actually calling \texttt{.format()} on a variable here, it's just
+that we haven't bothered to name the variable.)
+
+\bigskip
+Finally, here's a longer example with more variables:
+
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+name = "Pedro Pascal"
+num_items = 3
+cost = 91.73
+print("Customer {} bought {} items worth ${}.".format(name, num_items, cost))
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Customer Pedro Pascal bought 3 items worth $91.73.
+\end{Verbatim}
+
+You can see how we can pass more than one argument to a function/method simply
+by separating them with commas inside the bananas.
