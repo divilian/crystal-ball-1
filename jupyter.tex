@@ -34,16 +34,16 @@ Notebooks}'' environment since it's appropriate for an intro experience.
 The concept of a Jupyter Notebook is simple. It's just an editable Web page
 composed of \textbf{cell}s. Each cell is a little text window you can type in.
 
+\pagebreak
 There are three kinds of cells in Jupyter Notebooks:
+\vspace{-.15in}
 
 \begin{description}
-
-\label{cell!raw}
+\index{cell!raw}
 \item{\textbf{Raw.}} ``Raw'' is dumb. Never use it.
-
-\label{Markdown}
-\label{render}
-\label{cell!Markdown}
+\index{Markdown}
+\index{render}
+\index{cell!Markdown}
 \item{\textbf{Markdown.}} ``Markdown'' cells are for \textit{English text}, not Python
 code. They're mostly used to describe and annotate what you're doing in the
 code cells, like a running commentary. You can type plain-ol' text in a
@@ -57,43 +57,45 @@ you type in a Markdown cell, you see the raw text and formatting; to actually ge
 \textbf{render} your cell and make it pretty, you \textbf{run} the cell by
 pressing \textbf{Shift-Enter} while your cursor is inside it.
 
-\label{cell!code}
-\item{\textbf{Code.}} The most important cells are ``code'' cells which contain (duh)
+\index{cell!Code}
+\item{\textbf{Code.}} The most important cells are ``Code'' cells which contain (duh)
 code. When executed (again with \textbf{Shift-Enter}) they actually carry out
 the Python instructions you have typed in that cell, and display any results.
 
 \end{description}
 
 By the way, a common snafu is to somehow accidentally click in a way that
-changes the type of a cell from ``code'' to one of the other types. If you do
+changes the type of a cell from ``Code'' to one of the other types. If you do
 this, the Python code in that cell won't execute until you change the type back
-to code (more on this below).
+to ``Code'' (more on this below).
 
-\label{cell!type dropdown}
+\index{cell!type dropdown}
 Figure~\ref{fig:jupyterNotebook} shows a Jupyter Notebook hosted by the
 \textbf{CoCalc} cloud computing platform, which we'll use this semester. It has
-two cells, one Markdown and one code. Note carefully the \textbf{cell-type
-dropdown} which is kind of hidden in the middle: it currently reads ``Code''
-because the second cell is the one that's highlighted. (If we clicked to
-highlight and edit the top cell, that dropdown would change to ``Markdown.'')
+two cells, one Markdown and one Code. Note carefully the \textbf{cell-type
+dropdown} which is kind of hidden in the middle of the page: it currently reads
+``Code'' because the second cell is the one that's highlighted. (If we clicked
+to highlight and edit the top cell, that dropdown would change to
+``Markdown.'')
 
 \begin{figure}[!h]
 \centering
-\includegraphics[width=0.9\textwidth]{firstNotebook.png} \\
+\includegraphics[width=0.95\textwidth]{firstNotebook.png} \\
 \bigskip
-\includegraphics[width=0.9\textwidth]{firstNotebook2.png}
-\bigskip
-\caption{A Jupyter Notebook with one Markdown cell and one code
-cell. In the top pane, the two cells have
-been edited but not yet Shift-Enter-ed -- hence the Markdown formatting is
-unrendered and the code has not been executed. The bottom pane shows both cells
-after they've been Shift-Entere-ed.}
+\includegraphics[width=0.95\textwidth]{firstNotebook2.png}
+\medskip
+\caption{A Jupyter Notebook with one Markdown cell and one Code cell. In the
+top image, the two cells have been edited but not yet Shift-Enter-ed -- hence
+the Markdown formatting is unrendered and the code has not been executed. The
+bottom pane shows both cells after they've been Shift-Entere-ed.}
 \label{fig:jupyterNotebook}
 \end{figure}
 
-\label{code snippet}
-\label{snippet}
-\label{output}
+\index{code snippet}
+\index{snippet}
+\index{output}
+\index{*@\texttt{*} (splat)}
+\index{splat}
 The top figure shows the two cells before the user has pressed Shift-Enter: all
 the Markdown is unrendered (see the literal splats and hashtags) and the code
 is just sitting there. After Shift-Enter-ing both cells, the picture changes:
@@ -104,14 +106,14 @@ That's the ``output.'') We haven't yet covered what that Python code means
 (that's the main subject of this book) but you can probably guess a great deal
 about what it's doing.
 
-(Btw, you can see that when you Shift-Enter the bottom cell to run the code,
-Jupyter also creates a new empty cell at the end of the Notebook for you to
-type in. I find this annoying, but whatever.)
+(Incidentally, you can see that when you Shift-Enter the bottom cell to run the
+code, Jupyter also creates a new empty cell at the end of the Notebook for you
+to type in. I find this annoying, but whatever.)
 
 \section{Code and output}
 
 Incredibly, that's about it. Everything else in this book is going to concern
-what to type in those code cells and how to interpret its output.
+what to type in those Code cells and how to interpret its output.
 
 From now on, whenever I give example Python code in this book, I'll write it in
 a box like this:
@@ -122,7 +124,7 @@ usa_age = 2019 - founding
 print("Our country is {} years old!".format(usa_age))
 \end{Verbatim}
 
-That box means ``this stuff goes in a code cell of a Notebook.''
+That box means ``this stuff goes in a Code cell of a Notebook.''
 
 When I write the corresponding output (\textit{i.e.}, what gets printed on the
 page immediately below the code cell when the user highlights the cell and
