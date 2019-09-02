@@ -1,10 +1,146 @@
 
 % TODO:
-%   pow() function
 %   .strip() string method
 % memory diagrams -- diff between modifying in place and returning a copy (like
 % .strip().)
-% Left-side "variable names and atomic data". Right-side "aggregate data."
 
 \chapter{Calculations}
+
+Our discipline obviously involves a lot of computation -- in fact, I expect the
+first image that comes to mind when most people hear the words ``data science''
+is one of numerical calculation. In this chapter, I'll lay out the Python
+syntax for performing various mathematical operations on numbers, as well as
+manipulating strings. These things appear in every program, and you'll find it
+all straightforward.
+
+And then I'll drop a bomb on you. I'll unveil a Python behavior which you'll
+probably find completely unexpected, which flummoxes nearly every student who
+first sees it, and yet which you must understand and master to succeed in
+Python or any programming language.
+
+\section{Mathematical operations}
+
+\index{operator}
+
+
+\index{bananas (parentheses)}
+\index{()@\texttt{()} (bananas)}
+\index{curlies (curly braces)}
+\index{\{\}@\texttt{\{\}} (curlies)}
+\index{boxies (square brackets)}
+\index{[]@\texttt{[]} (boxies)}
+\index{wakkas (angle brackets)}
+\index{<>@\texttt{<>} (wakkas)}
+\index{+@\texttt{+}}
+\index{-@\texttt{-}}
+\index{/@\texttt{/}}
+\index{**@\texttt{**}}
+First, the easy stuff. Python has a number of built-in \textbf{operators} to do
+the familiar math stuff. Figure~\ref{fig:mathOps} has a table of the ones we'll
+use. A few are mildly surprising (\texttt{*} instead of \texttt{X} for
+multiplication; \texttt{/} instead of $\div$ for division, which I'll bet you
+couldn't find on your keyboard anyway), and you have to remember to use only
+bananas (not boxies \texttt{[]}, curlies \texttt{\{\}}, or wakkas \texttt{<>})
+for grouping sub-expressions within a larger expression. Otherwise, it's a
+piece of cake.
+
+\begin{figure}[ht]
+\centering
+\begin{tabular}{c | l}
+\hline
+Operator & Operation \\
+\hline
+\texttt{+} & addition \\
+\texttt{-} & subtraction \\
+\texttt{*} & multiplication \\
+\texttt{/} & division \\
+\texttt{**} & exponentiation \\
+\texttt{()} & grouping \\
+\hline
+\end{tabular}
+\smallskip
+\caption{Python's basic math operators.}
+\label{fig:mathOps}
+\end{figure}
+
+All this stuff has to appear on the \textbf{right-hand side} of an equals sign,
+by the way, never on the left. That may seem surprising, since in mathematics
+the equations ``$x = y + 3$'' and ``$y + 3 = x$'' mean the same thing. Why does
+it matter which order you write it in? The answer, you'll recall, is that in a
+program the symbol ``\texttt{=}'' doesn't mean ``\textit{is} equal to'' but
+rather ``\textit{make} equal to.'' It's not an equation; it's a command. And
+you can't command ``$y+3$'' to be equal to anything. Therefore the only thing
+permitted on the left-hand side of an equals sign is a single, plain-jane
+variable name.
+
+To test your understanding of the syntax, see if you agree that the following
+math expression:
+
+\begin{align*}
+\textrm{gpa} = \frac{
+\textrm{creds}_1 \cdot \textrm{gradepts}_1 +
+\textrm{creds}_2 \cdot \textrm{gradepts}_2}
+{\textrm{creds}_1 + \textrm{creds}_2}
+\end{align*}
+
+should look like this in Python:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+gpa = (creds1 * gradepts1 + creds2 * gradepts2) / (creds1 + creds2)
+\end{Verbatim}
+
+and that this one:
+
+\begin{align*}
+a = \frac{\lbrack x^2y(4-z) + (x+q)\cdot y \rbrack \times 2^{15y+2z}}
+{19x^3 - (2yz)^{(y-1)^2}}
+\end{align*}
+
+should look like this:
+
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+a = ( ((x**2)*y*(4-z) + (x+q)*y) * 2**(15*y+2*z) ) / ( 19*(x**3) - (2*y*z)**((y-1)**2) )
+\end{Verbatim}
+
+If so, you're good to go. It's tedious, but not complicated.
+
+Python also has plenty of functions for absolute value, sin and cosine,
+logarithms, square roots, and anything else you can think of. We'll learn all
+those at the proper time, or they're all eminently Google-able if you want to
+look them up now.
+
+
+\section{Return values}
+
+\index{calling a function@``calling'' a function}
+\index{passing an argument@``passing'' an argument}
+First, we're going to add another phrase to our already lengthy
+function-calling mantra. You'll recall that we summarized this code (a function
+call):
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+len(movie_title)
+\end{Verbatim}
+
+with this English:
+
+\begin{quote}
+``We are calling the \texttt{len()} function, and passing it
+\texttt{movie\_title} as an argument.''
+\end{quote}
+
+\index{calling a method@``calling'' a method (on a variable)}
+\index{on@``on''}
+And we summarized this code (a method call):
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+message.format(name, age)
+\end{Verbatim}
+
+with this English:
+
+\begin{quote}
+``We are calling the \texttt{.format()} method \textbf{on} the \texttt{message}
+variable, and passing it \texttt{name} and \texttt{age} as arguments.''
+\end{quote}
 
