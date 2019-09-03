@@ -53,7 +53,7 @@ Operator & Operation \\
 \texttt{-} & subtraction \\
 \texttt{*} & multiplication \\
 \texttt{/} & division \\
-\texttt{**} & exponentiation \\
+\texttt{**} & exponentiation (``to the power of'')\\
 \texttt{()} & grouping \\
 \hline
 \end{tabular}
@@ -113,9 +113,12 @@ look them up now).
 
 \index{trim@to trim (a string)}
 \index{whitespace}
+\index{tacking (concatenating) a string}
+\index{concatenating@concatenating (strings)}
 \index{case@case (upper and lower)}
 Text data, too, has many things that can be done to it. For now, let's just
-learn a few methods for \textbf{trimming} strings (removing
+learn a few techniques for \textbf{concatenating} strings (tacking one onto the
+end of another) \textbf{trimming} strings (removing
 \textbf{whitespace}\footnote{The word ``whitespace'' is a catch-all for spaces,
 tabs, newline characters, and most anything else invisible.} from the ends) and
 changing their \textbf{case} (upper/lower). See Figure~\ref{fig:stringOps} for
@@ -125,8 +128,9 @@ a list.
 \centering
 \begin{tabular}{c | l}
 \hline
-Method & Operation \\
+Method/operator & Operation \\
 \hline
+\texttt{+} & concatenate two strings \\
 \texttt{.lstrip()} & remove leading whitespace \\
 \texttt{.rstrip()} & remove trailing whitespace \\
 \texttt{.strip()} & remove leading and trailing whitespace \\
@@ -140,14 +144,84 @@ Method & Operation \\
 \label{fig:stringOps}
 \end{figure}
 
-These are methods, mind, not functions: they have an initial dot
-(``\texttt{.}'') and they must be called ``\textbf{on} a string'' (meaning, a
-string variable name must immediately precede them). They also take no
+The plus sign is an operator, like the mathematical ones in
+Figure~\ref{fig:mathOps}: it's used to concatenate (append) one string to
+another. Example:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+x = "Lady"
+y = "Gaga"
+z = x + y
+print(z)
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+LadyGaga
+\end{Verbatim}
+
+The second one is slapped right on the end of the first; there's no spaces or
+punctuation. If you wanted to insert a space, you'd have to do that explicitly
+with a string-that-consists-of-only-a-space (written as the three characters:
+quote, space, quote), like this:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+first = 'Dwayne'
+last = "Johnson"
+full = first + ' ' + last
+print(full)
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Dwayne Johnson
+\end{Verbatim}
+
+Punctuation marks, too, have to be included literally, and it can be tricky to
+get everything typed in the right way:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+first = 'Dwayne'
+last = "Johnson"
+nick = 'The Rock'
+full = first + ' "' + nick + '" ' + last
+print("Don't ya just love {}?".format(full))
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Don't ya just love Dwayne "The Rock" Johnson?
+\end{Verbatim}
+
+Stare at that line beginning with ``\texttt{full =}'' and see if you can figure
+out why each punctuation mark is where it is, and why there are spaces between
+some of them and not between others.
+
+By the way, here's a bit of a head-scratcher at first:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+matriculation_year = "2019"
+graduation_year = matriculation_year + 4
+print("Imma graduate in {}!".format(graduation_year))
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Imma graduate in 20194!
+\end{Verbatim}
+
+Whoa -- wut? That's a lot of tuition. The problem here is that
+\texttt{matriculation\_year} was defined as a \textit{string}, not an integer
+(note the quotes). So the \texttt{+} sign meant concatenation, not addition.
+Remember: a string-consisting-only-of-digits is not the same as a number. (If
+you remove the quotes from the first line, your mom will breathe easier and
+you'll get the result you expect.)
+
+The other items in Figure~\ref{fig:stringOps} are methods: they have an initial
+dot (``\texttt{.}'') and they must be called ``\textbf{on} a string'' (meaning,
+a string variable name must immediately precede them). They also take no
 arguments, which means that a lonely, empty pair of bananas comes after their
 name when they are called. Examples:
 
+\index{Carl's ice cream}
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-shop_title = "               carl's ice cream      "
+shop_title = "               carl's ICE cream      "
 print(shop_title)
 print(shop_title.strip())
 print(shop_title.upper())
@@ -156,8 +230,8 @@ print(shop_title.title())
 \end{Verbatim}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-               carl's ice cream         
-carl's ice cream
+               carl's ICE cream         
+carl's ICE cream
                CARL'S ICE CREAM         
                carl's ice cream         
                Carl'S Ice Cream         
@@ -191,6 +265,7 @@ middle is a bit trickier; stay tuned.
 
 \section{Return values}
 
+\index{bomb}
 Okay, you've been in suspense long enough. Time for the bomb.
 
 \index{calling a function@``calling'' a function}
@@ -228,18 +303,18 @@ variable, and passing it \texttt{name} and \texttt{age} as arguments.''
 \index{return value}
 \index{output!of a function}
 \index{return@``returning'' a value}
-Now, yet another thing. We can use the equals sign with a variable name to
+Now, a third thing. We can use the equals sign with a variable name to
 capture the output of the function or method, instead of just printing it. The
 output of a function is called its \textbf{return value}. We say that ``the
-\texttt{.upper()} function \textbf{returns} an upper-case version of the string
+\texttt{.upper()} method \textbf{returns} an upper-case version of the string
 it was called \textbf{on}.'' We can capture it like this:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 big_and_loud = shop_title.upper()
 \end{Verbatim}
 
-The variable \texttt{big\_and\_loud} now holds the value \texttt{"CARL'S ICE
-CREAM"}. Functions work similarly:
+The variable \texttt{big\_and\_loud} now holds the value
+\texttt{"CARL\textquotesingle S ICE CREAM"}. Functions work similarly:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 width_of_sign = len(shop_title)
@@ -274,11 +349,11 @@ I just love Ariana Grande!
 \end{Verbatim}
 
 Wait...did the ``\texttt{diva.upper()}'' part just not work? Did it get
-skipped? Did we call it wrong somehow?
+skipped? Did we do it wrong somehow?
 
-Even more confusing, doing the ``\texttt{.upper()}'' call directly in the
+Even more confusing, putting the ``\texttt{.upper()}'' call directly in the
 \texttt{print} statement seems to work...but only temporarily. Accessing
-\texttt{diva} a moment later appears to revert back to its old value:
+\texttt{diva} a moment later appears to revert it back to its old value:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 diva = "Ariana Grande"
@@ -334,10 +409,10 @@ coded with this style: not actually modifying the variables they are passed,
 but instead returning to you a modified copy which you must store.
 
 Now given that this is the case, it would at least be nice if I could tell you
-that it always, consistently worked this way. Then you could accept it and get
-used to it. Alas, no. There \textit{are} functions/methods (lots of them) which
-\textit{do} modify a parameter or the variable they were called on. So
-sometimes, our na\"{i}ve approach of calling the method and expecting the
+that it always, consistently worked this way. Then you could simply accept it
+and get used to it. Alas, no. There \textit{are} functions/methods (lots of
+them) which \textit{do} modify a parameter or the variable they were called on.
+So sometimes, our na\"{i}ve approach of calling the method and expecting the
 variable to change is exactly what we need to do. The bottom line is:
 \textit{there's no way of knowing without being told, or else reading the
 documentation.} We'll learn how to do the latter in a future chapter. For now,
@@ -346,7 +421,7 @@ Figure~\ref{fig:stringOps} are all of the ``return a modified copy'' type, and
 giving you a heads up that both styles of method do exist out there in
 abundance.
 
-A couple more things. First, as a corrolary of the above, realize that the
+A couple more things. First, as a corollary of the above, realize that the
 following statement (on a line by itself) is officially 100\% useless:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
@@ -357,7 +432,7 @@ You called the \texttt{.lstrip()} method, and then....did nothing with the
 return value. If you don't store it in a variable -- or else do something with
 it right away like \texttt{print} it before it slips out of your fingers --
 it's irrevocably lost: it doesn't even show up on the memory picture because
-there's no variable name. (Think deeply about that.)
+there's no variable name. (Think about that.)
 
 Second, note the following pattern which is very often used:
 
