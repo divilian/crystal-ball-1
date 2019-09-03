@@ -22,7 +22,6 @@ Python or any programming language.
 
 \index{operator}
 
-
 \index{bananas (parentheses)}
 \index{()@\texttt{()} (bananas)}
 \index{curlies (curly braces)}
@@ -106,11 +105,93 @@ If so, you're good to go. It's tedious, but not complicated.
 
 Python also has plenty of functions for absolute value, sin and cosine,
 logarithms, square roots, and anything else you can think of. We'll learn all
-those at the proper time, or they're all eminently Google-able if you want to
-look them up now.
+those at the proper time (or they're all eminently Google-able if you want to
+look them up now).
 
+
+\section{String operations}
+
+\index{trim@to trim (a string)}
+\index{whitespace}
+\index{case@case (upper and lower)}
+Text data, too, has many things that can be done to it. For now, let's just
+learn a few methods for \textbf{trimming} strings (removing
+\textbf{whitespace}\footnote{The word ``whitespace'' is a catch-all for spaces,
+tabs, newline characters, and most anything else invisible.} from the ends) and
+changing their \textbf{case} (upper/lower). See Figure~\ref{fig:stringOps} for
+a list.
+
+\begin{figure}[ht]
+\centering
+\begin{tabular}{c | l}
+\hline
+Method & Operation \\
+\hline
+\texttt{.lstrip()} & remove leading whitespace \\
+\texttt{.rstrip()} & remove trailing whitespace \\
+\texttt{.strip()} & remove leading and trailing whitespace \\
+\texttt{.upper()} & convert to all uppercase \\
+\texttt{.lower()} & convert to all lowercase \\
+\texttt{.title()} & convert to ``title case'' (initial capital on each word) \\
+\hline
+\end{tabular}
+\smallskip
+\caption{A few of Python's string methods.}
+\label{fig:stringOps}
+\end{figure}
+
+These are methods, mind, not functions: they have an initial dot
+(``\texttt{.}'') and they must be called ``\textbf{on} a string'' (meaning, a
+string variable name must immediately precede them). They also take no
+arguments, which means that a lonely, empty pair of bananas comes after their
+name when they are called. Examples:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+shop_title = "               carl's ice cream      "
+print(shop_title)
+print(shop_title.strip())
+print(shop_title.upper())
+print(shop_title.lower())
+print(shop_title.title())
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+               carl's ice cream         
+carl's ice cream
+               CARL'S ICE CREAM         
+               carl's ice cream         
+               Carl'S Ice Cream         
+\end{Verbatim}
+
+(You can't see the trailing spaces in the output, but you can see the leading
+ones.)
+
+You can even combine method calls back to back like this:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(shop_title.strip().upper())
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Carl'S Ice Cream
+\end{Verbatim}
+
+\index{data cleansing}
+These operations are for more than mere prettiness. They're also used for
+\textbf{data cleansing}, which is often needed when dealing with messy,
+real-world data sets. If, say, you asked a bunch of people on a Web-based
+survey which Fredericksburg ice cream store they prefer, lots of them will name
+Carl's: but they'll type the capitalization every which way, forget the
+apostrophe, clumsily add spaces to one end (or even both, or even in the
+middle), yet they'll all have in mind the same luscious vanilla cones. One step
+towards conflating all these different expressions to the same root answer
+would be trimming the whitespace off the ends and converting everything to all
+lower-case. More surgical operations like removing punctuation or spaces in the
+middle is a bit trickier; stay tuned.
 
 \section{Return values}
+
+Okay, you've been in suspense long enough. Time for the bomb.
 
 \index{calling a function@``calling'' a function}
 \index{passing an argument@``passing'' an argument}
@@ -144,3 +225,150 @@ with this English:
 variable, and passing it \texttt{name} and \texttt{age} as arguments.''
 \end{quote}
 
+\index{return value}
+\index{output!of a function}
+\index{return@``returning'' a value}
+Now, yet another thing. We can use the equals sign with a variable name to
+capture the output of the function or method, instead of just printing it. The
+output of a function is called its \textbf{return value}. We say that ``the
+\texttt{.upper()} function \textbf{returns} an upper-case version of the string
+it was called \textbf{on}.'' We can capture it like this:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+big_and_loud = shop_title.upper()
+\end{Verbatim}
+
+The variable \texttt{big\_and\_loud} now holds the value \texttt{"CARL'S ICE
+CREAM"}. Functions work similarly:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+width_of_sign = len(shop_title)
+\end{Verbatim}
+
+The \texttt{width\_of\_sign} int now has the value 40 (remember all those
+extraneous spaces); if we'd trimmed first, we'd have gotten 16:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+true_width_of_sign = len(shop_title.strip())
+print(true_width_of_sign)
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+16
+\end{Verbatim}
+
+
+\subsection{The bomb}
+
+I've probably built this up too much, but I think you'll agree that the
+following output is pretty surprising:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+diva = "Ariana Grande"
+diva.upper()
+print("I just love {}!".format(diva))
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+I just love Ariana Grande!
+\end{Verbatim}
+
+Wait...did the ``\texttt{diva.upper()}'' part just not work? Did it get
+skipped? Did we call it wrong somehow?
+
+Even more confusing, doing the ``\texttt{.upper()}'' call directly in the
+\texttt{print} statement seems to work...but only temporarily. Accessing
+\texttt{diva} a moment later appears to revert back to its old value:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+diva = "Ariana Grande"
+print("I just love {}!".format(diva.upper()))
+print("When does the next {} album come out?".format(diva))
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+I just love ARIANA GRANDE!
+When does the next Ariana Grande album come out?
+\end{Verbatim}
+
+The root cause of this and practically all perplexing Python printing can be
+discovered by consulting the memory picture. Here's how it starts out when we
+first define \texttt{diva}:
+
+\vspace{-.2in}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{bomb.png}
+\end{center}
+
+Now say we do this:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+new_var_name = diva.upper()
+\end{Verbatim}
+
+The result is this picture:
+
+\vspace{-.2in}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{bomb2.png}
+\end{center}
+
+And now we see the reason for it all. The contents of the \texttt{diva}
+variable itself are \textit{\textbf{unchanged}} by the method call. Calling
+``\texttt{.upper()}'' on \texttt{diva} didn't change the string value in
+\texttt{diva}: it merely \textit{returned} a modified \textit{copy} of the
+string.
+
+Think of it this way: if I asked you, ``what is your name in Pig Latin?'' and
+you told me, that would not intrinsically \textit{change} your actual name to
+be in Pig Latin. You would simply be ``returning'' to me the Pig Latin version
+of it in response to my query.
+
+You could argue this behavior of Python's is dumb, or at best misleading, and
+I'm actually inclined to agree with you in this case. But of course beggars
+can't be choosers: someone took the time to write the \texttt{.upper()} method
+for us, so if we want to take advantage of it we have to use his/her owner's
+manual. And the fact is that many (perhaps even most) Python functions/methods
+-- including many of the ones from Pandas, which we'll use extensively -- are
+coded with this style: not actually modifying the variables they are passed,
+but instead returning to you a modified copy which you must store.
+
+Now given that this is the case, it would at least be nice if I could tell you
+that it always, consistently worked this way. Then you could accept it and get
+used to it. Alas, no. There \textit{are} functions/methods (lots of them) which
+\textit{do} modify a parameter or the variable they were called on. So
+sometimes, our na\"{i}ve approach of calling the method and expecting the
+variable to change is exactly what we need to do. The bottom line is:
+\textit{there's no way of knowing without being told, or else reading the
+documentation.} We'll learn how to do the latter in a future chapter. For now,
+I'm simply telling you for the record that the methods in
+Figure~\ref{fig:stringOps} are all of the ``return a modified copy'' type, and
+giving you a heads up that both styles of method do exist out there in
+abundance.
+
+A couple more things. First, as a corrolary of the above, realize that the
+following statement (on a line by itself) is officially 100\% useless:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+name_of_pet.lstrip()
+\end{Verbatim}
+
+You called the \texttt{.lstrip()} method, and then....did nothing with the
+return value. If you don't store it in a variable -- or else do something with
+it right away like \texttt{print} it before it slips out of your fingers --
+it's irrevocably lost: it doesn't even show up on the memory picture because
+there's no variable name. (Think deeply about that.)
+
+Second, note the following pattern which is very often used:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+name_of_pet = name_of_pet.lstrip()
+\end{Verbatim}
+
+Here, we're calling \texttt{.lstrip()} on the \texttt{name\_of\_pet} variable
+\textit{and then storing the return value back in the \texttt{name\_of\_pet}
+variable}. This might be what you thought would have happened in the first
+place -- the author of the previous, useless line, probably wanted the variable
+itself to permanently have its leading spaces removed. Simply calling
+\texttt{.lstrip()} on the variable won't do that, but putting the revised value
+back in the same blue box on the memory diagram will.
