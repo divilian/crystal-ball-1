@@ -1,4 +1,7 @@
 
+% note that "variable" means something different in this chapter. Not a single
+% value, but multiple measurements.
+
 \chapter{Scales of measure}
 
 In the last chapter, we learned the Python verbiage for how to do arithmetic
@@ -69,12 +72,22 @@ uniform numbers aren't really ``numbers'' at all: they're more like labels.
 \subsubsection{Legal operations for categorical/nominal variables}
 
 \index{mode}
+\index{central tendency}
+\index{measure of central tendency}
 When a variable is on a categorical scale, about the only things you can do are
 compare for equality/inequality, count the occurrences of different values, and
-compute the \textbf{mode} of the set. The mode simply means the value that
-occurs \textit{the most often}.
+compute something called the \textbf{mode} of the set.
 
-So these things make sense to ask:
+The mode simply means the value that occurs \textit{the most often}. It's the
+first of the ``\textbf{measures of central tendency}'' we'll see: such measures
+are a way of capturing something about the ``typical'' value of a variable. For
+categorical variables, the only typical-ness is ``which one occurs the most
+often?'' If we ask a bunch of people for their \texttt{fave\_color}, and we get
+the answers \texttt{"blue"}, \texttt{"red"}, \texttt{"blue"}, \texttt{"blue"},
+and \texttt{"yellow"}, then the mode is \texttt{"blue"}. It's that simple.
+
+To wrap things up, these things make sense to ask of a \textit{categorical}
+variable:
 
 \begin{compactitem}
 \item[\leftthumbsup] ``Is his favorite color the same as her favorite color?''
@@ -92,4 +105,110 @@ color?'' (??)
 \item[\leftthumbsdown] ``What's the `average' favorite color in this data
 set?'' (??)
 \end{compactitem}
+
+
+\index{ordinal variable}
+\index{order}
+\subsection{Ordinal}
+
+One step up on the food chain is an \textbf{ordinal} variable, which means that
+its different possible values \textit{do} have some meaningful order.
+
+Consider \texttt{education\_level}, a variable that contains the highest degree
+a survey respondent has earned. Its values can be any of the following:
+\texttt{"HS"}, \texttt{"Associates"}, \texttt{"Bachelors"}, \texttt{"Masters"},
+and \texttt{"PhD"}. In some ways, this is like \texttt{fave\_color}: the
+variable must take on one of a set of specific, prescribed values. However,
+it's pretty clear that a High School degree is closer to (more similar to) an
+Associates degree than it is to a Ph.D. Each successive value represents more
+education, and so unlike categorical variables, it \textit{does} make sense to
+compare them along greater-than-or-less-than lines.
+
+In addition to the mode, another measure of central tendency available for
+ordinal variables is the \textbf{median}. I think of the median as the
+``middlest'' value: if you line up all the occurrences in a row -- in order of
+the values -- it's the one that lies in the exact middle. Suppose our survey
+respondents give these answers: \texttt{"Bachelors"}, \texttt{"HS"},
+\texttt{"HS"}, \texttt{"Masters"}, \texttt{"Masters"}, \texttt{"Bachelors"},
+and \texttt{"HS"}. To compute the median, we line them all up in order:
+
+\begin{center}
+\texttt{"HS"  "HS"  "HS"  "Bachelors"  "Bachelors"  "Masters"  "Masters"}
+\end{center}
+
+nd find the middlest one, which is \texttt{"Bachelors"}. So \texttt{"HS"} is
+the mode of this variable, and \texttt{"Bachelors"} is the median.
+
+Other examples of ordinal variables include an NCAA basketball team's top-25
+ranking, a taxpayer's tax bracket, and survey questions asking whether you
+\texttt{"strongly disagree"}, \texttt{"disagree"}, are \texttt{"neutral"},
+\texttt{"agree"}, or \texttt{"strongly agree"} with a certain statement.
+
+Again, a list. For \textit{ordinal} variables, these are okay:
+
+\begin{compactitem}
+\item[\leftthumbsup] ``Is his education level the same as her education level?''
+\item[\leftthumbsup] ``How many people answered \texttt{"strongly disagree"} to
+this question?''
+\item[\leftthumbsup] ``Is UMW basketball ranked higher or lower than Messiah?''
+\item[\leftthumbsup] ``What's the median tax bracket for this group of
+employees?''
+\end{compactitem}
+
+and these are \textit{not}:
+
+\begin{compactitem}
+\item[\leftthumbsdown] ``Which looks like the bigger mismatch on paper: Duke
+v.~Kentucky, or Villanova v.~Gonzaga?'' (??)
+\item[\leftthumbsdown] ``What's Caitlin's education level minus Hannah's?'' (??)
+\item[\leftthumbsdown] ``What's the `average' tax bracket for this group of
+employees?''
+\end{compactitem}
+
+It's worth commenting on that second list, because you might have thought some
+of those items were completely reasonable. For example, suppose that in the
+latest AP poll, Duke is currently ranked \#1, Kentucky \#3, Villanova \#4, and
+Gonzaga \#23. You might think that clearly the Villanova/Gonzaga matchup is the
+most lopsided, since there's nineteen places between them, whereas Duke and
+Kentucky are separated by just two.
+
+But not necessarily. We know Duke is considered \textit{stronger} than
+Kentucky, but not \textit{how much stronger}. It is almost certainly not the
+case that the teams are exactly evenly spaced all the way down the list from
+\#1 to \#25. Real life doesn't work like that. Instead, it might be the case
+that Duke and Georgetown, the \#1 and \#2 teams in the country, are considered
+\textit{far and away} the best two teams. And perhaps the next five or even
+twenty teams on the list are considered very close, to the point where experts
+disagree wildly on what order they should be in. If this is the case, then
+mighty Duke vs.~(comparatively) lowly Kentucky might be an enormous mismatch,
+while Villanova and Gonzaga is considered a tossup.
+
+\index{order}
+\index{spacing}
+The bottom line is: although an ordinal variable's values are \textit{ordered},
+there is no information at all about the \textit{spacing} between them. I'll
+tell you from personal experience that the difference between a Bachelors and a
+Masters degree is nuthin' compared to that between a Masters and a Ph.D. (You
+can ask anyone who has earned the latter for confirmation.)
+
+This leads into the second item on the no-no list: subtracting two ordinal
+values. All you're going to get is ``the number of positions in the sequence by
+which they differ,'' which tells you next to nothing. If I ask people to rate a
+movie on a scale of \texttt{"POOR"}, \texttt{"FAIR"}, \texttt{"GOOD"}, and
+\texttt{"EXCELLENT"}, the difference between \texttt{"POOR"} and
+\texttt{"GOOD"} is likely to be a lot greater than that between \texttt{"FAIR"}
+and \texttt{"EXCELLENT"}. This is true even though the ``difference'' between
+them seems exactly the same: ``two ranking's worth.'' The fact is that humans
+don't interpret those four adjectives as exactly equally spaced, and therefore
+it's a fallacy to interpret their results as though they did.
+
+Which leads to the third and last item: trying to take the ``average'' (adding
+up all the scores and dividing by the total). It's tempting to say, ``let's
+treat \texttt{"POOR"} as a 1, \texttt{"FAIR"} as a 2, \texttt{"GOOD"} as a 3,
+and \texttt{"EXCELLENT"} as a 4. Then, we can just take the mean of all the
+results to get the average rating! What's not to like?'' What's not to like is
+that by assigning those numbers, you added spurious information and thereby
+twisted the respondent's meaning into something they didn't necessarily intend.
+They very likely didn't think of the four options as equally-spaced
+numerically, and so this average is quite bogus. Instead, take the median.
 
