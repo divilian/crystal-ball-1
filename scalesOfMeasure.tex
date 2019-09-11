@@ -11,7 +11,7 @@ operations. In this one, we zoom out and ask: when does it actually make
 Another way to phrase this distinction is in terms of \textbf{syntax}
 vs.~\textbf{semantics}. Syntax concerns the rules for combining various symbols
 in a programming (or other) language. Semantics concerns the \textit{meaning}
-of those symbols. This isn't something a programming language can tell us; only
+of those symbols. This isn't something a programming language can tell us. Only
 a human who understands what all those symbols refer to can determine when a
 particular combination actually relates to something meaningful. Let this
 chapter be your guide.
@@ -25,4 +25,71 @@ There are four of these\footnote{According to psychologist Stanley Smith
 Stevens in 1946. Other researchers have developed related, but different,
 scales of measure.}, and each one determines which kinds of operations are
 ``legal'' (\textit{i.e.}, sensible) with that variable.
+
+\index{categorical variable}
+\index{nominal variable}
+\subsection{Categorical/nominal}
+
+The first one is the simplest, although it actually has two different names in
+common use: \textbf{categorical} or \textbf{nominal} variables. It is the scale
+of variables that represent ``one of a set of choices,'' where no choice is
+``higher'' or ``greater'' than any other.
+
+\index{order}
+An example would be a \texttt{fave\_color} variable that holds the value of a
+child's favorite color: legal values are \texttt{"red"}, \texttt{"blue"},
+\texttt{"green"} or \texttt{"yellow"}. We know it's categorical from, among
+other things, the fact that there's no one right way to \textbf{order} those
+values. (Alphabetical, most-popular-first, and ordering according to the
+sequence of the rainbow are three possibilities. You might think of others.)
+
+Political affiliation would be another categorical variable. Its values (like
+\texttt{"Democrat"}, \texttt{"Republican"}, and \texttt{"Green"}) aren't in any
+particular order. (Although you might think of the traditional left-to-right
+political spectrum, that's only one dimension of political party, and perhaps
+not even the most important one.) Other examples include film's genre, a
+student's nationality, and a football player's position.
+
+Now you might be tempted to think, ``hmm...all the categorical examples so far
+are textual, not numeric. Perhaps this scales of measure thing is just another
+way of stating the variable type?'' Alas, no. For one, we'll see text variables
+in the next category as well. For another, even data that on its surface seems
+numeric can actually be categorical in disguise.
+
+Consider the uniform number of an athlete. I might be interested in asking,
+``which uniform number had the greatest professional athletes who chose it?''
+24 is a good candidate: Willie Mays, Ken Griffey Jr., and Kobe Bryant all wore
+that jersey number. Or maybe \#7 is the winner, with Mickey Mantle, John Elway,
+and Cristiano Ronaldo. Either way, though, all that matters in this analysis is
+\textit{which} uniform number an athlete chose, not ``how high'' or ``how
+great'' that number is compared to others. No one in their right mind would say
+that Peyton Manning (\#18) was ``twice the player'' Mia Hamm was (\#9), because
+uniform numbers aren't really ``numbers'' at all: they're more like labels.
+
+\subsubsection{Legal operations for categorical/nominal variables}
+
+\index{mode}
+When a variable is on a categorical scale, about the only things you can do are
+compare for equality/inequality, count the occurrences of different values, and
+compute the \textbf{mode} of the set. The mode simply means the value that
+occurs \textit{the most often}.
+
+So these things make sense to ask:
+
+\begin{compactitem}
+\item[\leftthumbsup] ``Is his favorite color the same as her favorite color?''
+\item[\leftthumbsup] ``How many people have \texttt{"red"} as their favorite
+color?''
+\item[\leftthumbsup] ``What's the most popular favorite color?''
+\end{compactitem}
+
+while these do \textit{not}:
+
+\begin{compactitem}
+\item[\leftthumbsdown] ``Is his favorite color greater than her favorite
+color?'' (??)
+\item[\leftthumbsdown] ``What's Caitlin's favorite color minus Hannah's?'' (??)
+\item[\leftthumbsdown] ``What's the `average' favorite color in this data
+set?'' (??)
+\end{compactitem}
 
