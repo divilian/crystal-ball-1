@@ -26,6 +26,7 @@ first, and then look at how to use them in Python.
 \index{array}
 \subsection{Arrays}
 
+\index{element}
 An \textbf{array} is simply a sequence of items, all in a row. We call those
 items the ``\textbf{elements}'' of the array. So an array could have ten whole
 numbers as its elements, or a thousand strings of text, or a million real
@@ -179,9 +180,9 @@ As with the other types, the whole dog-gone table -- no matter how many
 millions of rows it might have -- is \textit{one} variable with a single name.
 Also, just like with associative arrays, there normally isn't any implied
 \textit{order} to the rows. Many implementations of these data types (including
-Pandas) will actually let you specify ``the first row'' or ``the
+Python/Pandas) will actually let you specify ``the first row'' or ``the
 $53^{\textrm{rd}}$ row,'' but that always makes me cringe because conceptually,
-there isn't any such thing. They're all just ``rows'' that are all ``in
+there isn't any such thing. They're just ``rows'' that are all ``in
 there.''
 
 \subsubsection{``Querying'' tables (and other things)}
@@ -199,25 +200,59 @@ Those specific requirements will restrict the table to a subset of its rows
 and/or columns. We'll learn the syntax for that later. It's a bit tricky but
 very powerful.
 
+\index{element}
+By the way, it turns out we'll actually be using the concept of a query for
+arrays and associative arrays as well. So strictly speaking, a query isn't just
+a ``table thing.'' However, they're especially invaluable for tables, since
+they're essentially the \textit{only} way to access individual elements.
+
 \section{Aggregate data and memory pictures}
 
-\subsection{Associative arrays}
+Recall from chapter~\ref{ch:memoryPictures} (p.~\pageref{fig:memoryPicture})
+that the right-hand side of our memory pictures bore the label
+``\textsf{Aggregate data}.'' You may have anticipated that that's where the
+stuff in this chapter will live, and you're right. But there's a catch.
+Remember that variable \textit{names} live on the left-hand side, and that's
+true even if the variable is of an aggregate type! This turns out to be
+crucially important, so I'm going to make a big deal about it.
 
-\subsection{Data frames}
+You must draw your memory pictures (either on a whiteboard, or in your head) in
+a very specific way, and that way is illustrated in
+Figure~\ref{fig:aggregateMemory}.
 
-\section{The three kinds in Python}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\textwidth]{aggregateMemory.png}
+\caption{Where aggregate data variables -- and their variable names -- live in
+memory.}
+\label{fig:aggregateMemory}
+\end{figure}
 
-\subsection{Arrays: \texttt{numpy}'s \texttt{ndarray}}
+Study this picture carefully, and notice several vitally important things.
+First, \textit{all} the variable names are on the left-hand side -- whether
+aggregate or not. This is always, always true.
 
-% np.array([]), np.arange(), np.zeros(),
-% np.loadtxt("file", dtype=object, delimiter='!!!')
+\index{pointer}
+\index{reference}
 
-% indexing, slices
+Second, the actual array, associative, and array depicted in this diagram are
+on the right-hand side. The variable name on the left ``\textbf{points to}''
+the data in question with a little arrow. The technical name for this arrow is
+a \textbf{pointer} or a \textbf{reference}. The rule is simple: each atomic
+variable (like \texttt{gpa} or \texttt{course}) contains \textit{the colored
+box itself}. Aggregate variables (like the other four) contain \textit{a
+pointer to the group of colored boxes.}
 
-\subsection{Associative arrays: Python's \texttt{dict}}
+Finally, mull over the fact that two \textit{different} variables in this
+memory picture are pointing to the same thing! (\texttt{ages} and
+\texttt{people}) Believe it or not, this is a normal occurrence. The
+consequence is that if Stacey had a birthday, and we increased her age from 19
+to 20, \textit{both} \texttt{ages} \textit{and} \texttt{people} would
+automatically see the new value. There is only one copy of that associative
+array in memory, and both variable names point at it.
 
-\subsection{Data frames: \texttt{pandas}'s \texttt{DataFrame}}
-
-
-% Somewhere: .map() for recoding
-
+It may seem like I'm being pedantic with this left-side-right-side stuff and
+all the little arrows. \textbf{I promise you I'm not.} The moment your data
+analysis program gets even mildly complicated, you will do the \textit{wrong}
+thing and get the \textit{wrong} answers if you don't think of it exactly like
+this. Take your time and commit it to memory.
