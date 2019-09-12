@@ -2,6 +2,9 @@
 % note that "variable" means something different in this chapter. Not a single
 % value, but multiple measurements.
 
+% Give the hierarchy of categorical -> ord -> int -> rat, and how each one
+% subsumes the other
+
 \chapter{Scales of measure}
 
 In the last chapter, we learned the Python verbiage for how to do arithmetic
@@ -212,3 +215,166 @@ twisted the respondent's meaning into something they didn't necessarily intend.
 They very likely didn't think of the four options as equally-spaced
 numerically, and so this average is quite bogus. Instead, take the median.
 
+
+\index{interval variable}
+\subsection{Interval}
+
+Onward. Our next scale of measure is the \textbf{interval} scale, which
+fulfills what was missing with ordinal variables. An interval variable
+\textit{does} have meaningful and reliable differences between values, which
+can be computed and analyzed.
+
+Unlike the previous two scales, interval variables are always numeric by
+nature. You can't subtract two words from one another, but you can do so with
+numbers, and unlike our uniform number and NCAA hoops ranking examples, that
+subtraction is a \textit{meaningful} operation.
+
+An example of an interval variable might be the longitude (or latitude) of a
+city. Not only can we ask whether two cities have the same longitude (as with
+categorical), and whether one is east or west of another (as with ordinal), we
+can now ask \textit{how far} east. Subtract one longitude from the other, and
+boom. We have a reliable degree of difference.
+
+This allows us to ask questions like ``are Dallas and Fort Worth farther apart
+than Minneapolis and St.~Paul are?'' or ``is the temperature swing between
+daytime and nighttime wider in Colorado than in Virginia?'' (Hint: yes.) Note
+that we couldn't legally ask such questions of an ordinal variable, since there
+was no way to really know how large the difference between \textbf{"GOOD"} and
+\textbf{"EXCELLENT"} was, as opposed to that between \textbf{"FAIR"} and
+\textbf{"GOOD"}.
+
+Another example of an interval scale variable, besides the aforementioned
+temperature, is the year an event takes place. We can say, for example, that
+nearly two-thirds of our nation's history has occurred \textit{after} the Civil
+War ($2019-1865=154$ years, versus $1861-1776=85$ years).
+
+\index{mean}
+The quintessential measure of central tendency for interval scale is the
+arithmetic \textbf{mean}. Both the median and the mode are still permitted, and
+they are sometimes quite useful. But often we're going to fall back on the
+add-'em-up-and-divide-by-the-number-of-elements thing you learned in grade
+school. In this case, it makes sense, because the values are at fixed,
+meaningful, numerical positions and so adding them up is okay.
+
+Here's our list of goods (for interval scale variables):
+
+\begin{compactitem}
+\item[\leftthumbsup] ``Was today's high temperature the same as yesterday's?''
+\item[\leftthumbsup] ``Was Beethoven born before or after Napoleon?''
+\item[\leftthumbsup] ``How many cities are at $40\deg$ latitude?''
+\item[\leftthumbsup] ``What's the median year of birth for current U.S. Senators?''
+\item[\leftthumbsup] ``Which is experiencing more global warming
+(temperature difference) -- Greenland or France?''
+\item[\leftthumbsup] ``What's London's latitude minus Boston's? How much
+farther north is it?''
+\item[\leftthumbsup] ``What was the average high temperature in Fredericksburg
+in September?''
+\end{compactitem}
+
+and bads:
+
+\begin{compactitem}
+\item[\leftthumbsdown] ``Which cities are at least 20\% more east than
+Chicago?'' (??)
+\item[\leftthumbsdown] ``When was the first fall day which was half as hot as
+it was on July 4th?'' (??)
+\item[\leftthumbsdown] ``Was Lincoln born 5\% later than Washington?'' (??)
+\end{compactitem}
+
+\index{zero point}
+Let's consider that bads list. With an interval scale variable, we can ask
+almost anything we want to about it. Almost. The one fly in the ointment is
+questions that have phrases like ``twice as'' or ``10\% less than.'' Those, we
+cannot do. The reason is that an interval scale variable \textit{has no
+meaningful \textbf{zero point}}.
+
+In an interval scale, values have \textit{relative} distances from each other,
+but not \textit{absolute} differences from some fixed reference point. Consider
+years. Saying that the Cubs finally won the World Series 146 years after their
+franchise was born is meaningful: the difference between 1870 and 2016 can be
+measured. But what if we said ``they won the World Series 7.8\% later than
+their franchise was born''? Could such a sentence possibly say anything useful?
+
+\index{arbitrary}
+The answer is no, and here's why. The ``zero point'' of our calendar system is
+\textbf{arbitrary}. By that I mean that the year we might consider ``year
+zero'' has nothing to do with the Cubs or baseball or America or anything else:
+it was a guess as to the birth year of Jesus Christ, and a wrong one at
+that.\footnote{Later historical discoveries have demonstrated that Herod the
+Great died in what we now call 4 B.C. If you went to Sunday School, you might
+recall that in a fit of jealousy, King Herod the Great ordered all the baby
+boys in Bethlehem (two years old or younger) to be killed. (See Matthew
+2:13-18.) He chose ``two years or younger'' as the cutoff because his goal was
+to kill Jesus, who was about two years old at the time. Hence Jesus was most
+likely born in the year which we have (incorrectly, it turns out) labeled as
+``6 B.C.'' Fun facts.}
+
+\index{relative difference}
+\index{absolute difference}
+We could, of course, have chosen to measure time relative to any other point
+instead, like the birth of our own nation, the founding of Rome, the Cubs
+franchise being founded, or anything else. If we had done that, all of the
+\textit{relative} differences between years would have been the same: there
+would still have been 85 years between the Declaration of Independence and the
+Civil War, Barack Obama would still have been President for 8 years, and you
+would still be the same age. But all the \textit{absolute} calculations that
+implicitly make reference to the zero point -- like ``what percent later did
+the Cubs won the Series than their franchise began?'' would suddenly become
+radically different. If we measured years relative to 1776, then the Cubs'
+victory would have been ``155.3\% later'' than their origin, instead of ``7.8\%
+later!'' That betrays the fact that this is an utterly meaningless calculation.
+
+Same thing with longitude. While latitude plausibly has a meaningful zero point
+-- the equator -- and thus perhaps ``twice as north'' has some meaning to it
+(``twice as far from the center of the planet'') longitude clearly does not.
+Saying a city is ``twice as east'' as another is plain nonsense. That's because
+the zero point for longitude is arbitrary: it's set at the Greenwich, England,
+or some nonsense like that. Clearly only relative differences between longitude
+have any meaning.
+
+And the same thing with temperature. If yesterday was $40\deg$, and today was
+$80\deg$, it's tempting to say that ````whew! It's twice as hot today!'' To see
+that this is nonsense, consider that we could (and probably should, actually)
+change to use the metric system like the rest of the world does, and measure
+temperature in Celsius. Now if we did that, clearly we wouldn't start
+experiencing heat waves or cold spells as a result! Hey we're just changing our
+units, bro, not influencing the atmosphere. But realize that in Celsius,
+yesterday's $40\deg$F day would become $4.4\deg$C, and today's $80\deg$F would
+be $26.7\deg$C. So now, by changing our units, we would have to say ``oh golly,
+I guess it's actually over \textit{six times} as hot today!'' This is why
+multiplying and dividing with interval scale variables leads to madness.
+
+
+\index{ratio variable}
+\subsection{Ratio}
+
+Which brings us to our last of the four scales: the ratio scale. In some ways
+this is the easiest to understand, because of all the mathematical questions
+we might want to ask, we \textit{can} ask them. Multiply, divide, make 
+absolute statements like ``25\% greater than'' -- go crazy, man.
+
+Salary has a meaningful, absolute zero point: namely, an unemployed (or
+volunteer) worker earning \textit{zero} dollars. Since we have that
+non-arbitrary standard, it makes perfect sense to say things like ``he makes
+twice as much as she does.
+
+The height of a person has a meaningful zero point as well: the ground. If
+Tyrion Lannister rises $3\frac{1}{2}$ feet from the floor, and Gregor Clegane
+stands a full 7 feet from that same floor, it makes all the sense in the world
+to say ``Gregor is twice as tall as Tyrion.''
+
+\index{mean}
+As with interval scale variables, we often use the arithmetic \textbf{mean}  as
+our measure of central tendency.\footnote{Interestingly, there are actually two
+different kinds of means, one of which, called the ``geometric mean'' is only
+applicable on the ratio data scale. It involves multiplying and taking roots
+instead of adding and dividing, and is a useful operation in some niche
+contexts.}
+
+\section{Final word}
+The lesson of this chapter is that Python will \textit{not} prevent you from
+doing any of the above stupid things -- if we have an ordinal scale variable,
+for instance, we can subtract values from one other until we're blue in the
+face, not recognizing that the results we're producing are gibberish. It's all
+on us to be responsible data citizens, and to only use operations that give
+meaningful results.
