@@ -128,7 +128,7 @@ Second, realize that the \textit{keys} in an associative array must be
 \textbf{unique} -- this means that there can be no duplicate keys. If we tried
 to create a second \texttt{"Alex Morgan"} (oh, if only...) with a different
 value, that new value would \textit{replace} Alex's current value, not sit
-alongside the first one as an additional ordered pair.
+alongside the first one as an additional key-value pair.
 
 The reverse is not true, however: the \textit{values} of an associative array
 may very well not be unique. In the left-hand picture they are, but in the
@@ -139,6 +139,65 @@ always access the information in an associative array \textit{through the
 keys}. Asking ``what number did Mia Hamm wear?'' gives us a well-defined
 answer. Asking ``which famous athlete wore \#23?'' does not. That's why we
 can't ask that second question (and aren't meant to).
+
+\subsection{Tables}
+
+Lastly, we have the table, which in Data Science is positively ubiquitous. In
+Figure~\ref{fig:table} we return to the pinterest.com example, with a table of
+their most popular users. As you can see, it has more going on that than the
+previous two aggregate data types. Still, it's pretty straightforward to wrap
+your head around.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{table.png}
+\caption{A table.}
+\label{fig:table}
+\end{figure}
+
+\index{row (of a table)}
+\index{column (of a table)}
+Unlike the other two aggregate data types, tables are full-on two-dimensional.
+There's (theoretically) no limit to how many \textbf{rows} and how many
+\textbf{columns} they can have. By the way, it's important to get those two
+terms straight: rows go across, and columns go up and down. (Think of the
+columns in the Trinkle Rotunda.) Also, the typical table has many, many more
+rows than columns, so they're super tall and skinny, not short and fat.
+
+\index{heterogeneous}
+\index{homogeneous}
+Although the \textit{rows} of a table are often heterogeneous, each
+\textit{column} must be homogeneous. You can see that with a glance at
+Figure~\ref{fig:table}. Each column represents a specific type of data -- in
+this case, some statistic or piece of information about a Pinterest user.
+Clearly all screen names should be of a text type, all ``number of pins or
+followers'' should be whole numbers, \textit{etc.} It doesn't make sense
+otherwise.
+
+\index{order}
+As with the other types, the whole dog-gone table -- no matter how many
+millions of rows it might have -- is \textit{one} variable with a single name.
+Also, just like with associative arrays, there normally isn't any implied
+\textit{order} to the rows. Many implementations of these data types (including
+Pandas) will actually let you specify ``the first row'' or ``the
+$53^{\textrm{rd}}$ row,'' but that always makes me cringe because conceptually,
+there isn't any such thing. They're all just ``rows'' that are all ``in
+there.''
+
+\subsubsection{``Querying'' tables (and other things)}
+\index{query}
+Now you might be wondering how to actually ``get at'' the individual values of
+a table. Unlike arrays, there's no index number. And unlike associative arrays,
+there's no key. How then to address, say, the \texttt{@poppytalk} row?
+
+The answer will turn out to be something called a \textbf{query}, which is a
+geeky way of saying ``a set of criteria which will match some, but not all, of
+the rows and/or columns.'' For instance, we might say ``tell me the pin count
+for \texttt{@ohjoy}.'' Or, ``give me all the information for any user who has
+more than 100,000 followers per board \textit{and} at least 20,000 pins.''
+Those specific requirements will restrict the table to a subset of its rows
+and/or columns. We'll learn the syntax for that later. It's a bit tricky but
+very powerful.
 
 \section{Aggregate data and memory pictures}
 
