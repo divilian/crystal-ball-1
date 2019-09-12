@@ -19,8 +19,8 @@ The number of ways in which pieces of data can be arranged is far greater than
 the number of different atomic types. These various ways all have names, some
 of them nerdy and/or exotic like ``hash tables,'' ``binary search trees,'' and
 ``skip lists.'' Nevertheless, there are again three basic ones which will form
-the basis of our study: they're called \textbf{arrays}, \texttt{associative
-arrays}, and \texttt{tables}. As before, we'll consider each one conceptually
+the basis of our study: they're called \textbf{arrays}, \textbf{associative
+arrays}, and \textbf{tables}. As before, we'll consider each one conceptually
 first, and then look at how to use them in Python.
 
 \index{array}
@@ -31,6 +31,8 @@ items the ``\textbf{elements}'' of the array. So an array could have ten whole
 numbers as its elements, or a thousand strings of text, or a million real
 numbers.
 
+\index{homogeneous}
+\index{heterogeneous}
 Normally, we will deal with \textbf{homogeneous} arrays, in which all the
 elements are of the same type; this turns out to be what you want 99\% of the
 time. Some languages (including Python) do permit creating a
@@ -69,9 +71,76 @@ past the initial weirdness.
 
 Arrays are the most basic kind of aggregate data there is, and they are the
 workhorse of a whole lot of Data Science processing. Sometimes they're called
-\textbf{\texttt{list}s}, \textbf{\texttt{vector}s}, or
-\textbf{\texttt{sequence}s}, by the way. (When a particular concept has lots of
-different names, you know it's important.)
+\textbf{lists}, \textbf{vectors}, or \textbf{sequences}, by the way. (When a
+particular concept has lots of different names, you know it's important.)
+
+\index{array!associative}
+\index{key-value pair}
+\subsection{Associative arrays}
+
+An \textbf{associative array}, by contrast, has no index numbers. And its
+elements are slightly more complicated: instead of just bare values, an
+associative array contains \textbf{key-value pairs}.
+Figure~\ref{fig:assocArray} shows a couple of examples. The left-hand side of
+each picture shows the keys, and the right-hand side the corresponding value.
+
+With an associative array, you don't ask ``what's element \#3?'' like you do
+with a regular array. Instead, you ask ``what value is associated with the
+\texttt{"Washington"} key?'' And out pops your answer (\texttt{"Redskins"}).
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{assocArray.png}
+\caption{Two associative arrays.}
+\label{fig:assocArray}
+\end{figure}
+
+\index{order}
+\index{undefined}
+\index{mapping (a key to a value)}
+All access to the associative array is through the keys: you can change the
+value that goes with a key, retrieve the value that goes with a key, or even
+retrieve and process \textit{all} the keys and their associated values
+sequentially.\footnote{Using something called a ``loop,'' which we'll learn
+about a little later in the book.} In that third case, the order in which
+you'll receive the key-value pairs is \textbf{undefined} (which means ``not
+guaranteed to be consistent'' or ``not necessarily what you'd expect.'') This
+underscores the fact that there isn't any reliable ``first'' key-value pair,
+or second, or last. They're just kind of all equally ``in there.'' Your mental
+model of an associative array should just think of keys that are
+\textbf{mapped} to values (we say that \texttt{"Dallas"} is ``mapped'' to
+\texttt{"Cowboys"}) without any implied order. (Sure, the
+\texttt{"Philadelphia"}/\texttt{"Eagles"} pair is at the top of the picture,
+but that's only because I had to put \textit{something} at the top of the
+picture, and I chose Philadelphia at random. It doesn't have any meaningful
+primacy though.)
+
+\index{homogeneous} Note a couple things about Figure~\ref{fig:assocArray}.
+First, the keys in an associative array will almost always (and for us,
+\textit{always}) be homogeneous. Similarly, the values will be homogeneous. But
+the keys might not be of the same type as the values. In the left picture, both
+keys and values are text, but in the right picture, the keys are text and the
+values (uniform numbers of famous athletes) are whole numbers. This is
+perfectly healthy and good.
+
+\index{uniqueness!of keys in an associative array}
+Second, realize that the \textit{keys} in an associative array must be
+\textbf{unique} -- this means that there can be no duplicate keys. If we tried
+to create a second \texttt{"Alex Morgan"} (oh, if only...) with a different
+value, that new value would \textit{replace} Alex's current value, not sit
+alongside the first one as an additional ordered pair.
+
+The reverse is not true, however: the \textit{values} of an associative array
+may very well not be unique. In the left-hand picture they are, but in the
+right-hand picture there are duplicates: both Jordan and LeBron wore \#23 in
+their stellar careers, while Hall of Famer quarterback Dan Marino once chose
+the same uniform number that Alex wears today. This isn't a problem, because we
+always access the information in an associative array \textit{through the
+keys}. Asking ``what number did Mia Hamm wear?'' gives us a well-defined
+answer. Asking ``which famous athlete wore \#23?'' does not. That's why we
+can't ask that second question (and aren't meant to).
+
+\section{Aggregate data and memory pictures}
 
 \subsection{Associative arrays}
 
@@ -81,9 +150,15 @@ different names, you know it's important.)
 
 \subsection{Arrays: \texttt{numpy}'s \texttt{ndarray}}
 
+% np.array([]), np.arange(), np.zeros(),
+% np.loadtxt("file", dtype=object, delimiter='!!!')
+
+% indexing, slices
+
 \subsection{Associative arrays: Python's \texttt{dict}}
 
 \subsection{Data frames: \texttt{pandas}'s \texttt{DataFrame}}
 
 
 % Somewhere: .map() for recoding
+
