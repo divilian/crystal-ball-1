@@ -12,7 +12,7 @@
 
 \index{array!in NumPy}
 \index{ndarray@\texttt{ndarray} (NumPy)}
-\index{list@\texttt{list}}
+\index{list@\texttt{list}, plain-ol'}
 There are several candidates in the Python language for representing the type
 of array structure we introduced in chapter~\ref{ch:aggregateData}. One is the
 plain-ol' Python \textbf{\texttt{list}}, which you may have used if you've
@@ -20,11 +20,12 @@ taken a computer science course in Python. Turns out, \texttt{list}s are going
 to be too slow for us once we start dealing with a lot of data, plus there are
 a lot of things that it won't do for us automatically that are handy to have.
 Another choice is the Pandas \texttt{Series} which we'll actually cover in
-chapter~\ref{ch:pythonAssocArrays} -- oddly, that one turns out to do to
+chapter~\ref{ch:pythonAssocArrays} -- oddly, that one turns out to do too
 \textit{much}, rather than too little, for our purposes here. A happy medium is
-the \textbf{\texttt{ndarray}} from the NumPy package. Before we do that,
-however, we need to learn what a \textbf{package} actually is, and how to use
-one.
+the \textbf{\texttt{ndarray}} from the NumPy package\footnote{Most people seem
+to pronounce this ``NUM-pie,'' although I've heard ``NUM-pee'' as well. Pick
+your poison.}. Before we do that, however, we need to learn what a ``package''
+actually is, and how to use one.
 
 \section{Packages}
 \index{package}
@@ -35,15 +36,15 @@ do -- from something complex like making a remote network connection to
 something simple like computing the average of some numbers -- was up to you to
 build. Code sharing over the Internet just wasn't much of a thing.
 
-\index{legos@Legos\textsuperscript{\textregistered}} -- and even a bunch of
 Today, the reverse is true. When you write a complex data analysis program,
 \textit{most} of the code will actually be written by others, if you do it
 right. This is because many, many smart people across the globe have written
-snippets of code to do all the common (and some not-so-common) things you want
-to do, and your job is to string them all together. Put another way: you're
-given most of the Legos\textsuperscript{\textregistered} -- and even a bunch of
-pre-assembled chunks with dozens of Legos\textsuperscript{\textregistered} each
--- and your job is to construct your masterpiece out of those building blocks.
+snippets of code to do all the common (and some not-so-common) things you'll
+want to do, and your job is to string them all together. Put another way:
+you're given most of the Legos\textsuperscript{\textregistered} -- and even a
+bunch of pre-assembled chunks made with dozens of
+Legos\textsuperscript{\textregistered} each -- and your job is to construct
+your masterpiece out of those building blocks.
 
 \index{package}
 \index{importing (a package)}
@@ -65,10 +66,143 @@ import numpy as np
 \end{Verbatim}
 
 Note that it's in all lower-case letters. Once that cell has been executed, you
-now have access to all the NumPy ``stuff,'' some of which is the subject of
-this chapter.
+now have access to all the NumPy ``stuff,'' which is the subject of this
+chapter.
 
 \section{The NumPy \texttt{ndarray}}
 
-type()
-dtype
+\index{array}
+\index{ndarray@\texttt{ndarray} (NumPy)}
+\index{matrix}
+The actual data type that the NumPy package provides is called an
+\texttt{ndarray}, which stands for ``n-dimensional array.'' If that sounds
+heady, it kind of is, although in this course we're only ever going to use a
+\textit{one}-dimensional array, which is super simple to understand. In fact,
+it looks exactly like the examples in Figure~\ref{fig:array}
+(p.~\pageref{fig:array}). ``One-dimensional'' just means that there is a single
+index number, and the elements are all in a line.\footnote{A two-dimensional
+array is a spreadsheety-looking thing also called a \textbf{matrix}. Each
+element has \textit{two} index numbers: a row and a column. A three-dimensional
+array is a cube, with three index numbers needed to specify an element.
+\textit{Etc.}}
+
+\subsection{Creating \texttt{ndarray}s}
+
+There are many different ways to create an \texttt{ndarray}. We'll learn four
+of them.
+
+\subsubsection{Way 1: \texttt{np.array([])}}
+
+The first is to use the \texttt{array()} function of the NumPy package, and
+give it all the values explicitly. Here's the code to reproduce the
+Figure~\ref{fig:array} examples:
+
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+followees = np.array(['@katyperry','@rihanna','@Cristiano','@TheEllenShow'])
+balances = np.array([1526.73, 98774.91, 1000000, 4963.12, 123.19])
+\end{Verbatim}
+
+\index{boxies (square brackets)}
+\index{[]@\texttt{[]} (boxies)}
+\index{bananas (parentheses)}
+\index{()@\texttt{()} (bananas)}
+It's simple, but don't miss the syntactical gotcha: \textit{you must include a
+pair of boxies inside the bananas.} Why? Reasons.\footnote{For the experienced
+reader, what we're actually doing here is creating a plain-ol' Python list
+(with the boxies), and then calling the \texttt{array()} function with that
+list as an argument.} For now, just memorize that for this function -- and this
+function only -- we use ``\texttt{([}\textsl{...stuff...}\texttt{])}'' instead
+of ``\texttt{(}\textsl{...stuff...}\texttt{)}'' when we call it.
+
+\index{package}
+\index{function}
+\index{method}
+By the way, the attentive reader might object to me calling \texttt{array()} a
+function, instead of a method. Isn't there a word-and-a-dot before it, and
+isn't that a ``method thing?'' Shrewd of you to think that, but actually no,
+and the reason is that ``\texttt{np}'' isn't the name of a variable, but the
+name of a \textit{package}. When we say ``\texttt{np.array()}'' what we're
+saying is: ``Python, please call the \texttt{array()} function \textit{from the
+\texttt{np} package}.'' The word-and-dot syntax does double-duty.
+
+\index{type@\texttt{type()}}
+We can call the \texttt{type()} function, as we did back on
+p.~\pageref{typeFunction}, to verify that yes indeed we have created
+\texttt{ndarray}s:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(type(followees))
+print(type(balances))
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+numpy.ndarray
+numpy.ndarray
+\end{Verbatim}
+
+This is useful, but sometimes we want to know what underlying atomic data type
+the array is comprised of. To do that, we attach ``\texttt{.dtype}''
+(confusingly, \textit{without} bananas this time) to the end of the variable
+name. ``\texttt{.dtype}'' stands for ``data type.'' Here goes:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(type(followees))
+print(type(balances))
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+dtype('<U13')
+dtype('float64')
+\end{Verbatim}
+
+Whoa, what does \textit{that} stuff mean? It's a bit hard on the eyes, but let
+me explain. The underlying data type of \texttt{followees} is (bizarrely)
+``\texttt{<U13}'' which in English means ``strings of Unicode
+characters\footnote{A ``Unicode character'' is just a fancy way of saying ``a
+character, which might not be English.'' NumPy is capable of storing more than
+just a-b-c's in its strings; it can store symbols from Greek, Arabic, Chinese,
+\textit{etc.} as well.}, each of which is 13 characters long or less.'' (If you
+bother to count, you'll discover that the longest string in our
+\texttt{followees} array is the last one, \texttt{'@TheEllenShow'}, which is
+exactly 13 characters long.) The ``\texttt{float64}'' thing means
+``\texttt{float}s, each of which is represented with 64 bits\footnote{A ``bit''
+-- which is short for ``binary digit'' -- is the tiniest piece of information a
+computer can store: it's a single 0 or 1.} in memory.
+
+You don't need to worry about any of those details. All you need to know is: if
+an array's \texttt{dtype} has ``\texttt{<U}'' in it, then it's composed of
+strings; and if it has the word ``\texttt{int}'' or ``\texttt{float}'' in it,
+it means one of those two old friends from chapter~\ref{ch:atomicData}.
+
+\index{homogeneous}
+\index{list@\texttt{list}, plain-ol'}
+Incidentally, you'll recall from chapter~\ref{ch:aggregateData} that an array
+is \textit{homogeneous}, which means all its elements are of the same type.
+NumPy enforces this. If you try to combine them:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+weird = np.array([3, 4.9, 8])
+strange = np.array([18, 73.0, 'bob', 22.8])
+\end{Verbatim}
+
+you'll discover that NumPy converts them to all be of the same type:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single]
+print(weird)
+print(weird.dtype)
+print(strange)
+print(strange.dtype)
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[ 3.   4.9  8. ]
+dtype('<U3')
+['18' '73.0' 'bob' '22.8']
+dtype('float64')
+\end{Verbatim}
+
+The \texttt{int}s \texttt{3} and \texttt{8} from the first array were converted
+into the \texttt{float}s \texttt{3.}~and \texttt{8.}; meanwhile, all of the
+numerical elements of the second array got converted to \texttt{str}s. (If you
+think about it, that's the only direction the conversions could go.)
+
