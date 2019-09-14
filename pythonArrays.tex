@@ -30,7 +30,45 @@ one.
 \index{package}
 
 Back in my day (circa 1990's) when someone wanted to write a computer program,
-they wrote the entire thing themselves, line by line.
+they wrote the entire thing themselves, line by line. Everything you needed to
+do -- from something complex like making a remote network connection to
+something simple like computing the average of some numbers -- was up to you to
+build. Code sharing over the Internet just wasn't much of a thing.
+
+\index{legos@Legos\textsuperscript{\textregistered}} -- and even a bunch of
+Today, the reverse is true. When you write a complex data analysis program,
+\textit{most} of the code will actually be written by others, if you do it
+right. This is because many, many smart people across the globe have written
+snippets of code to do all the common (and some not-so-common) things you want
+to do, and your job is to string them all together. Put another way: you're
+given most of the Legos\textsuperscript{\textregistered} -- and even a bunch of
+pre-assembled chunks with dozens of Legos\textsuperscript{\textregistered} each
+-- and your job is to construct your masterpiece out of those building blocks.
+
+\index{package}
+\index{importing (a package)}
+\index{package}
+\index{calling a function@``calling'' a function}
+\index{calling a method@``calling'' a method (on a variable)}
+In Python, a \textbf{package} is a repository of useful functions and methods
+that someone else has written. By \textbf{import}ing a package into your
+program, you're making all those useful things available to you. Your own code
+can then call those functions/methods whenever you see fit. It's the modular,
+organized, and elegant way to do things, in addition to saving a ton of time.
+
+The first package we'll use is called \textbf{NumPy}, which stands for
+``Numerical Python.'' To import it, you should include this exact line of code
+in the \textit{first} Code cell of your Notebook:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+import numpy as np
+\end{Verbatim}
+
+Note that it's in all lower-case letters. Once that cell has been executed, you
+now have access to all the NumPy ``stuff,'' some of which is the subject of
+this chapter.
+
+\section{The NumPy \texttt{ndarray}}
 
 type()
 dtype
