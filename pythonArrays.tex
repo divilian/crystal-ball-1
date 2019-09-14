@@ -1,0 +1,36 @@
+
+% np.array([]), np.arange(), np.zeros(),
+% np.loadtxt("file", dtype=object, delimiter='!!!')
+% +, -, *, /
+% np.sqrt()
+% np.round( , num_decimals)
+% np query syntax
+
+% indexing, slices
+
+\chapter{Arrays in Python: NumPy \texttt{ndarray}s}
+
+\index{array!in NumPy}
+\index{ndarray@\texttt{ndarray} (NumPy)}
+\index{list@\texttt{list}}
+There are several candidates in the Python language for representing the type
+of array structure we introduced in chapter~\ref{ch:aggregateData}. One is the
+plain-ol' Python \textbf{\texttt{list}}, which you may have used if you've
+taken a computer science course in Python. Turns out, \texttt{list}s are going
+to be too slow for us once we start dealing with a lot of data, plus there are
+a lot of things that it won't do for us automatically that are handy to have.
+Another choice is the Pandas \texttt{Series} which we'll actually cover in
+chapter~\ref{ch:pythonAssocArrays} -- oddly, that one turns out to do to
+\textit{much}, rather than too little, for our purposes here. A happy medium is
+the \textbf{\texttt{ndarray}} from the NumPy package. Before we do that,
+however, we need to learn what a \textbf{package} actually is, and how to use
+one.
+
+\section{Packages}
+\index{package}
+
+Back in my day (circa 1990's) when someone wanted to write a computer program,
+they wrote the entire thing themselves, line by line.
+
+type()
+dtype
