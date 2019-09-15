@@ -236,21 +236,21 @@ aggregate or not. This is always, always true.
 \index{pointer}
 \index{reference}
 
-Second, the actual array, associative, and array depicted in this diagram are
-on the right-hand side. The variable name on the left ``\textbf{points to}''
-the data in question with a little arrow. The technical name for this arrow is
-a \textbf{pointer} or a \textbf{reference}. The rule is simple: each atomic
-variable (like \texttt{gpa} or \texttt{course}) contains \textit{the colored
-box itself}. Aggregate variables (like the other four) contain \textit{a
-pointer to the group of colored boxes.}
+Second, the actual array, associative array, and table depicted in this diagram
+are on the right-hand side. The variable name on the left ``\textbf{points
+to}'' the data in question with a little arrow. The technical name for this
+arrow is a \textbf{pointer} or a \textbf{reference}. The rule is simple: each
+atomic variable (like \texttt{gpa} or \texttt{course}) contains \textit{the
+colored box itself}. Aggregate variables (like the other four) contain
+\textit{a pointer to the group of colored boxes.}
 
 Finally, mull over the fact that two \textit{different} variables in this
 memory picture are pointing to the same thing! (\texttt{ages} and
 \texttt{people}) Believe it or not, this is a normal occurrence. The
 consequence is that if Stacey had a birthday, and we increased her age from 19
-to 20, \textit{both} \texttt{ages} \textit{and} \texttt{people} would
-automatically see the new value. There is only one copy of that associative
-array in memory, and both variable names point at it.
+to 20 in the associative array, \textit{both} \texttt{ages} \textit{and}
+\texttt{people} would automatically see the new value. There is only one copy
+of that associative array in memory, and both variable names point at it.
 
 It may seem like I'm being pedantic with this left-side-right-side stuff and
 all the little arrows. \textbf{I promise you I'm not.} The moment your data
