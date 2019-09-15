@@ -8,7 +8,7 @@
 
 % indexing, slices
 
-\chapter{Arrays in Python: NumPy \texttt{ndarray}s}
+\chapter{Arrays in Python (1 of 2)}
 
 \index{array!in NumPy}
 \index{ndarray@\texttt{ndarray} (NumPy)}
@@ -157,6 +157,7 @@ dtype('<U13')
 dtype('float64')
 \end{Verbatim}
 
+\index{bit@bit (``binary digit'')}
 Whoa, what does \textit{that} stuff mean? It's a bit hard on the eyes, but let
 me explain. The underlying data type of \texttt{followees} is (bizarrely)
 ``\texttt{<U13}'' which in English means ``strings of Unicode
@@ -313,6 +314,174 @@ calls in order for the arrays to include 2000, and 2020, respectively. This is
 the same ``up to but not including the end point'' behavior, but extended to
 step sizes of greater than one.
 
+\subsubsection{Way 4: \texttt{np.loadtxt()}}
 
+\index{loadtxt@\texttt{loadtxt()} function (NumPy)}
+\index{file}
+\index{Microsoft}
+\index{word@Word (Microsoft)}
+
+Most of the data that we analyze will come from external \textbf{file}s, rather
+than being typed in by hand in Python. For one thing, this is how it will be
+provided by external sources; for another, it's infeasible to actually type in
+anything very large.
+
+\index{bit@bit (``binary digit'')}
+\index{song file}
+\index{GIF file}
+\index{image file}
+Let me say a word about files. You probably work with them every day on your
+own computer, but what you might not realize is that fundamentally, they all
+contain the same kind of ``data.'' You might think of a Microsoft Word document
+as a completely different kind of thing than a GIF image, or an MP3 song file,
+or a saved HTML page. But they're actually more alike than they are different.
+They all just contain a bunch of bits. Those bits are organized to conform to a
+particular kind of file specification, so that a program (like Word, Photoshop,
+or Spotify) can recognize and understand them. But it's still just
+``information.'' The difference between a Word doc and a GIF is like the
+difference between a book written in English and one written in Spanish; it's
+not like the difference between a bicycle and a fish.
+
+\index{file!plain-text}
+\index{plain-text file}
+In this course, we'll be working with \textbf{plain-text files}. This is how
+most of the open data sources on the Internet provide their information. A
+plain-text file is one that consists of readable characters, but which doesn't
+contain any additional formatting (like boldface, colors, margin settings,
+\textit{etc.}). You can actually open up a plain-text file in any text editor
+(including Microsoft Word) and see what it contains.
+
+\index{CoCalc}
+\index{folder@folder (directory)}
+\index{directory@directory (folder)}
+\index{CoCalc}
+
+In your CoCalc account, you have your own little group of files which, like
+those on your own computer, can be organized into \textbf{directories} (or
+\textbf{folders}\footnote{The words ``directory'' and ``folder'' are exact
+synonyms, and mean just what you think they mean. They are named containers
+which can contain files and/or other directories}). \textit{It is
+critically important that the data file you read, and the Jupyter Notebook that
+reads it, are in the \underline{same} directory.} The \#1 trouble students
+experience when trying to read from a text file is not having the text file
+itself located in the same directory as the code that reads it. If you make
+this mistake, Python will simply claim to not recognize the filename you give
+it. That doesn't mean your file doesn't exist! It's just not in the right
+place.
+
+\index{home directory}
+\index{directory!home}
+
+An example of doing this \textit{correctly} is in Figure~\ref{fig:folder}.
+We're in a directory called ``\texttt{filePractice}'' (stare at the middle of
+the figure until you find those words) which is contained within the
+\textbf{home directory} that's denoted by a little house icon. Your home
+directory is just the starting point of your own private little CoCalc world.
+The slash mark between the house and the word \texttt{filePractice} indicates
+that \texttt{filePractice} is contained directly within, or ``under,'' the home
+directory.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{folder.png}
+\medskip
+\caption{A directory (folder) on CoCalc, which contains two files: a plain-text
+file (called \texttt{uswnt.txt}) and a Jupyter Notebook which will read from it
+(\texttt{funWithArrays.ipynb}).}
+\label{fig:folder}
+\end{figure}
+
+\index{extension@extension (filename)}
+\index{filename extension}
+\index{US Women's National Team}
+\index{soccer}
+
+The two entries listed are a plain-text file (called \texttt{uswnt.txt}) and a
+Jupyter Notebook (\texttt{funWithArrays.ipynb}). You can tell that the former
+is a plain-text file because of the \textbf{filename extension}
+``\texttt{.txt}''. If we clicked on \texttt{uswnt.txt}, we'll bring up the
+contents of the file, as shown in Figure~\ref{fig:textFile}. In this case, we
+have the current roster on the US Women's National Soccer team, one name per
+line. Perhaps the most important thing to see is that the file itself, which we
+will read into Python in a moment, is nothing strange or scary: you could type
+it yourself into Notepad or Word.\footnote{If you do ever create a plain-text
+file using Microsoft Word or similar word processing program, be sure to choose
+``Save as...'' and save the file in \textbf{plain-text mode}. If you don't,
+Word will save a ton of extraneous formatting information (page settings,
+fonts, italics, and so forth) which will utterly pollute the raw information
+and make it impossible to read into Python.}
+
+\index{camel case}
+
+This is a good time to mention that \textit{spaces and other funny characters
+in filenames are considered evil.} You might think it looks better to call the
+notebook file ``\texttt{fun with arrays.ipynb}'' and the data file ``\texttt{US
+Women's National Team roster.txt''}, but I promise you it will lead to pain in
+the end, for a variety of fiddly reasons. It's better to use \textbf{camel
+case} for filenames, which is simply
+capitalizingEachSuccessive\-Word\-InAPhrase.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\textwidth]{textFile.png}
+\medskip
+\caption{The contents of a plain-text file, as rendered by CoCalc.}
+\label{fig:textFile}
+\end{figure}
+
+Okay, finally back to NumPy code. If all the stars are aligned, we can write
+this code in a \texttt{funWithArrays.ipynb} cell to read the soccer roster into
+an \texttt{ndarray}:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+roster = np.loadtxt("uswnt.txt", dtype=object, delimiter="###")
+\end{Verbatim}
+
+\index{atomic}
+\index{dtype@\texttt{.dtype}}
+\index{object@\texttt{object} (for \texttt{loadtxt()})}
+There's a lot of weird stuff in that line, so follow me here. The first
+argument is easy enough: the name of the file that contains our data. (Again, I
+stress that the file must be located \textit{in the same directory} as the
+notebook!) The second argument is bizarre: we know what \texttt{dtype} means,
+but ``\texttt{object}''? Ugh, another fiddly detail. When you read from a file
+into a NumPy array, you will be reading one of our three atomic types. Here are
+the rules:
+
+\begin{center}
+\begin{tabular}{c|c}
+If you want to read an array of... & ...then set \texttt{dtype} to: \\
+\hline
+\texttt{int}s & \texttt{int} \\
+\texttt{float}s & \texttt{float} \\
+\texttt{str}s & \texttt{object} \\
+\end{tabular}
+\end{center}
+
+Trust me. It works this way.
+
+\index{delimiter}
+The last of the three arguments is even nuttier, and you don't need to include
+it at \textit{all} if you're reading \texttt{int}s or \texttt{float}s. If
+you're reading \texttt{str}s, however, you need to set the \textbf{delimiter}
+to something \textit{that doesn't appear in any of the \texttt{str}s}. I chose
+three-hashtags-in-a-row since that rarely appears in any set of text data.
+
+Bottom line: once we've done all this, we get:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(roster)
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+['Alyssa Naeher' 'Mallory Pugh' 'Samantha Mewis' 'Becky Sauerbrunn'
+ "Kelly O'Hara" 'Morgan Brian' 'Abby Dahlkemper' 'Julie Ertz'
+ 'Lindsey Horan' 'Carli Lloyd' 'Ali Krieger' 'Tierna Davidson'
+ 'Alex Morgan' 'Emily Sonnett' 'Megan Rapinoe' 'Rose Lavelle'
+ 'Tobin Heath' 'Ashlyn Harris' 'Crystal Dunn' 'Allie Long'
+ 'Adrianna Franch' 'Jessica McDonald' 'Christen Press']
+\end{Verbatim}
+
+which is pretty cool.
 
 % memory pics
