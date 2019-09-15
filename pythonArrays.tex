@@ -93,6 +93,7 @@ of them.
 
 \subsubsection{Way 1: \texttt{np.array([])}}
 
+\index{array@\texttt{array()} function (NumPy)}
 The first is to use the \texttt{array()} function of the NumPy package, and
 give it all the values explicitly. Here's the code to reproduce the
 Figure~\ref{fig:array} examples:
@@ -201,8 +202,52 @@ dtype('<U3')
 dtype('float64')
 \end{Verbatim}
 
-The \texttt{int}s \texttt{3} and \texttt{8} from the first array were converted
-into the \texttt{float}s \texttt{3.}~and \texttt{8.}; meanwhile, all of the
-numerical elements of the second array got converted to \texttt{str}s. (If you
-think about it, that's the only direction the conversions could go.)
+See how the \texttt{int}s \texttt{3} and \texttt{8} from the first array were
+converted into the \texttt{float}s \texttt{3.}~and \texttt{8.}; meanwhile, all
+of the numerical elements of the second array got converted to \texttt{str}s.
+(If you think about it, that's the only direction the conversions could go.)
+
+\subsubsection{Way 2: \texttt{np.zeros()}}
+
+\index{increment}
+\index{decrement}
+\index{counter variable}
+
+It will often be useful to create an array, possibly a large one, with all
+elements equal to \textit{zero} initially. Among other scenarios, we often need
+to use a bunch of counter variables to, well, count things. Suppose, for
+example, that we had a giant array that held the numbers of likes that each
+Instagram photo had. When someone likes a photo, that photo's appropriate
+element in the array should be \textbf{incremented} (raised in value) by one.
+Similarly, if someone unlikes it, then its value in the array should be
+\textbf{decremented} by one.
+
+\index{zeros@\texttt{zeros()} function (NumPy)}
+An easy way to do this is NumPy's \texttt{zeros()} function:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+photo_likes = np.zeros(40000000000)
+\end{Verbatim}
+
+(although I'll bet you don't have enough memory on your laptop to actually
+store an array this size! Instagram sure has a lot of pics...) When I do this
+on my Data Science cluster, I get this:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(photo_likes)
+print(type(photo_likes))
+print(photo_likes.dtype)
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+array([ 0.,  0.,  0., ...,  0.,  0.,  0.])
+numpy.ndarray
+float64
+\end{Verbatim}
+
+Don't miss the ``\texttt{...}'' in the middle: it means ``there are
+(potentially) a lot of elements here that are not being shown, for
+conciseness.'' Also notice that \texttt{zeroes()} makes an array of
+\texttt{float}s, not \texttt{int}s.
+
 
