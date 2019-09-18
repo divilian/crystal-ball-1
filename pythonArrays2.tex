@@ -1,0 +1,201 @@
+
+% +, -, *, /
+% np.sqrt()
+% np.round( , num_decimals)
+% np query syntax
+% np.append
+% np.flip
+% two kinds of sorting
+% remove (by index  and by value?)
+
+% indexing, slices
+
+\chapter{Arrays in Python (2 of 2)}
+
+\index{array!in NumPy}
+\index{ndarray@\texttt{ndarray} (NumPy)}
+
+Now that we know several options for how to \textit{create} \texttt{ndarrays},
+what can we do with them? Many and sundry things.
+
+\section{Getting the array size}
+
+To learn how long an array is (\textit{i.e.}, how many elements) we use the
+\texttt{len()} function, kind of like we did for strings. Refer back to
+Figure~\ref{fig:arraysInMemory} (p.~\pageref{fig:arraysInMemory}) and consider
+this code:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+num_players = len(roster)
+big_number = len(photo_likes)
+print("There are {} players on the USWNT.".format(num_players))
+print(big_number)
+print("We've had {} presidential elections.".format(len(prez_elections)))
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+There are 24 players on the USWNT.
+40000000000
+We've had 59 elections for president.
+\end{Verbatim}
+
+\index{overloading}
+\index{return@``returning'' a value}
+\index{array!length}
+\index{len@\texttt{len()}}
+\index{element}
+This is an example of Python \textbf{overloading} function names, which just
+means that the same name is used for two different functions. When you pass a
+string to \texttt{len()}, you get the number of characters; but when you pass
+an array to \texttt{len()}, you get the number of elements it has.
+(The \texttt{roster} array had way more than 24 \textit{letters} in it, notice
+-- but \texttt{len()} returned 24 since that was the number of strings.)
+
+\section{Accessing individual elements}
+
+\index{boxies (square brackets)}
+\index{[]@\texttt{[]} (boxies)}
+\index{element}
+To retrieve a specific element from an array, we use ``boxie notation'' with
+the index number:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(prez_elections[0])
+third_year = usa_years[2]
+print("{} was the third year of our country.".format(third_year))
+print("The highest-numbered player is {}".format(roster[len(roster)-1]))
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+1788.0
+1778 was the third year of our country.
+The highest-numbered player is Christen Press.
+\end{Verbatim}
+
+Remember, indices start at zero (not one) so that's why the first line has a
+\texttt{0} in it.
+
+Now examine that last line, which is kind of tricky. Whenever you have boxies,
+you have to first evaluate the code \textit{inside} them to get a number. That
+number is then the index number Python will look up in the array. In the last
+line above, the code \textit{inside} the boxies is:
+
+\quad\quad\quad   ...\texttt{len(roster)-1}...
+
+Breaking it down, we know that \texttt{len(roster)} is 24, which means
+\texttt{len(roster)-1} must be 23, and so \texttt{roster[len(roster)-1]} is
+\texttt{Christen Press}. It's a common pattern to get the last element of an
+array.\footnote{Fun fact: you can also use \textit{negative} indices to mean
+``from the end of the array, rather than the beginning.'' So
+\texttt{roster[-1]} will also give you \texttt{Christen Press},
+\texttt{roster[-2]} is \texttt{Jessica McDonald}, 
+\texttt{roster[-5]} is \texttt{Crystal Dunn}, \textit{etc.} (see
+p.~\pageref{rosterNames} for the values). I find this a bit obscure, though, so
+I don't normally use this feature. (Negative indices also mean a completely
+different thing in the R language, which is another reason I eschew them in
+both R and Python.)}
+
+To test your understanding, figure out what the following code will print:
+
+\label{indexTest}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+q = 2
+r = np.array([45,17,39,99])
+s = 1
+print(r[q-s+1]+3)
+\end{Verbatim}
+
+The answer is at the end of the chapter.
+
+% Omit: slices
+
+\section{``Vectorized'' arithmetic operators}
+
+Recall our table of Python math operators (Figure~\ref{fig:mathOps} on
+p.~\pageref{fig:mathOps}). What do those things do if we use them on aggregate,
+instead of atomic data? The answer is: something super cool and useful.
+
+\subsection{Operating on an array and a single value}
+
+Consider the following code:
+
+\label{vectorizedArrayIntExample}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single]
+num_likes_today = np.array([6,61,0,0,14])
+num_likes_tomorrow = num_likes_today + 3
+print(num_likes_tomorrow)
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[ 9 64 3 3 17 ]
+\end{Verbatim}
+
+See what happened? ``Adding 3'' to the \textit{array} means adding 3 \textit{to
+each element}. All in one compact line of code, we can do five -- or even five
+billion -- operations. This works for all the other Figure~\ref{fig:mathOps}
+operators as well.
+
+\index{vectorized@``vectorized'' operation}
+
+For somewhat geeky reasons, this sort of thing is called a \textbf{vectorized}
+operation. All you need to know is that this means \textbf{fast}. And that's
+``fast'' in two different ways: fast to write the code (since instead of using
+a \textbf{loop}, which we'll cover in \ref{ch:loops}, you just write a single
+statement with \texttt{+} and \texttt{=} signs), and more importantly, fast to
+\textit{execute}. For more geeky reasons, the above code will run lightning
+fast even if \texttt{num\_likes\_today} had five hundred million elements
+instead of just five. As you'll learn if you ever try it, a Python loop is much
+slower.\footnote{I just ran that comparison on my laptop, and here are the
+results. Using the plain-ol' ``\texttt{+}'' vectorized operator, my machine
+added the number 3 to an array with five hundred million elements in just 1.51
+seconds. A loop, by contrast, took 2.8 \textit{minutes} to do the same thing.}
+
+Don't get me wrong: there are times we'll have to use a loop because we have no
+choice. But the general rule with Python is: if you can figure out how to
+perform a calculation without using a loop, always do it!
+
+
+\subsection{Operating on two arrays}
+
+\index{vectorized@``vectorized'' operation}
+
+Possibly even cooler, we can even ``\texttt{+}'' (or ``\texttt{-}'', or
+``\texttt{*}'', or...) two entire \textit{arrays} together. Example:
+
+\label{vectorizedArrayArrayExample}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+salaries = np.array([38000, 102000, 55750, 29500, 250000])
+raises = np.array([1000, 4000, 2000, 1000, 2000])
+salaries = salaries + raises
+print(salaries)
+\end{Verbatim}
+
+This code produces:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[ 39000 106000 57750 30500 252000]
+\end{Verbatim}
+
+Can you see why? ``Adding'' the two arrays together performed addition
+\textit{element-by-element}. The result is a new array with $38000+1000$ as the
+first element, $102000+4000$ as the second, \textit{etc.} This, too, is a
+lightning-fast, vectorized operation, and it too works with all the other math
+operators.
+
+Just to re-emphasize one point before we go on. In the example back on
+p.~\pageref{vectorizedArrayIntExample}, we assigned the result of the operation
+to a new variable, \texttt{num\_likes\_tomorrow}. This means that
+\texttt{num\_likes\_today} itself was \textit{unchanged} by the code. In
+contrast, in the example we just did, we assigned the result of the operation
+back into an \textit{existing} variable (\texttt{salaries}). So
+\texttt{salaries} has itself been updated as a result of that code.
+
+% TODO: could include memory picture to this effect.
+
+
+
+
+\subsubsection{The answer}
+
+Oh, and the answer to the puzzle on p.~\pageref{indexTest} -- and also the
+answer to Life, the Universe, and Everything, as it turns out -- is 42.
