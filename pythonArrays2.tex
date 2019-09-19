@@ -114,8 +114,8 @@ The answer is at the end of the chapter.
 To modify an element of an array, just use the equals sign like we do for
 variables:
 
-\texttt{stooges@Stooges (The Three)}
-\texttt{beavis@Beavis}
+\index{stooges@Stooges (The Three)}
+\index{beavis@Beavis}
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 stooges = np.array(['Larry','Beavis','Moe'])
 print(stooges)
@@ -404,35 +404,135 @@ numbers in the first example and text in the second. The difference between the
 two is merely in what is affected: in one, the actual array in memory is
 modified, and in the other, a modified copy is returned.
 
+\section{More exotic array modifications}
+
+\index{in place}
+Finally, there are lots of additional things you can do to an array to either
+modify its structure or rearrange its contents. Here's a few.
+\textbf{Important: all of the functions in this section return a modified copy
+of the array you pass to it. They do \textit{not} change the array in place.}
+
+\begin{itemize}
+\itemsep.1em
+\index{concatenating!arrays}
+\index{append@\texttt{append()} (NumPy)}
+\index{insert@\texttt{insert()} (NumPy)}
+\index{delete@\texttt{delete()} (NumPy)}
+\index{flip@\texttt{flip()} (NumPy)}
+\index{reversing (an array)}
+\item \texttt{np.append()} can be used to add a single element to the end of an
+array, or to add an entire second array of elements to it. (In the latter case,
+this is really \textbf{concatenation} of arrays.)
+\item \texttt{np.insert()} is like the first form of \texttt{np.append()},
+except it inserts in the middle (or the beginning).
+\item \texttt{np.delete()} will remove an element of an array \textit{by
+position}. In other words, you tell it which \textit{index number} to remove,
+not which element.
+\item \texttt{np.flip()} reverses the order of elements in an array.
+\end{itemize}
+
+These functions are all summarized in Figure~\ref{fig:handyNumPy}.
+
+Remember that when you're calling a function like this -- which returns a
+modified copy -- it is perfectly acceptable to store the return value
+\textit{in the same variable} that you passed it. This is common if you don't
+actually want to keep around the original:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+ice_cream_flavors = np.flip(ice_cream_flavors)
+\end{Verbatim}
+
+In this pattern, the net effect \textit{is} effectively to modify the array in
+place, since you're making a reversed copy, and then assigning that reversed
+copy to the same variable.
+
+Anyway, here's some example code to illustrate the functions in this section:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+clowns = np.array(["Bozo", "Krusty"])
+more_clowns = np.array(["Pennywise", "Skelton"])
+more_clowns = np.insert(more_clowns, 1, "Happy Slappy")
+all_clowns = np.append(clowns, more_clowns)
+all_clowns = np.append(all_clowns, "Ronald McDonald")
+all_clowns = np.flip(all_clowns)
+all_clowns = np.delete(all_clowns, 2)
+print("clowns is: {}".format(clowns))
+print("more_clowns is: {}".format(more_clowns))
+print("all_clowns is: {}".format(all_clowns))
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+clowns is: ['Bozo' 'Krusty']
+more_clowns is: ['Pennywise' 'Happy Slappy' 'Skelton']
+all_clowns is: ['Ronald McDonald' 'Skelton' 'Pennywise' 'Krusty' 'Bozo']
+\end{Verbatim}
+
+% TODO: memory picture of the clowns
+
+
+\section{Summary}
+
+The table in Figure~\ref{fig:handyNumPy} gives the promised summary of
+functions, methods, and operators in this chapter.
+
+\setlength\extrarowheight{5pt}
+
+\begin{figure}[ht]
+\centering
+\begin{tabular}{c|p{3.3in}}
+Function & Description \\
+\hline
+
+\texttt{len(}\textsl{arr}\texttt{)} & Get the number of elements in the array \textsl{arr}. \\
+
+\textsl{arr}\texttt{[17]} & Get a specific element's value from the array \textsl{arr}. \\
+
+\textsl{arr}\texttt{[8] =} (\textsl{something}) & Set a specific element of the array \textsl{arr}. \\
+
+\textsl{arr} \texttt{+ 91} & Add a value to each element of \textsl{arr},
+yielding a new array. (Also works with \texttt{-}, \texttt{*}, \texttt{/},
+\textit{etc.} \\
+
+\textsl{arr1} \texttt{+} \textsl{arr2} & Add each pair of values in two arrays,
+yielding a new array. (Also works with \texttt{-}, \texttt{*}, \texttt{/},
+\textit{etc.} \\
+
+\textsl{arr1} = \textsl{arr2} & Make \textsl{arr1} point to the same data that
+\textsl{arr2} points to. (\textit{Not} a copy!)\\
+
+\textsl{arr1} = \textsl{arr2}\texttt{.copy()} & Make \textsl{arr1} point to a
+new, independent copy of \textsl{arr2}. \\
+
+\textsl{arr}\texttt{.sort()} & Sort the array \textsl{arr} \textbf{in place}. (Numerical or
+alphabetical, depending on the \texttt{.dtype}.) \\
+
+\texttt{np.sort(}\textsl{arr}) & Return a new array with the sorted elements
+of \textsl{arr}. (Numerical or alphabetical, depending on the \texttt{.dtype}.)
+\\
+
+\texttt{np.append(}\textsl{arr}, \textsl{elem}\texttt{)} &
+    Return a new array with \textsl{elem} tacked on to the end. \\
+
+\texttt{np.append(}\textsl{arr1}, \textsl{arr2}\texttt{)} &
+    Return a new array with the two arrays \textsl{arr1} and \textsl{arr2} concatenated. \\
+
+\texttt{np.insert(}\textsl{arr}, \textsl{ind}, \textsl{val}\texttt{)} &
+    Return a new array with the new value \textsl{val} inserted into position \textsl{ind} of \textsl{arr}. \\
+
+\texttt{np.delete(}\textsl{arr}, \textsl{ind}\texttt{)} &
+    Return a new array with the element at index \textsl{ind} removed from \textsl{arr}. \\
+
+\texttt{np.flip(}\textsl{arr}\texttt{)} &
+    Return a new array with \textsl{arr} in reverse order. \\
+\end{tabular}
+\bigskip
+\caption{Handy NumPy functions, methods, and operators.}
+\label{fig:handyNumPy}
+\end{figure}
+
 \subsubsection{The answer}
 
 \index{42 (Life, Universe, Everything)}
 Oh, and the answer to the puzzle on p.~\pageref{indexTest} -- and also the
 answer to Life, the Universe, and Everything, as it turns out -- is 42.
-
-\pagebreak
-
-\vspace{1in}
-
-\begin{center}
-\Large Some things you'll need for lab \#2:
-\end{center}
-
-\normalsize
-\setlength\extrarowheight{5pt}
-
-\begin{tabular}{c|p{3.3in}}
-Function & Description \\
-\hline
-\texttt{np.append(}\textsl{arr}, \textsl{elem}\texttt{)} &
-    Return a new array with \textsl{elem} tacked on to the end. \\
-\texttt{np.append(}\textsl{arr1}, \textsl{arr2}\texttt{)} &
-    Return a new array with the two arrays \textsl{arr1} and \textsl{arr2} concatenated. \\
-\texttt{np.delete(}\textsl{arr}, \textsl{ind}\texttt{)} &
-    Return a new array with the element at index \textsl{ind} removed from \textsl{arr}. \\
-\texttt{np.insert(}\textsl{arr}, \textsl{ind}, \textsl{val}\texttt{)} &
-    Return a new array with the new value \textsl{val} inserted into position \textsl{ind} of \textsl{arr}. \\
-\texttt{np.flip(}\textsl{arr}\texttt{)} &
-    Return a new array with \textsl{arr} in reverse order. \\
-\end{tabular}
 
