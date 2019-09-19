@@ -90,7 +90,7 @@ Breaking it down, we know that \texttt{len(roster)} is 24, which means
 array.\footnote{Fun fact: you can also use \textit{negative} indices to mean
 ``from the end of the array, rather than the beginning.'' So
 \texttt{roster[-1]} will also give you \texttt{Christen Press},
-\texttt{roster[-2]} is \texttt{Jessica McDonald}, 
+\texttt{roster[-2]} is \texttt{Jessica McDonald},
 \texttt{roster[-5]} is \texttt{Crystal Dunn}, \textit{etc.} (see
 p.~\pageref{rosterNames} for the values). I find this a bit obscure, though, so
 I don't normally use this feature. (Negative indices also mean a completely
@@ -214,6 +214,93 @@ back into an \textit{existing} variable (\texttt{salaries}). So
 
 % TODO: could include memory picture to this effect.
 
+
+\section{Copying -- and \textit{not} copying -- arrays}
+
+Now, a surprise for the unwary. Suppose I write this code:
+
+\label{code:refNotCopy}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+stooges = np.array(['Larry','Beavis','Moe'])
+funny_people = stooges
+stooges[1] = 'Curly'
+print("The stooges are: {}.".format(stooges))
+print("The funny people are: {}.".format(stooges))
+\end{Verbatim}
+
+Take a moment and predict what you think the output will be. Then, read it and
+(possibly) weep:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+The stooges are: ['Larry' 'Curly' 'Moe'].
+The funny people are: ['Larry' 'Curly' 'Moe'].
+\end{Verbatim}
+
+Note carefully: \textit{no \texttt{Beavis}}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.49\textwidth]{refNotCopy.png}
+\includegraphics[width=0.49\textwidth]{refNotCopy2.png}
+\caption{The code on p.~\pageref{code:refNotCopy} immediately before (left
+side) and after (right side) the line ``\texttt{stooges[1] = \textquotesingle
+Curly\textquotesingle}'' is reached.}
+\label{fig:refNotCopy}
+\end{figure}
+
+\index{memory!picture}
+
+Now the question is why. To understand this (and virtually any other tricky
+programming problem) you have to return once again to the memory picture.
+Figure~\ref{fig:refNotCopy} shows the situation immediately before, and after,
+the line ``\texttt{stooges[1] = \textquotesingle Curly\textquotesingle}''
+executes. Crucially, \textit{there is only one array} in memory. Both variables
+-- \texttt{stooges} and \texttt{funny\_people} -- are pointing at it.
+
+You see, if \texttt{y} contains \textit{aggregate} (instead of atomic) data,
+the line ``\texttt{x = y}'' does not perform a copy operation. Instead, it just
+points the \texttt{x} variable name to the same place \texttt{y} is pointing
+to.
+
+Once you grasp this, it's easy to see why \texttt{"Beavis"} completely
+disappeared. There's only one array at all, so changing \texttt{stooges} has
+the side effect of implicitly changing \texttt{funny\_people} as well.
+
+\subsection{Actually copying}
+
+The ``point the variable to the same thing, but don't do a copy'' behavior is
+the default, because such copy operations are expensive (in terms of memory
+usage and time to execute). They're normally not what you want anyway.
+Sometimes, however, you \textit{do} want to produce an entire separate copy of
+an array, so you can modify the copy yet preserve the original. To do so, you
+use the \texttt{.copy()} method:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+orig_beatles = np.array(['John', 'Paul', 'George', 'Pete'])
+beatles = orig_beatles.copy()
+beatles[3] = 'Ringo'
+print("The Beatles were originally {}.".format(orig_beatles))
+print("But the ones we all know and love were {}.".format(beatles))
+\end{Verbatim}
+
+Look carefully at that second line: it makes all the difference. Instead of
+making the new variable \texttt{beatles} point to the same array in memory that
+\texttt{orig\_beatles} did, we explicitly copied the array and made
+\texttt{beatles} point to that new copy. The final memory picture is thus as
+per Figure~\ref{fig:copyNotRef}, and the output is of course:
+
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+The Beatles were originally ['John' 'Paul' 'George' 'Pete'].
+But the ones we all know and love were ['John' 'Paul' 'George' 'Ringo'].
+\end{Verbatim}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{copyNotRef.png}
+\caption{The memory picture after calling the \texttt{.copy()} method, instead
+of simply assigning to a new variable.}
+\label{fig:copyNotRef}
+\end{figure}
 
 
 
