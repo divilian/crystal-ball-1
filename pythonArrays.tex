@@ -94,7 +94,7 @@ of them.
 
 \subsubsection{Way 1: \texttt{np.array([])}}
 
-\index{array@\texttt{array()} function (NumPy)}
+\index{array@\texttt{array()} (NumPy)}
 The first is to use the \texttt{array()} function of the NumPy package, and
 give it all the values explicitly. Here's the code to reproduce the
 Figure~\ref{fig:array} examples:
@@ -226,7 +226,7 @@ element in the array should be \textbf{incremented} (raised in value) by one.
 Similarly, if someone unlikes it, then its value in the array should be
 \textbf{decremented} by one.
 
-\index{zeros@\texttt{zeros()} function (NumPy)}
+\index{zeros@\texttt{zeros()} (NumPy)}
 An easy way to do this is NumPy's \texttt{zeros()} function:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
@@ -255,7 +255,7 @@ conciseness.'' Also notice that \texttt{zeroes()} makes an array of
 
 \subsubsection{Way 3: \texttt{np.arange()}}
 
-\index{arange@\texttt{arange()} function (NumPy)}
+\index{arange@\texttt{arange()} (NumPy)}
 Sometimes we need to create an array with regularly-spaced values, like ``all
 the numbers from one to a million'' or ``all even numbers between 20 and 50.''
 We can use NumPy's \texttt{arange()} function for this.
@@ -317,7 +317,7 @@ step sizes of greater than one.
 
 \subsubsection{Way 4: \texttt{np.loadtxt()}}
 
-\index{loadtxt@\texttt{loadtxt()} function (NumPy)}
+\index{loadtxt@\texttt{loadtxt()} (NumPy)}
 \index{file}
 \index{Microsoft}
 \index{word@Word (Microsoft)}
@@ -439,7 +439,7 @@ roster = np.loadtxt("uswnt.txt", dtype=object, delimiter="###")
 \end{Verbatim}
 
 \index{atomic}
-\index{dtype@\texttt{.dtype}}
+\index{dtype@\texttt{.dtype} (NumPy)}
 \index{object@\texttt{object} (for \texttt{loadtxt()})}
 There's a lot of weird stuff in that line, so follow me here. The first
 argument is easy enough: the name of the file that contains our data. (Again, I

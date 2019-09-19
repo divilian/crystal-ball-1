@@ -114,6 +114,8 @@ The answer is at the end of the chapter.
 To modify an element of an array, just use the equals sign like we do for
 variables:
 
+\texttt{stooges@Stooges (The Three)}
+\texttt{beavis@Beavis}
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 stooges = np.array(['Larry','Beavis','Moe'])
 print(stooges)
@@ -217,6 +219,7 @@ back into an \textit{existing} variable (\texttt{salaries}). So
 
 \section{Copying -- and \textit{not} copying -- arrays}
 
+\index{copying@copying (arrays)}
 Now, a surprise for the unwary. Suppose I write this code:
 
 \label{code:refNotCopy}
@@ -303,8 +306,133 @@ of simply assigning to a new variable.}
 \end{figure}
 
 
+\section{Sorting arrays}
+
+\index{sorting@sorting (arrays)}
+\index{int@\texttt{int}}
+\index{float@\texttt{float}}
+\index{str@\texttt{str}}
+A common operation in Data Science is to \textbf{sort} an array, either
+numerically (if the array contains \texttt{int}s or \texttt{float}s) or
+alphabetically (if it contains strings). There are two ways to do this, which
+turn out to differ in exactly the same was as the operations in the previous
+section.
+
+\index{on@``on''}
+\index{sort@\texttt{.sort()}}
+\index{in place@``in place''}
+\index{calling a method@``calling'' a method (on a variable)}
+One way is to call the \texttt{.sort()} method directly \textbf{on} an array.
+This sorts the array \textbf{in place}, which means that the actual data in
+memory is rearranged right then and there. As an important side effect, any
+\textit{other} variable that points to the same array will \textit{also} be
+sorted.
+
+Here's an example:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+gpas = np.array([2.86, 3.99, 3.12, 1.17])
+gpas2 = gpas.copy()
+gpas3 = gpas
+gpas.sort()
+print("gpas has: {}".format(gpas))
+print("gpas2 has: {}".format(gpas2))
+print("gpas3 has: {}".format(gpas3))
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+gpas has: [1.17 2.86 3.12 3.99]
+gpas2 has: [2.86 3.99 3.12 1.17]
+gpas3 has: [1.17 2.86 3.12 3.99]
+\end{Verbatim}
+
+Do you see why that output was produced? It's because the memory picture after
+the ``\texttt{gpas.sort()}'' line looks like Figure~\ref{fig:dotSortArray}. The
+\texttt{gpas} variable really \textit{is} the \texttt{gpas3} variable, so when
+one is sorted, the other automatically is. They're both distinct from
+\texttt{gpas2}, though.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{dotSortArray.png}
+\caption{The state of affairs after \texttt{.sort()}ing the \texttt{gpas} array in place.}
+\label{fig:dotSortArray}
+\end{figure}
+
+\index{sorting@sorting arrays}
+\index{sort@\texttt{np.sort()} (NumPy)}
+\index{calling a function@``calling'' a function}
+\index{passing an argument@``passing'' an argument}
+The second option is to call the \texttt{np.sort()} function and pass an array
+as an object. Like many Python functions, including the ones in the next
+section, \texttt{np.sort()} \textit{returns a modified copy} of its argument
+rather than changing it in place. To illustrate:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+nfl_teams = np.array(["Redskins", "Patriots", "Broncos", "Chargers",
+    "Steelers"])
+sorted_teams = np.sort(nfl_teams)
+print(nfl_teams)
+print(sorted_teams)
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+['Redskins' 'Patriots' 'Broncos' 'Chargers' 'Steelers']
+['Broncos' 'Chargers' 'Patriots' 'Redskins' 'Steelers']
+\end{Verbatim}
+
+\index{return value}
+Observe that the \texttt{nfl\_teams} variable, even though we passed it to
+\texttt{np.sort()}, was not \textit{itself} sorted. The \texttt{sorted\_teams}
+variable, on the other hand, \textit{is} alphabetically sorted, because we
+assigned the return value from \texttt{np.sort()} to it. Again, the memory
+picture is shown in Figure~\ref{fig:npSortArray}.
+
+\index{on@``on''}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{npSortArray.png}
+\medskip
+\caption{Calling the \texttt{np.sort()} function (as opposed to calling the
+\texttt{.sort()} method \textbf{on} the array) returns a sorted copy.}
+\label{fig:npSortArray}
+\end{figure}
+
+To be clear, either one of these techniques can be used on \textit{any}
+\texttt{ndarray}: whole numbers, real numbers, or text. I just chose to do real
+numbers in the first example and text in the second. The difference between the
+two is merely in what is affected: in one, the actual array in memory is
+modified, and in the other, a modified copy is returned.
 
 \subsubsection{The answer}
 
+\index{42 (Life, Universe, Everything)}
 Oh, and the answer to the puzzle on p.~\pageref{indexTest} -- and also the
 answer to Life, the Universe, and Everything, as it turns out -- is 42.
+
+\pagebreak
+
+\vspace{1in}
+
+\begin{center}
+\Large Some things you'll need for lab \#2:
+\end{center}
+
+\normalsize
+\setlength\extrarowheight{5pt}
+
+\begin{tabular}{c|p{3.3in}}
+Function & Description \\
+\hline
+\texttt{np.append(}\textsl{arr}, \textsl{elem}\texttt{)} &
+    Return a new array with \textsl{elem} tacked on to the end. \\
+\texttt{np.append(}\textsl{arr1}, \textsl{arr2}\texttt{)} &
+    Return a new array with the two arrays \textsl{arr1} and \textsl{arr2} concatenated. \\
+\texttt{np.delete(}\textsl{arr}, \textsl{ind}\texttt{)} &
+    Return a new array with the element at index \textsl{ind} removed from \textsl{arr}. \\
+\texttt{np.insert(}\textsl{arr}, \textsl{ind}, \textsl{val}\texttt{)} &
+    Return a new array with the new value \textsl{val} inserted into position \textsl{ind} of \textsl{arr}. \\
+\texttt{np.flip(}\textsl{arr}\texttt{)} &
+    Return a new array with \textsl{arr} in reverse order. \\
+\end{tabular}
+
