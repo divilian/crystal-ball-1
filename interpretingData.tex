@@ -5,6 +5,8 @@ Let's take an intermission from the nitty-gritty Python stuff and talk about
 how to properly \textit{interpret} the data we're working with; specifically,
 how to draw correct conclusions from what we've collected.
 
+\section{Independent and dependent variables}
+
 \index{variable!dependent}
 \index{variable!independent}
 \index{independent variable}
@@ -23,25 +25,160 @@ emissions can cause higher global temperatures, or orgasms can cure hiccups.
 Much of the time, scientists try to find a \textbf{causal} factor that links
 one variable to another: they suspect that the value of a variable $A$ (often
 called the \textbf{independent variable}) is a \textit{reason}, or
-\textbf{cause}, of a certain value in another variable $B$.
+\textbf{cause}, of a certain value in another variable $B$ (the
+\textbf{dependent variable}).
 
 \index{variable}
+\index{objects (of a study)}
 
 Importantly, we're using the word \textbf{variable} here in a different, but
 related way than we used it in chapters~\ref{ch:atomicData},
 \ref{ch:arraysInPython1}, and \ref{ch:arraysInPython2}. As we did in
 chapter~\ref{ch:scalesOfMeasure} (see p.~\pageref{variableDifferent} footnote),
-we use ``variable'' here to mean a specific aspect of the objects in our study
-that can differ, or ``vary.'' The objects of our study (often people, but
-sometimes companies, organizations, environments, nations, \textit{etc.})
+we use ``variable'' here to mean a specific aspect of the \textbf{objects of a
+study} that can differ, or ``vary.'' The objects in our study (often people,
+but sometimes companies, organizations, environments, nations, \textit{etc.})
 \textit{each} have a value for the variable. Thus if you think of a
-``greenhouse gas emissions'' variable, you might think of an entire
-\textit{array} of floats, each of which represented the total yearly carbon
-dioxide emissions of a single nation (measured in gigatonnes $\textrm{CO}_2$).
+``per-capita income'' variable, you might think of an entire \textit{array} of
+floats, each of which represented the average income per resident of a single
+nation (measured in dioxide emissions of a single nation (measured in
+gigatonnes $\textrm{CO}_2$).
 
-% This could be framed in several different ways. Take the smoking example. We
-% might say that independent variable $A$ is 
+\index{scales of measure}
+\index{categorical variable}
 
+The variables in question can be from any of the scales of measure from
+chapter~\ref{ch:scalesOfMeasure}. Take the smoking example, with patients as
+the object of study. We might say that independent variable $A$ is categorical,
+with values \texttt{SMOKER} and \texttt{NON-SMOKER}. The dependent variable $B$
+is also categorical: \texttt{CANCER} and \texttt{NO-CANCER}. The key question
+is: do people with $A=\texttt{SMOKER}$ also have $B=\texttt{CANCER}$
+\textit{more often} (a higher percentage of the time) than people with
+$A=\texttt{NON-SMOKER}$ do?
+
+\index{ratio variable}
+\index{interval variable}
+
+In the greenhouse gas emissions example, our objects of study might be
+\textit{years}. Our variables are numeric, with $A$ (a measure of yearly
+greenhouse gas emissions, measured in gigatonnes $\textrm{CO}_2$) on the ratio
+scale, and $B$ (average worldwide temperature increase/decrease) on an interval
+scale. Here, the question would be: do years in which $A$ is relatively high
+more often also have $B$ relatively high? Put another way: do years in which
+earthlings have released more gas into the atmosphere tend to correspond with
+years in which the temperature increased?
+
+And of course, we might have one categorical variable and one numeric. Perhaps
+our objects of study are American adults, and while our categorical $A$
+variable has values \texttt{DEMOCRAT}, \texttt{REPUBLICAN}, \texttt{OTHER}, and
+\texttt{INDEPENDENT}, our numerical $B$ is yearly income. Our question would
+be: do adherents of one political party tend to be more wealthy than those of
+another?
+
+Or, flipping sides, the independent variable $A$ could be numeric while the
+dependent variable $B$ is categorical. Our objects of study might be high
+school seniors applying to UMW. Let $A$ be the number of different colleges a
+student applied to, and $B$ a categorical variable with values
+\texttt{ADMITTED-TO-UMW} and \texttt{NOT-ADMITTED-TO-UMW}. The question of
+interest is here is: do students who apply to more colleges tend to get in to
+UMW more often?
+
+\section{Association and causality}
+
+All of the above questions can be answered with data. In future chapters, we'll
+learn the exact Python commands to ask them, and how to interpret the answers.
+
+\index{association}
+\index{correlation}
+\index{dependent}
+
+For now, I merely want to draw your attention to the fact that these are all
+questions of \textbf{association}, not causation. An association between
+variables merely means that they are \textbf{correlated} in some way
+statistically.\footnote{Another way to put this is to say that the variables
+are \textbf{dependent} on each other, although this is confusing because we're
+already using the word ``dependent'' to refer to one of the variables.} If
+$A=\texttt{SMOKER}$ goes with $B=\texttt{CANCER}$ more often than
+$A=\texttt{NON-SMOKER}$ does, then there \textit{is} an association between the
+two, period. If yearly income $B$ is on average higher for
+$A=\texttt{REPUBLICAN}$ than for $A=\texttt{DEMOCRAT}$, then there \textit{is}
+an association between the two, period.
+
+(By the way, a key nuance will turn out to be: \textit{how much} more often
+does $A=\texttt{SMOKER}$ need to go with $B=\texttt{CANCER}$ in order for us to
+be confident that there is a true association? Or \textit{how much} more
+wealthy do the $A=\texttt{REPUBLICAN}$s need to be on average for us to have
+confidence? That one's a little tricky, and we'll postpone addressing it for
+now.)
+
+\index{causality}
+
+So anyway, the question of association turns out to be pretty straightforward
+to answer. Python will simply tell us if variables are associated or not. More
+difficult, however, is determining \textbf{causality}
+(a.k.a.~\textbf{causation}). Does a person's political affiliation influence
+how much wealth they have? Or is it the other way around: does a person's
+wealth cause them to vote a certain way? Or is it neither of these, with some
+third factor (perhaps values, or life philosophy) helping determine
+\textit{both} variables?
+
+\index{$\rightarrow$@$\rightarrow$ (causality)}
+
+If the first of these three is the case, we would write ``$A \rightarrow B$,''
+pronounced ``$A$ causes $B$''. If the second, we'd write, ``$B \rightarrow
+A$,'' and for the third, we'd write ``$C \rightarrow A, B$'' for some other
+(possibly yet to be determined) variable $C$. Determining which (if any) of
+these is true calls for some careful thinking, intuition, and additional kinds
+of statistical tests.
+
+In fact, just to blow your mind, Figure~\ref{fig:causalityTypes} gives a
+partial list of the various types of causation that \textit{could} be the true
+explanation, once we find out that $A$ and $B$ have an association.
+
+\begin{figure}[ht]
+\small
+\centering
+\begin{tabular}{|c|c|p{3.3in}|}
+\hline
+Symbology & Name & Example \\
+\hline
+\multirow[c]{2}{*}{$A \rightarrow B$} & \multirow[c]{2}{*}{causation} & Regular
+exercise does indeed normally lead to a lower resting heart rate. \\
+\hline
+\multirow[c]{2}{*}{$B \rightarrow A$} & \multirow[c]{2}{*}{reverse causation} & Smoking doesn't cause depression;
+depression causes smoking. \\
+\hline
+\multirow[c]{2}{*}{$C \rightarrow A, B$} & \multirow[c]{2}{*}{\makecell{external causation \\ (confounding
+factor)}} & Ice cream sales don't cause shark attacks; high temperatures boost both ice
+cream sales and ocean swimming. \\
+\hline
+\multirow[c]{2}{*}{$A \rightarrow B$ \& $B \rightarrow C$} &
+\multirow[c]{2}{*}{multiple causation }& A liberal arts
+education does improve critical thinking skills, but lots of other things do
+too. \\
+\hline
+\multirow[c]{2.5}{*}{$A,C \rightarrow B$} & \multirow[c]{2.5}{*}{joint causation} &
+Just being tall doesn't necessarily make you a good basketball player, but if
+your height is accompanied by another factor as well (athleticism), then you
+will be. \\
+\hline
+\multirow[c]{2.5}{*}{$A \rightarrow C \rightarrow B$} &
+\multirow[c]{2.5}{*}{indirect causation} & People who use antiperspirant tend to
+get more dates, but it's not because of the antiperspirant \textit{per se};
+it's because they don't have an unpleasant odor. \\
+\hline
+\multirow[c]{3}{*}{$A \not\rightarrow B$} & \multirow[c]{3}{*}{spurious
+association} & Although for many years the outcome of the Washington Redskins
+game immediately preceding a Presidential election predicted the election's
+outcome, that was by coincidence. \\
+\hline
+\end{tabular}
+\medskip
+\caption{Various types of causality that could be the underlying reason why an
+association between $A$ and $B$ exists.}
+\label{fig:causalityTypes}
+\normalsize
+\end{figure}
 
 \index{variable!confounding}
 \index{confounding variable}
