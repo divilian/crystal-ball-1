@@ -111,6 +111,8 @@ two, period. If yearly income $B$ is on average higher for
 $A=\texttt{REPUBLICAN}$ than for $A=\texttt{DEMOCRAT}$, then there \textit{is}
 an association between the two, period.
 
+\label{howMuchMore}
+
 (By the way, a key nuance will turn out to be: \textit{how much} more often
 does $A=\texttt{SMOKER}$ need to go with $B=\texttt{CANCER}$ in order for us to
 be confident that there is a true association? Or \textit{how much} more
@@ -119,6 +121,7 @@ confidence we've identified a real link to political party? That one's a little
 tricky, and we'll postpone addressing it for now.)
 
 \index{causality}
+\label{pythonAssociation}
 
 So anyway, the question of association turns out to be pretty straightforward
 to answer. Python will simply tell us if variables are associated or not. More
@@ -511,6 +514,80 @@ won't always be possible, and we'll have to rest on the uneasy assumption that
 we successfully predicted in advance all the important confounding variables
 and controlled for them.
 
+\section{Spurious associations}
 
-\subsection{Spurious associations}
+\index{spurious association}
+\index{association!spurious}
 
+Okay, back to Figure~\ref{fig:causalityTypes} on
+p.~\pageref{fig:causalityTypes}. The other item I'd like to point out in that
+table is the last one, which is called a \textbf{spurious association}. This is
+written as ``$A \not\rightarrow B$,'' with the arrow crossed out. And it simply
+means ``nope, none of the above: these variables actually aren't associated at
+all.''
+
+You might be scratching your head at that one. Didn't I tell you
+(p.~\pageref{pythonAssociation}) that Python is smart enough to tell us
+definitively whether or not two variables are associated? That was supposed to
+be the easy part; the hard part was only in figuring out what \textit{causes}
+that association. But now I'm saying that associations might not be
+associations, and Python is powerless to know the difference!
+
+\index{IQ}
+The root cause of this state of affairs is obvious once you see it, and it has
+to do with the ``how much more?'' questions from p.~\pageref{howMuchMore}.
+Clearly, when we collect data, there's a ``luck of the draw'' component
+ever-present. I might have data that suggests Republican voters have higher
+income than Democratic voters...but it's of course possible that I just
+happened to poll some richer Republicans and some poorer Democrats. Suppose I
+told you I thought women were on average smarter than men, and in my random
+sample the average men's IQ was 102.7 and the average woman's was 103.5. The
+women's was indeed greater...but is that \textit{enough} greater? Is the
+difference explainable simply by the randomness of my poll?
+
+\index{bar}
+The true answer is that we can \textit{never} know for absolute certainty,
+unless we can poll the entire population. (Only if we measured the IQ of every
+man and every woman on planet Earth, and took the means of both groups, could
+we say which one truly had the higher mean.) But what we have to do is
+essentially ``set a bar'' somewhere, and then determine whether we got over it.
+We could say ``only if the average IQ difference is greater than 5 points will
+we conclude that there's really a difference.''
+
+\subsection{Setting $\alpha$}
+
+Now the procedure for determining how high to put the ``bar'' is more
+complicated and more principled than that. We don't just pick a number that
+seems good to us. Instead, Python will put the bar at exactly the right height,
+given the level of certainty we decide to require. Some things that influence
+the placement of the bar include the sample size and how variable the data is.
+The thing \textit{we} specify in the bar equation, however, is \textit{how
+often we're willing to draw a false conclusion.}
+
+\index{$\alpha$ (alpha)}
+\index{alpha@alpha ($\alpha$)}
+
+That quantity is called ``$\boldsymbol{\alpha}$'' (pronounced
+``\textbf{alpha}'') and is a small number between 0 and 1. Normally we'll set
+$\alpha=.05$, which means: ``Python, please tell me whether the average male
+and female IQs were \textit{different enough} for me to be confident that the
+difference was truly a male-vs-female thing, not just an idiosyncrasy of the
+people I chose for my poll. And by the way, \textit{I'm willing to be wrong 5\%
+of the time about that.}''
+
+It seems weird at first -- why would we accept drawing a faulty conclusion 5\%
+of the time? Why not 0\%? But you see, we have to put the bar somewhere. If we
+said, ``I never want to think there's an association when there's not one,''
+Python would respond, ``well fine, if you're so worried about it then I'll
+never tell you there is one.'' There has to be some kind of criterion for
+judging whether a difference is ``enough,'' and $\alpha=.05$, which is ``being
+suckered only 1 in 20 times'' is the most common value for social sciences.
+($\alpha=.01$ is commonly used in the physical sciences.)
+
+So, the last entry in the Figure~\ref{fig:causalityTypes} table means ``even
+though the $A$ and $B$ variables aren't \textit{really} associated at all -- if
+we gathered some more $A$s and some more $B$s, we'd probably detect \textit{no}
+association -- you were fooled into thinking there was one because our random
+sample was a bit weird.'' There's really no way around this other than being
+aware it can happen, and possibly repeating our study with a different data
+set to be sure of our conclusions.
