@@ -191,7 +191,7 @@ association between $A$ and $B$ exists.}
 \normalsize
 \end{figure}
 
-\subsection{Confounding factors}
+\section{Confounding factors}
 
 \index{confounding factor}
 \index{external causation}
@@ -260,7 +260,7 @@ mind. The point is that it's really hard to be sure you've thought of all of
 them!
 
 
-\subsubsection{Paranoia and overparanoia}
+\subsection{Paranoia and overparanoia}
 
 All this should lead you to be somewhat paranoid, but not
 \textit{over}paranoid. Confounding variables can definitely lead us to make
@@ -316,7 +316,124 @@ in our country.) So that one isn't a confounder either. Having additional
 causes of an effect does not nullify a genuine effect. Only a lurking variable
 that pulls the marionette strings of both i.v.~and d.v.~can do that.
 
+\section{Dealing with confounding factors}
+
+\index{confounding factor}
+\index{variable!confounding}
+
+\label{smart}
+Confounding factors are evil, and we must deal with them seriously. There are
+essentially two ways to do that: one that requires us to be smart, and one that
+requires us to have money.
+
+\subsection{Controlling for a confounding factor}
+
+\index{control (for a variable)}
+\index{stratification}
+
+If we anticipate that a certain variable may be a confounding factor, we can
+\textbf{control} for it. There are several techniques for this, some of which
+you'll learn in your statistics class, but the simplest one to understand
+involves \textbf{stratification}.
+
+\index{pinterest}
+
+Let's make a silly example this time. We'll go back to the earlier pinterest
+theme. I think I've noticed over the past few years that the heavy pinterest
+users I know seem to almost always have long hair. I've developed a hypothesis
+about this, which involves theories about how protein filaments in follicles
+with longer protrusions lead to certain chemical changes in the brain. These
+mind alterations, if unchecked, lead to increased creativity, craftiness, and a
+desire to share artistic creations with other like-minded individuals. Further,
+these aesthetic desires manifest themselves in increased usage of the
+\texttt{pinterest.com} website, as measured in number of logins per day.
+
+My theory is thus reflected in the causal diagram in
+Figure~\ref{fig:hairPinterest}. Study it carefully.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{hairPinterest.png}
+\caption{A theory about how hair length impacts the number of times a person
+logs on to pinterest each day.}
+\label{fig:hairPinterest}
+\end{figure}
+
+Now of course this follicle stuff is bogus. I'm using an extreme example to
+make a point. Quick, can you come up with a possible confounding factor? Yeah,
+drr: \textit{gender}. It's undoubtedly true that women tend to (but don't
+always) have longer hair than men, and it's undoubtedly true that
+\texttt{pinterest.com} is a website that tends to appeal to (but not
+exclusively to) women. And causality-wise, the arrows obviously flow from
+gender, not to it: the pinterest login screen doesn't change your gender, and a
+man won't turn into a woman simply by growing his hair long (although a
+transgender woman might grow her hair long as a signal of her underlying gender
+change.) 
+
+Put that all together, and you get the much more plausible causal diagram in
+Figure~\ref{fig:hairPinterest2}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{hairPinterest2.png}
+\caption{An alternative theory that holds that a person's gender influences
+both their long-haired-ness and their pinterest-ness.}
+\label{fig:hairPinterest2}
+\end{figure}
+
+
+\index{control (for a variable)}
+\index{stratification}
+
+Now then. Controlling for a confounding variable through stratification is done
+by considering the objects of the study in \textit{groups}, comparing
+\textit{only those who have the same (or similar) value for the confounding
+variable.}
+
+In this case, we would separate the men from the women in our study. Looking at
+\textit{just the men}, we would ask, ``is longer hair associated with frequency
+of pinterest logins?'' Then we would do the same, looking at \textit{just the
+women.} Only if Python reported that both of these separate groups illustrated
+such a trend would we (tentatively) conclude, ``hair length itself does play a
+role in causing pinterest activity, \textit{even when controlling for
+gender.}''
+
+Do the thought experiment to see if you agree. I know the whole follicle theory
+struck you as dumb (and hopefully, a little funny) to begin with. ``Of
+\textit{course},'' you said to yourself, ``it's gender, not hair length, that's
+drawing users to pinterest, dummy!'' But suppose we \textit{did} perform that
+stratification technique, and discovered that the association actually
+\textit{did} hold in both cases. Would that give it more credence in your mind?
+It ought to. By stratifying, we've eliminated gender from the picture entirely,
+and now we're faced with the facts that those with longer hair -- regardless of
+gender -- log on to pinterest more often. 
+
+\index{association}
+
+Now I wrote the word ``tentatively'' a couple paragraphs ago, because there are
+still some caveats. For one, we don't actually know that the causality goes in
+the stated direction. Removing the gender confounder, we confirmed that there
+is still an association between hair length and pinterest, but that association
+might translate into a $B \rightarrow A$ phenomenon. Perhaps users who log on
+to pinterest a lot see a lot of long-haired users, and (consciously or not)
+decide to grow their own hair out as a result? That actually sounds more
+plausible than the original silly theory. Either way, we can't confirm the
+direction just by stratifying.
+
+The other caveat is even more important, because it's more pervasive: just
+because we got rid of one confounding variable doesn't mean there aren't
+others. The whole ``control for a variable'' approach requires us \textit{to
+anticipate in advance} what the possible confounding factors would be. This is
+why I said back on p.~\pageref{smart} that this approach requires the
+experimenter to be smart.
+
+\subsection{Running a controlled experiment}
+
+\index{controlled experiment}
+\index{observational study}
+\index{randomization}
+
+
+
 \subsection{Spurious associations}
 
-\index{variable!confounding}
-\index{confounding variable}
