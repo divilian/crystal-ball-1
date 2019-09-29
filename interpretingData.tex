@@ -9,24 +9,32 @@ how to draw correct conclusions from what we've collected.
 
 \index{variable!dependent}
 \index{variable!independent}
-\index{independent variable}
-\index{dependent variable}
+\index{independent variable (i.v.)}
+\index{dependent variable (d.v.)}
 \index{cause}
 \index{causal}
 \index{hiccup}
-\index{orgasm}
 \index{greenhouse gas}
 \index{smoking}
 \index{lung cancer}
 \index{global warming}
+
 You've undoubtedly seen countless studies that claim to reveal important truths
 about the world, such as that smoking can cause lung cancer, greenhouse gas
 emissions can cause higher global temperatures, or orgasms can cure hiccups.
 Much of the time, scientists try to find a \textbf{causal} factor that links
 one variable to another: they suspect that the value of a variable $A$ (often
-called the \textbf{independent variable}) is a \textit{reason}, or
-\textbf{cause}, of a certain value in another variable $B$ (the
-\textbf{dependent variable}).
+called the \textbf{independent variable}, or ``\textbf{i.v.}''~for short) is a
+\textit{reason}, or \textbf{cause}, of a certain value in another variable $B$
+(the \textbf{dependent variable}, or ``\textbf{d.v.}'').
+
+Just to avoid misunderstandings, when we claim that $A$ \textbf{causes} $B$, we
+don't normally mean that it \textit{exclusively} causes it, or even that it
+\textit{reliably} causes it. There are lots of contributing factors to lung
+cancer besides smoking, after all; and tons of smokers never develop cancer. We
+simply mean that $A$ is a contributing factor to $B$, and that the value of the
+$A$ variable exerts some, but not total, influence over the value of the $B$
+variable.
 
 \index{variable}
 \index{objects (of a study)}
@@ -40,9 +48,8 @@ study} that can differ, or ``vary.'' The objects in our study (often people,
 but sometimes companies, organizations, environments, nations, \textit{etc.})
 \textit{each} have a value for the variable. Thus if you think of a
 ``per-capita income'' variable, you might think of an entire \textit{array} of
-floats, each of which represented the average income per resident of a single
-nation (measured in dioxide emissions of a single nation (measured in
-gigatonnes $\textrm{CO}_2$).
+floats, each of which represented the average income-per-resident of a single
+nation.
 
 \index{scales of measure}
 \index{categorical variable}
@@ -60,13 +67,13 @@ $A=\texttt{NON-SMOKER}$ do?
 \index{interval variable}
 
 In the greenhouse gas emissions example, our objects of study might be
-\textit{years}. Our variables are numeric, with $A$ (a measure of yearly
+\textit{years}. Our variables are both numeric, with $A$ (a measure of yearly
 greenhouse gas emissions, measured in gigatonnes $\textrm{CO}_2$) on the ratio
 scale, and $B$ (average worldwide temperature increase/decrease) on an interval
 scale. Here, the question would be: do years in which $A$ is relatively high
-more often also have $B$ relatively high? Put another way: do years in which
+typically also have $B$ relatively high? Put another way: do years in which
 earthlings have released more gas into the atmosphere tend to correspond with
-years in which the temperature increased?
+years in which the global temperature increased?
 
 And of course, we might have one categorical variable and one numeric. Perhaps
 our objects of study are American adults, and while our categorical $A$
@@ -108,8 +115,8 @@ an association between the two, period.
 does $A=\texttt{SMOKER}$ need to go with $B=\texttt{CANCER}$ in order for us to
 be confident that there is a true association? Or \textit{how much} more
 wealthy do the $A=\texttt{REPUBLICAN}$s need to be on average for us to have
-confidence? That one's a little tricky, and we'll postpone addressing it for
-now.)
+confidence we've identified a real link to political party? That one's a little
+tricky, and we'll postpone addressing it for now.)
 
 \index{causality}
 
@@ -133,7 +140,11 @@ of statistical tests.
 
 In fact, just to blow your mind, Figure~\ref{fig:causalityTypes} gives a
 partial list of the various types of causation that \textit{could} be the true
-explanation, once we find out that $A$ and $B$ have an association.
+explanation, once we find out that $A$ and $B$ have an association. As you can
+see, there are a lot of ways to go wrong. Only \textit{one} of the
+possibilities is that ``$A$ actually causes $B$,'' which is what we suspected
+in the first place. The others are all ways of producing that same association
+we picked up in the data.
 
 \begin{figure}[ht]
 \small
@@ -179,6 +190,133 @@ association between $A$ and $B$ exists.}
 \label{fig:causalityTypes}
 \normalsize
 \end{figure}
+
+\subsection{Confounding factors}
+
+\index{confounding factor}
+\index{external causation}
+\index{variable!confounding}
+
+Let me speak to two of the items in the Figure~\ref{fig:causalityTypes} table
+in particular. The third one on the list, \textbf{external causation}, is a
+case where a third variable (call it $C$) comes into play. We refer to this as
+a \textbf{confounding factor} (or \textbf{confounding variable}) because it
+``confounds'' us: causes us to interpret the meaning behind the data in an
+incorrect way. The example in the table is a famous and funny one: clearly
+sharks don't react to Ben \& Jerry's daily net profits, and people (probably)
+don't run out and buy ice cream to cope with their anxiety about shark attacks.
+Neither $A \rightarrow B$ nor $B \rightarrow A$, but a third variable -- hot
+days -- influence both of them.
+
+\index{causal diagram}
+
+Now of course it's not always this obvious. Here's an example I ran across
+recently. A magazine article reported on a new health scare: scientists have
+discovered that \textit{eating barbecue can increase your risk of cancer.}
+Pictorially, this claim is illustrated in the \textbf{causal diagram} in
+Figure~\ref{fig:causalDiagram}, which shows our i.v.~and our d.v.~; the arrow
+means exactly what it meant earlier.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{causalDiagram.png}
+\caption{A hypothesis as to causality: eating barbecued foods increases one's
+risk for certain types of cancer.}
+\label{fig:causalDiagram}
+\end{figure}
+
+Unlike sharks and ice cream, this one seems plausible. And I'm not claiming to
+have read enough about their study to tell whether the researchers' claim is
+bogus. But I couldn't help thinking that there are a great many possibly
+confounding factors that could be blurring the results. For one, choosing to
+eat barbecue a lot is probably often associated with a less healthy, higher-fat
+diet in general (I can speak from experience on that). If that's true, and if
+high-fat diets -- whether featuring lots of barbecue or not -- are associated
+with these same poor health outcomes, then we'd have the picture on the
+left-side of Figure~\ref{fig:causalDiagram23}. The red bubble represents the
+confounding factor, which is influencing both i.v.~and d.v. If this picture
+were the correct one of the underlying phenomenon, then the correlation we
+thought were picking up between barbecue and cancer was actually due to fat
+content.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.4\textwidth]{causalDiagram2.png}
+\includegraphics[width=0.5\textwidth]{causalDiagram3.png}
+\caption{Other hypotheses as to causality, each resulting in the same
+associations in the data, yet involving confounding factors.}
+\label{fig:causalDiagram23}
+\end{figure}
+
+Another example is the right-hand side of Figure~\ref{fig:causalDiagram23}.
+Perhaps barbecue is more popular culturally in some areas of the country (say,
+the South, where I certainly see it eaten a lot), and perhaps those areas have
+other environmental factors that can lead to cancer. In this case, the
+``South'' confounder indirectly affects the d.v.~(via another variable,
+representing the environment) but it still affects it.
+
+It's not hard to think of others. These were just the first two that came to
+mind. The point is that it's really hard to be sure you've thought of all of
+them!
+
+
+\subsubsection{Paranoia and overparanoia}
+
+All this should lead you to be somewhat paranoid, but not
+\textit{over}paranoid. Confounding variables can definitely lead us to make
+mistakes in our reasoning, but perhaps they're not \textit{quite} as common as
+you think. Understand that a confounding factor is \textit{not} simply any
+other factor that affects the dependent variable. Instead, for a variable to be
+confounding \textbf{it must affect both the independent \textit{and} the
+dependent variable.}
+
+Let me illustrate with an example. I suspect that on average, men are taller
+than women. And I further suspect that there's causality here, and that it goes
+from $A$ (sex) to $B$ (height), not the other way around. (Clearly people don't
+spontaneously ``turn male'' because they reach a certain height.) So my
+thinking on the subject is summed up in Figure~\ref{fig:sexHeight}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{sexHeight.png}
+\caption{Stephen's hypothesis: a person's biological sex (male or female) plays
+a causal role in determining their height.}
+\label{fig:sexHeight}
+\end{figure}
+
+Now let me show you what I mean by ``overparanoia.'' What if someone said,
+``but wait, Stephen, not so fast! You've got potential confounding variables
+out the wazoo! Why, surely heredity plays some role in a person's height --
+tall parents are more likely to have tall offspring, just due to genetics. And
+nutrition, too, is a factor: it's been demonstrated that impoverished
+communities suffering from malnutrition will have children with stunted growth.
+And heck, if you're born at a high elevation (like Nepal), there's less
+gravitational pull dragging your body down to earth, so it stands to reason
+that you'll probably grow taller. And on and on!'' Figure~\ref{fig:sexHeight2}
+depicts this (supposed) scientific nightmare.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\textwidth]{sexHeight2.png}
+\caption{Oh geez -- confounding variables? \textbf{\textit{No!}}}
+\label{fig:sexHeight2}
+\end{figure}
+
+But plausible as some of those theories are, they are \textit{not} confounding
+variables! These are simply \textit{other factors that may affect the d.v.}
+Sure, they may also play a causal role in determining a person's height, but
+they do \textit{not} invalidate our finding about sex and height.
+
+For them to truly be confounders, they would have to affect the yellow
+\textit{and} the green variable, and I'm pretty sure they do not. Do tall
+parents tend to bear more sons, and short parents more daughters? If not, this
+isn't a confounder. Do boys have more nutritious diets than girls? (In some
+parts of the world, that may unfortunately be true, but I don't believe it is
+in our country.) So that one isn't a confounder either. Having additional
+causes of an effect does not nullify a genuine effect. Only a lurking variable
+that pulls the marionette strings of both i.v.~and d.v.~can do that.
+
+\subsection{Spurious associations}
 
 \index{variable!confounding}
 \index{confounding variable}
