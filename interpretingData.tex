@@ -209,6 +209,9 @@ Neither $A \rightarrow B$ nor $B \rightarrow A$, but a third variable -- hot
 days -- influence both of them.
 
 \index{causal diagram}
+\index{barbecue}
+\index{cancer}
+\label{barbecue}
 
 Now of course it's not always this obvious. Here's an example I ran across
 recently. A magazine article reported on a new health scare: scientists have
@@ -298,7 +301,7 @@ depicts this (supposed) scientific nightmare.
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.7\textwidth]{sexHeight2.png}
-\caption{Oh geez -- confounding variables? \textbf{\textit{No!}}}
+\caption{Oh geez -- confounding variables galore? \textbf{\textit{No!}}}
 \label{fig:sexHeight2}
 \end{figure}
 
@@ -431,8 +434,82 @@ experimenter to be smart.
 
 \index{controlled experiment}
 \index{observational study}
-\index{randomization}
 
+The other way to deal with confounding variables is to run a \textbf{controlled
+experiment} instead of an \textbf{observational study}. I jokingly said on
+p.~\pageref{smart} that this option requires the experimenter to have money.
+Let me explain.
+
+\index{data-generating process (DGP)}
+An observational study is one in which data is produced by naturally occurring
+processes (we'll call them \textbf{data-generating processes}, or
+\textbf{DGPs}, in a later chapter) and then collected by the researcher.
+Crucially, the experimenter plays no role in influencing what any of the
+variable values are, whether that be the i.v.~, the d.v.~, other related
+variables, or even possible confounders. Everything just is what it is, and the
+researcher is simply observing.
+
+Now at first this sounds like the best of all possible worlds. Scientists are
+supposed to be objective, and to do everything they can to avoid biasing the
+results, right? True, but the sad fact is that \textit{every observational
+study has potential confounding factors} and there's simply no foolproof way to
+account for them all. If you \textit{knew} them all, you could potentially
+account for them. But in general we don't know. It all hinges on our
+cleverness, which is a bit like rolling the dice.
+
+\index{randomization}
+\index{controlled experiment}
+
+A controlled experiment, on the other hand, is one in which \textit{the
+researcher decides what the value of the i.v.~will be for each object of
+study.} She normally does this randomly, which is why this technique is called
+\textbf{randomization}.
+
+Now controlled experiments bear some good news and some bad news. First, the
+good news, which is incredibly good, actually: \textit{a controlled experiment
+automatically eliminates \underline{every} possible confounding factor, whether
+you thought of it or not.} Wow: magic! We get this boon because of how the
+i.v.~works. The researcher's coin flip is the \textit{sole} determinant of who
+gets which i.v.~value. That means that no other factor can be ``upstream'' of
+the coin flip and influence it in any way. And this in turn nullifies all
+possible confounding factors, since as you recall, a confounder must affect
+both the i.v.~and the d.v.
+
+The catch is that controlled experiments can be very expensive to run, and in
+many cases can't be run at \textit{all}. Consider the barbecue example from
+p.~\pageref{barbecue}. To carry out a controlled experiment, we would have to:
+
+\begin{compactenum}
+\item Recruit participants to our study, and get their informed consent.
+\item Pay them some \$\$ for their trouble.
+\item For each participant, flip a coin. If it comes up heads, \textit{that
+person must eat barbecue three times per week for the next ten years.} If it's
+tails, \textit{that person must never eat barbecue for the next ten years.}
+\item At the end of the ten years, measure how many barbecuers and
+non-barbecuers have cancer.
+\end{compactenum}
+
+There's a question of this even being ethical: if we suspect that eating
+barbecue can cause cancer, is it okay to ``force'' participants to eat it? Even
+past that point, however, there's the expense. Ask yourself: if you were a
+potential participant in this experiment, how much money would you demand in
+step 2 to change your lifestyle to this degree? You might love barbecue, or you
+might hate it, but either way, it's a coin flip that makes your decision for
+you. That's a costly and intrusive change to make.
+
+Other scenarios are even worse, because they're downright impossible. We can't
+flip coins and make (at random) half of our experimental subjects male
+and the other half female. We can't (or at least, shouldn't) randomly decide
+our participants' political affiliations, making one random half be Democrats
+and the others Republicans. And we certainly can't dictate to the nations of
+the world to emit large quantities of greenhouse gases in some years and small
+quantities in others, depending on our coin flip for that year.
+
+Bottom line: if you can afford to gather data from a controlled experiment
+rather than an observational study, always choose to do so. Unfortunately, it
+won't always be possible, and we'll have to rest on the uneasy assumption that
+we successfully predicted in advance all the important confounding variables
+and controlled for them.
 
 
 \subsection{Spurious associations}
