@@ -1,5 +1,33 @@
 
 % Somewhere: .map() for recoding
 
-\chapter{Associative arrays in Python: Pandas \texttt{Series}}
+\chapter{Associative arrays in Python (1 of 2)}
 \label{ch:pythonAssocArrays}
+
+\index{associative array}
+\index{Pandas package}
+Our next trick is to represent associative arrays (review
+section~\ref{sec:assocArrays} if you need to) in Python. To do so, we will
+use another package, which goes by the adorable name ``Pandas'':
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+import pandas as pd
+\end{Verbatim}
+
+This code should go at the top of your first notebook cell, right under your
+``\texttt{import numpy as np}'' line. The two go hand in hand.
+
+\index{table}
+\index{NumPy package}
+\index{series@\texttt{Series} (Pandas)}
+\index{dict@\texttt{dict} (dictionary)}
+By the way, just as there were other choices besides NumPy \texttt{ndarray}s to
+represent ordinary arrays, there are other choices in Python for associative
+arrays. The native Python \texttt{dict} (``dictionary'') type is an obvious
+candidate. Because this won't work well when the data gets huge, however, and
+because using Pandas here will set up our usage of tables nicely in the next
+few chapters, we're going to use the Pandas \textbf{Series} data type for our
+associative arrays.
+
+
+\section{Pandas \texttt{Series}}
