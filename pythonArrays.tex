@@ -76,6 +76,8 @@ chapter.
 \index{array}
 \index{ndarray@\texttt{ndarray} (NumPy)}
 \index{matrix}
+\index{dimension}
+
 The actual data type that the NumPy package provides is called an
 \texttt{ndarray}, which stands for ``n-dimensional array.'' If that sounds
 heady, it kind of is, although in this course we're only ever going to use a
@@ -128,6 +130,7 @@ name of a \textit{package}. When we say ``\texttt{np.array()}'' what we're
 saying is: ``Python, please call the \texttt{array()} function \textit{from the
 \texttt{np} package}.'' The word-and-dot syntax does double-duty.
 
+\label{arrayType}
 \index{type@\texttt{type()}}
 We can call the \texttt{type()} function, as we did back on
 p.~\pageref{typeFunction}, to verify that yes indeed we have created
@@ -143,7 +146,7 @@ numpy.ndarray
 numpy.ndarray
 \end{Verbatim}
 
-\index{dtype@\texttt{.dtype} (NumPy)}
+\index{dtype@\texttt{.dtype} (NumPy/Pandas)}
 This is useful, but sometimes we want to know what underlying atomic data type
 the array is comprised of. To do that, we attach ``\texttt{.dtype}''
 (confusingly, \textit{without} bananas this time) to the end of the variable
@@ -450,6 +453,7 @@ but ``\texttt{object}''? Ugh, another fiddly detail. When you read from a file
 into a NumPy array, you will be reading one of our three atomic types. Here are
 the rules:
 
+\label{dtypeRules}
 \begin{center}
 \begin{tabular}{c|c}
 If you want to read an array of... & ...then set \texttt{dtype} to: \\
