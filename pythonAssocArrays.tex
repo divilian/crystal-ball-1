@@ -65,14 +65,25 @@ information.}
 \label{fig:assocArraysAreArrays}
 \end{figure}
 
-\index{dimension}
 
 \subsection{Creating \texttt{Series}es}
 
-Here are a couple of common ways of creating a Pandas \texttt{Series} object in
+Here are a few common ways of creating a Pandas \texttt{Series} object in
 memory.
 
-\subsubsection{Way 1: \texttt{pd.Series([], index=[])}}
+\subsubsection{Way 1: create an empty \texttt{Series}}
+
+Perhaps this first one sounds dumb, but we will indeed have occasion to start
+off with an empty \texttt{Series} and then add key/value pairs to it from
+there. The code is simple:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+my_new_series = pd.Series()
+\end{Verbatim}
+
+Voil\`{a}.
+
+\subsubsection{Way 2: \texttt{pd.Series([], index=[])}}
 
 As with NumPy \texttt{ndarrays}, we can explicitly list the values we want in a
 new \texttt{Series}. We also have to list the \textbf{index} values (the keys).
@@ -134,4 +145,71 @@ Just as it did on p.~\pageref{dtypeRules}, the ``\texttt{object}'' here is just
 a confusing way of saying ``\texttt{str}''. Don't read anything more into it
 than that.
 
-\subsubsection{Way 2: \texttt{pd.read\_csv()}}
+\subsubsection{Way 3: ``wrapping'' an array}
+
+\index{dimension}
+
+Associative arrays, and the Pandas \texttt{Series}es we've been using to
+implement them, are inherently \textit{one}-dimensional data structures. This
+is just like the NumPy arrays we used before. Pandas Serieses also provide a
+bunch of features for manipulating, querying, computing, and even graphing
+aspects of their content. It's a lot of rich stuff on top of plain-old NumPy.
+
+\index{wrapping}
+
+For this reason, it's common to want to create a \texttt{Series} that just
+``wraps'' (or encloses) an underlying NumPy \texttt{ndarray}, and provides all
+that rich stuff.
+
+The way to do this is simple:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+my_numpy_array = np.array(['Ghost','Pumpkin','Vampire','Witch'])
+my_pandas_enhanced_thang = pd.Series(my_numpy_array)
+\end{Verbatim}
+
+You can then treat \texttt{my\_pandas\_enhanced\_thang} as an ordinary
+aggregate variable which has the more sophisticated operations of next chapter
+automatically glommed on to it. The keys (index values) of this thang will
+simply be the integers 0 through 3.
+
+\subsubsection{Way 4: \texttt{pd.read\_csv()}}
+
+Finally, there's reading data from a text flie, which as I mentioned back in
+section~\ref{np.loadtxt} (p.\pageref{np.loadtxt}) is actually the most common. 
+Data typically resides in sources and files external to our programming
+environment, and we want to do everything we can to play ball with this open
+universe.
+
+The \texttt{pd.read\_csv()} function is a bit awkward since it has several
+mandatory arguments if you want to deal with \texttt{Series}es. Here's how it
+works. Suppose there were a file called \texttt{disney\_rides.csv} whose
+contents looked like this:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+Pirates of the Carribean,25
+Small World,20
+Peter Pan,29
+\end{Verbatim}
+
+These are the current expected wait time (in minutes) for each of these Disney
+World rides at some point of the day.
+
+To read this into a \texttt{Series} we'd write:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+wait_times = pd.read_csv('disney_rides.csv', index_col=0, squeeze=True,
+    header=None)
+\end{Verbatim}
+
+Most of that junk is just to memorize for now, not to fully understand. If
+you're curious, \texttt{index\_col=0} tells Pandas that the first (0th) column
+-- namely, the ride names --should be treated as the \texttt{index} for the
+\texttt{Series}. The \texttt{header=None} means ``there is no separate header
+row at the top of the file, Pandas, so don't try to treat it like one.'' If our
+\texttt{.csv} file \textit{did} have a summary row at the top, containing
+labels for the two columns, then we'd skip the \texttt{header=None} part.
+Finally, ``\texttt{squeeze=True}'' tells Pandas, ``since this is so skinny
+anyway -- just two columns -- let's have \texttt{pd.read\_csv()} return us a
+\texttt{Series}, rather than a more complex \texttt{DataFrame} object (which is
+the subject of a future chapter.)''
