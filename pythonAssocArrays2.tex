@@ -134,13 +134,16 @@ alter_egos = alter_egos['Bruce'] = 'Batman'           <--- WRONG!
 alter_egos = alter_egos['Diana'] = 'Wonder Woman'     <--- WRONG!
 \end{Verbatim}
 
+You don't ``change a value and get a new \texttt{Series}''; you just
+``change it.''
+
 \subsection{Accessing by pair number}
 
 \index{order}
 
 \index{iloc@\texttt{.iloc} syntax (Pandas)}
 
-One other weird thing you can do with a Pandas \texttt{Series} is ignore the
+One slightly weird thing you can do with a Pandas \texttt{Series} is ignore the
 key (index) altogether and instead use \textit{the number of the key/value
 pair} to specify what value you want. This gives me the heebie-jeebies, because
 as I explained back on p.~\pageref{assocArraysUnordered}, there really isn't
@@ -191,6 +194,13 @@ in the two \texttt{Series}es, and instead it does what you surely want:
 add corresponding elements, with matching keys, and produce a new
 \texttt{Series} with all of those sums.
 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\textwidth]{vectorizedPandas2.png}
+\caption{The result of \texttt{+}'ing two \texttt{Series}es that don't have all the same keys.}
+\label{fig:vectorizedPandas2}
+\end{figure}
+
 The actual result in this case is in Figure~\ref{fig:vectorizedPandas2}, and
 the output is here:
 
@@ -219,34 +229,27 @@ dtype: float64
 
 Convince yourself that \texttt{Dwight}'s \$68,000 salary got added to his
 \$3,500 raise, and that \texttt{Michael}'s \$113,000 was added to \$16,500,
-\textit{etc.} Pictorially, the state of affairs is in
-Figure~\ref{fig:vectorizedPandas2}.
+\textit{etc.}
 
 Don't get freaked out by those \texttt{NaN} entries just yet. The special value
 ``\textbf{NaN}'' stands for ``\textbf{not a number},'' and basically means that
-Pandas has to throw up its hands there. And with good cause. \texttt{Jim} has a
-current salary of \$100,200 in the first \texttt{Series}, but has no value at
-all in the second one (no raise for Jim this year? Haven't decided what his
-raise will be yet? Something else?) and so Pandas shrugs and says ``dunno.'' We
-say that the \texttt{Jim} entry in the \texttt{new\_salaries} \texttt{Series}
-is a \textbf{missing value}. The same is true for \texttt{Robert} and
-\texttt{Ryan}, each of whom was in only one of the two operands.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.8\textwidth]{vectorizedPandas2.png}
-\caption{The result of \texttt{+}'ing two \texttt{Series}es that don't have all the same keys.}
-\label{fig:vectorizedPandas2}
-\end{figure}
+Pandas has to throw up its hands in that case. And with good cause.
+\texttt{Jim} has a current salary of \$100,200 in the first \texttt{Series},
+but has no value at all in the second one (no raise for Jim this year? Haven't
+decided what his raise will be yet? Something else?) and so Pandas shrugs and
+says ``dunno.'' We say that the \texttt{Jim} entry in the
+\texttt{new\_salaries} \texttt{Series} is a \textbf{missing value}. The same is
+true for \texttt{Robert} and \texttt{Ryan}, each of whom was present in only
+one of the two operands.
 
 Now I know what you're thinking: ``can't Pandas just assume the salary and/or
 raise is 0 if there's a missing one?'' The answer is that yes it can, but it
 won't do so unless you give the go-ahead. Pandas is being cautious here, and
 doesn't want to introduce errors into your data stream by false assumptions.
-(Maybe, for instance, there's a default entry-level salary that every employee
-receives who's unspecified in the \texttt{salary} \texttt{Series}. Or maybe the
-yearly raise is always assumed to be a flat 2.5\% cost-of-living raise unless
-explicitly specified.)
+(Maybe in your company, for instance, there's a default entry-level salary that
+every employee receives who's unspecified in the \texttt{salary}
+\texttt{Series}. Or maybe the yearly raise is always assumed to be a flat 2.5\%
+cost-of-living raise unless explicitly specified.)
 
 \index{add@\texttt{add()} function (Pandas)}
 \index{sub@\texttt{sub()} function (Pandas)}
@@ -290,8 +293,6 @@ atomic value to a series as well:
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 cost_of_living_increase = salaries * .025
 print(cost_of_living_increase)
-salaries = salaries + cost_of_living_increase
-print(salaries)
 \end{Verbatim}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
@@ -301,7 +302,14 @@ Pam        1.675
 Jim        2.505
 Ryan       1.700
 dtype: float64
+\end{Verbatim}
 
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+salaries = salaries + cost_of_living_increase
+print(salaries)
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 Michael    115.825
 Dwight      69.700
 Pam         68.675
@@ -331,3 +339,68 @@ print(firsts + " " + lasts)
 dtype: object
 \end{Verbatim}
 
+\section{Copying \texttt{Series}es}
+
+\section{Sorting \texttt{Series}es}
+\index{in place}
+
+\section{Concatenating and combining}
+
+\section{Queries}
+
+These functions are all summarized in Figure~\ref{fig:handySeries}.
+
+\setlength\extrarowheight{5pt}
+
+\begin{figure}[ht]
+\centering
+\begin{tabular}{c|p{3.3in}}
+Function & Description \\
+\hline
+
+\texttt{len(}\textsl{arr}\texttt{)} & Get the number of elements in the array \textsl{arr}. \\
+
+\textsl{arr}\texttt{[17]} & Get a specific element's value from the array \textsl{arr}. \\
+
+\textsl{arr}\texttt{[8] =} (\textsl{something}) & Set a specific element of the array \textsl{arr}. \\
+
+\textsl{arr} \texttt{+ 91} & Add a value to each element of \textsl{arr},
+yielding a new array. (Also works with \texttt{-}, \texttt{*}, \texttt{/},
+\textit{etc.}) \\
+
+\textsl{arr1} \texttt{+} \textsl{arr2} & Add each pair of values in two arrays,
+yielding a new array. (Also works with \texttt{-}, \texttt{*}, \texttt{/},
+\textit{etc.}) \\
+
+\textsl{arr1} = \textsl{arr2} & Make \textsl{arr1} point to the same data that
+\textsl{arr2} points to. (\textit{Not} a copy!)\\
+
+\textsl{arr1} = \textsl{arr2}\texttt{.copy()} & Make \textsl{arr1} point to a
+new, independent copy of \textsl{arr2}. \\
+
+\textsl{arr}\texttt{.sort()} & Sort the array \textsl{arr} \textbf{in place}. (Numerical or
+alphabetical, depending on the \texttt{.dtype}.) \\
+
+\texttt{np.sort(}\textsl{arr}) & Return a new array with the sorted elements
+of \textsl{arr}. (Numerical or alphabetical, depending on the \texttt{.dtype}.)
+\\
+
+\texttt{np.append(}\textsl{arr}, \textsl{elem}\texttt{)} &
+    Return a new array with \textsl{elem} tacked on to the end. \\
+
+\texttt{np.append(}\textsl{arr1}, \textsl{arr2}\texttt{)} &
+    Return a new array with the two arrays \textsl{arr1} and \textsl{arr2} concatenated. \\
+
+\texttt{np.insert(}\textsl{arr}, \textsl{ind}, \textsl{val}\texttt{)} &
+    Return a new array with the new value \textsl{val} inserted into position \textsl{ind} of \textsl{arr}. \\
+
+\texttt{np.delete(}\textsl{arr}, \textsl{ind}\texttt{)} &
+    Return a new array with the element at index \textsl{ind} removed from \textsl{arr}. \\
+
+\texttt{np.flip(}\textsl{arr}\texttt{)} &
+    Return a new array with \textsl{arr} in reverse order. \\
+\end{tabular}
+\bigskip
+\caption{Handy functions, methods, and operators for Pandas \texttt{Series}es.}
+\label{fig:handySeries}
+\end{figure}
