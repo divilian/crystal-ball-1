@@ -341,14 +341,221 @@ dtype: object
 
 \section{Copying \texttt{Series}es}
 
+\index{copying@copying (\texttt{Series}es)}
+The rules for copying (or not copying) \texttt{Series}es are exactly the same
+as for NumPy arrays (see Section~\ref{copyingNotCopyingArrays} on
+p.~\pageref{copyingNotCopyingArrays}). If you merely assign one \texttt{Series}
+object to another variable, the two variables will be pointing to the
+\textit{same} \texttt{Series} in memory, which means that changes to one will
+be reflected in the other. Calling the \texttt{.copy()} method, however,
+creates an entirely new \texttt{Series} in memory.
+
+Make sure you understand the following output to confirm your understanding of
+this:
+
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+slayers = pd.Series([120, 72, 200], index=['Buffy','Xander','Willow'])
+anti_vamps = slayers
+good_guys = slayers.copy()
+anti_vamps['Rubert'] = 150
+print(slayers)
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Buffy     120
+Xander     72
+Willow    200
+Rubert    150
+dtype: int64
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+print(anti_vamps)
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Buffy     120
+Xander     82
+Willow    200
+Rubert    150
+dtype: int64
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+print(good_guys)
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Buffy     120
+Xander     72
+Willow    200
+dtype: int64
+\end{Verbatim}
+
+(The numbers here are approximate IQs; don't mean to be a hater.)
+
+
 \section{Sorting \texttt{Series}es}
+\index{sorting@sorting (\texttt{Series}es)}
+
+Sorting is slightly more complex than for arrays, since there are two things we
+might want to sort by: the \texttt{Series}' index, or the values themselves.
+Correspondingly, there are two methods: \texttt{.sort\_index()} and
+\texttt{.sort\_values()}:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(anti_vamps.sort_index())
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Buffy     120
+Rubert    150
+Willow    200
+Xander     82
+dtype: int64
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(anti_vamps.sort_values())
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Xander     82
+Buffy     120
+Rubert    150
+Willow    200
+dtype: int64
+\end{Verbatim}
+
 \index{in place}
+Like NumPy's \texttt{np.sort()} function (but unlike its \texttt{.sort()}
+method; refer back to Section~\ref{sortingArrays} on p.~\pageref{sortingArrays}
+for details), neither of these methods actually sort the \texttt{Series} in
+place; instead, they return sorted copies. However, they can be made to, by
+including ``\texttt{inplace=True}'' as an argument:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+heroes_dumb_to_smart = anti_vamps.sort_values()
+print(heroes_dumb_to_smart)
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Xander     82
+Buffy     120
+Rubert    150
+Willow    200
+dtype: int64
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(anti_vamps)
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Buffy     120
+Xander     82
+Willow    200
+Rubert    150
+dtype: int64
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+anti_vamps.sort_values(inplace=True)
+print(anti_vamps)
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Xander     82
+Buffy     120
+Rubert    150
+Willow    200
+dtype: int64
+\end{Verbatim}
+
+Another useful feature of both \texttt{.sort\_X} methods is the ability to
+\textit{reverse} sort. By adding ``\texttt{ascending=False}'' as an argument
+(with or without also including the ``\texttt{inplace=True}'' argument; they
+are combinable with a comma) you produce the reverse order:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+heroes_smart_to_dumb = anti_vamps.sort_values(ascending=False)
+print(heroes_smart_to_dumb)
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Willow    200
+Rubert    150
+Buffy     120
+Xander     82
+dtype: int64
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+anti_vamps.sort_index(inplace=True, ascending=False)
+print(anti_vamps)
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Xander     82
+Willow    200
+Rubert    150
+Buffy     120
+dtype: int64
+\end{Verbatim}
 
 \section{Concatenating and combining}
 
-\section{Queries}
+\index{uniqueness!of keys in an associative array}
+Finally, it is sometimes convenient to be able to combine two or more
+\texttt{Series}es into a single one. But there's a catch. Remember that in
+order for a \texttt{Series} to ``work properly,'' its keys must be unique.
+Combining two \texttt{Series} which share at least one of the same keys is a
+recipe for disaster!
 
-These functions are all summarized in Figure~\ref{fig:handySeries}.
+The syntax for doing so, when the coast is clear, uses the \texttt{.append()}
+method:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+crazy_example = salaries.append(slayers)
+print(crazy_example)
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Michael    113.0
+Dwight      68.0
+Pam         67.0
+Jim        100.2
+Ryan        68.0
+Xander      82.0
+Willow     200.0
+Rubert     150.0
+Buffy      120.0
+dtype: float64
+\end{Verbatim}
+
+Nothing untoward happened here because \textit{The Office} and \textit{Buffy}
+don't have any overlapping character names. Note that the values all got
+converted to \texttt{float} (instead of \texttt{int}), to enforce homogeneity.
+Note also that \texttt{salaries} itself did \textit{not} change as a result of
+this \texttt{.append()} call; instead, a new \texttt{Series} was returned that
+contains all the items.
+
+
+\section{Summary}
+
+All the functions from this chapter are summarized in
+Figure~\ref{fig:handySeries}.
 
 \setlength\extrarowheight{5pt}
 
@@ -358,47 +565,58 @@ These functions are all summarized in Figure~\ref{fig:handySeries}.
 Function & Description \\
 \hline
 
-\texttt{len(}\textsl{arr}\texttt{)} & Get the number of elements in the array \textsl{arr}. \\
+\texttt{len(}\textsl{ser}\texttt{)} & Get the number of key/value pairs in the
+\texttt{Series} \textsl{ser}. \\
 
-\textsl{arr}\texttt{[17]} & Get a specific element's value from the array \textsl{arr}. \\
+\textsl{ser}\texttt{[\textquotesingle Five Guys\textquotesingle]} & Get the value of a specific key from the
+\texttt{Series} \textsl{ser}. \\
 
-\textsl{arr}\texttt{[8] =} (\textsl{something}) & Set a specific element of the array \textsl{arr}. \\
+\textsl{ser}\texttt{.iloc[73]} & Treating the key/values pairs in the
+\texttt{Series} \textsl{ser} as ordered, get a specific numbered (from 0)
+value. \\
 
-\textsl{arr} \texttt{+ 91} & Add a value to each element of \textsl{arr},
-yielding a new array. (Also works with \texttt{-}, \texttt{*}, \texttt{/},
-\textit{etc.}) \\
+\textsl{ser}\texttt{[\textquotesingle Firehouse\textquotesingle] =} (\textsl{something}) & Set the value for a key of
+the \texttt{Series} \textsl{ser}. \\
 
-\textsl{arr1} \texttt{+} \textsl{arr2} & Add each pair of values in two arrays,
-yielding a new array. (Also works with \texttt{-}, \texttt{*}, \texttt{/},
-\textit{etc.}) \\
+\textsl{ser}\texttt{[\textquotesingle New Rest\textquotesingle] =}
+(\textsl{something}) & Add an additional key/value pair to the \texttt{Series}
+\textsl{ser}. (Same syntax as the previous.) \\
 
-\textsl{arr1} = \textsl{arr2} & Make \textsl{arr1} point to the same data that
-\textsl{arr2} points to. (\textit{Not} a copy!)\\
+\textsl{ser} \texttt{+ 13} & Add a quantity to each value of \textsl{ser},
+yielding a new \textit{Series}. (Also works with \texttt{-}, \texttt{*},
+\texttt{/}, \textit{etc.}) \\
 
-\textsl{arr1} = \textsl{arr2}\texttt{.copy()} & Make \textsl{arr1} point to a
-new, independent copy of \textsl{arr2}. \\
+\index{nan@\texttt{NaN} (``not a number'')} \textsl{ser1} \texttt{+}
+\textsl{ser2} & Add pairs of values that have matching keys in two
+\texttt{Series}es, yielding a new \texttt{Series}. Use \texttt{NaN} for the
+value of any key that doesn't appear in both \textsl{ser1} and \textsl{ser2}.
+(Also works with \texttt{-}, \texttt{*}, \texttt{/}, \textit{etc.}) \\
 
-\textsl{arr}\texttt{.sort()} & Sort the array \textsl{arr} \textbf{in place}. (Numerical or
-alphabetical, depending on the \texttt{.dtype}.) \\
+\shortstack{\texttt{pd.Series.add(}\textsl{ser1}\texttt{,}\\\quad\quad\quad\textsl{ser2}\texttt{,
+fill\_value=}\textsl{x})} & Add pairs of values that have matching keys in two
+\texttt{Series}es, yielding a new \texttt{Series}. Use \texttt{x} for any
+missing values. (Also works with \texttt{sub()}, \texttt{mul()},
+\texttt{div()}, \textit{etc.}) \\
 
-\texttt{np.sort(}\textsl{arr}) & Return a new array with the sorted elements
-of \textsl{arr}. (Numerical or alphabetical, depending on the \texttt{.dtype}.)
-\\
+\textsl{ser1} = \textsl{ser2} & Make \textsl{ser1} point to the same data that
+\textsl{ser2} points to. (\textit{Not} a copy!)\\
 
-\texttt{np.append(}\textsl{arr}, \textsl{elem}\texttt{)} &
-    Return a new array with \textsl{elem} tacked on to the end. \\
+\textsl{ser1} = \textsl{ser2}\texttt{.copy()} & Make \textsl{ser1} point to a
+new, independent copy of \textsl{ser2}. \\
 
-\texttt{np.append(}\textsl{arr1}, \textsl{arr2}\texttt{)} &
-    Return a new array with the two arrays \textsl{arr1} and \textsl{arr2} concatenated. \\
+\textsl{ser}\texttt{.sort\_index()} & Return a copy of the \texttt{Series}
+\textsl{ser} which is sorted by the keys. Can also pass
+``\texttt{inplace=True}'' to change \textsl{ser} itself, and/or pass
+``\texttt{ascending=False}'' to get reverse order. \\
 
-\texttt{np.insert(}\textsl{arr}, \textsl{ind}, \textsl{val}\texttt{)} &
-    Return a new array with the new value \textsl{val} inserted into position \textsl{ind} of \textsl{arr}. \\
+\textsl{ser}\texttt{.sort\_values()} & Same as above, except that sorting is
+done with respect to values, not keys. \\
 
-\texttt{np.delete(}\textsl{arr}, \textsl{ind}\texttt{)} &
-    Return a new array with the element at index \textsl{ind} removed from \textsl{arr}. \\
+\textsl{ser1}\texttt{.append(}\textsl{ser2}\texttt{)} & 
+Return a new \texttt{Series} with \textsl{ser1}'s and \textsl{ser2}'s key/value
+pairs smooshed together. (Bad things may happen if \textsl{ser1} and
+\textsl{ser2} share some of the same keys.) \\
 
-\texttt{np.flip(}\textsl{arr}\texttt{)} &
-    Return a new array with \textsl{arr} in reverse order. \\
 \end{tabular}
 \bigskip
 \caption{Handy functions, methods, and operators for Pandas \texttt{Series}es.}
