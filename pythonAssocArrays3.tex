@@ -18,6 +18,8 @@ values in a \texttt{Series}, or their keys (indexes). Note that
 \texttt{Series}! Instead, it gives you \textit{the key of the lowest value}.
 Study this code snippet and its output to test your understanding of this:
 
+\index{understanding@\texttt{understanding}}
+
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 understanding = pd.Series([15,4,13,3,7], index=[4,10,2,12,9])
 print(understanding)
@@ -63,4 +65,345 @@ The highest key is 12.
 
 And remember that ``lowest''/``highest'' for string data means alphabetical
 order.
+
+\section{Queries}
+
+\index{query}
+\index{match (a query)}
+\index{filter}
+
+One of the most powerful things we'll do with a data set is to \textbf{query}
+it. This means that instead of specifying (say) a particular key, or something
+like ``the minimum'' or ``the maximum,'' we provide our own custom criteria and
+ask Pandas to give us all values that \textbf{match}. This kind of operation is
+also sometimes called \textbf{filtering}, because we're taking a long list of
+items and sifting out only the ones we want.
+
+\index{boxies (square brackets)}
+\index{[]@\texttt{[]} (boxies)}
+
+\index{condition (of a query)}
+
+The syntax is interesting: you still use the boxies (like you do when
+giving a specific key) but inside the boxies you put a \textbf{condition} that
+will be used to select elements. It's best seen with an example. Re-using the
+\texttt{understanding} variable from above, we can query it and ask for all the
+elements greater than 5:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+more_than_five = understanding[understanding > 5]
+print(more_than_five)
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+4    15
+2    13
+9     7
+dtype: int64
+\end{Verbatim}
+
+The new thing here is the ``\texttt{understanding > 5}'' thing inside the
+boxies. The result of this query is itself a \texttt{Series}, but one in which
+everything that doesn't match the condition is filtered out. Thus we only have
+three elements instead of five. Notice the keys didn't change, and they also
+had nothing to do with the query: our query was about \textit{values}.
+
+\index{index@\texttt{.index} syntax (Pandas)}
+
+We could change this, if we were interested in putting a restriction on
+\textit{keys} instead, using the \texttt{.index} syntax:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+index_more_than_five = understanding[understanding.index > 5]
+print(index_more_than_five)
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+10    4
+12    3
+9     7
+dtype: int64
+\end{Verbatim}
+
+See how tacking on ``\texttt{.index}'' in the query made all the difference.
+
+\subsection{Query operators}
+
+\index{wakkas (angle brackets)}
+\index{<>@\texttt{<>} (wakkas)}
+
+Now I have a surprise for you. It makes perfect sense to use the character
+``\texttt{>}'' (called ``greater-than,'' ''right-angle-bracket,'' or simply
+''wakka'') to mean ``greater than.'' And the character ``\texttt{<}'' makes
+sense as ``less than.'' Unfortunately, the others don't make quite as much
+sense. See the top table in Figure~\ref{fig:queryOps}.
+
+\index{bang (``\texttt{"!}'')}
+\index{"!@\texttt{"!} (bang)}
+\index{bang-equals (``\texttt{"!=}'')}
+
+``Greater/less than or equal to'' isn't hard to remember, and it's a good thing
+Python doesn't require symbols like ``$\le$'' or ``$\ge$'' since those are hard
+to find on your keyboard. You just type both symbols back-to-back, with no
+space. More problematic are the last two entries in the top table. The
+``\texttt{!=}'' operator (pronounced ``bang-equals'') is used as a stand-in
+for ``$\ne$'' which also isn't keyboard friendly. And that one doesn't have a
+good mnemonic; you just have to memorize it.
+
+\index{double-equals (\texttt{==})}
+\index{==@\texttt{==} (double-equals)}
+
+By far the most error-prone of this set is the ``\texttt{==}''
+(\textbf{double-equals}) operator, which simply means ``equals.'' \textbf{Yes,
+you do have to use double-equals instead of single-equals in your queries, and
+yes it matters.} As additional incentive, let me inform you that if you use
+single-equals when you needed to use double-equals, \textit{it will seem to
+work at first}, but you will silently get the wrong answer.
+
+\textbf{Memorize this fact!} Failing to use double-equals is quite possibly the
+single most common programming error for beginners.
+
+\begin{figure}[ht]
+\centering
+\small
+\bigskip
+\underline{\textit{Simple query operators:}}\\
+\smallskip
+\begin{tabular}{c|c}
+Symbol & Meaning \\
+\hline
+\texttt{>} & greater than \\
+\hline
+\texttt{<} & less than \\
+\hline
+\texttt{>=} & greater than or equal to \\
+\hline
+\texttt{<=} & less than or equal to \\
+\hline
+\texttt{!=} & \textit{not} equal to \\
+\hline
+\texttt{==} & equal to \\
+\end{tabular}
+
+\bigskip
+\bigskip
+\underline{\textit{Compound query operators:}}\\
+\smallskip
+\begin{tabular}{c|c}
+Symbol & Meaning \\
+\hline
+\texttt{\&} & and \\
+\hline
+\texttt{|} & or \\
+\hline
+\texttt{\textasciitilde} & not \\
+\end{tabular}
+
+\bigskip
+\normalsize
+\caption{Query operators: simple and compound}
+\label{fig:queryOps}
+\end{figure}
+
+
+Here are some more examples to test your understanding. Make sure you
+understand why each output is what it is.
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+understanding = pd.Series([15,4,13,3,7], index=[4,10,2,12,9])
+print(understanding[understanding <= 7])
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+10    4
+12    3
+9     7
+dtype: int64
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(understanding[understanding != 13])
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+4     15
+10     4
+12     3
+9      7
+dtype: int64
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(understanding[understanding == 3])
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+12    3
+dtype: int64
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(understanding[understanding.index >= 9])
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+10    4
+12    3
+9     7
+dtype: int64
+dtype: int64
+\end{Verbatim}
+
+
+\subsection{Compound queries}
+
+\index{compound condition}
+
+Often, your query will involve more than one criterion. This is called a
+\textbf{compound condition}. It's not as common with \texttt{Series}es as it
+will be with \texttt{DataFrame}s in a couple chapters, but there are still uses
+for it here.
+
+\index{and (compound condition)}
+
+Suppose I want all the key/value pairs of \texttt{understanding} where the
+value is \textit{between 5 and 14}. This is really two conditions masquerading
+as one: we want all pairs where (1) the value is greater than 5, \textbf{and}
+also (2) the value is less than 14. I put the word ``\textbf{and}'' in boldface
+in the previous sentence because that's the operator called for here. We only
+want elements in our results where \textit{both} things are true, and
+therefore, we ``\textit{and} together the two conditions.'' (``And'' is being
+used as a verb here.)
+
+The way to achieve this is as follows. The syntax is nutty, so pay close
+attention:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+betw_5_and_14 = understanding[(understanding > 5) & (understanding < 14)]
+print(betw_5_and_14)
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+2    13
+9     7
+dtype: int64
+\end{Verbatim}
+
+First, notice that we put each of our two conditions \textit{in bananas} here.
+This is \textit{not} optional, as it turns out: you'll get a non-obvious error
+message if you omit them. Second, see how we combined the two with the
+``\texttt{\&}'' operator from the bottom half of Figure~\ref{fig:queryOps}. The
+result, then, was only the elements that satisfied \textit{both} conditions.
+
+\index{or (compound condition)}
+\index{pipe (vertical bar, or ``\texttt{|}'')}
+\index{|@\texttt{|} (pipe)}
+
+It can be tricky to figure out whether you want an \textbf{and} or an
+\textbf{or}. Unfortunately they don't always correspond to their colloquial
+English usage. Let's see what happens if we switch the ``\texttt{\&}'' symbol to
+a ``\texttt{|}'' (pronounced ``pipe''):
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+different_ex = understanding[(understanding > 5) | (understanding < 14)]
+print(different_ex)
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+4     15
+10     4
+2     13
+12     3
+9      7
+dtype: int64
+\end{Verbatim}
+
+You can see that we got everything back. That's because \textbf{or} means
+``only give me the elements where \textit{either one} of the conditions,
+\textit{or both}, are true.'' In this case, this is guaranteed to match
+everything, because if you think about it, \textit{every} number is either
+greater than five, or less than fourteen, or both. (Think deeply.)
+
+Even though in this example it didn't do anything exciting, an ``\textbf{or}''
+does sometimes return a useful result. Consider this example:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+useful = understanding[(understanding.index > 10) | (understanding > 5)]
+print(useful)
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+4     15
+2     13
+12     3
+dtype: int64
+\end{Verbatim}
+
+Here we're asking for all key/value pairs in which \textit{either} the key is
+greater than ten, \textit{or} the value is greater than ten, or both. This
+reeled in exactly three fish as shown above. If we changed this ``\texttt{|}''
+to an ``\texttt{\&}'', we'd have caught \textit{no} fish. (Take a moment to
+convince yourself of that.)
+
+\index{not (query condition)}
+\index{squiggle (tilde, or ``\texttt{\textasciitilde}'')}
+\index{~@\texttt{\textasciitilde} (squiggle)}
+
+The last entry in Figure~\ref{fig:queryOps} is the ``\texttt{\textasciitilde}''
+sign, which is pronounced ``tilde,'' ``twiddle,'' or ``squiggle.'' It
+corresponds to the English word \textbf{not}, although in an unusual place in
+the sentence. Here's an example:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+ex = understanding[~(understanding.index > 10) | (understanding > 10)]
+print(ex)
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+4     15
+10     4
+2     13
+9      7
+dtype: int64
+\end{Verbatim}
+
+Search for and stare at the squiggle in that line of code. In English, what we
+said was ``give me elements where either the key is \textit{not} greater than
+ten, or the value is greater than ten, or both.'' The four matching elements
+are shown above. 
+
+Changing the ``or'' back to an ``and'' here gives us this output instead:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+ex2 = understanding[~(understanding.index > 10) | (understanding > 10)]
+print(ex2)
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+4     15
+2     13
+dtype: int64
+\end{Verbatim}
+
+These are the only two rows where \textit{both} conditions are true (and
+remember that the first one is not-ted.)
+
+It can be tricky to get your queries right. As with most things, it just takes
+some practice.
+
+\subsection{Queries on strings}
+
+% pronounce "where" instead of "of"
+
+\subsubsection{Common pitfalls}
+
+A couple things before we move on. You've noticed that in all the above
+examples, it was necessary to type the word \texttt{understanding}
+\textit{twice}: once to specify the \texttt{Series} to query, and once as pat
+of the query itself. There's no way around that, sorry; you just have to get
+used to it.
 
