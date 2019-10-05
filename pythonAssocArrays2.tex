@@ -138,11 +138,9 @@ alter_egos = alter_egos['Diana'] = 'Wonder Woman'     <--- WRONG!
 You don't ``change a value and get a new \texttt{Series}''; you just
 ``change it.''
 
-\subsection{Accessing by pair number}
+\subsection{Accessing by position}
 
 \index{order}
-
-\index{iloc@\texttt{.iloc} syntax (Pandas)}
 
 One slightly weird thing you can do with a Pandas \texttt{Series} is ignore the
 key (index) altogether and instead use \textit{the number of the key/value
@@ -150,13 +148,20 @@ pair} to specify what value you want. This gives me the heebie-jeebies, because
 as I explained back on p.~\pageref{assocArraysUnordered}, there really isn't
 any meaningful ``order'' to the key/value pairs of an associative array. In
 true All Things To All People\texttrademark~fashion, however, Pandas lets you
-ask for the value of (say) ``the second'' superhero. To do so, you use the
-bizarrely-named \textbf{.iloc syntax}:
+do this.
+
+\subsubsection{Accessing a value by position}
+
+\index{iloc@\texttt{.iloc} syntax (Pandas)}
+
+You can ask for the value of (say) ``the second'' superhero. To do so, you use
+the bizarrely-named \textbf{.iloc syntax}:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 a_hero = alter_egos.iloc[1]
 print(a_hero)
 \end{Verbatim}
+\vspace{-.3in}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 Spidey
@@ -164,6 +169,25 @@ Spidey
 
 This is occasionally useful, so I mention it for completeness. The
 \texttt{.iloc} numbers start with 0 (not 1) as is true throughout Python.
+
+\subsubsection{Accessing a key by position}
+
+\index{index@\texttt{.index} syntax (Pandas)}
+
+Similarly, you can get the \textit{key} (as opposed to the value) of the
+key/value pair at a particular position. To ask for the key of ``the second''
+superhero, you use the \textbf{.index syntax}:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+a_secret_hero = alter_egos.index[1]
+print(a_secret_hero)
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Peter
+\end{Verbatim}
+
 
 \section{Vectorized arithmetic operators}
 
@@ -575,6 +599,10 @@ Function & Description \\
 \textsl{ser}\texttt{.iloc[73]} & Treating the key/values pairs in the
 \texttt{Series} \textsl{ser} as ordered, get a specific numbered (from 0)
 value. \\
+
+\textsl{ser}\texttt{.index[73]} & Treating the key/values pairs in the
+\texttt{Series} \textsl{ser} as ordered, get a specific numbered (from 0)
+key. \\
 
 \textsl{ser}\texttt{[\textquotesingle Firehouse\textquotesingle] =} (\textsl{something}) & Set the value for a key of
 the \texttt{Series} \textsl{ser}. \\
