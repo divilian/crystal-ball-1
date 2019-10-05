@@ -3,4 +3,64 @@
 arrays in Python (3 of 3)}}
 \label{ch:assocArraysInPython3}
 
-But wait, there's more!
+\index{min@\texttt{.min()} (Pandas)}
+\index{max@\texttt{.max()} (Pandas)}
+\index{idxmin@\texttt{.idxmin()} (Pandas)}
+\index{idxmax@\texttt{.idxmin()} (Pandas)}
+\index{index@index (pl:~indices)}
+\index{key-value pair}
+
+But wait, there's more! We can also use methods like \texttt{.min()},
+\texttt{.max()}, \texttt{.idxmin()}, and \texttt{.idxmax()} to get the
+``extremes'' of a \texttt{Series} -- \textit{i.e.} the lowest and highest
+values in a \texttt{Series}, or their keys (indexes). Note that
+\texttt{.idxmin()} does \textit{not} give you the lowest key in the
+\texttt{Series}! Instead, it gives you \textit{the key of the lowest value}.
+Study this code snippet and its output to test your understanding of this:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+understanding = pd.Series([15,4,13,3,7], index=[4,10,2,12,9])
+print(understanding)
+print("The min is {}.".format(understanding.min()))
+print("The max is {}.".format(understanding.max()))
+print("The idxmin is {}.".format(understanding.idxmin()))
+print("The idxmax is {}.".format(understanding.idxmax()))
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+4     15
+10     4
+2     13
+12     3
+9      7
+dtype: int64
+
+The min is 3.
+The max is 15.
+The idxmin is 12.
+The idxmax is 4.
+\end{Verbatim}
+
+The \texttt{idxmin} and \texttt{idxmax} are \texttt{12} and \texttt{4},
+respectively, since the smallest value in the series (the \texttt{3}) has a key
+of \texttt{12}, and the largest value (the \texttt{15}) has a key of
+\texttt{4}.
+
+\index{index@\texttt{.index} syntax (Pandas)}
+
+If we did actually want the lowest (or highest) key, we could use the
+\texttt{.index} syntax (see p.~\pageref{dotIndex}) to achieve that:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print("The lowest key is {}.".format(understanding.index.min()))
+print("The highest key is {}.".format(understanding.index.max()))
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+The lowest key is 2.
+The highest key is 12.
+\end{Verbatim}
+
+And remember that ``lowest''/``highest'' for string data means alphabetical
+order.
+
