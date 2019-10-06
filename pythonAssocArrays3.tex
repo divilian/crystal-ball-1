@@ -390,20 +390,171 @@ dtype: int64
 \end{Verbatim}
 
 These are the only two rows where \textit{both} conditions are true (and
-remember that the first one is not-ted.)
+remember that the first one is ``not-ted.'')
 
-It can be tricky to get your queries right. As with most things, it just takes
-some practice.
+It can be tricky to get compound queries right. As with most things, it just
+takes some practice.
 
 \subsection{Queries on strings}
 
-% pronounce "where" instead of "of"
+So far our examples have involved only numbers. Pandas also lets us perform
+queries on text data, specifying constraints on such things as the length of
+strings, letters in certain positions, and case (upper/lower).
 
-\subsubsection{Common pitfalls}
+\index{Marvel comics}
+
+Let's return to the Marvel-themed series from section~\ref{marvelSeries}:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+alter_egos = pd.Series(['Hulk','Spidey','Iron Man','Thor'],
+    index=['Bruce','Peter','Tony','Thor'])
+\end{Verbatim}
+
+\index{str@\texttt{.str} suffix (for Pandas queries)}
+\index{len@\texttt{len()}}
+
+By appending ``\texttt{.str}'' to the end of the variable name, we can get
+access to most of the string-based methods we'd like to use. For instance, find
+all the values with exactly four letters:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+four_letter_names = alter_egos[alter_egos.str.len() == 4]
+print(four_letter_names)
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Bruce    Hulk
+Thor     Thor
+dtype: object
+\end{Verbatim}
+
+\index{contains@\texttt{contains()}}
+or all the values that contain a space:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+spaced_out = alter_egos[alter_egos.str.contains(' ')]
+print(spaced_out)
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Tony    Iron Man
+dtype: object
+\end{Verbatim}
+
+or all the keys whose first character is a \texttt{T}:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+to_a_tee = alter_egos[alter_egos.index.str.startswith('T')]
+print(to_a_tee)
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Tony    Iron Man
+Thor        Thor
+dtype: object
+\end{Verbatim}
+
+or all entries where either the value is greater than five letters long or the
+key is the same as the value:
+
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+huh = alter_egos[(alter_egos.str.len() > 5) | (alter_egos.index == alter_egos)]
+print(huh)
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Peter    Spidey
+Thor       Thor
+dtype: object
+\end{Verbatim}
+
+The possibilities are endless. Some of the more common functions are summarized
+in Figure~\ref{fig:stringQueryFunctions}.
+
+\setlength\extrarowheight{5pt}
+
+\begin{figure}[ht]
+\centering
+\begin{tabular}{c|p{3.3in}}
+Function & Description \\
+\hline
+
+\textsl{ser}\texttt{.str.len()} & Set a condition on the length of a string. \\
+
+\textsl{ser}\texttt{.str.startswith(}\textsl{str}\texttt{)} & Request only
+strings that begin with certain letter(s). \\
+
+\textsl{ser}\texttt{.str.endswith(}\textsl{str}\texttt{)} & Request only
+strings that end with certain letter(s). \\
+
+\textsl{ser}\texttt{.str.contains(}\textsl{str}\texttt{)} & Request only
+strings that contain certain letter(s) somewhere in them. \\
+
+\textsl{ser}\texttt{.str.isupper()} & Request only strings that are in all
+upper-case. \\
+
+\textsl{ser}\texttt{.str.islower()} & Request only strings that are in all
+lower-case. \\
+
+\end{tabular}
+\bigskip
+\caption{Common query methods for string data.}
+\label{fig:stringQueryFunctions}
+\end{figure}
+
+\subsection{Last word}
 
 A couple things before we move on. You've noticed that in all the above
-examples, it was necessary to type the word \texttt{understanding}
-\textit{twice}: once to specify the \texttt{Series} to query, and once as pat
-of the query itself. There's no way around that, sorry; you just have to get
-used to it.
+examples, it was necessary to type the \texttt{Series} variable name several
+times:
 
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+understanding[(understanding < 12) | (understanding > 18)]
+alter_egos[(alter_egos.str.isupper()) & (alter_egos.str.len() < 10)]
+\end{Verbatim}
+
+There's really no way around that, sorry; you just have to get used to it. A
+very common beginner error is to try and write this:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+understanding[understanding < 12 | > 18]
+\end{Verbatim}
+
+This seems to make perfect sense, especially since it mimics the natural
+English sentence exactly: ``give me all values where \texttt{understanding} is
+\textit{less than 12 or greater than 18}.'' Unfortunately, it doesn't work like
+that in Python. The rule is: each side of an \textsl{and} or an \textsl{or}
+must be a complete sentence. The phrase ``\texttt{understanding} is greater
+than 18'' counts as a complete sentence, but ``is greater than 18'' does not.
+
+\index{boxies (square brackets)}
+\index{[]@\texttt{[]} (boxies)}
+\index{of@``of'' (array/\texttt{Series} access)}
+
+Also, whenever I see a line of code that specifies a key to a \texttt{Series}
+(or array), I mentally pronounce the opening boxie (``\texttt{[}'') as the word
+``of''. So when I read:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(x[5])
+\end{Verbatim}
+\vspace{-.2in}
+
+I say to myself ``print x \textbf{of} five.''
+
+\index{where@``where'' (array/\texttt{Series} query)}
+However, whenever I see a \textit{query}, I mentally pronounce the 
+boxie as the word ``where''. So when I read:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(x[x > 12])
+\end{Verbatim}
+\vspace{-.2in}
+
+I say to myself ``print x \textbf{where} x is greater than 12.'' I've found
+this helpful in making sense of the meaning of queries, since they're
+complicated enough as it is!
