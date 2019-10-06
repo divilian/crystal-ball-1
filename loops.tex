@@ -205,3 +205,151 @@ letters}'' messages were printed four times each, whereas
 indentation: it told Python that lines 4 and 5 \textit{were} part of the loop
 body, whereas line 6 was just ``business as usual,'' taking place only after
 all the loop hoopla was over and done with.
+
+\section{Iterating through the values of a \texttt{Series}}
+
+\index{iteration}
+
+Great news: if you mastered the previous section, this one and the next will be
+a snap. That's because Python, NumPy, and Pandas work together to make
+iterating through a \texttt{Series} pretty much \textit{exactly the same} as
+iterating through an array. In fact, sometimes you're not even sure which type
+you've got!
+
+\index{Marvel comics}
+
+Here's the Marvel \texttt{Series} regurgitated yet again:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+alter_egos = pd.Series(['Hulk','Spidey','Iron Man','Thor'],
+    index=['Bruce','Peter','Tony','Thor'])
+\end{Verbatim}
+
+\index{Thanos}
+\index{snap@``the snap''}
+
+Let's say I want to go through and greet all our heroes. It's a snap! (no pun
+intended):
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print("Welcome to the Marvel Cinematic Universe(tm).")
+for hero in alter_egos:
+    print("Greetings, {}!".format(hero))
+print("Go team!")
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Welcome to the Marvel Cinematic Universe(tm).
+Greetings, Hulk!
+Greetings, Spidey!
+Greetings, Iron Man!
+Greetings, Thor!
+Go team!
+\end{Verbatim}
+
+What could be easier?
+
+Notice that ``looping through the \texttt{Series}'' effectively means ``looping
+through the \textit{values} of the \texttt{Series},'' not the keys. What if we
+want to loop through the keys instead?
+
+\section{Iterating through the keys of a \texttt{Series}}
+
+\index{iteration}
+\index{index@\texttt{.index} syntax (Pandas)}
+
+I'm glad you asked. But in fact, you already know the answer: just use the
+\texttt{.index} syntax from p.~\pageref{dotIndex}!
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print("Let's iterate through the keys instead:")
+for secret_identity in alter_egos.index:
+    print("Nice to meet you, {}.".format(secret_identity))
+print("Carry on...")
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Let's iterate through the keys instead:
+Nice to meet you, Bruce.
+Nice to meet you, Peter.
+Nice to meet you, Tony.
+Nice to meet you, Thor.
+Carry on...
+\end{Verbatim}
+
+\index{loop variable}
+
+By the way, you can see that the name of the loop variable is completely at
+your discretion. I called the previous one ``\texttt{hero}'' and this one
+``\texttt{secret\_identity}'' just because those names were reflective of their
+contents. But it's really up to you: it has nothing to do with the name of the
+\texttt{Series} itself. (Yeah, I know the Marvel identities aren't secret
+anymore, but I'm old school.)
+
+\section{Iterating through the keys \textit{and} values of a \texttt{Series}}
+
+\index{items@\texttt{.items()} (Pandas)}
+
+Finally, it's common to need access to both halves of each key/value pair as
+you iterate through a \texttt{Series}. The way to accomplish this is to call
+the \texttt{.items()} method of the \texttt{Series}. But it's tricky, because
+when you use \texttt{.items()} you assign \textit{two} variables in your loop
+instead of just one.
+
+Before showing the complete loop, let's focus on just the loop header needed
+for this technique:
+
+\begin{Verbatim}[fontsize=\normalsize,samepage=true,frame=single,framesep=3mm]
+for secret_identity, hero in alter_egos.items():
+\end{Verbatim}
+
+I named two loop variables, separated by a comma. The reason I put
+\texttt{secret\_identity} first is that in this \texttt{Series}, we used
+\texttt{Bruce}, \texttt{Peter}, \textit{etc.} as the \textit{keys}, with the
+superhero names as the values. And with \texttt{.items()}, the variable name
+you want to use for the key is listed first.
+
+The rest of the loop follows logically from this, with both variables available
+inside the loop body:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print("We're now going to recognize some outstanding citizens.")
+for secret_identity, hero in alter_egos.items():
+    print("{}, known to his friends as {}.".format(hero, secret_identity))
+    print("The crowd screams: 'YAY {}!'".format(hero.upper()))
+print("Thanks, everyone, for your service.")
+\end{Verbatim}
+
+If we freeze the program just after the \textit{third} execution of the loop
+header this time, we get the picture in Figure~\ref{fig:loopsMemory2}. And the
+output, of course, is:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+We're now going to recognize some outstanding citizens.
+Hulk, known to his friends as Bruce.
+The crowd screams: 'YAY HULK!'
+Spidey, known to his friends as Peter.
+The crowd screams: 'YAY SPIDEY!'
+Iron Man, known to his friends as Tony.
+The crowd screams: 'YAY IRON MAN!'
+Thor, known to his friends as Thor.
+The crowd screams: 'YAY THOR!'
+Thanks, everyone, for your service.
+\end{Verbatim}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{loopsMemory2.png}
+\caption{A snapshot of memory immediately after the \textit{third} execution
+of the loop header in the \texttt{alter\_egos} program.}
+\label{fig:loopsMemory2}
+\end{figure}
+
+\section{Wrapping up}
+
+We can, of course, do much more inside loops than just print things. We can
+perform computations galore. The examples in this chapter were simply to
+illustrate the structure and behavior of \texttt{for} loops, so that you have a
+framework for understanding how more complex parts fit into them later.
+
+Onward!
