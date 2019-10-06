@@ -1,3 +1,144 @@
 
 \chapter{Loops}
 \label{ch:loops}
+
+\index{non-linear}
+\index{loop}
+
+It's time for our first look at a \textbf{non-linear} program. Up to now, all
+of our Python programs have executed step-by-step, start to finish, like a
+metronome, with each line of code getting executed exactly once. That's about
+to change. In this chapter, we introduce the concept of a \textbf{loop}, which
+is a programming construct that directs lines of code to be executed
+\textit{repeatedly}, and out of strict sequence.
+
+\section{The two species of loops}
+
+\index{fixed-iteration (loop)}
+\index{variable-iteration (loop)}
+\index{counter-controlled (loop)}
+\index{condition-controlled (loop)}
+\index{for loop@\texttt{for} loop}
+\index{while loop@\texttt{while} loop}
+
+Although some programming languages try to dress them up further, there are
+really only two fundamental kinds of loops in the world:
+\textbf{fixed-iteration loops} and \textbf{variable-iteration
+loops}.\footnote{Sometimes these are called \textbf{counter-controlled} and
+\textbf{condition-controlled} loops, respectively.} The first kind is simpler
+to understand and less error-prone; in most languages (Python included) it is
+implemented as a ``\textbf{\texttt{for} loop}.'' The tricker, second kind is
+available to programmers as a ``\textbf{\texttt{while} loop}.''
+
+Happily for us, it turns out that \texttt{while} loops don't come up much in
+Data Science, at least in the beginning. There are some more advanced
+techniques that use them (for instance, optimization methods and threshold
+detection) but for us it's going to be \texttt{for} loops that dominate the
+landscape. So let's figure out how they work.
+
+\section{A word of caution}
+
+\index{query}
+
+But before we embark, a cautionary note. Some of the things that loops can do
+-- especially the early examples -- can also be done using the queries of the
+last chapter. For instance, we could use a query to find all the strings in a
+\texttt{Series} that begin with the letter \texttt{T}, or we could use a loop
+to do the same thing.
+
+Here's the rule: \textbf{if you can do it without a loop, that is always
+preferred.} There are two reasons for this. First, it's less code to write, and
+less error-prone, to use Pandas' built-in features rather than crafting a loop
+yourself. That's why they created those features (like queries) after all.
+
+Second, and ultimately even more important, using a Pandas function is
+\textit{much faster} to execute than a loop. The reason has to do with how a
+loop is eventually broken down into the little instructions a machine can
+understand: when Python runs a loop, it plods through the steps methodically,
+whereas the Pandas functions are all pre-baked into a water-cooled rocket
+engine that can jet out of the gate.
+
+You don't need to know any of those nitty-gritty details. All you have to
+remember is: don't ever resort to using a loop unless you can't figure out how
+to do what you want without one. (And unfortunately, there are indeed those
+times.)
+
+\section{Iterating through an array}
+
+\index{iterate}
+
+Most often, we'll use a \texttt{for} loop to ``loop through,'' or
+``\textbf{iterate} through,'' the contents of an aggregate data variable. This
+means that instead of executing a snippet of code \textit{once}, we'll execute
+it \textit{once per element of the variable}. This ``once per element'' thing
+is what makes the code non-linear.
+
+\index{array}
+\index{ndarray@\texttt{ndarray} (NumPy)}
+
+Let's start with the first aggregate data type we learned, a NumPy array.
+(I've numbered the lines in this example so I can refer to them in the text
+below, but the numbers and colons aren't part of Python.)
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+ 1: villains = np.array(['Jafar','Ursula','Maleficent','Gaston'])
+ 2: print("Here we go!")
+ 3: for villain in villains:
+ 4:     print("Oooo, {} is scary!".format(villain))
+ 5:     print("({} has {} letters.)".format(villain, len(villain)))
+ 6: print("Whew!")
+\end{Verbatim}
+
+\index{loop!header}
+\index{loop!body}
+
+Immediately after creating our \texttt{villains} array, and printing an
+introductory message, we encounter our first loop. A loop consists of two
+parts: the \textbf{loop header} and the \textbf{loop body}. Here are the rules:
+
+\index{indentation}
+\index{curlies (curly braces)}
+\index{\{\}@\texttt{\{\}} (curlies)}
+
+\begin{compactitem}
+\item The loop header consists of the line that begins with ``\texttt{for}''.
+\item The loop body consists of \textit{all of the consecutive following lines
+that are \textbf{indented} (tabbed-over) one tab.}\footnote{Other programming
+languages -- every other one I know besides Python, in fact -- uses some other
+way to designate the loop body than indentation. Many (R and Java, for
+instance) use curly braces before and after the loop body so that the computer
+knows where it begins and ends. I personally like this feature of Python's, but
+there are haters, and the bottom line is you just have to get used to it.}
+\end{compactitem}
+
+That second rule turns out to be more important than it seems at first. A very
+(\textit{very!}) common error among beginners is to ``mis-indent'' their code
+such that their loop body includes more, or less, than they mean it to. So
+heads up.
+
+Before we continue, stare at that code above and convince yourself of these two
+facts:
+
+\begin{compactitem}
+\item[\leftpointright] The loop header is line \textbf{3}.
+\item[\leftpointright] The loop body is lines \textbf{4 and 5}. (\textit{Not} line 4
+only! \textit{Not} lines 4, 5, and 6!)
+\end{compactitem}
+
+Now the reason this is important is that a \texttt{for} loop works as follows:
+
+\index{memory picture}
+
+\begin{compactenum}
+\itemsep.1em
+\item First, create a new variable (on the left-hand side of the memory
+picture) named whatever comes immediately after the word ``\texttt{for}''. (In
+this example, the name of this new variable will be \texttt{villain}.)
+\item Then, for \textit{each} element of the array, in succession:
+    \begin{compactenum}
+    \itemsep.1em
+    \item Set that variable's value to the element of the array.
+    \item \textit{Execute the entire loop body.} (In this example, lines 4--5.)
+    \end{compactenum}
+\end{compactenum}
+
