@@ -1,0 +1,133 @@
+
+\chapter{Exploratory Data Analysis: univariate data}
+\label{ch:edaUnivariate}
+
+\index{Exploratory Data Analysis (EDA)}
+
+The fancy term ``\textbf{Exploratory Data Analysis}'' (EDA) basically just
+means getting acquainted with your data. After importing a new data set into
+Python, the first thing you normally do is poke around to get an idea of what
+it contains. You may not even know what questions you eventually want to ask --
+let alone what the answers are -- but sizing up the data is a necessary
+precursor to those activities.
+
+\index{univariate}
+
+In this chapter, we'll learn some basic EDA techniques for \textbf{univariate
+data}, which is really all we've studied so far. ``Univariate'' means to
+consider just one variable at a time, rather than possible relationships
+between variables. A single (one-dimensional) NumPy array or Pandas
+\texttt{Series} is a univariate data set, if you treat it in isolation. As it
+turns out, there's quite a few interesting things you can do with even
+something that simple.
+
+\section{Summary statistics}
+
+\index{summary statistics}
+
+\index{scales of measure}
+\index{categorical variable}
+\index{nominal variable}
+
+\textbf{Summary statistics} are a way to capture the general features of a data
+set, so you can see the forest instead of just a bunch of trees. Which type of
+summary information is appropriate depends on whether you're dealing with
+categorical or numeric data.
+
+\subsection{Categorical data: counts of occurrences}
+
+\index{faves@\texttt{faves}}
+Let's say you had access to a poll on people's favorite pop stars. You import
+this into a big ol' Pandas \texttt{Series} called \texttt{faves}:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(faves)
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+0          Katy Perry
+1             Rihanna
+2       Justin Bieber
+3               Drake
+4             Rihanna
+5        Taylor Swift
+6               Adele
+7               Adele
+8        Taylor Swift
+9       Justin Bieber
+...
+1395       Katy Perry
+dtype: object
+\end{Verbatim}
+
+\index{value\_counts@\texttt{.value\_counts()}}
+
+That's great, but it's also kinda TMI. You probably don't care who the
+\textit{first} person's idol is, nor the fifteenth, nor the last. Much more
+interesting is simply \textit{how many times} each value appears in the
+\texttt{Series}. This information is available from the Pandas
+\texttt{.value\_counts()} method:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+counts = faves.value_counts()
+print(counts)
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Taylor Swift     388
+Katy Perry       265
+Drake            261
+Adele            212
+Rihanna          136
+Justin Bieber    134
+dtype: int64
+\end{Verbatim}
+
+The \texttt{.value\_counts()} method returns another \texttt{Series}, but the
+\textit{values} of the original \texttt{Series} become the \textit{keys} of the
+new one. This tells us at a glance how popular each answer is relative to the
+others.
+
+To get percentages instead of totals, just divide by the total and multiply by
+100, of course:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(counts / len(counts) * 100)
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Taylor Swift     0.277937
+Katy Perry       0.189828
+Drake            0.186963
+Adele            0.151862
+Rihanna          0.097421
+Justin Bieber    0.095989
+dtype: float64
+\end{Verbatim}
+
+\index{mode}
+\index{central tendency}
+\index{measure of central tendency}
+
+Recall (p.~\pageref{mode}) that the \textbf{mode} is the only measure of
+central tendency that makes sense for categorical data. And all you have to do
+is call \texttt{.value\_counts()} and look at the top result. (In this case,
+\texttt{Taylor Swift}.)
+
+Note that \texttt{.value\_counts()} is a Pandas \texttt{Series} method, not a
+NumPy method. If you find yourself with a NumPy array instead, you can just
+\textbf{wrap} it in a \texttt{Series} as we did in Section~\ref{wrap}
+(p.~\pageref{wrap}):
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+my_array = np.array(['red','blue','red','green','green','green','blue'])
+print(pd.Series(my_array).value_counts())
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+green    3
+red      2
+blue     2
+dtype: int64
+\end{Verbatim}
+
