@@ -21,20 +21,18 @@ between variables. A single (one-dimensional) NumPy array or Pandas
 turns out, there's quite a few interesting things you can do with even
 something that simple.
 
-\section{Summary statistics}
-
 \index{summary statistics}
 
 \index{scales of measure}
 \index{categorical variable}
 \index{nominal variable}
 
-\textbf{Summary statistics} are a way to capture the general features of a data
-set, so you can see the forest instead of just a bunch of trees. Which type of
-summary information is appropriate depends on whether you're dealing with
-categorical or numeric data.
+First, we'll look at \textbf{summary statistics}, which are a way to capture
+the general features of a data set so you can see the forest instead of just a
+bunch of trees. Which type of summary information is appropriate depends on
+whether you're dealing with categorical or numeric data.
 
-\subsection{Categorical data: counts of occurrences}
+\section{Categorical data: counts of occurrences}
 
 \index{faves@\texttt{faves}}
 Let's say you had access to a poll on people's favorite pop stars. You import
@@ -60,7 +58,7 @@ print(faves)
 dtype: object
 \end{Verbatim}
 
-\index{value\_counts@\texttt{.value\_counts()}}
+\index{value\_counts@\texttt{.value\_counts()} method (Pandas)}
 
 That's great, but it's also kinda TMI. You probably don't care who the
 \textit{first} person's idol is, nor the fifteenth, nor the last. Much more
@@ -130,4 +128,292 @@ red      2
 blue     2
 dtype: int64
 \end{Verbatim}
+
+\section{Numerical data: quantiles}
+
+\index{real number}
+\index{quantile}
+\index{cut point (quantile)}
+
+A \textbf{quantile} is a real number between 0 and 1 that represents a
+``\textbf{cut point}'' of a numerical data set: roughly speaking, it's the
+number for which a certain fraction of the values are \textit{less than} that
+number. So the ``.2-quantile'' (pronounced ``point two quantile'') of a
+variable containing the heights of third-graders might be 50 inches. If that's
+the case, it would indicate that \textit{20\% of the third-graders are less
+than 50 inches tall.}
+
+Quantiles are very revealing, but underappreciated. Most people don't seem to
+know how to interpret them. But once you figure it out, you'll realize that
+quantiles tell you almost everything possible to know about a numeric variable:
+by dialing the quantile between 0 and 1, you can tell exactly how common values
+in a certain range are.
+
+\index{quantile@\texttt{.quantile()} method (Pandas)}
+
+In Python, you simply call the \texttt{.quantile()} method on a
+\texttt{Series}, passing a number between 0 and 1 as an argument, and it tells
+you exactly where that cut point is.
+
+Now there's a little bit of weirdness around the edges, depending on the exact
+definition used to calculate the quantiles. Let's say I collected some salary
+data, and got these responses (``k'' means ``thousand dollars per year,'' and
+``M'' means ``million dollars per year''):
+
+\begin{center}
+35k\quad 22k\quad 67k\quad 45k\quad 35k\quad 8M\quad 94k\quad 51k\quad 53k\quad
+64k\quad 54k
+\end{center}
+
+How would I calculate, say, the .7-quantile? First, sort the numbers:
+
+\begin{center}
+22k\quad 35k\quad 35k\quad 45k\quad 51k\quad 53k\quad 54k\quad 64k\quad 67k\quad 94k\quad 8M
+\end{center}
+
+(yes, we \textit{do} include the 35k value twice; don't eliminate duplicates)
+and then spread out the quantiles ``evenly'' from 0 to 1:
+
+\begin{center}
+\renewcommand{\arraystretch}{.7}
+\begin{tabular}{rccccccccccc}
+value: & 22k& 35k& 35k& 45k& 51k& 53k& 54k& 64k& 67k& 94k& 8M\\
+& $\uparrow$ &
+$\uparrow$ &
+$\uparrow$ &
+$\uparrow$ &
+$\uparrow$ &
+$\uparrow$ &
+$\uparrow$ &
+$\uparrow$ &
+$\uparrow$ &
+$\uparrow$ &
+$\uparrow$ \\
+quantile: & .0\ \ & .1\ \  & .2\ \  & .3\ \  & .4\ \  & .5\ \  & .6\ \  & .7\ \  & .8\ \  & .9\ \  & 1.0 \\
+\end{tabular}
+\end{center}
+
+Don't get picky on me. If you were picky, you could quibble at saying ``the
+.3-quantile is 45k'' since it's technically \textit{not} true that 30\% of the
+values are less than 45k: in truth, 3 out of 11 (27.3\%) of them are. Whatever,
+whatever. The point is that 45k is at the ``cut point'' that's
+$\frac{3}{10}$ths of the way through the values from min to max. Quantiles
+aren't about laser precision anyway: they're about understanding the general
+pattern of the data.
+
+\subsection{Special cases}
+
+\index{median}
+
+You'll realize as an immediate consequence of the above that the
+\textbf{median} is just another name for the \textbf{.5-quantile}. It's the
+value for which half the data points are below it, and half above. Also, the
+\textbf{0-quantile} is just the minimum of the data set, and the
+\textbf{1-quantile} the maximum.
+
+\subsection{Other kinds of ``-tiles''}
+
+This whole idea may ring bells with other names for you: qua\textbf{r}tiles,
+qu\textbf{i}ntiles, deciles, or (most probably) percentiles. All of those are
+basically special cases of quantiles. They split the data into evenly-sized
+groups:
+
+\index{quartile}
+\index{quintile}
+\index{quantile}
+\index{decile}
+\index{percentile}
+
+\begin{compactitem}
+\item ``quartiles'': split the data into four groups, with the split points
+being the .25-, .5-, and .75-quantiles.
+\item ``quintiles'': split the data into five groups, with the split points
+being the .2-, .4-, .6, and .8-quantiles.
+\item ``deciles'': split the data into ten groups, with the split points
+being the .1-, .2-, .3-, .4-, .5-, .6-, .7-, .8-, and .9-quantiles.
+\item ``percentiles'': split the data into 100 groups, with the split points
+being the .01-, .02-, .03-, ..., .98-, and .99-quantiles.
+\end{compactitem}
+
+Be careful to understand that ``evenly-sized groups'' does not mean ``groups
+with the same-sized range,'' but rather ``groups with \textit{the same number
+of data points in them.}'' Normally, in fact, the ranges will \textit{not} be
+the same size. The lowest quintile for a data set of IQs might range from 47
+(the lowest IQ in the data set) all the way up to 83, whereas the IQs in the
+middle quintile might all be in the narrow range 96 to 104.
+
+\subsection{An example}
+
+\index{YouTube}
+\index{num\_plays@\texttt{num\_plays}}
+
+Let's nail this home with an example. I have a (fictitious) data set containing
+the number of YouTube plays for each of a selection of videos. It's called
+\texttt{num\_plays}. Here are the first few values:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+0     791
+1    3133
+2       0
+3    1789
+4     297
+5     219
+6    1688
+7     209
+8     422
+9   91454
+dtype: int64
+\end{Verbatim}
+
+That's great, but it's both too much information and too little: we can pore
+through the plays for every single video, but it's hard to get our head around
+what the overall contents are. So let's run some quantiles. We'll start with
+the .1-quantile:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(num_plays.quantile(.1))
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+0.0
+\end{Verbatim}
+
+Whoa. The .1-quantile is \textit{zero}. Think about what that means.
+Pictorially, sorting the data would give this:
+
+\begin{center}
+\renewcommand{\arraystretch}{.7}
+\begin{tabular}{rccccccccccccc}
+value: & 0& 0& 0& 0& 0& 0& 0& 0& $\cdots$ & 0 & 0 & $\cdots$ \\
+& $\uparrow$ & & & & & & & & & & $\uparrow$ & \\
+quantile: & .0\ \ & & & & & & & & & & .1\ \ & \\
+\end{tabular}
+\end{center}
+
+Put another way, that means that (at least) \textit{10\% of our videos have no
+plays at all.}
+
+Let's try the .2-quantile:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(num_plays.quantile(.2))
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+15.0
+\end{Verbatim}
+
+Okay, now at least we have a pulse. But in case we thought this was data set
+was packed with big hits, think again: a full 20\% of these videos have fewer
+than 15 plays.
+
+The median is:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(num_plays.quantile(.5))
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+263.0
+\end{Verbatim}
+
+That's quite a bit higher. How about the 90\% mark?
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(num_plays.quantile(.9))
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+1378.0
+\end{Verbatim}
+
+All right, so the upper end of these videos are in the thousands. Finally,
+let's look at the max:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(num_plays.quantile(1))
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+982221.0
+\end{Verbatim}
+
+!!
+
+Believe it or not, this sort of thing isn't unusual, especially with data from
+social phenomena. The tiny fraction of the data at the upper end of the range
+is \textit{vastly} higher than everything else is. Get your head around that:
+the median number of plays was a couple hundred, but the maximum number of
+plays was nearly a \textit{million}.
+
+\section{Numerical data: other summary statistics}
+
+\index{mean}
+\index{mean@\texttt{.mean()} method (Pandas)}
+
+That YouTube data set is a good segue to talking about that most overused of
+all statistics: the \textbf{mean}. Nearly everyone, if you ask them ``what's
+the typical number of plays for these videos?'' will use the mean, or average,
+to get at the answer. After all, isn't that what we mean by ``the average
+number of plays?''
+
+The answer is: not really, and not usually. Look what happens if we compute the
+mean (using the \texttt{.mean()} \texttt{Series} method) in this case:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(num_plays.mean())
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+14018.888235294118
+\end{Verbatim}
+
+Consider just how misleading that really is. The ``average'' number of plays is
+over 14,000. Yet the \textit{.9}-quantile was less than $\frac{1}{10}$th of that!
+In fact, even the .97-quantile is only:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(num_plays.quantile(.97))
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+3836.0
+\end{Verbatim}
+
+So \textit{over 97\% of the videos have less than the mean of 14,000 plays.} I
+think you'll agree that it is nonsensical to claim that ``the typical number of
+plays is 14,018,'' no matter how you slice it.
+
+We'll see in the next section why the mean is hopelessly skewed here.
+Basically, unless the data is symmetrical and ``bell-curvy,'' it gives a
+meaningless number. It is almost \textit{always} safer and more illuminating to
+look at the median (or other quantiles).
+
+\index{standard deviation}
+\index{std@\texttt{.std()} method (Pandas)}
+
+For completeness, one other commonly cited summary statistic is the
+\textbf{standard deviation}, which can be computed with the \texttt{.std()}
+method:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(num_plays.std())
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+93031.835
+\end{Verbatim}
+
+The standard deviation is a measure of the ``spread'' of a data set -- a high
+number means (in this example) higher variability in the number of plays from
+video to video. As with the mean, it's essentially meaningless (no pun
+intended) unless the data is nice and bell-curve shaped.
 
