@@ -38,11 +38,11 @@ whether you're dealing with categorical or numeric data.
 Let's say you had access to a poll on people's favorite pop stars. You import
 this into a big ol' Pandas \texttt{Series} called \texttt{faves}:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
 print(faves)
 \end{Verbatim}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 0          Katy Perry
 1             Rihanna
 2       Justin Bieber
@@ -201,7 +201,7 @@ $\frac{3}{10}$ths of the way through the values from min to max. Quantiles
 aren't about laser precision anyway: they're about understanding the general
 pattern of the data.
 
-\subsection{Special cases}
+\subsection{``Special'' quantiles}
 
 \index{median}
 
@@ -417,3 +417,186 @@ number means (in this example) higher variability in the number of plays from
 video to video. As with the mean, it's essentially meaningless (no pun
 intended) unless the data is nice and bell-curve shaped.
 
+Speaking of which, we'll never be able to judge the ``shape'' of anything
+unless we get some graphical plots involved. So let's turn our focus to that.
+
+\section{Plotting univariate data}
+
+\index{univariate}
+
+There are basically two useful ways of plotting a \texttt{Series} with
+univariate data. In one, you care about the specific labels (\textit{i.e.}
+keys, or ``index'') of the values in the \texttt{Series}, and you want them to
+be prominent in the plot. In the other, you don't; you just want to show the
+values themselves, so you can visualize how they are distributed irrespective
+of what label they might have.
+
+Let's do the first one first.
+
+\subsection{Bar charts of labeled data}
+
+\index{CSV@CSV (comma-separated values format)}
+\index{extension@extension (filename)}
+\index{filename extension}
+
+Let's read a data set on the world countries with the highest GDP (Gross
+Domestic Product). Here's a CSV file called \texttt{gdp.csv}\footnote{Recall
+the caveat about filename extensions in the p.~\pageref{extensions} footnote.}:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+Nation,Trillions
+Italy,2.26
+Germany,4.42
+Brazil,2.26
+United States,21.41
+France,3.06
+Canada,1.91
+Japan,5.36
+China,15.54
+India,3.16
+United Kingdom,3.02
+\end{Verbatim}
+
+\index{read\_csv@\texttt{read\_csv()} function (Pandas)}
+
+We'll read that into a \texttt{Series} using our technique from
+p.~\pageref{read_csv}:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+gdp = pd.read_csv('gdp.csv', squeeze=True, index_col=0, header=None)
+print(gdp)
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+0
+Nation            Trillions
+Italy                 2.26
+Germany               4.42
+Brazil                2.26
+United States        21.41
+France                3.06
+Canada                1.91
+Japan                 5.36
+China                15.54
+India                 3.16
+United Kingdom        3.02
+Name: 1, dtype: object
+\end{Verbatim}
+
+\index{bar chart}
+\index{plot@\texttt{.plot()} method (Pandas)}
+
+and now, we can visualize the relative sizes of these economies with the
+\texttt{.plot()} method. The \texttt{.plot()} method takes, among other things,
+a ``\texttt{kind}'' argument which specifies what kind of plot you want. In
+this case, a \textbf{bar chart} is the correct thing:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+gdp.plot(kind='bar')
+\end{Verbatim}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\textwidth]{gdp.png}
+\end{figure}
+
+There are a zillion ways to customize these plots, and I'll only mention a
+very, very few. A more complete list of options is available by Googling, or
+going to \url{https://matplotlib.org/3.1.1/api/\_as\_gen/matplotlib.pyplot.plot.html}
+
+\index{sort\_values@\texttt{.sort\_values()} method (Pandas)}
+
+For instance, to make all the bars the same color, we can pass
+``\texttt{color="blue"}''. Sorting the values is something we already know how
+to do, with \texttt{.sort\_values()}:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+gdp.sort_values(ascending=False).plot(kind='bar')
+\end{Verbatim}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\textwidth]{gdp2.png}
+\end{figure}
+
+You see what I mean about ``caring about the labels/keys/index'' for this sort
+of plot: if we hadn't labeled the bars, the plot would tell us nothing useful.
+
+I'm sure you've seen lots of bar charts in your life, so this is nothing new.
+But consider how much information is embedded in this infographic. Not only can
+we tell that the U.S.~and China are the two biggest economies, we can tell that
+they are \textit{far and away} the two biggest, with Japan and Germany (the
+next two highest) only a fraction.
+
+\subsection{Bar charts of occurrence counts}
+
+\index{value\_counts@\texttt{.value\_counts()} method}
+\index{bar chart}
+
+A very common special case of a bar chart is one where we combine it with the
+\texttt{.value\_counts()} method. Let's go back to Taylor vs.~Katy:
+
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+print(faves)
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+0          Katy Perry
+1             Rihanna
+2       Justin Bieber
+3               Drake
+4             Rihanna
+5        Taylor Swift
+6               Adele
+7               Adele
+8        Taylor Swift
+9       Justin Bieber
+...
+1395       Katy Perry
+dtype: object
+\end{Verbatim}
+
+\index{plot@\texttt{.plot()} method}
+
+It would be useful to see an infographic on how popular each celebrity is, and
+combining \texttt{.value\_counts()} and \texttt{.plot()} makes it a snap:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+faves.value_counts().plot(kind='bar',color="red")
+\end{Verbatim}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{celebs.png}
+\end{figure}
+
+\index{sort\_index@\texttt{.sort\_index()} method (Pandas)}
+\index{value\_counts@\texttt{.value\_counts()} method (Pandas)}
+
+The \texttt{.sort\_values()} method wasn't needed here, since
+\texttt{.value\_counts()} already returns its answer in decreasing numerical
+order. If we wanted the bars in alphabetical order instead, we'd just sort the
+\texttt{Series} by index before plotting:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+faves.value_counts().sort_index().plot(kind='bar',color="purple")
+\end{Verbatim}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{celebs2.png}
+\end{figure}
+
+These long lines with lots of strung-together methods are concise, but can also
+be confusing. It's always an option to use temporary variables to store the
+intermediate results instead:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+counts = faves.value_counts()
+alphbetical_counts = counts.sort_index()
+alphbetical_counts.plot(kind='bar',color="purple")
+\end{Verbatim}
+
+Just a matter of preference.

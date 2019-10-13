@@ -186,10 +186,15 @@ Data typically resides in sources and files external to our programming
 environment, and we want to do everything we can to play ball with this open
 universe.
 
-The \texttt{pd.read\_csv()} function is a bit awkward since it has several
-mandatory arguments if you want to deal with \texttt{Series}es. Here's how it
-works. Suppose there were a file called \texttt{disney\_rides.csv} whose
-contents looked like this:
+\index{CSV@CSV (comma-separated values format)}
+\index{extension@extension (filename)}
+\index{filename extension}
+
+One common data format is called \textbf{CSV}, which stands for
+\textbf{comma-separated values}. Files in this format are normally named with a
+``\texttt{.csv}'' extension. As the name suggests, the lines in such a file
+consist of values separated by commas. For example, suppose there's a file
+called \texttt{disney\_rides.csv} whose contents looked like this:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 Pirates of the Carribean,25
@@ -200,7 +205,12 @@ Peter Pan,29
 These are the current expected wait time (in minutes) for each of these Disney
 World rides at some point of the day.
 
-To read this into a \texttt{Series} we'd write:
+\label{read_csv}
+\index{read\_csv@\texttt{read\_csv()} function (Pandas)}
+
+To read this into Python, we use the \texttt{pd.read\_csv()} function. It's a
+bit awkward since it has several mandatory arguments if you want to deal with
+\texttt{Series}es. Here's how it works:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 wait_times = pd.read_csv('disney_rides.csv', index_col=0, squeeze=True,
@@ -209,7 +219,7 @@ wait_times = pd.read_csv('disney_rides.csv', index_col=0, squeeze=True,
 
 Most of that junk is just to memorize for now, not to fully understand. If
 you're curious, \texttt{index\_col=0} tells Pandas that the first (0th) column
--- namely, the ride names --should be treated as the \texttt{index} for the
+-- namely, the ride names -- should be treated as the \texttt{index} for the
 \texttt{Series}. The \texttt{header=None} means ``there is no separate header
 row at the top of the file, Pandas, so don't try to treat it like one.'' If our
 \texttt{.csv} file \textit{did} have a summary row at the top, containing
