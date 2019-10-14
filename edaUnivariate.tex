@@ -242,7 +242,7 @@ the same size. The lowest quintile for a data set of IQs might range from 47
 (the lowest IQ in the data set) all the way up to 83, whereas the IQs in the
 middle quintile might all be in the narrow range 96 to 104.
 
-\subsection{An example}
+\subsection{A quantile example}
 
 \index{YouTube}
 \index{num\_plays@\texttt{num\_plays}}
@@ -391,6 +391,8 @@ So \textit{over 97\% of the videos have less than the mean of 14,000 plays.} I
 think you'll agree that it is nonsensical to claim that ``the typical number of
 plays is 14,018,'' no matter how you slice it.
 
+\index{bell-curvy@``bell-curvy''}
+
 We'll see in the next section why the mean is hopelessly skewed here.
 Basically, unless the data is symmetrical and ``bell-curvy,'' it gives a
 meaningless number. It is almost \textit{always} safer and more illuminating to
@@ -412,6 +414,7 @@ print(num_plays.std())
 93031.835
 \end{Verbatim}
 
+\index{bell-curvy@``bell-curvy''}
 The standard deviation is a measure of the ``spread'' of a data set -- a high
 number means (in this example) higher variability in the number of plays from
 video to video. As with the mean, it's essentially meaningless (no pun
@@ -423,6 +426,7 @@ unless we get some graphical plots involved. So let's turn our focus to that.
 \section{Plotting univariate data}
 
 \index{univariate}
+\label{twoWaysToPlotUnivariateData}
 
 There are basically two useful ways of plotting a \texttt{Series} with
 univariate data. In one, you care about the specific labels (\textit{i.e.}
@@ -600,3 +604,153 @@ alphbetical_counts.plot(kind='bar',color="purple")
 \end{Verbatim}
 
 Just a matter of preference.
+
+\section{Numerical data: histograms}
+
+\index{objects (of a study)}
+
+As I mentioned on p.~\pageref{twoWaysToPlotUnivariateData}, sometimes we don't
+actually care about the labels in a \texttt{Series}, only the values. This is
+when we're trying to size up how \textit{often} values of various magnitudes
+appear, irrespective of which specific objects of study those values go with.
+
+\index{histogram}
+\index{quantile}
+\index{bin (of a histogram)}
+
+My favorite plot this is the \textbf{histogram}. It's super powerful if you
+know how to read it, but underused because few people seem to know how. The
+idea is that we take a numeric, univariate data set, and divide it up into
+\textbf{bins}. Bins are sort of the reverse of quantiles: all bins have the
+\textit{same} size range, but a \textit{different} number of data points fall
+into each one.
+
+\index{football}
+\index{NCAA}
+
+Suppose we had data on the entire history of a particular NCAA football
+conference. A \texttt{Series} called ``\texttt{pts}'' has the number of points
+scored by each team in all that conference's games. It looks like this:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(pts)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+0        7
+1       35
+2       40
+3       17
+4       10
+...
+399     14
+dtype: int64
+\end{Verbatim}
+
+Some basic summary statistics of interest include:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print("min: {}".format(pts.quantile(0)))
+print(".25-quantile: {}".format(pts.quantile(.25)))
+print(".5-quantile: {}".format(pts.quantile(.5)))
+print(".75-quantile: {}".format(pts.quantile(.75)))
+print("max: {}".format(pts.quantile(1)))
+print("mean: {}".format(pts.mean()))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+min: 0.0
+.25-quantile: 17.0
+.5-quantile: 25.0
+.75-quantile: 32.0
+max: 55.0
+mean: 23.755
+\end{Verbatim}
+
+Looks like a typical score is in the 20's, with the conference record being a
+whopping 55 points in one game.
+
+We can plot a histogram of this \texttt{Series} with this code:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+pts.plot(kind='hist')
+\end{Verbatim}
+
+The result is in Figure~\ref{fig:ncaa1}. Stare hard at it. Python has divided
+up the points into ranges: 0 through 6 points, 7 through 12 points, 13 through
+21, \textit{etc.} Each of these ranges is a bin. The height of each blue bar on
+the plot is simply the number of games in which a team scored in that range.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{ncaa1.png}
+\caption{A histogram of the historical points-per-game for teams in a certain
+NCAA football conference.}
+\label{fig:ncaa1}
+\end{figure}
+
+\index{bell-curvy@``bell-curvy''}
+Now what do we learn from this? Lots, if we know how to read it. For one thing,
+it looks like the vast majority of games have teams scoring between 12 and 38
+points. A few teams have managed to eke out 40 or more, and there have been a
+modest number of single-digit scores or shutouts. Moreover, it appears that
+scores between 24 and 38 are considerably more common than those between 12 and
+24. Finally, this data shows some evidence of being ``bell-curvy'' in the sense
+that values in the middle of the range are more common than values at either
+end, and it is (very roughly) symmetrical on both sides of the median.
+
+This is even more precise information than the quantiles gave us. We get an
+entire birds-eye view of the data set. Whenever I'm looking at a numerical,
+univariate data set, pretty much the first thing I do is throw a histogram up
+on the screen and spend at least a couple minutes staring at it. It's almost
+the best diagnostic tool available.
+
+\subsection{Bin size}
+
+\index{bins (of a histogram)}
+\index{plot@\texttt{.plot()} method (Pandas)}
+
+Now one idiosyncrasy with histograms is that a lot depends on the bin size and
+placement. Python made its best guess at a decent bin size here by choosing
+ranges of 6 points each. But we can control this by passing a second parameter
+to the \texttt{.plot()} function, called ``\texttt{bins}'':
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+pts.plot(kind='hist', bins=30)
+\end{Verbatim}
+
+Here we specifically asked for \textit{thirty} bins in total, and we get the
+result in Figure~\ref{fig:ncaa2}. Now each bin is only two points wide, and as
+you can see there's a lot more detail in the plot.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{ncaa2.png}
+\caption{The same data set as in Figure~\ref{fig:ncaa1}, but with more (and
+smaller) bins.}
+\label{fig:ncaa2}
+\end{figure}
+
+Whether that amount of detail is a good thing or not takes some practice to
+decide. Make your bins too large and you don't get much precision in your
+histogram. Make them too small and the trees can overwhelm the forest. In this
+case, I'd say that Figure~\ref{fig:ncaa2} is good in that it tells us something
+not apparent from Figure~\ref{fig:ncaa1}: there are quite a few shutouts
+(zero-point performances), not merely games with six-points-or-less. Whether
+the trough between 22 and 24 points is meaningful is another matter, and my
+guess is that part is obscuring the more general features apparent in the first
+plot.
+
+\index{sweet spot@``sweet spot''}
+
+The rule is: whenever you create a histogram, \textit{take a few minutes to
+experiment with different bin sizes.} Often you'll find a ``sweet spot'' where
+the amount of detail is just right, and you'll get great insight into the data.
+But you do have to work at it a little bit.
+
+\subsection{Non-bell-curvy data}
+
+Let's return again to the celebrities example.
+
