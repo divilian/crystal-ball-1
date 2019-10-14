@@ -20,5 +20,9 @@ counts = celebs.value_counts()
 print(counts)
 
 plt.figure()
+counts.plot(kind='bar',color="orange")
+plt.savefig('celebs.png', bbox_inches='tight')
+
+plt.figure()
 counts.sort_index().plot(kind='bar',color="purple")
 plt.savefig('celebs2.png', bbox_inches='tight')

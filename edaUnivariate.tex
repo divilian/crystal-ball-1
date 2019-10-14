@@ -35,6 +35,9 @@ whether you're dealing with categorical or numeric data.
 \section{Categorical data: counts of occurrences}
 
 \index{faves@\texttt{faves}}
+\index{Swift@Taylor Swift}
+\index{Perry@Katy Perry}
+
 Let's say you had access to a poll on people's favorite pop stars. You import
 this into a big ol' Pandas \texttt{Series} called \texttt{faves}:
 
@@ -279,6 +282,7 @@ print(num_plays.quantile(.1))
 0.0
 \end{Verbatim}
 
+\label{pointOneQuantileEpiphany}
 Whoa. The .1-quantile is \textit{zero}. Think about what that means.
 Pictorially, sorting the data would give this:
 
@@ -568,7 +572,7 @@ It would be useful to see an infographic on how popular each celebrity is, and
 combining \texttt{.value\_counts()} and \texttt{.plot()} makes it a snap:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-faves.value_counts().plot(kind='bar',color="red")
+faves.value_counts().plot(kind='bar',color="orange")
 \end{Verbatim}
 
 \begin{figure}[ht]
@@ -752,5 +756,100 @@ But you do have to work at it a little bit.
 
 \subsection{Non-bell-curvy data}
 
-Let's return again to the celebrities example.
+\index{YouTube}
+\index{num\_plays@\texttt{num\_plays}}
+
+Let's return again to the YouTube example. We had some surprises when we looked
+at the quantiles and saw that the 1-quantile (max) was astronomically higher
+than the .9-quantile was. Let's see what happens when we plot a histogram
+(show in Figure~\ref{fig:youtube1}):
+
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+num_plays.plot(kind='hist', color="red")
+\end{Verbatim}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\textwidth]{youtube1.png}
+\caption{A first attempt at plotting the YouTube \texttt{num\_plays} data set.}
+\label{fig:youtube1}
+\end{figure}
+
+Huh?? Wait, where are all the bars of varying heights? We seem to have got only
+a single one.
+
+But they're there! They're just so small you can't see them. If you stare at
+the x-axis -- and your eyesight is good -- you might see tiny signs of life at
+higher values. But the overall picture is clear: the vast, vast majority of
+videos in this set have between 0 and 100,000 plays.
+
+\index{bins (of a histogram)}
+
+Let's see if we can get more detail by increasing the number of bins (say,
+to 1000):
+
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+num_plays.plot(kind='hist', bins=1000, color="red")
+\end{Verbatim}
+
+We now get the left-hand side of Figure~\ref{fig:youtube23}. It didn't really
+help much. Turns out the masses aren't merely crammed below a hundred thousand
+plays; they're crammed below \textit{one} thousand. We need another approach if
+we're going to see any detail on the low-play videos.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=.48\textwidth]{youtube2.png}
+\includegraphics[width=.48\textwidth]{youtube3.png}
+\caption{Further attempts at plotting the YouTube \texttt{num\_plays} data set.
+On the left side, we decreased the bin size to no avail. On the right side, we
+gave up on plotting the popular videos and concentrated only on the unpopular
+ones, which does illuminate the lower end somewhat. (Don't miss the x-axis
+ranges!)}
+\label{fig:youtube23}
+\end{figure}
+
+
+\index{distribution}
+\index{query}
+\index{filter}
+
+The only way to really see the distribution on the low end is to \textit{only}
+plot the low end. Let's use a query (recall section~\ref{queries} from
+p.~\pageref{queries}) to filter out \textit{only} the videos with 1000 plays or
+fewer, and then plot a histogram of that:
+
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+unpopular_video_plays = num_plays[num_plays <= 1000]
+unpopular_video_plays.plot(kind='hist', color="green")
+\end{Verbatim}
+
+This gives the right-hand side of Figure~\ref{fig:youtube23}. Now we can at
+least see what's going on. Looks like our \texttt{Series} has a crap-ton of
+videos that have never been viewed at all (recall our .1-quantile epiphany for
+this data set on p.\pageref{pointOneQuantileEpiphany}) plus a chunk that are in
+the 500-views-or-fewer range.
+
+\index{bell-curvy@``bell-curvy''}
+\index{mean}
+\index{standard deviation}
+
+The takeaway here is that not all data sets (by a long shot!) are bell-curvy.
+Statistics courses often present nice, symmetric data sets on physical
+phenomena like length or weight or free throw shooting, which have nice bell
+curves and are nicely summarized by means and standard deviations. But for many
+social phenomena (like salaries, numbers of likes/followers/plays, lengths of
+Broadway show runs, \textit{etc.})~the data looks more like this YouTube
+example. A few extremely large values dominate everything else by their sheer
+magnitude, which makes it more difficult to wrap your head around.
+
+It also makes it more challenging to answer the question, ``what's the
+\textit{typical} value for this variable?'' It ain't the mean, that's for sure.
+If you asked me for the ``typical'' number of plays of one of these YouTube
+videos, I'd probably say ``zero'' since that's an extremely common value.
+Another reasonable answer would be ``somewhere in the low hundreds,'' since
+there are quite a few videos in that range, as illustrated by the
+right-hand-side of Figure~\ref{fig:youtube23}. But you'd be hard-pressed to try
+and sum up the entire data set with a single typical value. There just isn't
+one for stuff like this.
 
