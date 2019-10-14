@@ -134,6 +134,7 @@ dtype: int64
 
 \section{Numerical data: quantiles}
 
+\label{quantiles}
 \index{real number}
 \index{quantile}
 \index{cut point (quantile)}
@@ -713,7 +714,7 @@ the best diagnostic tool available.
 
 \subsection{Bin size}
 
-\index{bins (of a histogram)}
+\index{bin (of a histogram)}
 \index{plot@\texttt{.plot()} method (Pandas)}
 
 Now one idiosyncrasy with histograms is that a lot depends on the bin size and
@@ -783,7 +784,7 @@ the x-axis -- and your eyesight is good -- you might see tiny signs of life at
 higher values. But the overall picture is clear: the vast, vast majority of
 videos in this set have between 0 and 100,000 plays.
 
-\index{bins (of a histogram)}
+\index{bin (of a histogram)}
 
 Let's see if we can get more detail by increasing the number of bins (say,
 to 1000):
@@ -833,15 +834,17 @@ the 500-views-or-fewer range.
 \index{bell-curvy@``bell-curvy''}
 \index{mean}
 \index{standard deviation}
+\index{Broadway shows}
 
 The takeaway here is that not all data sets (by a long shot!) are bell-curvy.
 Statistics courses often present nice, symmetric data sets on physical
-phenomena like length or weight or free throw shooting, which have nice bell
-curves and are nicely summarized by means and standard deviations. But for many
-social phenomena (like salaries, numbers of likes/followers/plays, lengths of
-Broadway show runs, \textit{etc.})~the data looks more like this YouTube
-example. A few extremely large values dominate everything else by their sheer
-magnitude, which makes it more difficult to wrap your head around.
+phenomena like bridge lengths or actor heights or free throw percentages, which
+have nice bell curves and are nicely summarized by means and standard
+deviations. But for many social phenomena (like salaries, numbers of
+likes/followers/plays, lengths of Broadway show runs, \textit{etc.})~the data
+looks more like this YouTube example. A few extremely large values dominate
+everything else by their sheer magnitude, which makes it more difficult to wrap
+your head around.
 
 It also makes it more challenging to answer the question, ``what's the
 \textit{typical} value for this variable?'' It ain't the mean, that's for sure.
@@ -853,3 +856,104 @@ right-hand-side of Figure~\ref{fig:youtube23}. But you'd be hard-pressed to try
 and sum up the entire data set with a single typical value. There just isn't
 one for stuff like this.
 
+\section{Numerical data: box plots}
+
+\index{bivariate}
+\index{box plot}
+\index{plot@\texttt{.plot()} method (Pandas)}
+
+Let's talk about one more type of plot in this chapter, even though it's really
+most useful when dealing with bivariate data, as we'll address in a later
+chapter. It's called the \textbf{box plot} (also known as a
+``\textbf{box-and-whisker'' plot}). We can create one by passing
+``\texttt{kind="box"}'' to the \texttt{.plot()} method (here for the NCAA
+football data):
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+pts.plot(kind="box")
+\end{Verbatim}
+
+The result is shown in Figure~\ref{fig:ncaaBox}, along with some annotations in
+red so you can figure out what's going on.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\textwidth]{ncaaboxAnnotated.png}
+\caption{A box plot of the NCAA points data.}
+\label{fig:ncaaBox}
+\end{figure}
+
+For now, don't worry about the mysterious word ``\texttt{None}'' at the bottom.
+(This indicates which ``group'' the box represents, and will feature
+prominently in our bivariate data chapter.) For a univariate data set like this
+one, the x-axis has no meaning. The y-axis, on the other hand, is easy to
+understand: it's the number of points per football game.
+
+\index{quantile}
+
+Now the thing to realize about box plots is that they're essentially just a
+graphical way of showing quartiles; or, put another way, a graphical way of
+showing these five quantiles:
+
+\begin{compactitem}
+\item The 0-quantile (the minimum value) is the y-value of the bottom ``whisker.''
+\item The .25-quantile is the y-value of the bottom of the ``box.''
+\item The .5-quantile (the median) is the y-value of the horizontal line within
+the box.
+\item The .75-quantile is the y-value of the top of the ``box.''
+\item The 1-quantile (the maximum value) is the y-value of the top ``whisker.''
+\end{compactitem}
+
+Using your quantile knowledge from section~\ref{quantiles}, you'll realize the
+following fact: \textit{the box alone contains exactly half the data points.}
+This is a key insight. While the whiskers show the entire range of the data,
+the box shows the middle 50\% of it. This makes it very easy to grasp where the
+bulk of the data lies, and it reinforces the lesson we learned from the
+histogram on this data set (Figure~\ref{ncaa1}): a big chunk of the time, teams
+score in the 20's.
+
+You might object to showing an entire plot for this, since I've just revealed
+that it's a fancy way to show five numbers. And you're right, in a way.
+However, when we show multiple \textit{groups} of data side-by-side, each with
+their own box, it becomes a particularly powerful tool. Stay tuned for that.
+
+\subsection{Outliers}
+
+What happens if we show our head-scratching YouTube data set as a box plot? You
+get the monstrosity in Figure~\ref{fig:youtubebox}:
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\textwidth]{youtubebox.png}
+\caption{A box plot of a non-bell-curvy data set.}
+\label{fig:youtubebox}
+\end{figure}
+
+\index{outlier}
+\index{fish bubbles}
+
+Geez Louise, does that look wacky. The little circles (which to me always
+looked like bubbles from fish breath) represent \textbf{outliers}, an important
+concept in data science. An outlier is basically any data point that's so far
+out of the normal range that it seems strange. Python is essentially flagging
+it for us, so we can judge for ourselves whether it was a data entry error or
+just a strange data point. In this case, these aren't errors -- there's just a
+handful of videos that have been played a ton of times. And this makes the
+whole box plot look weird.
+
+\index{gravity}
+\index{black hole}
+\index{smoosh}
+
+Notice from Figure~\ref{fig:youtubebox} that \textit{the entire box and both
+whiskers} have gotten smooshed at the bottom of the figure, as if crushed by
+the gravity of a black hole. You'll see that the top whisker doesn't
+\textit{really} mean ``maximum,'' since it's way down there in thousand-land
+despite the fact that we have videos with almost a million views. The top
+whisker truly means ``the maximum \textit{reasonable-looking} data point in the
+\texttt{Series},'' where ``reasonable-looking'' is something Pandas is trying
+to make an educated guess about. There are ways to tweak what counts as an
+outlier, but my purpose here is just to get you to realize that when you have a
+highly skewed data set (like YouTube), prepare to see lots of things that are
+considered ``outliers,'' and prepare to comb through all the mess on your box
+plots to try and discern the true meaning it's trying to convey.
