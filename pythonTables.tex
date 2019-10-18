@@ -1,7 +1,343 @@
 
-% +, -, *, /
-% np.sqrt()
-% np.round( , num_decimals)
-% np query syntax
+\chapter[Tables in Python (1 of 3)]{\huge\selectfont{Tables in Python (1 of
+3)}}
 
-\chapter{Tables in Python: Pandas \texttt{DataFrame}s}
+\label{dataframes}
+
+\index{table}
+\index{DataFrame@\texttt{DataFrame} (Pandas)}
+
+The third of our three aggregate data types from waaaay back in
+Chapter~\ref{ch:aggregateData} was the \textbf{table}. Don't worry: we haven't
+forgotten about him. In this chapter, we'll implement him by means of the
+Pandas \texttt{DataFrame}, the most important data type in this entire book.
+
+\section{Reading a \texttt{DataFrame} from a \texttt{.csv} file}
+
+\index{CSV@CSV (comma-separated values format)}
+
+Unlike NumPy arrays and Pandas \texttt{Series}es, which we learned several
+different ways to create, we're only going to learn one way to create a
+\texttt{DataFrame}. That's because \texttt{DataFrame}s are normally big enough
+that it's just too tedious to ever type them in manually. Instead, we'll read
+them from an external source; namely, a \texttt{.csv} file.
+
+\index{read\_csv@\texttt{read\_csv()} function (Pandas)}
+\index{davieses@\texttt{davieses}}
+
+We'll actually use the same \texttt{read\_csv()} function that we used in
+section~\ref{read_csv} (p.~\pageref{read_csv}), although oddly, this time we
+won't need to specify as many arguments. Let's say we have a
+``\texttt{davieses.csv}'' file with these contents:
+
+\index{file!\texttt{.csv}}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=lines,framesep=3mm]
+person,age,gender,height,instrument
+Dad,50,M,73,piano
+Mom,49,F,66,flute
+Lizzy,19,F,63,guitar
+TJ,18,M,71,trombone
+Johnny,15,M,69,euphonium
+\end{Verbatim}
+
+We can read it into a \texttt{DataFrame} with this code:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+my_first_data_frame = pd.read_csv("davieses.csv").set_index('person')
+print(my_first_data_frame)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+        age gender  height instrument
+person                               
+Dad      50      M      73      piano
+Mom      49      F      66      flute
+Lizzy    19      F      63     guitar
+TJ       18      M      71   trombone
+Johnny   15      M      69  euphonium
+\end{Verbatim}
+
+\index{header row (of a \texttt{.csv} file)}
+\index{row (of a table)}
+
+A couple things. First, you may have noticed that the \texttt{davieses.csv}
+file had a ``header'' row. This means that the first line of the file is not
+like the others: instead of containing information on a specific family member,
+it contains the \textit{kind} of information for \textit{every} family member.
+It looked like this:
+
+\vspace{-.1in}
+\begin{center}
+\texttt{person,age,gender,height,instrument}
+\end{center}
+\vspace{-.1in}
+
+\index{column (of a table)}
+\index{metadata}
+
+and you'll notice that these words (except for the first one; more on that in a
+moment) became the \textit{column names} when we imported the data. This sort
+of information, by the way, is called ``\textbf{metadata},'' a geeky-sounding
+word that basically means ``data about data.'' If ``Lizzy plays the guitar'' is
+a piece of data, then ``family members play instruments'' is a piece of
+\textit{meta}data.
+
+\index{read\_csv@\texttt{read\_csv()} function (Pandas)}
+\index{set\_index@\texttt{set\_index()} method (Pandas)}
+
+Second, don't miss the ending I tacked on to the \texttt{read\_csv()} line,
+where I called the \texttt{.set\_index()} method on the \texttt{DataFrame}.
+This tells Pandas that one of the columns in the \texttt{DataFrame} should be
+designated as the \textbf{index} (or the \textbf{keys}).
+
+\index{uniqueness!of the values in a \texttt{DataFrame} index}
+
+Back on p.~\pageref{tablesHaveNoKey} I asserted that unlike associative arrays,
+tables didn't have keys. And that's true of the general ``table'' concept. But
+Pandas designed their \texttt{DataFrame}s to behave in the same way as their
+\texttt{Series}es: one uniquely-valued column will be used to identify each
+row.
+
+\index{Foreman, George}
+\index{George}
+
+This choice is usually easy; if you glance back to Figure~\ref{fig:table}
+(p.~\pageref{fig:table}), we'd probably want to choose the \textsf{screenname}
+as the index (although a case could be made for the \textsf{real name} column
+instead). For the table in Figure~\ref{fig:aggregateMemory}
+(p.~\pageref{fig:aggregateMemory}), it would be the \textsf{item} column. In
+the \texttt{DataFrame} we just created above, obviously \texttt{person} is the
+correct choice -- it's the only one sure to be unique.\footnote{With apologies
+to boxing legend George Foreman, who named all four of his sons ``George.''}
+
+Anyway, designating a column as the index in this way sort of removes it from
+the other, ``ordinary'' columns. In the output, above, you may notice that the
+word ``\texttt{person}'' is printed somewhat lower than the other column names
+are. It turns out that if we want to talk about the index column specifically,
+we'll need to use a slightly different technique than we do for the other
+columns. More on that next chapter.
+
+\section{Missing values}
+
+Let's change the example to a different family, and a slightly bigger
+\texttt{DataFrame}. The ``\texttt{simpsons.csv}'' file is reproduced below. Do
+you notice anything odd about it?
+
+\index{simpsons@The Simpsons}
+\index{Santa's Little Helper}
+\index{file!\texttt{.csv}}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=lines,framesep=3mm]
+name,species,age,gender,fave,IQ,hair,salary
+Homer,human,36,M,beer,74,,52000
+Marge,human,34,F,helping others,120,stacked tall,
+Bart,human,10,M,skateboard,90,buzz,
+Lisa,human,8,F,saxophone,200,curly,
+Maggie,human,1,F,pacifier,100,curly,
+SLH,dog,4,M,,,shaggy,
+\end{Verbatim}
+
+\index{double comma@``double comma''}
+
+What I mean is the positioning of some of the commas. The sharp-eyed reader
+will see a ``double comma'' in Homer's row. Even a dull-eyed reader will notice
+several commas in a row in SLH's\footnote{The Simpson's dog was named ``Santa's
+Little Helper.''} row. And nearly \textit{every} row (the exception being
+Homer's) \textit{ends} with a comma, which just looks messed up.
+
+\index{missing value}
+
+This weird punctuation implies the existence of \textbf{missing values}, which
+means just what it sounds like: there's simply no data for certain columns of 
+certain rows. Homer doesn't have a ``\texttt{hair}'' value, no one \textit{but}
+Homer has a ``\texttt{salary}'' value, and SLH is missing all kinds of stuff.
+
+When we read this into a Pandas \texttt{DataFrame} a la:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+simpsons = pd.read_csv("simpsons.csv").set_index('name')
+\end{Verbatim}
+
+the result looks like this:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+       species  age gender            fave     IQ          hair   salary
+name                                                                    
+Homer    human   36      M            beer   74.0           NaN  52000.0
+Marge    human   34      F  helping others  120.0  stacked tall      NaN
+Bart     human   10      M      skateboard   90.0          buzz      NaN
+Lisa     human    8      F       saxophone  200.0         curly      NaN
+Maggie   human    1      F        pacifier  100.0         curly      NaN
+SLH        dog    4      M             NaN    NaN        shaggy      NaN
+\end{Verbatim}
+
+\index{nan@\texttt{NaN} (``not a number'')}
+
+The missing values come up as \texttt{NaN}'s, the same value you may remember
+from p.~\pageref{NaN}. The monker ``not a number'' makes sense for the
+\texttt{salary} case, although I think it's a bit weird for Homer's
+\texttt{hair} (not a number? is hair \textit{supposed} to be a number?...)
+At any rate, we can expect that this will be the case for many real-world data
+sets.
+
+\index{objects (of a study)}
+
+``Missing'' can mean quite a few subtly different things, actually. Maybe it
+means that the value for that object of study was collected, but lost. Maybe it
+means it was never collected at all. Maybe it means that variable doesn't
+really make \textit{sense} for that object, as in the case of a dog's IQ.
+Ultimately, if we want to use the other values in that row, we'll have to come
+to terms with what the missing values \textit{mean}. For now, let's just learn
+a couple of coarse ways of dealing with them.
+
+\index{dropna@\texttt{.dropna()} method (Pandas)}
+
+One (sometimes) handy method is \texttt{.dropna()}. If you call it, it will
+return a modified copy of the \texttt{DataFrame} in which any row with an
+\texttt{NaN} is removed. This turns out to be overkill in the Simpson's case,
+though:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(simpsons.dropna())
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Empty DataFrame
+Columns: [species, age, gender, fave, IQ, hair, salary]
+Index: []
+\end{Verbatim}
+
+In other words, nothing's left. (Every row had at least one \texttt{NaN} in
+it, so nothing survived.)
+
+We could pass an optional argument to \texttt{.dropna()} called
+``\texttt{how}'', and set it equal to \texttt{"all"}: in this case only rows
+with \textit{all} \texttt{NaN} values are removed. Sometimes that's
+``underkill,'' as in our Simpson's example: after all, none of the rows are
+\textit{entirely} \texttt{NaN}'s, so calling \texttt{.dropna(how="all")}
+would leave everything intact.
+
+\index{fillna@\texttt{.fillna()} method (Pandas)}
+\index{default value}
+
+Another option is the \texttt{.fillna()} method, which takes a ``default
+value'' argument: any \texttt{NaN} value is replaced with the default in the
+modified copy returned. Let's try it with the string \texttt{"none"} as the
+default value:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(simpsons.fillna("none"))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+       species  age gender            fave    IQ          hair salary
+name                                                                 
+Homer    human   36      M            beer    74          none  52000
+Marge    human   34      F  helping others   120  stacked tall   none
+Bart     human   10      M      skateboard    90          buzz   none
+Lisa     human    8      F       saxophone   200         curly   none
+Maggie   human    1      F        pacifier   100         curly   none
+SLH        dog    4      M            none  none        shaggy   none
+\end{Verbatim}
+
+This is possibly useful, but in this case it's not a perfect fit because
+different columns call for different defaults. The \texttt{fave} and
+\texttt{hair} columns could well have ``\texttt{none}'' (indicating no
+favorite thing, and no hair, respectively) but we might want the default
+\texttt{salary} to be 0. The way to accomplish that is to change the individual
+columns of the \texttt{DataFrame}. Here goes:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+simpsons['salary'] = simpsons['salary'].fillna(0)
+simpsons['IQ'] = simpsons['IQ'].fillna(100)
+simpsons['hair'] = simpsons['hair'].fillna("none")
+print(simpsons)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+       species  age gender            fave     IQ          hair   salary
+name                                                                    
+Homer    human   36      M            beer   74.0          none  52000.0
+Marge    human   34      F  helping others  120.0  stacked tall      0.0
+Bart     human   10      M      skateboard   90.0          buzz      0.0
+Lisa     human    8      F       saxophone  200.0         curly      0.0
+Maggie   human    1      F        pacifier  100.0         curly      0.0
+SLH        dog    4      M             NaN  100.0        shaggy      0.0
+\end{Verbatim}
+
+Here we've assumed that the default IQ, for someone who hasn't taken the test,
+is 100 (the average). I left the \texttt{NaN} in \texttt{fave} as is, since
+that seemed appropriate.
+
+\begin{samepage}
+By the way, that code is actually more than it may appear at first. When we
+execute a line like:
+
+\vspace{-.1in}
+\begin{center}
+\texttt{simpsons[\textquotesingle salary\textquotesingle] =
+simpsons[\textquotesingle salary\textquotesingle].fillna(0)}
+\end{center}
+\vspace{-.1in}
+\end{samepage}
+
+we're really saying ``please \textit{replace} the \texttt{salary} column of the
+\texttt{simpsons} \texttt{DataFrame} with a new column. That new column should
+be -- wait for it -- the existing \texttt{salary} column but with zeros
+replacing the \texttt{NaN}'s.''
+
+We'll see many more cases of changing \texttt{DataFrame} columns wholesale in
+the following chapters.
+
+\section{Removing rows/columns}
+
+Finally, there are times when after reading a \texttt{.csv} file into a
+\texttt{DataFrame}, you want to manually delete certain rows and/or columns
+that are not going to be of interest.
+
+
+\begin{samepage}
+
+\index{drop@\texttt{.drop()} method (Pandas)}
+\index{Santa's Little Helper}
+The easiest syntax for deleting a row (say, Santa's Little Helper) is:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+simpsons = simpsons.drop('SLH')
+\end{Verbatim}
+\end{samepage}
+
+The \texttt{.drop()} method takes the index of the undesired row as an
+argument, Like most of the methods we've seen so far, it returns a modified
+copy of the \texttt{DataFrame} it's called on, so you have to reassign this to
+the original variable (or use the \texttt{inplace=True} argument).
+
+\index{boxies (square brackets)}
+\index{[]@\texttt{[]} (boxies)}
+
+\begin{samepage}
+You can even delete multiple rows at the same time by enclosing the undesired
+indices in boxies:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+simpsons = simpsons.drop(['Homer','Marge','SLH'])
+\end{Verbatim}
+\end{samepage}
+
+\begin{samepage}
+
+\index{del operator@\texttt{del} operator (Pandas)}
+Deleting a column is even more common, since many tables ``in the wild'' have
+many, many columns, only a few of which you may care about in your analysis.
+You can whack one entirely with the \texttt{del} operator, just like we did for
+\texttt{Series}es (p.~\pageref{delOp}):
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+del simpsons['IQ']
+\end{Verbatim}
+\end{samepage}

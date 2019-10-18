@@ -189,6 +189,7 @@ universe.
 \index{CSV@CSV (comma-separated values format)}
 \index{extension@extension (filename)}
 \index{filename extension}
+\index{file!\texttt{.csv}}
 
 One common data format is called \textbf{CSV}, which stands for
 \textbf{comma-separated values}. Files in this format are normally named with a
@@ -196,7 +197,7 @@ One common data format is called \textbf{CSV}, which stands for
 consist of values separated by commas. For example, suppose there's a file
 called \texttt{disney\_rides.csv} whose contents looked like this:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=lines,framesep=2mm]
 Pirates of the Carribean,25
 Small World,20
 Peter Pan,29
@@ -217,6 +218,8 @@ wait_times = pd.read_csv('disney_rides.csv', index_col=0, squeeze=True,
     header=None)
 \end{Verbatim}
 
+\index{header row (of a \texttt{.csv} file)}
+
 Most of that junk is just to memorize for now, not to fully understand. If
 you're curious, \texttt{index\_col=0} tells Pandas that the first (0th) column
 -- namely, the ride names -- should be treated as the \texttt{index} for the
@@ -227,4 +230,4 @@ labels for the two columns, then we'd skip the \texttt{header=None} part.
 Finally, ``\texttt{squeeze=True}'' tells Pandas, ``since this is so skinny
 anyway -- just two columns -- let's have \texttt{pd.read\_csv()} return us a
 \texttt{Series}, rather than a more complex \texttt{DataFrame} object (which is
-the subject of a future chapter.)''
+the subject of Chapter~\ref{dataframes}.)''
