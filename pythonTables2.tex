@@ -2,10 +2,6 @@
 \chapter[Tables in Python (2 of 3)]{\huge\selectfont{Tables in Python (2 of
 3)}}
 
-% .sort_values(), .sort_index()
-% recoding with vectorized operators (and adding new column)
-% .sum(), etc. for column sums of entire df.
-
 \index{row (of a \texttt{DataFrame})}
 \index{row (of a table)}
 \index{column (of a table)}
@@ -417,184 +413,94 @@ ties by \texttt{reverse} sorted order by IQ.''
 Oh, and the \texttt{inplace=True} argument works for all these examples as
 well.
 
-%K, now we can create \texttt{Series}es; let's figure out what we can do with
-%them.
-%
-%
-%\index{element}
-%\index{len@\texttt{len()}}
-%
-%We can use the same \texttt{len()} function in yet a third way: to ascertain
-%the number of key/value pairs in a series. Using the Figure~\ref{fig:Series}
-%example (p.~\pageref{fig:Series}):
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-%print(len(alter_egos))
-%\end{Verbatim}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%4
-%\end{Verbatim}
-%
-%\index{boxies (square brackets)}
-%\index{[]@\texttt{[]} (boxies)}
-%
-%Accessing the value for a given key uses exactly the same syntax that NumPy
-%arrays used (boxies), except with the key in place of the numeric index:
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-%superhero = alter_egos['Peter']
-%print("Pssst...Peter is really {}.".format(superhero))
-%\end{Verbatim}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%Pssst...Peter is really Spidey.
-%\end{Verbatim}
-%
-%\index{uniqueness!of keys in an associative array}
-%
-%This is why it's important that the \textit{keys} of an associative array be
-%unique, even though the \textit{values} often aren't. If we type
-%``\texttt{alter\_egos[\textquotesingle Peter\textquotesingle]},'' we need to
-%get back one well-defined answer, not an ambiguous set of
-%alternatives.\footnote{Pandas, which tries to be All Things To All
-%People\texttrademark, will actually let you have duplicate index values in a
-%\texttt{Series}. What does it do if you ask for ``the'' value of
-%\texttt{Peter}, then, if there's more than one? It gives you back another
-%\textit{\texttt{Series}} of the different \texttt{Peter} superheroes. This is a
-%major pain, because now when you look up a value in the \texttt{Series}, you
-%don't know whether you'll get back a single item or another \texttt{Series},
-%which means you have to check to see which one it is, and then write different
-%code to handle the two cases...yick. Just stay far, far away. Make all your
-%keys unique.}
-%
-%To overwrite the value for a key with a new value, just treat it as a variable
-%and go:
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-%alter_egos['Bruce'] = 'Batman'
-%print(alter_egos)
-%\end{Verbatim}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%Bruce      Batman
-%Peter      Spidey
-%Tony     Iron Man
-%Thor         Thor
-%dtype: object
-%\end{Verbatim}
-%
-%This same syntax works for adding an entirely \textit{new} key/value pair as
-%well:
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-%alter_egos['Diana'] = 'Wonder Woman'
-%print(alter_egos)
-%\end{Verbatim}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%Bruce          Batman
-%Peter          Spidey
-%Tony         Iron Man
-%Thor             Thor
-%Diana    Wonder Woman
-%dtype: object
-%\end{Verbatim}
-%
-%It's just like with ordinary variables, if you think about it. Saying
-%``\texttt{x=5}'' overwrites the current value of \texttt{x} if there already
-%\textit{is} an \texttt{x}, otherwise it creates a new variable \texttt{x} with
-%that value.
-%
-%\index{del operator@\texttt{del} operator (Pandas)}
-%\label{delOp}
-%
-%Finally, to outright remove a key/value pair, you use the \texttt{del}
-%operator:
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-%del alter_egos['Tony']
-%print(alter_egos)
-%\end{Verbatim}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%Bruce          Batman
-%Peter          Spidey
-%Thor             Thor
-%Diana    Wonder Woman
-%dtype: object
-%\end{Verbatim}
-%
-%Bye bye, Iron Man.
-%
-%\index{in place@``in place''}
-%
-%Don't get mad when I tell you that all of the above operations work
-%\textbf{in place} on the \texttt{Series}, which is very different than some of
-%the ``return a modified copy'' style we've seen recently. Hence all of these
-%attempts are \textit{wrong}:
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-%alter_egos = del alter_egos['Tony']                   <--- WRONG!
-%alter_egos = alter_egos['Bruce'] = 'Batman'           <--- WRONG!
-%alter_egos = alter_egos['Diana'] = 'Wonder Woman'     <--- WRONG!
-%\end{Verbatim}
-%
-%You don't ``change a value and get a new \texttt{Series}''; you just
-%``change it.''
-%
-%\subsection{Accessing by position}
-%
-%\index{order}
-%
-%One slightly weird thing you can do with a Pandas \texttt{Series} is ignore the
-%key (index) altogether and instead use \textit{the number of the key/value
-%pair} to specify what value you want. This gives me the heebie-jeebies, because
-%as I explained back on p.~\pageref{assocArraysUnordered}, there really isn't
-%any meaningful ``order'' to the key/value pairs of an associative array. In
-%true All Things To All People\texttrademark~fashion, however, Pandas lets you
-%do this.
-%
-%\subsubsection{Accessing a value by position}
-%
-%\index{iloc@\texttt{.iloc} syntax (Pandas)}
-%
-%You can ask for the value of (say) ``the second'' superhero. To do so, you use
-%the bizarrely-named \textbf{.iloc syntax}:
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-%a_hero = alter_egos.iloc[1]
-%print(a_hero)
-%\end{Verbatim}
-%\vspace{-.3in}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%Spidey
-%\end{Verbatim}
-%
-%This is occasionally useful, so I mention it for completeness. The
-%\texttt{.iloc} numbers start with 0 (not 1) as is true throughout Python.
-%
-%\subsubsection{Accessing a key by position}
-%
-%\index{index@\texttt{.index} syntax (Pandas)}
-%\label{dotIndex}
-%
-%Similarly, you can get the \textit{key} (as opposed to the value) of the
-%key/value pair at a particular position. To ask for the key of ``the second''
-%superhero, you use the \textbf{.index syntax}:
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-%a_secret_hero = alter_egos.index[1]
-%print(a_secret_hero)
-%\end{Verbatim}
-%\vspace{-.3in}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%Peter
-%\end{Verbatim}
-%
-%
+\section{Summary statistics for \texttt{DataFrame}s}
+
+\index{summary statistics}
+
+Summary statistics like the mean, median, minimum/maximum, and the like, can of
+course all be computed on individual columns of a \texttt{DataFrame}, because
+each column is a \texttt{Series}:
+
+\index{median}
+
+\begin{samepage}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(simpsons['IQ'].median())
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+95.0
+\end{Verbatim}
+\end{samepage}
+
+\begin{samepage}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(simpsons['salary'].sum())
+\end{Verbatim}
+\vspace{-.2in}
+
+\index{sum method@\texttt{.sum()} method (Pandas)}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+52000.0
+\end{Verbatim}
+\end{samepage}
+
+\index{mean method@\texttt{.mean()} method (Pandas)}
+You can also, believe it or not, compute the sum/mean/max/etc on the entire
+\texttt{DataFrame}. This computes it on every column individually:
+
+\begin{samepage}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(simpsons.mean())
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+age         15.500000
+IQ         102.333333
+salary    8666.666667
+dtype: float64
+\end{Verbatim}
+\end{samepage}
+
+
+Pandas left out the non-numeric columns (\texttt{species}, \texttt{gender},
+\textit{etc.}) and computed the mean of each of the others, giving us a
+\texttt{Series} containing their values.
+
+\index{describe method@\texttt{.describe()} method (Pandas)}
+
+Finally, I often find the \texttt{.describe()} method useful:
+
+\begin{samepage}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(simpsons.describe())
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+count   6.000000    6.000000      6.000000
+mean   15.500000  102.333333   8666.666667
+std    15.436969   56.645094  21228.911104
+min     1.000000   30.000000      0.000000
+25%     5.000000   78.000000      0.000000
+50%     9.000000   95.000000      0.000000
+75%    28.000000  115.000000      0.000000
+max    36.000000  200.000000  52000.000000
+\end{Verbatim}
+\end{samepage}
+
+\index{quartile}
+\index{standard deviation}
+
+Neat! We get the number of values, the mean, the standard deviation, and all
+the quartiles for each of the numeric columns. Lots of dashboard information at
+a glance!
+
+% recoding with vectorized operators (and adding new column)
+
+
 %\section{Vectorized arithmetic operators}
 %
 %As with NumPy \texttt{ndarrays}, you can apply arithmetic operators like

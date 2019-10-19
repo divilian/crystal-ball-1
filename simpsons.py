@@ -64,3 +64,10 @@ print(simpsons.sort_values('IQ'))
 print("\nsort by two:")
 print(simpsons.sort_values(['gender','hair','IQ'],
     ascending=[False,True,False]))
+print("\nmedian IQ:")
+print(simpsons['IQ'].median())
+print("\ntotal salary:")
+print(simpsons['salary'].sum())
+print("\nwhole mean:")
+print(simpsons.mean())
+
