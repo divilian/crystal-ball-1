@@ -41,3 +41,18 @@ print("\nweird:")
 print(simpsons.iloc[[1,3,4]])
 print("\nage, fave, and IQ:")
 print(simpsons[['age','fave','IQ']])
+
+print("\nLisa's IQ:")
+lisas_row = simpsons.loc['Lisa']
+lisas_iq = lisas_row['IQ'] 
+print("Lisa's IQ is {}".format(lisas_iq))
+print("Lisa's IQ is {}".format(simpsons.loc['Lisa']['IQ']))
+
+print("\nindex:")
+print(simpsons.index)
+print("\ncolumns:")
+print(simpsons.columns)
+print("\nlen:")
+print(len(simpsons))
+print("\nshape:")
+print(simpsons.shape)

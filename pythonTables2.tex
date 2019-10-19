@@ -2,8 +2,6 @@
 \chapter[Tables in Python (2 of 3)]{\huge\selectfont{Tables in Python (2 of
 3)}}
 
-% .index, .columns, .shape, len()
-% .iloc, .loc, [], and with lists for all three
 % .sort_values(), .sort_index()
 % recoding with vectorized operators (and adding new column)
 % .sum(), etc. for column sums of entire df.
@@ -182,7 +180,123 @@ rather than up with the other values in that row.
 
 \section{Accessing individual elements}
 
+I mentioned above the eternal truth that \textit{each row of a
+\texttt{DataFrame} is a \texttt{Series}}. Once you grasp this, you'll realize
+that you can access an individual ``cell'' of a \texttt{DataFrame} simply by
+getting the row you want, and then getting the specific value from that. A
+two-step process for doing this would be:
 
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+lisas_row = simpsons.loc['Lisa']
+lisas_iq = lisas_row['IQ']
+print(lisas_iq)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+200.0
+\end{Verbatim}
+
+But a shorter, one-stepper just combines these two operations on the same line:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+lisas_iq = simpsons.loc['Lisa']['IQ']
+print(lisas_iq)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+200.0
+\end{Verbatim}
+
+\section{Accessing a \texttt{DataFrame}'s metadata}
+
+\index{metadata}
+\index{index syntax@\texttt{.index} syntax (Pandas)}
+
+We can get some meta-information about a \texttt{DataFrame} without even
+looking at individual rows. If we want to know what the index values themselves
+are, we use \texttt{.index}:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(simpsons.index)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Index(['Homer', 'Marge', 'Bart', 'Lisa', 'Maggie', 'SLH'],
+    dtype='object', name='name')
+\end{Verbatim}
+
+That weird-looking output tells us several things. First, the index of this
+\texttt{DataFrame} consists of \texttt{string}s (recall that's what
+``\texttt{dtype='object'}'' means; see p.~\pageref{dtypeRules}.) Second, the
+\textit{name} of the index column is, ironically, ``\texttt{name}''. (It could
+be named anything at all, of course.) Third, the actual index values are
+\texttt{Homer}, \texttt{Marge}, and all the rest.
+
+\index{columns@\texttt{.columns} (Pandas)}
+
+That's the index, or the ``row names,'' if you will. To get the column names,
+we use \texttt{.columns}:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(simpsons.columns)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Index(['species', 'age', 'gender', 'fave', 'IQ', 'hair', 'salary'],
+    dtype='object')
+\end{Verbatim}
+
+Interestingly, this too is an ``\texttt{Index}'' beast, also comprised of
+\texttt{string}s. Pandas treats both ``axes'' of a \texttt{DataFrame}
+similarly, in that both of them are the same type of thing (an
+``\texttt{Index}''). Notice that \texttt{name} is not present in the column
+names list, because as the \texttt{DataFrame}'s index it's a different sort of
+thing.
+
+\index{len@\texttt{len()}}
+
+How many rows does a \texttt{DataFrame} have? This is answerable by using the
+\texttt{len()} function again:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(len(simpsons))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+6
+\end{Verbatim}
+
+This is our third use of the word \texttt{len()}: it can be used to find the
+number of characters in a \texttt{string}, the number of key/value pairs of a
+\texttt{Series}, and (here) the number of rows of a \texttt{DataFrame}.
+
+\index{shape@\texttt{.shape} (Pandas)}
+Finally, we often want to get a quick sense of how large a \texttt{DataFrame}
+is, both in terms of rows and columns. The \texttt{.shape} syntax is handy
+here:
+
+\begin{samepage}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(simpsons.shape)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+(6, 7)
+\end{Verbatim}
+\end{samepage}
+
+This tells us that \texttt{simpsons} has six rows and seven columns. As I
+mentioned previously (p.~\pageref{tallAndSkinny}) this is definitely not the
+typical case: most \texttt{DataFrames} will have many more rows (thousands or
+even millions) than columns (at most, dozens).
+
+% .index, .columns, .shape, len()
 
 %K, now we can create \texttt{Series}es; let's figure out what we can do with
 %them.
