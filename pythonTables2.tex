@@ -296,7 +296,126 @@ mentioned previously (p.~\pageref{tallAndSkinny}) this is definitely not the
 typical case: most \texttt{DataFrames} will have many more rows (thousands or
 even millions) than columns (at most, dozens).
 
-% .index, .columns, .shape, len()
+\section{Sorting \texttt{DataFrames}s}
+\index{sorting@sorting (\texttt{DataFrame}s)}
+
+Sorting a \texttt{DataFrame} is largely like sorting a \texttt{Series}, except
+we have more choices: instead of just the keys and the values, we have the
+index and potentially \textit{many} different columns.
+
+\index{sort\_index@\texttt{.sort\_index()} method (Pandas)}
+The \texttt{.sort\_index()} method works just like it did for
+\texttt{Series}es:
+
+\begin{samepage}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(simpsons.sort_index())
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+       species  age gender            fave     IQ          hair   salary
+name                                                                    
+Bart     human   10      M      skateboard   90.0          buzz      0.0
+Homer    human   36      M            beer   74.0          none  52000.0
+Lisa     human    8      F       saxophone  200.0         curly      0.0
+Maggie   human    1      F        pacifier  100.0         curly      0.0
+Marge    human   34      F  helping others  120.0  stacked tall      0.0
+SLH        dog    4      M             NaN   30.0        shaggy      0.0
+\end{Verbatim}
+\end{samepage}
+
+The result is rows sorted alphabetically by name. And I hate to keep repeating
+myself, but remember that \texttt{.sort\_index()} returns a modified copy,
+unless you pass the \texttt{inplace=True} argument. The
+\texttt{ascending=False} argument is also allowed, and will sort by the index
+highest-to-lowest instead of lowest-to-highest.
+
+\index{sort\_values@\texttt{.sort\_values()} method (Pandas)}
+To sort by one of the columns, we call \texttt{.sort\_values()} and pass it the
+column name:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(simpsons.sort_index('IQ')
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+       species  age gender            fave     IQ          hair   salary
+name                                                                    
+SLH        dog    4      M             NaN   30.0        shaggy      0.0
+Homer    human   36      M            beer   74.0          none  52000.0
+Bart     human   10      M      skateboard   90.0          buzz      0.0
+Maggie   human    1      F        pacifier  100.0         curly      0.0
+Marge    human   34      F  helping others  120.0  stacked tall      0.0
+Lisa     human    8      F       saxophone  200.0         curly      0.0
+\end{Verbatim}
+
+\index{tie-breaker}
+
+Sometimes we want to include more than one column in the sort. Why? As a
+tie-breaker. Consider sorting a roster for a student club, which has
+\texttt{first\_name} and \texttt{last\_name} columns, among other things. We
+might want to sort the list alphabetically by last name, but for students with
+the same last name, we should go to the first name as a tie-breaker (so that
+\texttt{Angela Smith} shows up after \texttt{Velma Patterson} but before
+\texttt{Brad Smith}).
+
+To do this, we pass a list of columns, instead of a single column:
+
+\begin{samepage}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(simpsons.sort_values(['gender','hair','IQ']))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+       species  age gender            fave     IQ          hair   salary
+name                                                                    
+Maggie   human    1      F        pacifier  100.0         curly      0.0
+Lisa     human    8      F       saxophone  200.0         curly      0.0
+Marge    human   34      F  helping others  120.0  stacked tall      0.0
+Bart     human   10      M      skateboard   90.0          buzz      0.0
+Homer    human   36      M            beer   74.0          none  52000.0
+SLH        dog    4      M             NaN   30.0        shaggy      0.0
+\end{Verbatim}
+\end{samepage}
+
+Here, we said ``sort the rows alphabetically by \texttt{gender}. For rows with
+the same \texttt{gender}, use \texttt{hair} as a tie-breaker. And for rows with
+the same \texttt{gender} \textit{and} the same \texttt{hair}, use \texttt{IQ}
+as a second tie-breaker.'' Glance at that output and convince yourself that
+it's correct.
+
+We control the ``ascendingness'' of the multi-column sort by specifying a list
+of \textit{each} \texttt{ascending} value, one for each column we're sorting
+by. Consider this:
+
+\begin{samepage}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(simpsons.sort_values(['gender','hair','IQ'],
+    ascending=[False,True,False]))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+       species  age gender            fave     IQ          hair   salary
+name                                                                    
+Bart     human   10      M      skateboard   90.0          buzz      0.0
+Homer    human   36      M            beer   74.0          none  52000.0
+SLH        dog    4      M             NaN   30.0        shaggy      0.0
+Lisa     human    8      F       saxophone  200.0         curly      0.0
+Maggie   human    1      F        pacifier  100.0         curly      0.0
+Marge    human   34      F  helping others  120.0  stacked tall      0.0
+\end{Verbatim}
+\end{samepage}
+
+Now we're saying ``sort \textit{reverse} alphabetically by \texttt{gender},
+breaking ties by comparing \texttt{hair} alphabetically, and breaking further
+ties by \texttt{reverse} sorted order by IQ.''
+
+Oh, and the \texttt{inplace=True} argument works for all these examples as
+well.
 
 %K, now we can create \texttt{Series}es; let's figure out what we can do with
 %them.

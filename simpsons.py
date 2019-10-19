@@ -56,3 +56,11 @@ print("\nlen:")
 print(len(simpsons))
 print("\nshape:")
 print(simpsons.shape)
+
+print("\nsort by index:")
+print(simpsons.sort_index())
+print("\nsort by IQ:")
+print(simpsons.sort_values('IQ'))
+print("\nsort by two:")
+print(simpsons.sort_values(['gender','hair','IQ'],
+    ascending=[False,True,False]))
