@@ -498,474 +498,195 @@ Neat! We get the number of values, the mean, the standard deviation, and all
 the quartiles for each of the numeric columns. Lots of dashboard information at
 a glance!
 
-% recoding with vectorized operators (and adding new column)
+\section{Recoding and transforming}
 
+\index{US Women's National Team}
 
-%\section{Vectorized arithmetic operators}
-%
-%As with NumPy \texttt{ndarrays}, you can apply arithmetic operators like
-%\texttt{+} and \texttt{*} to entire \texttt{Series}es at a time, which is not
-%only easy code to write but also runs blazing fast. But the Pandas
-%\texttt{Series} is even smarter than that.
-%
-%\begin{figure}[ht]
-%\centering
-%\includegraphics[width=0.9\textwidth]{vectorizedPandas.png}
-%\caption{Two \texttt{Series}es in memory}
-%\label{fig:vectorizedPandas}
-%\end{figure}
-%
-%Consider the memory picture in Figure~\ref{fig:vectorizedPandas}. Here we have
-%two \texttt{Series}es, one pointed to by a \texttt{salaries} variable and the
-%other by \texttt{raises}, which are of different sizes and which have
-%overlapping, but not identical, sets of keys. What do you suppose Pandas would
-%do if we executed this code?
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-%new_salaries = salaries + raises
-%\end{Verbatim}
-%
-%The answer, happily, is the smartest possible thing it could do. Pandas gets
-%neither confused nor stifled by the fact that the keys are in different orders
-%in the two \texttt{Series}es, and instead it does what you surely want:
-%add corresponding elements, with matching keys, and produce a new
-%\texttt{Series} with all of those sums.
-%
-%\begin{figure}[ht]
-%\centering
-%\includegraphics[width=0.8\textwidth]{vectorizedPandas2.png}
-%\caption{The result of \texttt{+}'ing two \texttt{Series}es that don't have all the same keys.}
-%\label{fig:vectorizedPandas2}
-%\end{figure}
-%
-%The actual result in this case is in Figure~\ref{fig:vectorizedPandas2}, and
-%the output is here:
-%
-%% salaries = pd.Series([113,68,67,100.2,68],
-%%   index=['Michael','Dwight','Pam','Jim','Ryan'])
-%% raises = pd.Series([3.5,100,2,16.5],
-%%   index=['Dwight','Robert','Pam','Michael'])
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-%new_salaries = salaries + raises
-%print(new_salaries)
-%\end{Verbatim}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%Dwight      71.5
-%Jim          NaN
-%Michael    129.5
-%Pam         69.0
-%Robert       NaN
-%Ryan         NaN
-%dtype: float64
-%\end{Verbatim}
-%
-%\index{nan@\texttt{NaN} (``not a number'')}
-%\index{missing value}
-%
-%Convince yourself that \texttt{Dwight}'s \$68,000 salary got added to his
-%\$3,500 raise, and that \texttt{Michael}'s \$113,000 was added to \$16,500,
-%\textit{etc.}
-%
-%\label{NaN}
-%
-%Don't get freaked out by those \texttt{NaN} entries just yet. The special value
-%``\textbf{NaN}'' stands for ``\textbf{not a number},'' and basically means that
-%Pandas has to throw up its hands in that case. And with good cause.
-%\texttt{Jim} has a current salary of \$100,200 in the first \texttt{Series},
-%but has no value at all in the second one (no raise for Jim this year? Haven't
-%decided what his raise will be yet? Something else?) and so Pandas shrugs and
-%says ``dunno.'' We say that the \texttt{Jim} entry in the
-%\texttt{new\_salaries} \texttt{Series} is a \textbf{missing value}. The same is
-%true for \texttt{Robert} and \texttt{Ryan}, each of whom was present in only
-%one of the two operands.
-%
-%Now I know what you're thinking: ``can't Pandas just assume the salary and/or
-%raise is 0 if there's a missing one?'' The answer is that yes it can, but it
-%won't do so unless you give the go-ahead. Pandas is being cautious here, and
-%doesn't want to introduce errors into your data stream by false assumptions.
-%(Maybe in your company, for instance, there's a default entry-level salary that
-%every employee receives who's unspecified in the \texttt{salary}
-%\texttt{Series}. Or maybe the yearly raise is always assumed to be a flat 2.5\%
-%cost-of-living raise unless explicitly specified.)
-%
-%\index{add@\texttt{add()} function (Pandas)}
-%\index{sub@\texttt{sub()} function (Pandas)}
-%\index{mul@\texttt{mul()} function (Pandas)}
-%\index{div@\texttt{div()} function (Pandas)}
-%
-%If we do want Pandas to assume a certain default value, we have to change
-%tactics a bit and go with the \texttt{add()} function (or \texttt{sub()},
-%\texttt{mul()}, or \texttt{div()}):
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single]
-%new_salaries = pd.Series.add(salaries, raises, fill_value=0)
-%print(new_salaries)
-%\end{Verbatim}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%Dwight      71.5
-%Jim        100.2
-%Michael    129.5
-%Pam         69.0
-%Robert     100.0
-%Ryan        68.0
-%dtype: float64
-%\end{Verbatim}
-%
-%The \texttt{fill\_value} argument is the important one here: it specifies what
-%default value to use if one of the addends is missing a key from the other. Now
-%the result is as in Figure~\ref{fig:vectorizedPandas3}. You can, of course,
-%choose a \texttt{fill\_value} other than zero, if you wish.
-%
-%\begin{figure}[ht]
-%\centering
-%\includegraphics[width=0.8\textwidth]{vectorizedPandas3.png}
-%\caption{Using \texttt{add()} instead, and passing a \texttt{fill\_value}.}
-%\label{fig:vectorizedPandas3}
-%\end{figure}
-%
-%As with NumPy arrays, we can add (or subtract, or multiply, ...) a single
-%atomic value to a series as well:
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-%cost_of_living_increase = salaries * .025
-%print(cost_of_living_increase)
-%\end{Verbatim}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%Michael    2.825
-%Dwight     1.700
-%Pam        1.675
-%Jim        2.505
-%Ryan       1.700
-%dtype: float64
-%\end{Verbatim}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-%salaries = salaries + cost_of_living_increase
-%print(salaries)
-%\end{Verbatim}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%Michael    115.825
-%Dwight      69.700
-%Pam         68.675
-%Jim        102.705
-%Ryan        69.700
-%dtype: float64
-%\end{Verbatim}
-%
-%It can sometimes be useful to do string concatenation as well, for instance if
-%we had employee first names and last names in two \texttt{Series}es with their
-%employee ID as the index:
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-%firsts = pd.Series(['Hannibal', 'Clarice', 'Multiple', 'Buffalo'],
-%    index=[666, 1993, 47, 988])
-%lasts = pd.Series(['Starling', 'Crawford', 'Lecter', 'Bill', 'Miggs'],
-%    index=[1993, 1650, 666, 988, 47])
-%print(firsts + " " + lasts)
-%\end{Verbatim}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%47        Multiple Miggs
-%666      Hannibal Lecter
-%988         Buffalo Bill
-%1650                 NaN
-%1993    Clarice Starling
-%dtype: object
-%\end{Verbatim}
-%
-%\section{Copying \texttt{Series}es}
-%
-%\index{copying@copying (\texttt{Series}es)}
-%The rules for copying (or not copying) \texttt{Series}es are exactly the same
-%as for NumPy arrays (see Section~\ref{copyingNotCopyingArrays} on
-%p.~\pageref{copyingNotCopyingArrays}). If you merely assign one \texttt{Series}
-%object to another variable, the two variables will be pointing to the
-%\textit{same} \texttt{Series} in memory, which means that changes to one will
-%be reflected in the other. Calling the \texttt{.copy()} method, however,
-%creates an entirely new \texttt{Series} in memory.
-%
-%Make sure you understand the following output to confirm your understanding of
-%this:
-%
-%\index{Buffy the Vampire Slayer@\textit{Buffy the Vampire Slayer}}
-%
-%\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
-%slayers = pd.Series([120, 72, 200], index=['Buffy','Xander','Willow'])
-%anti_vamps = slayers
-%good_guys = slayers.copy()
-%anti_vamps['Rubert'] = 150
-%print(slayers)
-%\end{Verbatim}
-%\vspace{-.3in}
-%
-%\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%Buffy     120
-%Xander     72
-%Willow    200
-%Rubert    150
-%dtype: int64
-%\end{Verbatim}
-%
-%\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
-%print(anti_vamps)
-%\end{Verbatim}
-%\vspace{-.3in}
-%
-%\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%Buffy     120
-%Xander     72
-%Willow    200
-%Rubert    150
-%dtype: int64
-%\end{Verbatim}
-%
-%\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
-%print(good_guys)
-%\end{Verbatim}
-%\vspace{-.3in}
-%
-%\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%Buffy     120
-%Xander     72
-%Willow    200
-%dtype: int64
-%\end{Verbatim}
-%
-%(The numbers here are approximate IQs; don't mean to be a hater.)
-%
-%
-%\section{Sorting \texttt{Series}es}
-%\index{sorting@sorting (\texttt{Series}es)}
-%\index{sort\_values@\texttt{.sort\_values()} method (Pandas)}
-%\index{sort\_index@\texttt{.sort\_index()} method (Pandas)}
-%
-%Sorting is slightly more complex than for arrays, since there are two things we
-%might want to sort by: the \texttt{Series}' index, or the values themselves.
-%Correspondingly, there are two methods: \texttt{.sort\_index()} and
-%\texttt{.sort\_values()}:
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-%print(anti_vamps.sort_index())
-%\end{Verbatim}
-%\vspace{-.3in}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%Buffy     120
-%Rubert    150
-%Willow    200
-%Xander     72
-%dtype: int64
-%\end{Verbatim}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-%print(anti_vamps.sort_values())
-%\end{Verbatim}
-%\vspace{-.3in}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%Xander     72
-%Buffy     120
-%Rubert    150
-%Willow    200
-%dtype: int64
-%\end{Verbatim}
-%
-%\index{in place@``in place''}
-%Like NumPy's \texttt{np.sort()} function (but unlike its \texttt{.sort()}
-%method; refer back to Section~\ref{sortingArrays} on p.~\pageref{sortingArrays}
-%for details), neither of these methods actually sort the \texttt{Series} in
-%place; instead, they return sorted copies. However, they can be made to, by
-%including ``\texttt{inplace=True}'' as an argument:
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-%heroes_dumb_to_smart = anti_vamps.sort_values()
-%print(heroes_dumb_to_smart)
-%\end{Verbatim}
-%\vspace{-.3in}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%Xander     72
-%Buffy     120
-%Rubert    150
-%Willow    200
-%dtype: int64
-%\end{Verbatim}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-%print(anti_vamps)
-%\end{Verbatim}
-%\vspace{-.3in}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%Buffy     120
-%Xander     72
-%Willow    200
-%Rubert    150
-%dtype: int64
-%\end{Verbatim}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-%anti_vamps.sort_values(inplace=True)
-%print(anti_vamps)
-%\end{Verbatim}
-%\vspace{-.3in}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%Xander     72
-%Buffy     120
-%Rubert    150
-%Willow    200
-%dtype: int64
-%\end{Verbatim}
-%
-%Another useful feature of both \texttt{.sort\_X} methods is the ability to
-%\textit{reverse} sort. By adding ``\texttt{ascending=False}'' as an argument
-%(with or without also including the ``\texttt{inplace=True}'' argument; they
-%are combinable with a comma) you produce the reverse order:
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-%heroes_smart_to_dumb = anti_vamps.sort_values(ascending=False)
-%print(heroes_smart_to_dumb)
-%\end{Verbatim}
-%\vspace{-.3in}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%Willow    200
-%Rubert    150
-%Buffy     120
-%Xander     72
-%dtype: int64
-%\end{Verbatim}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-%anti_vamps.sort_index(inplace=True, ascending=False)
-%print(anti_vamps)
-%\end{Verbatim}
-%\vspace{-.3in}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%Xander     72
-%Willow    200
-%Rubert    150
-%Buffy     120
-%dtype: int64
-%\end{Verbatim}
-%
-%\section{Concatenating and combining}
-%
-%\index{uniqueness!of keys in an associative array}
-%Finally, it is sometimes convenient to be able to combine two or more
-%\texttt{Series}es into a single one. But there's a catch. Remember that in
-%order for a \texttt{Series} to ``work properly,'' its keys must be unique.
-%Combining two \texttt{Series} which share at least one of the same keys is a
-%recipe for disaster!
-%
-%The syntax for doing so, when the coast is clear, uses the \texttt{.append()}
-%method:
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-%crazy_example = salaries.append(slayers)
-%print(crazy_example)
-%\end{Verbatim}
-%\vspace{-.3in}
-%
-%\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-%Michael    113.0
-%Dwight      68.0
-%Pam         67.0
-%Jim        100.2
-%Ryan        68.0
-%Xander      72.0
-%Willow     200.0
-%Rubert     150.0
-%Buffy      120.0
-%dtype: float64
-%\end{Verbatim}
-%
-%Nothing untoward happened here because \textit{The Office} and \textit{Buffy}
-%don't have any overlapping character names. Note that the values all got
-%converted to \texttt{float} (instead of \texttt{int}), to enforce homogeneity.
-%Note also that \texttt{salaries} itself did \textit{not} change as a result of
-%this \texttt{.append()} call; instead, a new \texttt{Series} was returned that
-%contains all the items.
-%
-%
-%\section{Summary}
-%
-%All the functions from this chapter are summarized in
-%Figure~\ref{fig:handySeries}.
-%
-%\setlength\extrarowheight{5pt}
-%
-%\begin{figure}[ht]
-%\centering
-%\begin{tabular}{c|p{3.3in}}
-%Function & Description \\
-%\hline
-%
-%\texttt{len(}\textsl{ser}\texttt{)} & Get the number of key/value pairs in the
-%\texttt{Series} \textsl{ser}. \\
-%
-%\textsl{ser}\texttt{[\textquotesingle Five Guys\textquotesingle]} & Get the value of a specific key from the
-%\texttt{Series} \textsl{ser}. \\
-%
-%\textsl{ser}\texttt{.iloc[73]} & Treating the key/values pairs in the
-%\texttt{Series} \textsl{ser} as ordered, get a specific numbered (from 0)
-%value. \\
-%
-%\textsl{ser}\texttt{.index[73]} & Treating the key/values pairs in the
-%\texttt{Series} \textsl{ser} as ordered, get a specific numbered (from 0)
-%key. \\
-%
-%\textsl{ser}\texttt{[\textquotesingle Firehouse\textquotesingle] =} (\textsl{something}) & Set the value for a key of
-%the \texttt{Series} \textsl{ser}. \\
-%
-%\textsl{ser}\texttt{[\textquotesingle New Rest\textquotesingle] =}
-%(\textsl{something}) & Add an additional key/value pair to the \texttt{Series}
-%\textsl{ser}. (Same syntax as the previous.) \\
-%
-%\textsl{ser} \texttt{+ 13} & Add a quantity to each value of \textsl{ser},
-%yielding a new \textit{Series}. (Also works with \texttt{-}, \texttt{*},
-%\texttt{/}, \textit{etc.}) \\
-%
-%\index{nan@\texttt{NaN} (``not a number'')} \textsl{ser1} \texttt{+}
-%\textsl{ser2} & Add pairs of values that have matching keys in two
-%\texttt{Series}es, yielding a new \texttt{Series}. Use \texttt{NaN} for the
-%value of any key that doesn't appear in both \textsl{ser1} and \textsl{ser2}.
-%(Also works with \texttt{-}, \texttt{*}, \texttt{/}, \textit{etc.}) \\
-%
-%\shortstack{\texttt{pd.Series.add(}\textsl{ser1}\texttt{,}\\\quad\quad\quad\textsl{ser2}\texttt{,
-%fill\_value=}\textsl{x})} & Add pairs of values that have matching keys in two
-%\texttt{Series}es, yielding a new \texttt{Series}. Use \texttt{x} for any
-%missing values. (Also works with \texttt{sub()}, \texttt{mul()},
-%\texttt{div()}, \textit{etc.}) \\
-%
-%\textsl{ser1} = \textsl{ser2} & Make \textsl{ser1} point to the same data that
-%\textsl{ser2} points to. (\textit{Not} a copy!)\\
-%
-%\textsl{ser1} = \textsl{ser2}\texttt{.copy()} & Make \textsl{ser1} point to a
-%new, independent copy of \textsl{ser2}. \\
-%
-%\textsl{ser}\texttt{.sort\_index()} & Return a copy of the \texttt{Series}
-%\textsl{ser} which is sorted by the keys. Can also pass
-%``\texttt{inplace=True}'' to change \textsl{ser} itself, and/or pass
-%``\texttt{ascending=False}'' to get reverse order. \\
-%
-%\textsl{ser}\texttt{.sort\_values()} & Same as above, except that sorting is
-%done with respect to values, not keys. \\
-%
-%\textsl{ser1}\texttt{.append(}\textsl{ser2}\texttt{)} & 
-%Return a new \texttt{Series} with \textsl{ser1}'s and \textsl{ser2}'s key/value
-%pairs smooshed together. (Bad things may happen if \textsl{ser1} and
-%\textsl{ser2} share some of the same keys.) \\
-%
-%\end{tabular}
-%\bigskip
-%\caption{Handy functions, methods, and operators for Pandas \texttt{Series}es.}
-%\label{fig:handySeries}
-%\end{figure}
+It's often the case that although a \texttt{DataFrame} contains the information
+you need for your analysis, it's not exactly in the form you need it. Consider
+the following soccer data set called \texttt{worldcup2019.csv}:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=lines,framesep=3mm]
+last,first,date,in_time,out_time,goals,assists,tackles,fouls
+Morgan,Alex,28-Jun-2019,0.0,90.0,0,0,2,1
+Rapinoe,Megan,28-Jun-2019,0.0,74.0,2,0,2,2
+Press,Christen,28-Jun-2019,74.0,90.0,0,0,1,0
+Lavelle,Rose,28-Jun-2019,0.0,90.0,0,1,3,0
+Lavelle,Rose,7-Jul-2019,0.0,90.0,1,0,4,1
+Rapinoe,Megan,7-Jul-2019,0.0,83.0,1,1,3,2
+Lloyd,Carli,7-Jul-2019,87.0,90.0,0,0,1,0
+Dunn,Crystal,23-Jun-2019,42.0,81.0,0,1,1,2
+\end{Verbatim}
+
+\index{set\_index@\texttt{.set\_index()} method (Pandas)}
+
+Interestingly, if you think about it, this particular \texttt{.csv} file
+doesn't really have a meaningful index column. None of the columns are expected
+to be unique. So we'll leave off the ``\texttt{.set\_index()}'' method call
+when we read it in:
+
+\begin{samepage}
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+wc = pd.read_csv('worldcup2019.csv')
+print(wc)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+      last     first    date  in_mins  in_secs  out_mins  out_secs  goals  assists  tackles  fouls
+0   Morgan      Alex  28-Jun        0        0        90         0      0        0        2      1
+1  Rapinoe     Megan  28-Jun        0        0        74        27      2        0        2      2
+2    Press  Christen  28-Jun       74       27        90         0      0        0        1      0
+3  Lavelle      Rose  28-Jun        0        0        90         0      0        1        3      0
+4  Lavelle      Rose   7-Jul        0        0        90         0      1        0        4      1
+5  Rapinoe     Megan   7-Jul        0        0        83        16      1        1        3      2
+6    Lloyd     Carli   7-Jul       83       16        90         0      0        0        1      0
+7     Dunn   Crystal  23-Jun       42       37        81         5      0        1        1      2
+\end{Verbatim}
+\end{samepage}
+
+(As you can see, Pandas put in a numeric index column for us.)
+
+Each row of this \texttt{DataFrame} represents one player in one 2019 World Cup
+game. Notice we have a couple of players with more than one row (Megan Rapinoe
+and Rose Lavelle), and several rows for the same game (the first four rows are
+all from the June 28th game, for instance).
+
+Let's zero in on the columns with \texttt{mins} and \texttt{secs} in the names.
+These columns show us the minute and second that the player went \texttt{in} to
+the game, and the minute and second that they came \texttt{out}. For example,
+Alex Morgan played the entire 90-minute match on June 28th. Rapinoe started
+that game, but came out for a substitute at the 74:27 mark. Who replaced her?
+Looks like Christen Press did, since she \textit{entered} the game at exactly
+the same time. In most rows, the player either started the game, or ended the
+game or both, but the last row (Crystal Dunn's June 23rd performance) has her
+entering at 42:37 and exiting at 81:05.
+
+Now the reason I bring this up is because one aspect of our analysis might be
+computing statistics \textit{per minute} that each athlete played. If one
+player scored 3 goals in 200 minutes, for example, and another scored 3 goals
+in just 150 minutes, we could reasonably say that the second player was a more
+prolific scorer in that World Cup.
+
+\index{recoding}
+
+This is hard to do with the data in the form that it stands. So we'll
+\textbf{recode} a few of the columns. Let's collapse the minutes and seconds
+for each of the two clock times into a single value, in minutes:
+
+% TODO: round to two decimal places
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+wc['in_time'] = wc['in_mins'] + (wc['in_secs'] / 60)
+wc['out_time'] = wc['out_mins'] + (wc['out_secs'] / 60)
+\end{Verbatim}
+
+\index{vectorized operation@``vectorized'' operation}
+
+We're taking advantage of vectorized operations here. For each row, we need to
+divide the \texttt{in\_secs} value by 60 (to convert it to minutes) and add it
+to the \texttt{in\_mins} value. Pandas makes this super easy here, since we can
+just write out those operations once, and it will compute it for every single
+row!
+
+Let's delete the old, superfluous columns now and see what we've got:
+
+\begin{samepage}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+del wc['in_mins']
+del wc['in_secs']
+del wc['out_mins']
+del wc['out_secs']
+print(wc)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+      last     first    date  goals  assists  tackles  fouls  in_time  out_time
+0   Morgan      Alex  28-Jun      0        0        2      1     0.00     90.00
+1  Rapinoe     Megan  28-Jun      2        0        2      2     0.00     74.45
+2    Press  Christen  28-Jun      0        0        1      0    74.45     90.00
+3  Lavelle      Rose  28-Jun      0        1        3      0     0.00     90.00
+4  Lavelle      Rose   7-Jul      1        0        4      1     0.00     90.00
+5  Rapinoe     Megan   7-Jul      1        1        3      2     0.00     83.27
+6    Lloyd     Carli   7-Jul      0        0        1      0    83.27     90.00
+7     Dunn   Crystal  23-Jun      0        1        1      2    42.62     81.08
+\end{Verbatim}
+\end{samepage}
+
+\index{transforming}
+
+This is much less unwieldy than dealing with minutes and seconds separately.
+All we need to do now is \textbf{transform} our data by computing a new
+quantity entirely: the {total number of minutes played} for each player in each
+game. Again, Pandas makes this easy:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+wc['mins_played'] = wc['out_time'] - wc['in_time']
+print(wc)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+      last     first    date  goals  assists  tackles  fouls  in_time  out_time  mins_played
+0   Morgan      Alex  28-Jun      0        0        2      1     0.00     90.00        90.00
+1  Rapinoe     Megan  28-Jun      2        0        2      2     0.00     74.45        74.45
+2    Press  Christen  28-Jun      0        0        1      0    74.45     90.00        15.55
+3  Lavelle      Rose  28-Jun      0        1        3      0     0.00     90.00        90.00
+4  Lavelle      Rose   7-Jul      1        0        4      1     0.00     90.00        90.00
+5  Rapinoe     Megan   7-Jul      1        1        3      2     0.00     83.27        83.27
+6    Lloyd     Carli   7-Jul      0        0        1      0    83.27     90.00         6.73
+7     Dunn   Crystal  23-Jun      0        1        1      2    42.62     81.08        38.46
+\end{Verbatim}
+
+\index{starter@\texttt{starter}}
+\index{where@\texttt{where()} function (NumPy)}
+
+Before removing the \texttt{in\_time} and \texttt{out\_time} columns (which we
+could keep around, but I want this to fit on the page) let's do something extra
+snazzy. We might also be interested in which players \textit{started} which
+games (as opposed to being a mid-game substitute). Obviously, a starter is
+someone who entered the game at time 0. To create a new column for this, let's
+use the NumPy \texttt{where()} function, which I find immeasurably useful.
+
+The \texttt{np.where()} function works as follows. You give it three arguments.
+The first is a query condition, using the same query syntax we learned back in
+section~\ref{queries}. The second and third arguments are the values you want
+to use \textit{if the query evaluates to \texttt{True}, or \texttt{False},
+respectively}, for a particular row. Check it out:
+
+\begin{samepage}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+wc['starter'] = np.where(wc['in_time'] == 0, True, False)
+del wc['in_time']
+del wc['out_time']
+print(wc)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+      last     first    date  goals  assists  tackles  fouls  mins_played  starter
+0   Morgan      Alex  28-Jun      0        0        2      1        90.00     True
+1  Rapinoe     Megan  28-Jun      2        0        2      2        74.45     True
+2    Press  Christen  28-Jun      0        0        1      0        15.55    False
+3  Lavelle      Rose  28-Jun      0        1        3      0        90.00     True
+4  Lavelle      Rose   7-Jul      1        0        4      1        90.00     True
+5  Rapinoe     Megan   7-Jul      1        1        3      2        83.27     True
+6    Lloyd     Carli   7-Jul      0        0        1      0         6.73    False
+7     Dunn   Crystal  23-Jun      0        1        1      2        38.46    False
+\end{Verbatim}
+\end{samepage}
+
+Pretty cool, huh? The original \texttt{DataFrame} had the information we
+wanted, but not in the form we really needed it. What we wanted was not the
+entry time and exit time of each player (both in minutes and seconds) but
+rather the total time that player was on the pitch, and whether or not they
+started the game.
+
+Recoding and transforming turn out to be common tasks for a simple reason:
+\textit{whoever collects a data set can rarely predict how an analyst will
+eventually use it.} We're very grateful to the author of the \texttt{.csv}
+file, since it contains the raw material we need to evaluate our team's
+performances; but how were they to know that length-of-time-on-the-field and
+who-started-which-game was going to be important to us? They couldn't. But
+thanks to recoding and transformation skills, we can cope.
+
