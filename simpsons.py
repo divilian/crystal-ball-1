@@ -81,3 +81,8 @@ print("\nquery with cols #1:")
 print(simpsons[simpsons.age > 18]['fave'])
 print("\nquery with cols #2:")
 print(simpsons[simpsons.age > 18][['fave','gender','IQ']])
+
+print("\ngroupby:")
+print(simpsons['IQ'].median())
+print(simpsons.groupby('gender')['IQ'].median())
+print(simpsons.groupby('hair')['age'].max())

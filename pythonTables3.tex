@@ -131,8 +131,82 @@ whereas in the second (with the double boxies) we got a multi-column
 \texttt{DataFrame}.
 
 Combining all these operations takes practice, but lets you slice and dice a
-\texttt{DataFrame} up in innumerable ways.
+\texttt{DataFrame} up in innumerable different ways.
+
+\section{The \texttt{.groupby()} method}
+
+\index{groupby@\texttt{.groupby()} method (Pandas)}
+\index{subset (of a data set)}
+
+One of the most useful methods in the whole \texttt{DataFrame} repertoire is
+\texttt{.groupby()}. It applies when you want summary statistics (mean,
+quantile, max/min, \textit{etc.}) not for the \textit{whole} data set, but for
+each \textit{subset} of the data set, where the subsets split on the values of 
+one of the variables.
+
+Here's an example in action. It's old news that we could find, say, the median
+IQ of the Simpsons family overall:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(simpsons['IQ'].median())
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+95.0
+\end{Verbatim}
+
+But it's new news that we can do this for each gender separately, via:
+
+\begin{Verbatim}[fontsize=\normalsize,samepage=true,frame=single,framesep=3mm]
+print(simpsons.groupby('gender')['IQ'].median())
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+gender
+F    120.0
+M     74.0
+Name: IQ, dtype: float64
+\end{Verbatim}
+
+\index{categorical variable}
+We give a \textit{categorical} variable as the argument to \texttt{.groupby()},
+and specify a \textit{numeric} variable as the column we wish to analyze.
+Finally, we choose the summary statistic we want (\texttt{.median()} in the
+above case). 
+
+All this produces a resulting \textit{\texttt{Series}}. Think hard: the
+\textit{keys} of the resulting \texttt{Series} are the \textit{values} of the
+categorical variable (in the original \texttt{Series}) that we grouped by; and
+the \textit{values} of the resulting \texttt{Series}, are the results of
+applying the summary statistic function to each of the subsets separately.
+
+So now, in addition to knowing that the overall Simpson family median IQ is 95,
+we also know that among Simpson boys and men, it's only 74, whereas among girls
+and women, it's an impressive 120.
+
+Another example: let's find the maximum age for each hair style:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(simpsons.groupby('hair')['age'].max())
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+hair
+buzz            10
+curly            8
+none            36
+shaggy           4
+stacked tall    34
+Name: age, dtype: int64
+\end{Verbatim}
+
+(Since there's so many different hairstyles present, Maggie turns out to be the
+only one whose age is not represented here.)
+
+% TODO: explain .groupby() as "split/apply/combine" with figure
 
 % for loops with .itertuples()
-% .groupby() -- "split/apply/combine"
 
