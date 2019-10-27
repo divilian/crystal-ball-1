@@ -12,6 +12,8 @@ we'll talk about the atomic elements (``cells'') themselves.
 
 \section{Accessing individual rows and columns}
 
+\label{accessIndividualRowsColsOfDataFrame}
+
 Suppose you have a \texttt{DataFrame} called \texttt{df}. Here's how you can
 extract particular rows and columns:
 
@@ -176,6 +178,8 @@ rather than up with the other values in that row.
 
 \section{Accessing individual elements}
 
+\label{accessIndividualElementsOfDataFrame}
+
 I mentioned above the eternal truth that \textit{each row of a
 \texttt{DataFrame} is a \texttt{Series}}. Once you grasp this, you'll realize
 that you can access an individual ``cell'' of a \texttt{DataFrame} simply by
@@ -208,7 +212,7 @@ print(lisas_iq)
 \section{Accessing a \texttt{DataFrame}'s metadata}
 
 \index{metadata}
-\index{index syntax@\texttt{.index} syntax (Pandas)}
+\index{index@\texttt{.index} syntax (Pandas)}
 
 We can get some meta-information about a \texttt{DataFrame} without even
 looking at individual rows. If we want to know what the index values themselves
@@ -292,7 +296,7 @@ mentioned previously (p.~\pageref{tallAndSkinny}) this is definitely not the
 typical case: most \texttt{DataFrames} will have many more rows (thousands or
 even millions) than columns (at most, dozens).
 
-\section{Sorting \texttt{DataFrames}s}
+\section{Sorting \texttt{DataFrame}s}
 \index{sorting@sorting (\texttt{DataFrame}s)}
 
 Sorting a \texttt{DataFrame} is largely like sorting a \texttt{Series}, except
@@ -650,8 +654,8 @@ use the NumPy \texttt{where()} function, which I find immeasurably useful.
 
 The \texttt{np.where()} function works as follows. You give it three arguments.
 The first is a query condition, using the same query syntax we learned back in
-section~\ref{queries}. The second and third arguments are the values you want
-to use \textit{if the query evaluates to \texttt{True}, or \texttt{False},
+section~\ref{seriesQueries}. The second and third arguments are the values you
+want to use \textit{if the query evaluates to \texttt{True}, or \texttt{False},
 respectively}, for a particular row. Check it out:
 
 \begin{samepage}

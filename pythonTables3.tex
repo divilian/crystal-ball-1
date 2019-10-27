@@ -1,0 +1,138 @@
+
+\chapter[Tables in Python (3 of 3)]{\huge\selectfont{Tables in Python (3 of
+3)}}
+
+\section{Queries}
+
+\label{queries}
+\index{query}
+\index{match (a query)}
+
+Back in section~\ref{seriesQueries} (p.~\pageref{seriesQueries}), we learned
+how to write simple \textbf{queries} to selectively match only certain elements
+of a \texttt{Series}. The same technique is available to us with
+\texttt{DataFrame}s, only it's more powerful since there are more columns to
+work with at a time.
+
+\index{simpsons@The Simpsons}
+
+Let's return to the Simpsons example from p.~\pageref{finalSimpsons}, which is
+reproduced here:
+
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+       species  age gender            fave     IQ          hair   salary
+name                                                                    
+Homer    human   36      M            beer   74.0          none  52000.0
+Marge    human   34      F  helping others  120.0  stacked tall      0.0
+Bart     human   10      M      skateboard   90.0          buzz      0.0
+Lisa     human    8      F       saxophone  200.0         curly      0.0
+Maggie   human    1      F        pacifier  100.0         curly      0.0
+SLH        dog    4      M             NaN  100.0        shaggy      0.0
+\end{Verbatim}
+
+\index{boxies (square brackets)}
+\index{[]@\texttt{[]} (boxies)}
+
+We can filter this on certain rows by including a query in boxies:
+
+\index{adults@\texttt{adults}}
+
+\begin{Verbatim}[fontsize=\normalsize,samepage=true,frame=single,framesep=3mm]
+adults = simpsons[simpsons.age > 18]
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+      species  age gender            fave     IQ          hair   salary
+name                                                                   
+Homer   human   36      M            beer   74.0          none  52000.0
+Marge   human   34      F  helping others  120.0  stacked tall      0.0
+\end{Verbatim}
+
+As with \texttt{Series}es, we can't forget to repeat the name of the variable
+(``\texttt{simpsons}'') before giving the query criteria (``\texttt{> 18}'').
+Unlike with \texttt{Series}es, we also specify a column name
+(``\texttt{.age}'') that we want to query.
+
+\index{compound condition}
+\index{and (compound condition)}
+\index{kids@\texttt{kids}}
+
+We can also provide compound conditions in just the same way as before
+(section~\ref{seriesCompoundQueries}, p.~\pageref{seriesCompoundQueries}). If
+we want only human children, we say:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+kids = simpsons[(simpsons.age <= 18) & (simpsons.species == "human")]
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+       species  age gender        fave     IQ   hair  salary
+name                                                        
+Bart     human   10      M  skateboard   90.0   buzz     0.0
+Lisa     human    8      F   saxophone  200.0  curly     0.0
+Maggie   human    1      F    pacifier  100.0  curly     0.0
+\end{Verbatim}
+
+\index{or (compound condition)}
+\index{kids@\texttt{old\_andor\_wise}}
+whereas if we want everybody who's smart and/or old, we say:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+old_andor_wise = simpsons[(simpsons.IQ > 100) | (simpsons.age > 30)]
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+      species  age gender            fave     IQ          hair   salary
+name                                                                   
+Homer   human   36      M            beer   74.0          none  52000.0
+Marge   human   34      F  helping others  120.0  stacked tall      0.0
+Lisa    human    8      F       saxophone  200.0         curly      0.0
+\end{Verbatim}
+
+To narrow it down to only specific columns, we can combine our query with the
+syntax from section~\ref{accessIndividualRowsColsOfDataFrame}
+(p.~\pageref{accessIndividualRowsColsOfDataFrame}). You see, our query gave us
+another (shorter) \texttt{DataFrame} as a result, which has the same rights and
+privileges as any other \texttt{DataFrame}. So tacking on another pair of
+boxies gives us just a column:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(simpsons[simpsons.age > 18]['fave'])
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+name
+Homer              beer
+Marge    helping others
+Name: fave, dtype: object
+\end{Verbatim}
+
+\index{double boxies@``double boxies''}
+while tacking on \textit{double} boxies gives us column\textbf{s}:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(simpsons[simpsons.age > 18][['fave','gender','IQ']])
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+                 fave gender     IQ
+name                               
+Homer            beer      M   74.0
+Marge  helping others      F  120.0
+\end{Verbatim}
+
+Note that in the first of these cases, we got a \textit{\texttt{Series}} back,
+whereas in the second (with the double boxies) we got a multi-column
+\texttt{DataFrame}.
+
+Combining all these operations takes practice, but lets you slice and dice a
+\texttt{DataFrame} up in innumerable ways.
+
+% for loops with .itertuples()
+% .groupby() -- "split/apply/combine"
+
