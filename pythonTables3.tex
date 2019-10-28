@@ -208,5 +208,65 @@ only one whose age is not represented here.)
 
 % TODO: explain .groupby() as "split/apply/combine" with figure
 
-% for loops with .itertuples()
+\section{Looping with \texttt{DataFrame}s}
+
+\index{loop}
+\index{itertuples@\texttt{.itertuples()} (Pandas)}
+
+Just as we wrote \texttt{for} loops to iterate through the elements of a NumPy
+array (section~\ref{arrayLoops}) and a Pandas \texttt{Series}
+(section~\ref{seriesLoops}), so we can iterate through the rows of a
+\texttt{DataFrame}. We'll do so using the weirdly-named \texttt{.itertuples()}
+method.
+
+\index{loop!header}
+\index{loop!body}
+By using \texttt{.itertuples()} in the loop header, we have available to us in
+the loop body a \texttt{Series} representing \textit{the current row}.
+(``Current row'' just means ``the row we're on as we successively go through
+all the rows in sequence.'') We can access individual elements of it by using
+column names and the dot (or boxie) syntax, as follows:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+for row in simpsons.itertuples():
+    print("A certain {}-year old has {} hair.".format(row.age, row.hair))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+A certain 36-year old has none hair.
+A certain 34-year old has stacked tall hair.
+A certain 10-year old has buzz hair.
+A certain 8-year old has curly hair.
+A certain 1-year old has curly hair.
+A certain 4-year old has shaggy hair.
+\end{Verbatim}
+
+I called the loop variable ``\texttt{row}'' because it represents a row of the
+\texttt{DataFrame} (duh), although you can call it anything you want to. (I
+could have named it ``\texttt{family\_member}'' or ``\texttt{Simpson}''
+instead.)
+
+This is very intuitive. Slightly less intuitive is that if we want the index
+column (in \texttt{simpsons}, it's called ``\texttt{name},'' remember) we can't
+use the name of the index column. Instead, we have to literally say
+``\texttt{.Index},'' and yes that's a \textit{capital} `\texttt{I}'.
+
+To illustrate:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+for family_member in simpsons.itertuples():
+    print("{} Simpson, {} years of age, has {} hair.".format(
+        family_member.Index, family_member.age, family_member.hair))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Homer Simpson, 36 years of age, has none hair.
+Marge Simpson, 34 years of age, has stacked tall hair.
+Bart Simpson, 10 years of age, has buzz hair.
+Lisa Simpson, 8 years of age, has curly hair.
+Maggie Simpson, 1 years of age, has curly hair.
+SLH Simpson, 4 years of age, has shaggy hair.
+\end{Verbatim}
 

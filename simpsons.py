@@ -86,3 +86,14 @@ print("\ngroupby:")
 print(simpsons['IQ'].median())
 print(simpsons.groupby('gender')['IQ'].median())
 print(simpsons.groupby('hair')['age'].max())
+
+print("\niterate #1:")
+for row in simpsons.itertuples():
+    print("A certain {}-year old has {} hair.".format(row.age, row.hair))
+
+print("\niterate #2:")
+for family_member in simpsons.itertuples():
+    print("{} Simpson, {} years of age, has {} hair.".format(
+        family_member.Index, family_member.age, family_member.hair))
+
+
