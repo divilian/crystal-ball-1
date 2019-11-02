@@ -30,15 +30,206 @@ we examine any two columns, we know that matching indices go together
 (\textit{i.e.}, represent the same person). This implicit connection is what
 allows us to meaningfully examine a pair of variables.
 
+\section{The concept of statistical significance}
+
+\index{statistical significance}
+
+Before we get to the details, we need to face head-on what is probably the
+single most important concept in statistics, that of \textbf{statistical
+significance} (or ``stat sig,'' for short). It is so immensely important that
+I'm going to ask you to put down whatever snack you're eating right now, fold
+your hands, and pay very close attention.
+
+\index{association}
+\index{correlation}
+
+All forms of bivariate analysis are variations on a single theme, namely:
+discovering whether or not an \textit{association} exists between two
+variables. Recall from section~\ref{association} (p.~\pageref{association})
+that an association means that two variables are correlated in some way: that
+certain values of one tend to go more often with certain values of the other.
+To make it concrete, let's say one of our variables is \texttt{sex} (at birth,
+male or female) and the other is \texttt{height} (in inches, say). We want to
+know: ``are taller people more often male, and shorter people more often
+female, or is there no connection between \texttt{sex} and \texttt{height}?''
+
+\index{sample}
+\index{mean}
+\index{height}
+\index{sex}
+
+Now the first thing you think of doing, of course, is getting a \textbf{sample}
+(recruiting volunteers, say) of both males and females, measuring their
+heights, and taking the average (mean). Let's say you do that, and you come up
+with the following numbers:
+
+\begin{center}
+Females -- average height: 65.5 inches\\
+Males -- average height: 69.3 inches
+\end{center}
+
+Clearly, in your \textit{sample}, males were on average somewhat taller -- 3.8
+inches taller, in fact. A careless thinker would immediately conclude: ``aha!
+My hypothesis is confirmed. I scientifically carried out my study, and
+mathematically computed the results, and now here is some hard data proving the
+conclusion that generally speaking, men tend to be taller than women.''
+
+Are you convinced by that reasoning?
+
+\index{IQ}
+
+I hope you're not. Here's why. Let's change the example, and suppose that
+instead of height, we measured our volunteers' IQ. Taking the averages as
+before, we come up with these numbers:
+
+\begin{center}
+Females -- average IQ: 102.4\\
+Males -- average IQ: 98.6
+\end{center}
+
+In this case, the average of the females in the sample was higher than the
+males was. Shall we conclude that in general, women tend to be smarter than
+men?
+
+\subsection{Confirmation bias}
+
+\index{confirmation bias}
+
+If you're like most people, you'll accept that first finding as confirmation of
+men's tallness, and you'll reject the second finding as just a fluke of the
+sample. Undoubtedly, this is because you went into the question already having
+an opinion about the matter. You just \textit{know in your heart} that men
+\textit{do} tend to be taller than women (you've observed thousands of both
+sexes, in fact, and have in fact noticed that trend) whereas you know in your
+heart that neither sex has an advantage in intelligence (ditto). This leads you
+to reason as follows:
+
+\begin{compactenum}
+\item ``Well of course my male volunteers were taller than the female ones.
+I've known all along that males tend to be taller in general, and this just
+confirms it!''
+\item ``Aw, c'mon, we only sampled a few people and measured their IQs. Sure,
+these particular women might have been a bit smarter than these particular men,
+but if I ran the experiment again on different volunteers, it might just as
+easily go the other way. It'd be silly to draw a grand conclusion from that.''
+\end{compactenum}
+
+Psychologists call this fallacy of reasoning ``\textbf{confirmation bias}.'' We
+have a natural tendency to interpret information in a way that affirms our
+prior beliefs. Data that seems to contradict it, we simply talk our way out of.
+
+\index{groupthink}
+
+Confirmation bias is one of the most insidious enemies of humankind. It leads
+to wrong reasoning, the entrenchment of beliefs, dangerous overconfidence,
+polarization, and in the worst cases, \textbf{groupthink}. When a group of
+people succumbs to groupthink, ``orthodox'' viewpoints are encouraged, while
+alternative viewpoints are dismissed and suppressed. Every piece of evidence
+that conforms to the group's consensus belief is hailed as evidence confirming
+it, and evidence that contradicts it is chalked up to mere statistical anomaly.
+
+\index{WMD}
+
+One of many examples of this phenomenon was the CIA circa 2002: from the top to
+the bottom, nearly every member of the organization was \textit{certain} that
+Sadaam Hussein's terrible regime in Iraq possessed weapons of mass destruction
+(WMDs). Later, when it was inexplicably discovered that this ``fact'' wasn't
+true after all (\textit{after} we had made irreversible decisions based on it),
+analysts pored over the CIA's decision-making process to try and make sense of
+it. Confirmation bias was perhaps the key ingredient.
+
+Be aware of it in your own thinking, and at all costs steer yourself away from
+it!
+
+\subsection{The perils of eyeballing it}
+
 \section{Three bivariate scenarios}
 
 \index{scales of measure}
 \index{categorical variable}
 \index{nominal variable}
+As in chapter~\ref{ch:edaUnivariate}, different kinds of plots and statistics
+are appropriate depending on the variable's scale of measure -- categorical or
+numeric. There are thus three different cases for bivariate analysis:
 
-\section{Categorical data: counts of occurrences}
+\begin{compactitem}
+\item Two categorical variables
+\item One categorical variable and one numeric variable
+\item Two numeric variables
+\end{compactitem}
 
-\index{faves@\texttt{faves}}
-\index{Swift@Taylor Swift}
-\index{Perry@Katy Perry}
+We'll consider each case in turn. Throughout all the remaining sections, we'll
+use this fictitious data set, called \texttt{people}:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+   gender  salary   color  followers
+0    male   54.94  purple         26
+1  female   72.48  purple         22
+2    male    9.47    blue         27
+3   other   60.08     red         22
+4    male   37.62     red         13
+                .
+                .
+                .
+\end{Verbatim}
+
+Each row represents one fictional person we interviewed, and includes their 
+\texttt{gender}, their \texttt{salary} (in thousands of dollars per year),
+their favorite \texttt{color}, and the number of \texttt{followers} they have
+on some unspecified social media website.
+
+The \texttt{DataFrame} has 5000 rows, and no special ``index'' variable: none
+of the columns that we collected are unique, so we just let Pandas default to
+indexing the rows by number, 0 through 4,999.
+
+
+\section{Two categorical variables}
+
+\index{value\_counts@\texttt{.value\_counts()} method (Pandas)}
+\index{bar chart}
+
+Let's begin with a bivariate analysis of the \texttt{gender} and \texttt{color}
+columns. The first thing we should do, of course, is inspect each one
+individually, using \texttt{.value\_counts()} and perhaps a bar chart from
+sections~\ref{categoricalDataValueCounts} and \ref{categoricalDataBarCharts}.
+Let's say we've done that.
+
+\index{association}
+
+The next obvious question: is there an \textit{association} between the two
+variables? In other words, are there particular values of one that tend to go
+with particular values of the other? In still other words, do the genders tend
+to have different favorite colors?
+
+\index{contingency table}
+
+\subsection{Contingency tables}
+
+The first tool to get at this question is called a \textbf{contingency table}.
+This is very much like \texttt{.value\_counts()}, but for two variables instead
+of one. Our function is \texttt{crosstab()} from the Pandas package: if we give
+it two columns as arguments, it computes the complete set of counts from all
+possible combinations of variables. Here's what it looks like:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+pd.crosstab(people.gender, people.color)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+color   blue  green  pink  purple  red  yellow
+gender                                        
+female   240    402   665     644  289     378
+male    1403      0     0     248  463     258
+other      1      2     2       2    1       2
+\end{Verbatim}
+
+Interpreting this is straightforward. Every cell in the matrix tells us how
+many people had a particular gender and a particular favorite color. For
+instance, there were 378 females who named yellow as their favorite color, and
+no males at all chose green.
+
+% Margins? Or is that 219 only?
+
+\subsection{The $\chi^2$ test}
 
