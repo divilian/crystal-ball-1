@@ -143,6 +143,60 @@ it!
 
 \subsection{The perils of eyeballing it}
 
+Okay. Let's suppose that we've freed ourselves from confirmation bias, and
+we're actually looking at the numbers objectively. The first question still
+remains: \textit{does} an association exist between the two variables?
+
+Men were an average of 3.8 inches taller in our sample. That's a
+difference...but is it \textit{enough} of a difference? Women were smarter by
+3.8 IQ points. That's a difference...but is it \textit{enough}?
+
+\index{enough@``enough''}
+\index{sample}
+\index{population}
+
+To clarify, when we say ``enough,'' what we mean is: ``\textit{enough of a
+difference to generalize our findings to the population at large.}'' Here's a
+paradox: what we have is a sample; yet oddly, it's never the sample we actually
+care about. We care about what the sample tells us \textit{about the
+\textbf{population}}.
+
+\index{Warren, Elizabeth}
+\index{Trump, Donald}
+
+Think about it. Nobody cares whether the 14 females we surveyed are smarter on
+average than the 17 males we surveyed. But if we make the claim: ``\textit{in
+general} women are smarter than men,'' suddenly everybody cares. To use another
+example, nobody cares that 58\% of the 2,000 people in our phone sample said
+they intend to vote for Elizabeth Warren, and only 39\% said Donald Trump. But
+if we say ``\textit{across the country}, we predict more Warren votes than
+Trump votes by such-and-such margin,'' this is big news.
+
+\index{eyeballing it}
+
+Now the first law to beat into your head is that \textit{you absolutely cannot
+reliably eyeball it.} This is what everyone who hasn't taken a Data Science or
+Statistics class tries to do. They squint at the difference (3.8 IQ points,
+\textit{e.g.}) and bite their lip and mutter, ``well, that sure \textit{seems}
+(or \textit{doesn't seem}) like a pretty big difference. I'll bet this says (or
+doesn't say) something about intelligence among the sexes in general.''
+
+Stop. You cannot. People are provably very bad at judging whether or not a
+difference between groups is ``enough.'' Part of the problem is that the answer
+to the question turns on three separate things: how big the difference is, how
+large your sample size is, and -- importantly -- how variable the data is
+(meaning, how widely the points you sample differ from each other). All three
+of these factors need to be mixed into a soup in just the right way in order to
+properly judge, and human intuition is just flat terrible at doing that.
+
+So eyeballing is a non-starter. But happily, it turns out that statistics
+provides us an iron-clad, dependable, quantitative, take-it-to-the-bank method
+for determining whether the pattern in a data set is ``enough'' to justifiably
+claim an association between variables. And that is the concept of statistical
+significance.
+
+\subsection{A ``statistically significant difference''}
+
 \section{Three bivariate scenarios}
 
 \index{scales of measure}
