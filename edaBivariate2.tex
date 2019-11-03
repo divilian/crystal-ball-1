@@ -1,5 +1,5 @@
 
-\chapter{Exploratory Data Analysis: bivariate data (2 of 2)}
+\chapter{Exploratory Data Analysis: bivariate (2 of 2)}
 \label{ch:edaBivariate2}
 
 \section{Three bivariate scenarios}
@@ -108,6 +108,19 @@ color, and no males at all chose \texttt{green}.
 
 % Margins? Or is that 219 only?
 
+\subsection{Plotting two categorical variables}
+
+So now we have a table of counts -- how to turn this into a pretty and
+informative plot?
+
+Unfortunately, there doesn't seem to be any great way to do this. There's
+something called a ``mosaic plot'' which attempts it, but they're not very easy
+to visually interpret. Another option is a ``heat map,'' which essentially
+reproduces the above table as squares in a grid, with each square color coded
+on a continuum by its height (for instance, low numbers might be dark blue and
+high numbers bright yellow, with a rainbow spectrum of number in between).
+That's sort of okay, but to be honest I prefer to just look at the numbers.
+
 \subsection{The $\chi^2$ test}
 
 \index{$\chi^2$@$\chi^2$ test}
@@ -122,6 +135,7 @@ the genders of people and their favorite colors:
 gender_color = pd.crosstab(people.gender, people.color)
 \end{Verbatim}
 
+\index{chi2\_contingency@\texttt{chi2\_contingency()} (SciPy)}
 Now, we run the test by calling the \texttt{chi2\_contingency()} function from
 SciPy:
 
@@ -154,3 +168,10 @@ associated.}
 All the other stuff in that output are fine-grained details that statisticians
 like to pore over. For us, the only thing we need to see from a $\chi^2$ (or
 any other) test is the $p$-value.
+
+\section{One categorical and one numeric variable}
+
+\index{value\_counts@\texttt{.value\_counts()} method (Pandas)}
+\index{bar chart}
+
+Now let's consider the 
