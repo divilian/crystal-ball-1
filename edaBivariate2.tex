@@ -330,3 +330,87 @@ average number of followers \underline{does} depend significantly on the gender.
 
 Be careful with this. It's an easy mistake to make, and can lead to
 embarrassingly wrong slides in presentations. \smiley
+
+
+\section{Two numeric variables}
+
+Finally, we have the case where both variables are numeric. The \texttt{salary}
+and \texttt{followers} columns are this case. Are they associated?
+
+\subsection{Scatter plots}
+\index{scatter plot}
+
+The correct plot to visualize this is the \textbf{scatter plot}. It has an
+axis for each numeric variable, and plots one dot (or other marker) for each
+object of study: its $x$/$y$ coordinates depend on that object's value for each
+variable.
+
+The Pandas code is as follows:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+people.plot.scatter(x='followers',y='salary')
+\end{Verbatim}
+
+which produces Figure~\ref{fig:followersSalary}. Interestingly, there appear to
+be a lot of people pegged at zero salary, and also at 10-ish followers. (These
+observations would have shown up in a univariate analysis as well.) There's no
+super obvious connection between the two variables, but if you squint at the
+plot it (maybe) looks like there's a slight up-and-to-the-right trend, which
+would indicate that having more followers is modestly associated with earning
+more money.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\textwidth]{followersSalary.png}
+\caption{A scatter plot of \texttt{followers} vs.~\texttt{salary}. Each point
+in the plot represents one person, with the $x$ and $y$ coordinates
+corresponding to his/her/their number of followers and salary.}
+\label{fig:followersSalary}
+\end{figure}
+
+\section{Pearson correlation coefficient}
+\index{Pearson correlation coefficient}
+\index{correlation coefficient}
+\index{pearsonr@\texttt{pearsonr()} (SciPy)}
+
+The test we'll use to see whether this pattern is significant is the
+\textbf{Pearson correlation coefficient} (also called ``Pearson's $r$''). To
+run it, we call SciPy's \texttt{pearsonr()} function and pass it the two
+columns:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+scipy.stats.pearsonr(people.salary, people.followers)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+(0.2007815176819964, 1.2285885030618397e-46)
+\end{Verbatim}
+
+We're given two numbers as output. The \textit{second} of these is the
+$p$-value, and remembering our pitfall from above, we're savvy enough to notice
+the \texttt{e-46} at the end and declare it significant. So we can say
+\textit{we have high confidence that a person's salary is associated with their
+number of social media followers.}
+
+\index{positive correlation}
+\index{negative correlation}
+
+Now for the first number, which is the actual ``correlation coefficient.''
+\textit{If} the second number is below $\alpha$ and therefore significant (as
+it was here), you then look at the first number and see whether it's positive
+or negative. Positive numbers indicate \textbf{positive correlations}: an
+increase in one of the variables corresponds to an \textit{increase} in the
+other. Negative numbers indicate \textbf{negative correlations}: an increase in
+one of the variables corresponds to a \textit{decrease} in the other. Here, we
+have a positive number, which means that \textit{having more followers tends to
+go with a higher salary.}
+
+As an example of the second (negative) case, suppose two of our variables in a
+data set of sailboat races were \texttt{length} (the length of the sailboat,
+from bow to stern) and \texttt{finish\_time} (the number of minutes the boat
+took to complete the race). We're likely to see a negative correlation in this
+case, because physics tells us that \textit{longer} boats can travel through
+the water \textit{faster} (and therefore have \textit{lower} finish times).
+These two variables would thus be correlated, but in a negative way: a high
+value for one would typically indicate a \textit{low} value for the other.

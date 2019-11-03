@@ -11,7 +11,7 @@ print(scipy.stats.chi2_contingency(gender_color))
 
 print(scipy.stats.chi2_contingency(gender_color))
 
-people.boxplot('salary',by='gender')
+#people.boxplot('salary',by='gender')
 
 print(people.groupby('gender')['salary'].mean())
 
@@ -24,3 +24,7 @@ print(scipy.stats.ttest_ind(
 print(scipy.stats.ttest_ind(
     people[people.gender=="female"]['salary'],
     people[people.gender=="male"]['salary']))
+
+people.plot.scatter(x='followers',y='salary')
+
+print(scipy.stats.pearsonr(people.salary, people.followers))
