@@ -5,4 +5,6 @@ import scipy.stats
 
 people = pd.read_csv('people.csv')
 
-print(pd.crosstab(people.gender, people.color))
+gender_color = pd.crosstab(people.gender, people.color)
+print(gender_color)
+print(scipy.stats.chi2_contingency(gender_color))
