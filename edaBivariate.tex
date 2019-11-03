@@ -181,7 +181,7 @@ Statistics class tries to do. They squint at the difference (3.8 IQ points,
 (or \textit{doesn't seem}) like a pretty big difference. I'll bet this says (or
 doesn't say) something about intelligence among the sexes in general.''
 
-Stop. You cannot. People are provably very bad at judging whether or not a
+Stop. You cannot. People are demonstrably very bad at judging whether or not a
 difference between groups is ``enough.'' Part of the problem is that the answer
 to the question turns on three separate things: how big the difference is, how
 large your sample size is, and -- importantly -- how variable the data is
@@ -197,93 +197,77 @@ significance.
 
 \subsection{A ``statistically significant difference''}
 
-\section{Three bivariate scenarios}
+The correct way to determine whether a difference is ``enough'' is to use the
+appropriate \textbf{statistical test}. A statistical test is a standard
+procedure for incorporating all three factors I previously mentioned (the
+degree of difference, the sample size, and the amount of variance among data
+points) to come up with a principled, defensible answer to this question: is
+the pattern I see in my sample a \textit{statistically significant} one? Can we
+be reasonably confident that it will also be true of the population as a whole?
 
-\index{scales of measure}
-\index{categorical variable}
-\index{nominal variable}
-As in chapter~\ref{ch:edaUnivariate}, different kinds of plots and statistics
-are appropriate depending on the variable's scale of measure -- categorical or
-numeric. There are thus three different cases for bivariate analysis:
+\index{statistical test}
+\index{p-value@\textit{p}-value}
 
+All the statistical tests we'll learn (in the next chapter) have a common
+output: a \textbf{\textit{p}-value}. That's nice because you don't have to
+memorize a lot of different rules for interpreting a lot of different tests.
+
+So what the heck is a ``\textit{p}-value?'' There have been controversies
+galore\footnote{For instance:\\
+\vspace{-.15in}
 \begin{compactitem}
-\item Two categorical variables
-\item One categorical variable and one numeric variable
-\item Two numeric variables
+\item Colquhoun D (2017). ``$p$-values.'' \textit{Royal Society Open Science.}
+\textbf{4}(12): 171085.
+\item Murtaugh, Paul A. (2014). ``In defense of $p$-values.'' \textit{Ecology}.
+\textbf{95}(3): 611--617
+\item Wasserstein, Ronald L.; Lazar, Nicole A. (2016). ``The ASA's Statement on
+$p$-Values: Context, Process, and Purpose.'' \textit{The American Statistician.}
+\textbf{70}(2): 129-133
 \end{compactitem}
+\vspace{-.15in}
+}, and even entire
+books\footnote{Vickers, A. J. (2009). \textit{What is a p-value anyway?}
+Boston: Pearson.} devoted to the subject, which means that whatever I choose to
+write here can be nitpicked by statisticians a dozen different ways.
 
-We'll consider each case in turn. Throughout all the remaining sections, we'll
-use this fictitious data set, called \texttt{people}:
+That's okay. I'm going to write it anyway, and this will serve you very well. 
+Here goes: 
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-   gender  salary   color  followers
-0    male   54.94  purple         26
-1  female   72.48  purple         22
-2    male    9.47    blue         27
-3   other   60.08     red         22
-4    male   37.62     red         13
-                .
-                .
-                .
-\end{Verbatim}
+\index{$\alpha$ (alpha)}
+\index{alpha@alpha ($\alpha$)}
 
-Each row represents one fictional person we interviewed, and includes their 
-\texttt{gender}, their \texttt{salary} (in thousands of dollars per year),
-their favorite \texttt{color}, and the number of \texttt{followers} they have
-on some unspecified social media website.
+\definecolor{shadecolor}{rgb}{.9,.9,.9}
+\begin{shaded}
+A \textit{p}-value is a number between 0 and 1. If you run a
+statistical test on your bivariate data, and the \textit{p}-value is
+\textbf{\textit{less than}} your $\alpha$ (``alpha'') value (normally, .05),
+then there \textit{\textbf{is}} a statistically significant association between
+the variables. Otherwise, there isn't. End of story.
+\end{shaded}
 
-The \texttt{DataFrame} has 5000 rows, and no special ``index'' variable: none
-of the columns that we collected are unique, so we just let Pandas default to
-indexing the rows by number, 0 through 4,999.
+Recall from section~\ref{alpha} (p.~\pageref{alpha}) that $\alpha$ is ``where
+to set the bar'' to detect a meaningful association. It's essentially how often
+we're willing to draw a false conclusion. For social science data (that is,
+data involving humans), you should always choose .05 to avoid controversy. For
+physical science data, you should always choose .01. 
 
+The bottom line is this: if you spot a possible relationship between two of
+your variables (like gender and IQ), run the appropriate statistical test (see
+next chapter) and look at the $p$-value. If it's less than $\alpha$, then the
+difference you thought you saw officially \textit{is} ``enough.'' You can
+therefore declare ``yep, these two variables \textit{are} associated, to a
+confidence level of $\alpha$.'' If it's not less than $\alpha$, then even
+though you thought you saw a meaningful tendency in the data, you can
+officially say, ``nope, it's not a stat sig diff. This is very likely just an
+artifact of the particular data points I collected in my sample. Pay of no
+mind.''
 
-\section{Two categorical variables}
+\section{Moving on}
 
-\index{value\_counts@\texttt{.value\_counts()} method (Pandas)}
-\index{bar chart}
-
-Let's begin with a bivariate analysis of the \texttt{gender} and \texttt{color}
-columns. The first thing we should do, of course, is inspect each one
-individually, using \texttt{.value\_counts()} and perhaps a bar chart from
-sections~\ref{categoricalDataValueCounts} and \ref{categoricalDataBarCharts}.
-Let's say we've done that.
-
-\index{association}
-
-The next obvious question: is there an \textit{association} between the two
-variables? In other words, are there particular values of one that tend to go
-with particular values of the other? In still other words, do the genders tend
-to have different favorite colors?
-
-\index{contingency table}
-
-\subsection{Contingency tables}
-
-The first tool to get at this question is called a \textbf{contingency table}.
-This is very much like \texttt{.value\_counts()}, but for two variables instead
-of one. Our function is \texttt{crosstab()} from the Pandas package: if we give
-it two columns as arguments, it computes the complete set of counts from all
-possible combinations of variables. Here's what it looks like:
-
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-pd.crosstab(people.gender, people.color)
-\end{Verbatim}
-\vspace{-.2in}
-
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-color   blue  green  pink  purple  red  yellow
-gender                                        
-female   240    402   665     644  289     378
-male    1403      0     0     248  463     258
-other      1      2     2       2    1       2
-\end{Verbatim}
-
-Interpreting this is straightforward. Every cell in the matrix tells us how
-many people had a particular gender and a particular favorite color. For
-instance, there were 378 females who named yellow as their favorite color, and
-no males at all chose green.
-
-% Margins? Or is that 219 only?
-
-\subsection{The $\chi^2$ test}
-
+Which statistical test is appropriate depends on your two variables' scales of
+measure: in particular, whether they are categorical or numeric. There are
+three scenarios for bivariate analysis: two categorical variables, two numeric
+variables, or one of each. In the next chapter, in addition to learning how to
+meaningfully plot all three cases, we'll learn how to run and interpret the
+statistical test applicable to each case, in order to determine once and for
+all whether ``enough'' is \textit{enough}.
