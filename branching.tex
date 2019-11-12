@@ -1,0 +1,79 @@
+
+\chapter{Branching}
+\label{ch:branching}
+
+\index{non-linear}
+\index{branching}
+\index{conditional execution}
+
+In this chapter, we'll learn our next programming trick: how to execute code
+\textit{conditionally}. This is called \textbf{branching}. It's another variant
+of non-linear programming, like the loops from chapter~\ref{ch:loops}: it
+enables something other than the strict, start-to-finish, line-by-line
+execution of a program. In particular, branching allow us to designate certain
+lines of code to be executed ``only sometimes.''
+
+\section{The \texttt{if} statement}
+
+\index{if statement@\texttt{if} statement}
+
+The main branching statement in Python and most languages is the
+\textbf{\texttt{if} statement}. Here's a couple of them in action:
+
+\index{cash\_on\_hand@\texttt{cash\_on\_hand}}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+ 1: name = "Horace"
+ 2: cash_on_hand = 100000
+ 3: IQ = 90
+ 4: print("Nice to meet you, {}!".format(name))
+ 5: if cash_on_hand > 5000:
+ 6:     print("Wow, you're rich! Gimme a fiver.")
+ 7:     cash_on_hand = cash_on_hand - 5
+ 8: if IQ > 100:
+ 9:     print("Wow, you're smart! Read a book.")
+10:     IQ = IQ + 5
+11: print("{}'s IQ is {} and he has ${}.".format(name, IQ, cash_on_hand))
+\end{Verbatim}
+\vspace{-.2in}
+
+Even without any explanation, you might be able to figure out that the output
+of the code snippet above is:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Nice to meet you, Horace!
+Wow, you're rich! Gimme a fiver.
+Horace's IQ is 90 and he has $99995.
+\end{Verbatim}
+
+If not, stay tuned.
+
+\index{loop!header}
+\index{loop!body}
+\index{indentation}
+
+Just like a \texttt{for} loop, every \texttt{if} statement has a header and a
+body. And just like a \texttt{for} loop, which lines constitute the body
+depends on the indentation:
+
+\begin{compactitem}
+\item[\leftpointright] The first \texttt{if} statement's header is line \textbf{5}.
+\item[\leftpointright] The first \texttt{if} statement's body is lines \textbf{6 and 7}.
+\item[\leftpointright] The second \texttt{if} statement's header is line \textbf{8}.
+\item[\leftpointright] The second \texttt{if} statement's body is lines
+\textbf{9 and 10}.
+\end{compactitem}
+
+\index{condition (of an \texttt{if} statement)}
+
+When an \texttt{if} statement is reached, its \textbf{condition} is evaluated;
+in the first case, the condition ``\texttt{cash\_on\_hand > 500}'' is evaluated
+to \texttt{True}, and in the second case, ``\texttt{IQ > 100}'' is determined
+to be \texttt{False}. Then, \textit{only if} the condition is true will the
+body of the \texttt{if} statement execute. Otherwise, it'll be skipped over.
+
+Thus, the lines of the above program execute in this order: 1, 2, 3, 4, 5, 6,
+7, 8, 11. Lines 9 and 10 are skipped entirely, since Horace's IQ wasn't above
+average.
+
+% compound conditions; refer to queries
