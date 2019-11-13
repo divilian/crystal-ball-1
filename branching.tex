@@ -53,8 +53,8 @@ If not, stay tuned.
 \index{indentation}
 
 Just like a \texttt{for} loop, every \texttt{if} statement has a header and a
-body. And just like a \texttt{for} loop, which lines constitute the body
-depends on the indentation:
+body. And just like a \texttt{for} loop, the determining factor of which lines
+constitute the body depends on the indentation:
 
 \begin{compactitem}
 \item[\leftpointright] The first \texttt{if} statement's header is line \textbf{5}.
@@ -74,6 +74,72 @@ body of the \texttt{if} statement execute. Otherwise, it'll be skipped over.
 
 Thus, the lines of the above program execute in this order: 1, 2, 3, 4, 5, 6,
 7, 8, 11. Lines 9 and 10 are skipped entirely, since Horace's IQ wasn't above
-average.
+average. Observe that the \texttt{cash\_on\_hand} variable was updated inside
+the body of the first \texttt{if} statement, but that \texttt{IQ} was not.
 
-% compound conditions; refer to queries
+\subsection{Compound conditions}
+
+\index{compound condition}
+
+Conditions can be more complicated than the ones above; just as with queries
+(p.~\pageref{seriesCompoundQueries}) they can contain more than one component:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+if cash_on_hand > 10000 and IQ < 50:
+    print("Wow, some dumb people are sure rich!")
+\end{Verbatim}
+
+
+You might have been surprised to see the word ``\texttt{and}'' in that
+\texttt{if} statement instead of the character ``\texttt{\&}''. I feel you.
+It's totally inconsistent, but nevertheless true: although in a query, you must
+use the symbols \texttt{\&}, \texttt{|}, and \texttt{\textasciitilde}, in an
+\texttt{if} condition, you must use the words \texttt{and}, \texttt{or}, and
+\texttt{not}. (In other news, the bananas around the components of an
+\texttt{if} condition aren't necessary, but you can include them if you want.)
+
+\index{double-equals (\texttt{==})}
+\index{==@\texttt{==} (double-equals)}
+
+For your convenience, the \texttt{if} condition operators are listed in
+Figure~\ref{fig:ifStatementOps}. (\textbf{Remember} the double-equals!!)
+
+% in and .isin()
+
+\begin{figure}[ht]
+\centering
+\small
+\bigskip
+\begin{tabular}{c|c}
+Symbol & Meaning \\
+\hline
+\texttt{>} & greater than \\
+\hline
+\texttt{<} & less than \\
+\hline
+\texttt{>=} & greater than or equal to \\
+\hline
+\texttt{<=} & less than or equal to \\
+\hline
+\texttt{!=} & \textit{not} equal to \\
+\hline
+\texttt{==} & equal to \\
+\hline
+\texttt{and} & and \\
+\hline
+\texttt{or} & or \\
+\hline
+\texttt{not} & not \\
+\end{tabular}
+
+\bigskip
+\normalsize
+\caption{Operators in \texttt{if} statements: simple and compound.}
+\label{fig:ifStatementOps}
+\end{figure}
+
+% else
+
+% elif
+
+% nested
