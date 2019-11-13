@@ -106,12 +106,12 @@ Figure~\ref{fig:ifStatementOps}. (\textbf{Remember} the double-equals!!)
 
 % in and .isin()
 
-\begin{figure}[ht]
+\begin{figure}[b]
 \centering
 \small
 \bigskip
 \begin{tabular}{c|c}
-Symbol & Meaning \\
+Operator & Meaning \\
 \hline
 \texttt{>} & greater than \\
 \hline
@@ -138,7 +138,127 @@ Symbol & Meaning \\
 \label{fig:ifStatementOps}
 \end{figure}
 
-% else
+\section{The \texttt{if}/\texttt{else} statement}
+
+The above examples execute the \texttt{if} body as long as the condition is
+true, and do nothing otherwise. It's common to want to do something else in the
+``otherwise'' case instead, and for that, we have the \texttt{if}/\texttt{else}
+statement.
+
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+name = "Gladys"
+cash_on_hand = 2000
+IQ = 120
+print("Nice to meet you, {}!".format(name))
+if cash_on_hand > 5000:
+    print("Wow, you're rich! Gimme a fiver.")
+    cash_on_hand = cash_on_hand - 5
+else:
+    print("I wish you well!")
+if IQ > 100:
+    print("Wow, you're smart! Read a book.")
+    IQ = IQ + 5
+else:
+    print("You're currently not that smart, but read a book and get smarter.")
+    IQ = IQ + 10
+print("{}'s IQ is {} and she has ${}.".format(name, IQ, cash_on_hand))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Nice to meet you, Gladys!
+I wish you well!
+Wow, you're smart! Read a book.
+Gladys's IQ is 125 and she has $2000.
+\end{Verbatim}
+
+You can see that ``\texttt{I wish you well!}'' was printed, since
+\texttt{cash\_on\_hand} was \textit{not} greater than 5000 (as required by the
+\texttt{if} condition), and that the ``\dots\texttt{you're smart!}\dots''
+message was printed but not the ``\dots\texttt{not that smart}\dots'' one.
+Both the \texttt{if} part and the \texttt{else} part have an indented body,
+although only the \texttt{if} part has a condition.
+
+And that brings up another point. Although it hardly seems worth mentioning,
+let me nevertheless emphasize this oft-overlooked truth:
+
+\definecolor{shadecolor}{rgb}{.9,.9,.9}
+\begin{shaded}
+Whenever an \texttt{if}/\texttt{else} statement is reached,
+\textbf{\textit{either} the \texttt{if} body \textit{or} the \texttt{else}
+body will always be executed. It's never both, and it's never neither one.}
+\end{shaded}
+
+This is always, always true, because of the nature of things. The reason the
+\texttt{else} header doesn't have a condition is because its condition is
+implicitly \textit{the exact opposite} of the \texttt{if} condition. Period. In
+\textit{any} case where the \texttt{if} condition isn't true -- and
+\textit{only} in such a case -- will the \textbf{else} condition be executed.
+
+To test whether you fully understand this point, see if you can predict the
+output of the following program, which 99\% of beginning programmers get wrong:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+name = "Javier"
+lang = "French"
+
+if lang == "Spanish":
+    print("Hola, {}!".format(name))
+if lang == "French":
+    print("Bonjour, {}!".format(name))
+if lang == "Chinese":
+    print("Ni hao, {}!".format(name))
+else:
+    print("Hello, {}!".format(name))
+\end{Verbatim}
+\vspace{-.2in}
+
+Seriously, don't feel bad if you miss this one. The answer (*drum roll please*)
+is:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Bonjour, Javier!
+Hello, Javier!
+\end{Verbatim}
+
+Wait...wut? Why did it print two messages? Surely if \texttt{Javier}'s
+preferred language is \texttt{French}, it ought to say ``\texttt{Bonjour}'' and
+skip all the other options?
+
+To understand this behavior, you have to realize that an
+\texttt{if}/\texttt{else} statement is a \textit{single} entity. This
+multi-lingual greeting program has three components:
+
+\begin{samepage}
+\begin{compactenum}
+\item an \texttt{if} statement
+\item an \texttt{if} statement
+\item an \texttt{if}/\texttt{else} statement
+\end{compactenum}
+\end{samepage}
+
+\index{golden rule}
+
+And you must remember our golden rule in the shaded box:
+\textbf{\textit{either} the \texttt{if} body \textit{or} the \texttt{else} body
+will always be executed: never both, and never neither one.} Therefore, the
+above program does this:
+
+\begin{samepage}
+\begin{compactenum}
+\item If the language is Spanish, print an ``Hola'' message. (Otherwise, do
+nothing.)
+\item If the language is French, print a ``Bonjour'' message. (Otherwise, do
+nothing.)
+\item If the language is Chinese print a ``Ni hao'' message. Otherwise, print a
+``Hello'' message.
+\end{compactenum}
+\end{samepage}
+
+Once you recognize that structure, you'll realize that when step 3 is
+encountered, the program \textit{must} print either ``Ni hao'' or ``Hello.'' It
+can't print both, and it can't print neither. An \texttt{if}/\texttt{else} just
+doesn't work any other way.
 
 % elif
 
