@@ -140,6 +140,9 @@ Operator & Meaning \\
 
 \section{The \texttt{if}/\texttt{else} statement}
 
+\index{if/else statement@\texttt{if}/\texttt{else} statement}
+\index{else}
+
 The above examples execute the \texttt{if} body as long as the condition is
 true, and do nothing otherwise. It's common to want to do something else in the
 ``otherwise'' case instead, and for that, we have the \texttt{if}/\texttt{else}
@@ -260,6 +263,50 @@ encountered, the program \textit{must} print either ``Ni hao'' or ``Hello.'' It
 can't print both, and it can't print neither. An \texttt{if}/\texttt{else} just
 doesn't work any other way.
 
-% elif
+\section{The \texttt{if}/\texttt{elif}/\texttt{else} statement}
+
+\index{if/elif/else statement@\texttt{if}/\texttt{elif}/\texttt{else} statement}
+\index{elif}
+
+The problem with the previous example is that we really want our four languages
+to be \textbf{mutually exclusive} options. If \texttt{lang} is
+\texttt{"Spanish"}, we want it to print ``Hola'' and skip all the rest. The
+easiest way to get this behavior is to use ``\texttt{elif}'' (a horrid
+abbreviation of the phrase ``else if'').
+
+Squint hard at this program until you see the differences between it and the
+previous one:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+name = "Javier"
+lang = "French"
+
+if lang == "Spanish":
+    print("Hola, {}!".format(name))
+elif lang == "French":
+    print("Bonjour, {}!".format(name))
+elif lang == "Chinese":
+    print("Ni hao, {}!".format(name))
+else:
+    print("Hello, {}!".format(name))
+\end{Verbatim}
+
+It's identical except that we replaced the second two \texttt{if}'s with
+\texttt{elif}'s. This tells Python: only if the language is \textit{not}
+Spanish should you then consider whether or not it's French. And only if it's
+\textit{not} French (and \textit{not} Spanish) should you consider whether or
+not it's Chinese. And only if it's not Chinese (and not French (and not
+Spanish)) should you print ``Hello.''
+
+Whether to use sequential \texttt{if}s or a chain of \texttt{elif}s isn't
+always an easy question to answer. Neither choice is always right: you have to
+think rigorously logically about how the program should act. Ask yourself: ``do
+I want Python to consider \textit{all} of these conditions -- and execute the
+appropriate \texttt{if} bodies -- no matter what? Or do I want it to bail out
+as soon as it finds one that's true?'' Like most things, it takes practice to
+get right.
+
 
 % nested
+
+% loops
