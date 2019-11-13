@@ -106,38 +106,6 @@ Figure~\ref{fig:ifStatementOps}. (\textbf{Remember} the double-equals!!)
 
 % in and .isin()
 
-\begin{figure}[b]
-\centering
-\small
-\bigskip
-\begin{tabular}{c|c}
-Operator & Meaning \\
-\hline
-\texttt{>} & greater than \\
-\hline
-\texttt{<} & less than \\
-\hline
-\texttt{>=} & greater than or equal to \\
-\hline
-\texttt{<=} & less than or equal to \\
-\hline
-\texttt{!=} & \textit{not} equal to \\
-\hline
-\texttt{==} & equal to \\
-\hline
-\texttt{and} & and \\
-\hline
-\texttt{or} & or \\
-\hline
-\texttt{not} & not \\
-\end{tabular}
-
-\bigskip
-\normalsize
-\caption{Operators in \texttt{if} statements: simple and compound.}
-\label{fig:ifStatementOps}
-\end{figure}
-
 \section{The \texttt{if}/\texttt{else} statement}
 
 \index{if/else statement@\texttt{if}/\texttt{else} statement}
@@ -263,16 +231,49 @@ encountered, the program \textit{must} print either ``Ni hao'' or ``Hello.'' It
 can't print both, and it can't print neither. An \texttt{if}/\texttt{else} just
 doesn't work any other way.
 
+\begin{figure}[tb]
+\centering
+\small
+\bigskip
+\begin{tabular}{c|c}
+Operator & Meaning \\
+\hline
+\texttt{>} & greater than \\
+\hline
+\texttt{<} & less than \\
+\hline
+\texttt{>=} & greater than or equal to \\
+\hline
+\texttt{<=} & less than or equal to \\
+\hline
+\texttt{!=} & \textit{not} equal to \\
+\hline
+\texttt{==} & equal to \\
+\hline
+\texttt{and} & and \\
+\hline
+\texttt{or} & or \\
+\hline
+\texttt{not} & not \\
+\end{tabular}
+
+\bigskip
+\normalsize
+\caption{Operators in \texttt{if} statements: simple and compound.}
+\label{fig:ifStatementOps}
+\end{figure}
+
 \section{The \texttt{if}/\texttt{elif}/\texttt{else} statement}
 
 \index{if/elif/else statement@\texttt{if}/\texttt{elif}/\texttt{else} statement}
 \index{elif}
+\index{mutually exclusive}
 
 The problem with the previous example is that we really want our four languages
 to be \textbf{mutually exclusive} options. If \texttt{lang} is
-\texttt{"Spanish"}, we want it to print ``Hola'' and skip all the rest. The
-easiest way to get this behavior is to use ``\texttt{elif}'' (a horrid
-abbreviation of the phrase ``else if'').
+\texttt{"Spanish"}, we want it to print ``\texttt{Hola}'' and skip all the
+rest. The easiest way to get this behavior is to use ``\texttt{elif}'' (a
+horrid abbreviation of the phrase ``else if'').
 
 Squint hard at this program until you see the differences between it and the
 previous one:
@@ -298,6 +299,21 @@ Spanish should you then consider whether or not it's French. And only if it's
 not it's Chinese. And only if it's not Chinese (and not French (and not
 Spanish)) should you print ``Hello.''
 
+Realize, too, that an entire
+\texttt{if}/\texttt{elif}/\texttt{elif}/.../\texttt{elif}/\texttt{else} chain
+is a \textit{single} statement, no matter how many conditions it has. You can't
+just have an ``\texttt{elif}'' (or an ``\texttt{else},'' for that matter)
+floating out in the void without an initial \texttt{if} to anchor it. This may
+help you to understand how the \texttt{elif} structure acts, and why it will
+only ever execute \textit{one} of the bodies. It's because:
+
+\definecolor{shadecolor}{rgb}{.9,.9,.9}
+\begin{shaded}
+Whenever an \texttt{if}/\texttt{elif}/.../\texttt{elif}/\texttt{else} statement
+is reached, \textbf{exactly \textit{one} of the bodies will be executed. It's
+never more than one, and it's never none.}
+\end{shaded}
+
 Whether to use sequential \texttt{if}s or a chain of \texttt{elif}s isn't
 always an easy question to answer. Neither choice is always right: you have to
 think rigorously logically about how the program should act. Ask yourself: ``do
@@ -306,7 +322,68 @@ appropriate \texttt{if} bodies -- no matter what? Or do I want it to bail out
 as soon as it finds one that's true?'' Like most things, it takes practice to
 get right.
 
+\section{Nesting}
 
-% nested
+\index{nested if statements@nested \texttt{if} statements}
+
+Now as if this weren't complex enough, let me inform you that the body of an
+\texttt{if} (or \texttt{else}, or \texttt{elif}) statement can \textit{itself}
+contain other \texttt{if} statements! This is actually quite common. Consider
+this example:
+
+\index{Watson, Emma}
+\index{salutations}
+\index{single}
+\index{married}
+\index{Ph.D.}
+\index{Dr.}
+\index{Mr./Mrs./Miss/Ms./Mx.}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+first_name = "Emma"
+last_name = "Watson"
+gender = "female"
+marital_status = "single"
+degree = "BA"
+
+if degree == "PhD" or degree == "MD":
+    print("Why hello, Dr. {}!".format(last_name))
+elif gender == "male":
+    print("Why hello, Mr. {}!".format(last_name))
+elif gender == "female":
+    if marital_status == "married":
+        print("Why hello, Mrs. {}!".format(last_name))
+    elif marital_status == "single":
+        print("Why hello, Miss {}!".format(last_name))
+    else:
+        print("Why hello, Ms. {}!".format(last_name))
+else:
+    print("Why hello, Mx. {}!".format(last_name))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Why hello, Miss Watson!
+\end{Verbatim}
+
+This program implements the quite convoluted social norms for salutations in
+Western culture. Consider it carefully. If a person is either a Ph.D. or a
+Medical Doctor, that trumps everything, and we use ``Dr.'' as their form of
+address. This is to indicate just how studly these people are.
+
+If they don't have such a college degree -- and \textit{only} if they don't
+(notice the \texttt{elif}) -- will we then consider their gender. For men, it's
+simple: a plain old ``Mr.'' will do. For women, it's complicated: their marital
+status now comes into play. This is the \textit{nested} part of the structure:
+we have another \texttt{if} statement (a whole
+\texttt{if}/\texttt{elif}/\texttt{else} chain, actually) \textit{inside} the
+``\texttt{gender == "female"}'' condition. If the person in question identifies
+as neither \texttt{male} nor \texttt{female}, all that Mrs./Miss/Ms. stuff will
+be skipped, and we'll drop straight to the \texttt{Mx.}~message.
+
+\index{indentation}
+
+Pay careful attention to the indentation in these examples, since it's the key
+to discerning the structure of the program.
 
 % loops
