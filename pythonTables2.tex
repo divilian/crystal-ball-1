@@ -585,7 +585,7 @@ wc['in_time'] = wc['in_mins'] + (wc['in_secs'] / 60)
 wc['out_time'] = wc['out_mins'] + (wc['out_secs'] / 60)
 \end{Verbatim}
 
-\index{vectorized operation@``vectorized'' operation}
+\index{vectorized@``vectorized'' operation}
 
 We're taking advantage of vectorized operations here. For each row, we need to
 divide the \texttt{in\_secs} value by 60 (to convert it to minutes) and add it
