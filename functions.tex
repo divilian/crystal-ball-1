@@ -79,4 +79,55 @@ that nobody has to reinvent the wheel.
 
 \index{def statement@\texttt{def} statement}
 
-Okay, down to brass tacks.
+Okay, down to brass tacks. The way to create (not call) a function in Python is
+to use the \texttt{def} statement. For our first example, let's write a
+function to compute an (American) football team's score in a game:
+
+\index{football\_score@\texttt{football\_score}}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+def football_score(num_tds, num_fgs):
+    return num_tds * 7 + num_fgs * 3
+\end{Verbatim}
+
+For those not familiar with football scoring, each ``touchdown'' (or TD for
+short) a team scores is worth seven points, and each ``field goal'' (or FG) is
+worth three. (For those who \textit{are} familiar with football scoring, please
+forgive the simplifications here -- extra point kicks, safeties, \textit{etc.}
+It's a first example.)
+
+\index{argument}
+\index{bananas (parentheses)}
+\index{()@\texttt{()} (bananas)}
+
+As you can see from the code snippet, above, the word \texttt{def} (which
+stands for ``define,'' I think, since we're ``defining'' -- a.k.a.~writing -- a
+function) is followed by the \textit{name} of our function, which like a
+variable name can be any name we choose. After the name is the list of
+\textbf{argument}s to the function, in bananas.
+
+\index{function!header}
+\index{function!body}
+\index{indentation}
+
+All that is the \textbf{header} of the function. The \textbf{body}, like other
+``bodies'' we've seen (p.~\pageref{loopBody}, p.~\pageref{ifBody}) is
+\textit{indented} underneath. The \texttt{football\_score} body is just one
+line long, but it can be as many lines as necessary.
+
+\index{return value}
+\index{output!of a function}
+\index{input!of a function}
+\index{return statement@\texttt{return} statement}
+
+Finally, we see the word ``\texttt{return}'' on that last line. This is how we
+control the \textbf{return value} which is given back to the code that called
+our function (review section~\ref{returnValues} on p.~\pageref{returnValues} if
+you need a refresher on this). Whenever a \texttt{return} statement is
+encountered during the execution of a function, the function immediately
+\textit{stops} executing, and the specified value is handed back to the calling
+code. More on that in a minute.
+
+\section{Writing vs.~calling}
+
+Now here's one of the most perplexing things for beginners. 
