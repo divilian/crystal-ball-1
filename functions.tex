@@ -21,7 +21,62 @@ we write our \textit{own} functions.
 
 \section{Why do all this}
 
+It turns out there's a lot of syntactic nonsense involved to get all the wiring
+right when you do this. It can cause students to pull their hair out. So it's
+worth asking at the outset: what do we get for all this pain?
+
+\index{modular}
+
+The answer is subtle, and can seem underwhelming at first, but it's crucial. It
+essentially boils down to this lesson: any complex creative work (including a
+computer program) should be \textbf{modular} in its design. This means that it
+should be composed of smaller building blocks, which are in turn composed of
+smaller building blocks, and that the whole thing should comprise an organized
+whole.
+
+Any other way of doing it leads to madness.
+
+\index{car engine}
+
+Think of a car engine. When a mechanic opens up the hood, he or she doesn't see
+just one big monolithic thing called ``The Engine,'' but rather piston
+assemblies, spark plugs, water pumps, drive shafts, and lots of other
+subsystems. It's what allows piece by piece investigation of problems, and
+piece by piece replacement of bad parts.
+
+\index{creativity}
+\index{rock 'n' roll}
+
+Or think of a rock 'n' roll tune. It's not just an impenetrable mass of sound.
+Instead, it's a collection of recognizable bass lines, drum sequences, vocal
+patterns, and variations on common guitar riffs. This isn't to minimize the
+creativity involved in its orchestration; in fact, the novel combination of the
+myriad possible building blocks \textit{is} the creativity. If it were just an
+impermeable wall of sound, it would be noise, not music.
+
+% TODO Susan Polgar
+% I like to tell the story of Susan Polgar, and the ``simul'' match I saw her
+% play.
+
+\index{spaghetti code@``spaghetti code''}
+
+In the same way, once your data analysis code approaches a certain size, it
+really must be written in a modular way or it will become a hopelessly tangled
+mess, what programmers refer to as ``spaghetti code.'' And the way to achieve
+this is by writing it in terms of functions that you then call at the
+appropriate time.
+
+\index{reusable}
+\index{wheel, reinventing}
+
+One other advantage to this approach, by the way, is that functions are
+\textbf{reusable}. Think of how many different programmers all over the world
+have had reason to call \texttt{np.sort()}, or \texttt{scipy.stats.pearsonr()}!
+The same function becomes applicable in a variety of different contexts, so
+that nobody has to reinvent the wheel.
+
 \section{The \texttt{def} statement}
 
 \index{def statement@\texttt{def} statement}
 
+Okay, down to brass tacks.
