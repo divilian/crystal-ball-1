@@ -386,4 +386,121 @@ be skipped, and we'll drop straight to the \texttt{Mx.}~message.
 Pay careful attention to the indentation in these examples, since it's the key
 to discerning the structure of the program.
 
-% loops
+
+\section{Combining branching with loops}
+
+\index{loop}
+
+And now for the really important application of branching in data science
+programs: combining it with \textit{loops}.
+
+Just as we can have an \texttt{if} statement (or \texttt{if}/\texttt{else}, or
+\texttt{if}/\texttt{elif}/\texttt{else}) inside an \texttt{if} body, so we can
+have an \texttt{if} statement (and friends) inside a \textit{loop} body. This
+is where we're going to get a lot of mileage.
+
+Let's return to Springfield. Our \texttt{simpsons} \texttt{DataFrame} from
+p.~\pageref{finalSimpsons} looked like this:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+       species  age gender            fave     IQ          hair   salary
+name                                                                    
+Homer    human   36      M            beer   74.0          none  52000.0
+Marge    human   34      F  helping others  120.0  stacked tall      0.0
+Bart     human   10      M      skateboard   90.0          buzz      0.0
+Lisa     human    8      F       saxophone  200.0         curly      0.0
+Maggie   human    1      F        pacifier  100.0         curly      0.0
+SLH        dog    4      M             NaN  100.0        shaggy      0.0
+\end{Verbatim}
+
+Now an ordinary loop could print (say) the name and favorite things of all the
+characters:
+
+\index{itertuples@\texttt{.itertuples()} (Pandas)}
+
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+for row in simpsons.itertuples():
+    print("{} likes {}.".format(row.Index, row.fave))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Homer likes beer.
+Marge likes helping others.
+Bart likes skateboard.
+Lisa likes saxophone.
+Maggie likes pacifier.
+SLH likes nan.
+\end{Verbatim}
+
+But combining this with branching techniques gives us more power. We could, for
+example, print only the females:
+
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+for row in simpsons.itertuples():
+    if row.gender == "F":
+        print("{} likes {}.".format(row.Index, row.fave))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Marge likes helping others.
+Lisa likes saxophone.
+Maggie likes pacifier.
+\end{Verbatim}
+
+or give different messages for different age ranges:
+
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+for row in simpsons.itertuples():
+    if row.age >= 18:
+        print("{} earns ${} outside the home.".format(row.Index, row.salary))
+    else:
+        print("Aw, {}'s just a kid.".format(row.Index))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Homer earns $52000.0 outside the home.
+Marge earns $0.0 outside the home.
+Aw, Bart's just a kid.
+Aw, Lisa's just a kid.
+Aw, Maggie's just a kid.
+Aw, SLH's just a kid.
+\end{Verbatim}
+
+or combine these things in innumerable ways:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+for row in simpsons.itertuples():
+    if row.species == "human":
+        if row.IQ > 115:
+            print("We'd like to nominate {} for a Nobel prize.".format(
+                row.Index))
+        elif row.IQ >= 90:
+            print("You can trust {} with a {}, or even a penknife.".format(
+                row.Index, row.fave))
+        else:
+            print("Hmm. No comment.")
+        if row.salary > 0:
+            print("The {}-year-old {} is gainfully employed.".format(
+                row.age, row.Index))
+    else:
+        print("Hey...{} is some kind of animal!".format(row.Index))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Hmm. No comment.
+The 36-year-old Homer is gainfully employed.
+We'd like to nominate Marge for a Nobel prize.
+You can trust Bart with a skateboard, or even a penknife.
+We'd like to nominate Lisa for a Nobel prize.
+You can trust Maggie with a pacifier, or even a penknife.
+Hey...SLH is some kind of animal!
+\end{Verbatim}
+
+You get the idea. Using a loop, we can successively consider each element of an
+array/\texttt{Series} or the rows of a \texttt{DataFrame}. Using \texttt{if}
+and friends, we can treat each one differently depending on its
+characteristics. The possibilities are endless!
