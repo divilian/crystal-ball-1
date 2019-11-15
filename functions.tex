@@ -31,7 +31,7 @@ The answer is subtle, and can seem underwhelming at first, but it's crucial. It
 essentially boils down to this lesson: any complex creative work (including a
 computer program) should be \textbf{modular} in its design. This means that it
 should be composed of smaller building blocks, which are in turn composed of
-smaller building blocks, and that the whole thing should comprise an organized
+still smaller building blocks. The entire thing should comprise an organized
 whole.
 
 Any other way of doing it leads to madness.
@@ -49,10 +49,10 @@ piece by piece replacement of bad parts.
 
 Or think of a rock 'n' roll tune. It's not just an impenetrable mass of sound.
 Instead, it's a collection of recognizable bass lines, drum sequences, vocal
-patterns, and variations on common guitar riffs. This isn't to minimize the
+patterns, and variations on common guitar riffs. I don't mean to minimize the
 creativity involved in its orchestration; in fact, the novel combination of the
-myriad possible building blocks \textit{is} the creativity. If it were just an
-impermeable wall of sound, it would be noise, not music.
+myriad possible building blocks \textit{is} the creativity. If the song were
+just an impermeable wall of sound, it would be noise, not music.
 
 % TODO Susan Polgar
 % I like to tell the story of Susan Polgar, and the ``simul'' match I saw her
@@ -101,7 +101,7 @@ It's a first example.)
 \index{()@\texttt{()} (bananas)}
 
 As you can see from the code snippet, above, the word \texttt{def} (which
-stands for ``define,'' I think, since we're ``defining'' -- a.k.a.~writing -- a
+stands for ``define,'' since we're ``defining'' -- a.k.a.~writing -- a
 function) is followed by the \textit{name} of our function, which like a
 variable name can be any name we choose. After the name is the list of
 \textbf{argument}s to the function, in bananas.
@@ -130,4 +130,148 @@ code. More on that in a minute.
 
 \section{Writing vs.~calling}
 
-Now here's one of the most perplexing things for beginners. 
+Now here's one of the most perplexing things for beginners. Consider this code:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+team_name = "Broncos"
+num_tds = 3
+num_fgs = 2
+
+def football_score(num_tds, num_fgs):
+    return num_tds * 7 + num_fgs * 3
+\end{Verbatim}
+
+It surprises many to learn that this code snippet \textit{does not compute
+anything}, football score or otherwise. The reason? We only \textit{wrote} a
+function; we didn't actually \textit{call} it.
+
+This is sort of like building an impressive machine but then never pushing the
+``On'' button. The above code says to do three things:
+
+\begin{compactenum}
+\item Create a \texttt{num\_tds} variable and set its value to the integer 3.
+\item Create a \texttt{num\_fgs} variable and set its value to the integer 2.
+\item Create a function called \texttt{football\_score} which, \textit{if it is
+ever called in the future}, will compute and return the score of a football
+game.
+\end{compactenum}
+
+In other words, that last step is just preparatory. It tells Python: ``by the
+way, in case you see any code later on that calls a function named
+`\texttt{football\_score},' here's the code you should run in response.''
+
+To actually call your function, you have to use the same syntax we learned on
+p.~\pageref{function}, namely:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+team_name = "Broncos"
+num_tds = 3
+num_fgs = 2
+
+the_score = football_score(num_tds, num_fgs)
+print("The {} scored {} points.".format(team_name, the_score))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+The Broncos scored 27 points.
+\end{Verbatim}
+
+\index{main program}
+
+Follow the thread of execution closely here. First, the three variables are
+created, in what I'll often call ``the main program.'' By ``main,'' I really
+just mean the stuff that's all the way flush-left, and thus not inside any
+``\texttt{def}.'' It's the main program in the sense that when you execute the
+cell, it's what immediately happens without needing to be explicitly called.
+
+Then, after those three variables are created, the \texttt{football\_score()}
+function is called, at which point \textit{the flow of execution is transferred
+to the inside of the function.} Since this simple function has only one line of
+code in its body (the \texttt{return} statement), executing it is really quick;
+but it's still important to realize that for a moment, Python isn't ``in'' that
+Broncos cell at all. Instead it jumps to the function, carries out the code
+inside it, and then \texttt{return}s the value...
+
+...right back into the waiting arms of the main program, which stores that
+returned value (an integer 27, as it turns out) in a new variable named
+\texttt{the\_score}. Then the flow continues, and the \texttt{print()}
+statement executes as normal.
+
+\index{bananas (parentheses)}
+Bottom line: every time you want to run your function's code -- whether that's
+a hundred times, once, or not at all -- you need to call it by typing the name
+of the function (with no ``\texttt{def}'') followed by a banana-separated list
+of arguments.
+
+\section{Naming arguments}
+
+\index{passing an argument@``passing'' an argument}
+\index{argument}
+
+Speaking of arguments, here's the next thing many students have trouble with.
+The names of the variables that your main program passes to the function are
+normally \textit{not} the same as the arguments defined by the function itself.
+
+What? Yeah.
+
+Consider this example:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+jets_touchdowns = 2
+jets_field_goals = 0
+jets_total_pts = football_score(jets_touchdowns, jets_field_goals)
+
+steeler_tds = 1
+steeler_fgs = 3
+steeler_total_pts = football_score(steeler_tds, steeler_fgs)
+
+print("The Steelers won {} to {}.".format(steeler_total_pts,
+    jets_total_pts))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+The Steelers won 16 to 14.
+\end{Verbatim}
+
+This code contains two calls to the \texttt{football\_score()} function. In the
+first call, the variables \texttt{jets\_touchdowns} (with value 2) and
+\texttt{jets\_field\_goals} (0) were passed. In the second,
+\texttt{steeler\_tds} (1) and \texttt{steeler\_fgs} (3) were. In
+\textit{neither} case were the arguments literally named ``\texttt{num\_tds}''
+and ``\texttt{num\_fgs}'', which were the function's own argument names.
+
+To be crystal clear: whenever \texttt{football\_score()} is called, two
+arguments are passed to it. The function chooses to name the first one it
+receives ``\texttt{num\_tds}'' and the second one it receives
+``\texttt{num\_fgs}''. But these are \textit{its own personal names.} They
+normally have nothing to do with what the calling code chooses to name them.
+
+Why does it work this way? Perhaps this example makes clear the reason. If the
+main program had to name its variables exactly the same as the (indented)
+function did, then the function would not be reusable. In order for it to be
+called with different values in different contexts, there needs to be this
+flexible decoupling of variable names.
+
+To reinforce the lesson, note too that you can call a function without even
+having variables in the main program at all:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+x = football_score(5, 2)
+print("Some mythical team scored {} points today.".format(x))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Some mythical team scored 41 points today.
+\end{Verbatim}
+
+\index{slot \#1}
+\index{slot \#2}
+Here we literally passed the values 5 and 2 to the function, instead of
+creating variables to hold them. The function doesn't mind: it just says, ``hey
+man, whatever's given to me in slot \#1, I'm going to name `\texttt{num\_tds},'
+and whatever's delivered through slot \#2, I'm going to call
+`\texttt{num\_fgs}.' I don't care what the outside world's variable names
+are...or even whether they have names at all. I just work here.''
