@@ -1,5 +1,5 @@
 
-\chapter{Functions}
+\chapter{Functions (1 of 2)}
 \label{ch:functions}
 
 \index{function}
@@ -218,28 +218,32 @@ What? Yeah.
 
 Consider this example:
 
+\index{Colts, Baltimore}
+\index{Jets, New York}
+\index{Superbowl III}
+\index{Namath, Joe}
+
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-jets_touchdowns = 2
-jets_field_goals = 0
-jets_total_pts = football_score(jets_touchdowns, jets_field_goals)
+jets_touchdowns = 1
+jets_field_goals = 3
+jets_total = football_score(jets_touchdowns, jets_field_goals)
 
-steeler_tds = 1
-steeler_fgs = 3
-steeler_total_pts = football_score(steeler_tds, steeler_fgs)
+colts_tds = 1
+colts_fgs = 0
+colts_total = football_score(colts_tds, colts_fgs)
 
-print("The Steelers won {} to {}.".format(steeler_total_pts,
-    jets_total_pts))
+print("The Jets won {} to {}.".format(jets_total, colts_total))
 \end{Verbatim}
 \vspace{-.2in}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-The Steelers won 16 to 14.
+The Jets won 16 to 7.
 \end{Verbatim}
 
 This code contains two calls to the \texttt{football\_score()} function. In the
 first call, the variables \texttt{jets\_touchdowns} (with value 2) and
 \texttt{jets\_field\_goals} (0) were passed. In the second,
-\texttt{steeler\_tds} (1) and \texttt{steeler\_fgs} (3) were. In
+\texttt{colts\_tds} (1) and \texttt{colts\_fgs} (3) were. In
 \textit{neither} case were the arguments literally named ``\texttt{num\_tds}''
 and ``\texttt{num\_fgs}'', which were the function's own argument names.
 
@@ -441,16 +445,90 @@ actually: there's no way to shorten it without changing what it does.)
 \index{return value}
 \index{return statement@\texttt{return} statement}
 
-This function, as you can see, has a veritable crap ton of \texttt{return}
+This function, as you can see, has a veritable crap-ton of \texttt{return}
 statements -- six in fact. But only one will ever be reached, because as soon
 as one \textit{is} reached, the function is officially finished, and returns
 that value.
 
 \section{Returning nothing at all}
 
-\section{More complicated functions}
+Does it ever make sense for a function to return \textit{nothing}? Oddly, yes:
+if it has a useful side effect. One obvious one is printing something to the
+screen:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+def cheer_for(team):
+    if team != "Christopher Newport":
+        print("Go {} go!!".format(team))
+    else:
+        print("Uhh...no.")
+
+cheer_for("Mary Washington")
+cheer_for("Lady Eagles")
+cheer_for("Christopher Newport")
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Go Mary Washington go!!
+Go Lady Eagles go!!
+Uhh...no.
+\end{Verbatim}
+
+Here, instead of ``\texttt{something = cheer\_for(...)}'' we type plain-old
+``\texttt{cheer\_for(...)}''. That's because there's no return value to
+capture, so there's no point in setting it equal to anything. We call the
+function just to enjoy its messages.
 
 \section{Calling a function from another function}
+
+Finally, note that we can put any code we desire inside a function's body,
+including one or more calls to other functions! Check out this bad boy:
+
+\index{greet@\texttt{greet()}}
+\index{full\_name@\texttt{full\_name()}}
+\index{salutation@\texttt{salutation()}}
+\index{Merkel, Angela}
+\index{Sharapova, Maria}
+\index{Thunberg, Greta}
+\index{Kasparov, Garry}
+\index{single}
+\index{married}
+\index{Ph.D.}
+\index{Dr.}
+\index{Mr./Mrs./Miss/Ms./Mx.}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+def greet(first_n, last_n, middle_i, gender, status, deg, lang):
+    sal = salutation(gender, status, deg)
+    if lang == "Swedish":
+        greeting = "Hej"
+    elif lang == "Russian":
+        greeting = "Privet"
+    elif lang == "Hindi":
+        greeting = "Namaste"
+    else:
+        greeting = "Yo"
+    full = full_name(last_n, first_n, middle_i)
+    print("{}, {} {}!".format(greeting, sal, full))
+
+greet("Greta", "Thunberg", "F", "female", "single", "none", "Swedish")
+greet("Maria", "Sharapova", "S", "female", "single", "none", "Russian")
+greet("Garry", "Kasparov", "K", "male", "married", "BA", "Russian")
+greet("Angela", "Merkel", "D", "female", "married", "PhD", "German")
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Hej, Miss Greta F. Thunberg!
+Privet, Miss Maria S. Sharapova!
+Privet, Mr. Garry K. Kasparov!
+Yo, Dr. Angela D. Merkel!
+\end{Verbatim}
+
+In the course of its duties, \texttt{greet()}'s function body calls both
+\texttt{salutation()} and \texttt{full\_name()} for help. They each produce
+components of its complete solution. Good teamwork!
 
 % full name, using salutation
 
