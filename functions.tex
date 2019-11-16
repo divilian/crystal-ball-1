@@ -275,3 +275,45 @@ man, whatever's given to me in slot \#1, I'm going to name `\texttt{num\_tds},'
 and whatever's delivered through slot \#2, I'm going to call
 `\texttt{num\_fgs}.' I don't care what the outside world's variable names
 are...or even whether they have names at all. I just work here.''
+
+\section{Passing aggregate data to functions}
+
+\index{atomic}
+\index{aggregate data}
+\index{IQR (interquartile range)}
+
+Even though the previous example involved passing atomic data to a function,
+you can totally pass aggregate data as well. Suppose we'd like to be able to
+easily compute the IQR (recall p.~\pageref{IQR}) of a univariate data set.
+Writing a function to do that is a snap:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+def IQR(some_data):
+    return some_data.quantile(.75) - some_data.quantile(.25)
+\end{Verbatim}
+
+\index{NCAA}
+\index{YouTube}
+\index{num\_plays@\texttt{num\_plays}}
+We can now call it on anything we like, like our examples from
+p.~\pageref{YouTubeData} and p.~\pageref{NCAAData}:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print("The IQR of the YouTube plays data is {}".format(IQR(num_plays)))
+print("The IQR of the NCAA scoring data is {}".format(IQR(pts)))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+The IQR of the YouTube plays data is 412.
+The IQR of the NCAA scoring data is 15.
+\end{Verbatim}
+
+Again, we named the function's own argument (\texttt{some\_data}) something
+totally different than the variables it was called with (\texttt{num\_plays}
+and \texttt{pts}). This is a happy and healthy thing.
+
+
+% Calling a function from another function
+
+% Returning a boolean
