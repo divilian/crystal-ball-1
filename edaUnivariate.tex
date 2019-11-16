@@ -248,6 +248,22 @@ the same size. The lowest quintile for a data set of IQs might range from 47
 (the lowest IQ in the data set) all the way up to 83, whereas the IQs in the
 middle quintile might all be in the narrow range 96 to 104.
 
+\subsection{The IQR (interquartile range)}
+
+\index{IQR (interquartile range)}
+
+Speaking of quartiles, you'll commonly hear data scientists cite the
+\textbf{IQR}, or \textbf{interquartile range}, as a measure of how widely
+varying a univariate data set is. It's simply the distance between the
+.25-quantile and the .75-quantile; or in quartile terms, the difference between
+the ``upper'' and ``lower'' quartiles.
+
+Because of how quantiles work, exactly 50\% of the data points are between the
+.25- and .75-quantiles. This means that the more spread out the data points
+are, the larger the IQR, and vice versa. In this sense, it's akin to the
+standard deviation (see p.~\pageref{standardDeviation}) which you may be
+familiar with.
+
 \subsection{A quantile example}
 
 \index{YouTube}
@@ -405,6 +421,7 @@ Basically, unless the data is symmetrical and ``bell-curvy,'' it gives a
 meaningless number. It is almost \textit{always} safer and more illuminating to
 look at the median (or other quantiles).
 
+\label{standardDeviation}
 \index{standard deviation}
 \index{std@\texttt{.std()} method (Pandas)}
 
@@ -422,10 +439,12 @@ print(num_plays.std())
 \end{Verbatim}
 
 \index{bell-curvy@``bell-curvy''}
-The standard deviation is a measure of the ``spread'' of a data set -- a high
-number means (in this example) higher variability in the number of plays from
-video to video. As with the mean, it's essentially meaningless (no pun
-intended) unless the data is nice and bell-curve shaped.
+\index{IQR (interquartile range)}
+
+The standard deviation, like the IQR, is a measure of the ``spread'' of a data
+set -- a high number means (in this example) higher variability in the number
+of plays from video to video. As with the mean, it's essentially meaningless
+(no pun intended) unless the data is nice and bell-curve shaped.
 
 Speaking of which, we'll never be able to judge the ``shape'' of anything
 unless we get some graphical plots involved. So let's turn our focus to that.
@@ -670,6 +689,7 @@ print("mean: {}".format(pts.mean()))
 \end{Verbatim}
 \vspace{-.2in}
 
+\label{ncaaQuantiles}
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 min: 0.0
 .25-quantile: 17.0
@@ -680,7 +700,7 @@ mean: 23.755
 \end{Verbatim}
 
 Looks like a typical score is in the 20's, with the conference record being a
-whopping 55 points in one game.
+whopping 55 points in one game. The IQR is $32-17$, or 15 points.
 
 We can plot a histogram of this \texttt{Series} with this code:
 
@@ -869,8 +889,8 @@ one for stuff like this.
 
 Let's talk about one more type of plot in this chapter, even though it's really
 most useful when dealing with bivariate data, as we'll address in
-chapter\~{ch:edaBivariate2}. It's called the \textbf{box plot} (also known as a
-``\textbf{box-and-whisker'' plot}). We can create one by passing
+chapter~\ref{ch:edaBivariate2}. It's called the \textbf{box plot} (also known
+as a ``\textbf{box-and-whisker'' plot}). We can create one by passing
 ``\texttt{kind="box"}'' to the \texttt{.plot()} method (here for the NCAA
 football data):
 
@@ -911,13 +931,15 @@ the box.
 \item The 1-quantile (the maximum value) is the y-value of the top ``whisker.''
 \end{compactitem}
 
+\index{IQR (interquartile range)}
 Using your quantile knowledge from section~\ref{quantiles}, you'll realize the
 following fact: \textit{the box alone contains exactly half the data points.}
 This is a key insight. While the whiskers show the entire range of the data,
-the box shows the middle 50\% of it. This makes it very easy to grasp where the
-bulk of the data lies, and it reinforces the lesson we learned from the
-histogram on this data set (Figure~\ref{fig:ncaa1} on page
-\pageref{fig:ncaa1}): a big chunk of the time, teams score in the 20's.
+the box shows the middle 50\% of it. (And the height of the box is precisely
+the IQR.) This makes it very easy to grasp where the bulk of the data lies, and
+it reinforces the lesson we learned from the histogram on this data set
+(Figure~\ref{fig:ncaa1} on page \pageref{fig:ncaa1}): a big chunk of the time,
+teams score in the 20's.
 
 You might object to showing an entire plot for this, since I've just revealed
 that it's merely a fancy way to show five numbers. And you're right, in a way.
