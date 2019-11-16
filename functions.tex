@@ -119,6 +119,7 @@ line long, but it can be as many lines as necessary.
 \index{output!of a function}
 \index{input!of a function}
 \index{return statement@\texttt{return} statement}
+\label{returnImmediatelyReturns}
 
 Finally, we see the word ``\texttt{return}'' on that last line. This is how we
 control the \textbf{return value} which is given back to the code that called
@@ -313,7 +314,143 @@ Again, we named the function's own argument (\texttt{some\_data}) something
 totally different than the variables it was called with (\texttt{num\_plays}
 and \texttt{pts}). This is a happy and healthy thing.
 
+\section{Returning text}
 
-% Calling a function from another function
+So far, our functions have returned numeric answers. But they can certainly
+return text as well. Here's a function which assembles a person's full name out
+of his or her constituent components:
 
-% Returning a boolean
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+def full_name(last_name, first_name, middle_initial):
+    return first_name + " " + middle_initial + ". " + last_name
+
+my_full_name = full_name("Davies", "Stephen", "C")
+her_full_name = full_name("Clinton", "Hillary", "R")
+
+print("Your author's full name is: {}".format(my_full_name))
+print("Another person's full name is: {}".format(her_full_name))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Your author's full name is: Stephen C. Davies
+Another person's full name is: Hillary R. Clinton
+\end{Verbatim}
+
+(Recall from p.~\pageref{concatenatingStrings} that the ``\texttt{+}'' operator
+is used for the concatenation of strings.)
+
+\section{Returning \texttt{True} or \texttt{False}}
+
+\index{if statement@\texttt{if} statement}
+\index{condition (of an \texttt{if} statement)}
+It's common for a programmer to want a function which, instead of returning a
+number or text, tells her \textit{whether or not something is true.} This lets
+her use the return value of such a function as the condition of an \texttt{if}
+statement.
+
+\index{is\_positive@\texttt{is\_positive()}}
+Here's a trivial example:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+def is_positive(number):
+    if number > 0:
+        return True
+    else:
+        return False
+
+x = is_positive(13)
+if x:
+    print("Yes, 13 is positive!")
+else:
+    print("Alas, 13 isn't positive.")
+
+if is_positive(-5):
+    print("Yes, -5 is positive!")
+else:
+    print("Alas, -5 isn't positive.")
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Yes, 13 is positive!
+Alas, -5 isn't positive.
+\end{Verbatim}
+
+\index{boolean value}
+\index{Boole, George}
+The values \texttt{True} and \texttt{False} are called \textbf{boolean value}s,
+after the 19th-century mathematician George Boole. Note that in Python they
+must begin with \textit{capital} letters.
+
+The somewhat odd-looking ``\texttt{if x:}'' line is possible because \texttt{x}
+was set to the return value of a call to \texttt{is\_positive()}, and that
+function returned a boolean value.
+
+\index{return value}
+\index{return statement@\texttt{return} statement}
+\index{if/else statement@\texttt{if}/\texttt{else} statement}
+Another thing this brief example illustrates is the presence of more than one
+\texttt{return} statement in a function. You might have thought this was
+useless, since on p.~\pageref{returnImmediatelyReturns} I mentioned that as
+soon as a \texttt{return} is encountered during execution, the function is
+immediately completed. Why, then, would one ever have more than one -- the
+second one could never be reached, right? Wrong. The branching nature of the
+\texttt{if}/\texttt{else} statement (above) means that the first
+\texttt{return} will be skipped over in some situations (negative arguments,
+\textit{etc.}) so it's perfectly sensible to have more than one.
+
+\index{salutations}
+\index{salutation@\texttt{salutation()}}
+A more complicated example would be the ``salutation'' algorithm from
+section~\ref{salutation} (p.~\pageref{salutation}), this time embodied in a
+function:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+def salutation(gender, marital_status, degree):
+    if degree == "PhD" or degree == "MD":
+        return "Dr."
+    elif gender == "male":
+        return "Mr."
+    elif gender == "female":
+        if marital_status == "married":
+            return "Mrs."
+        elif marital_status == "single":
+            return "Miss"
+        else:
+            return "Ms."
+    else:
+        return "Mx."
+
+my_salutation = salutation("male", "married", "PhD")
+print("Why hello, {} Davies.".format(my_salutation))
+print("And hello, {} Davies.".format(salutation("female", "married", "BS")))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Why hello, Dr. Davies.
+And hello, Mrs. Davies.
+\end{Verbatim}
+
+Wow, all that code is in \textit{one} function? Yeah. That's not unusual at
+all, although you should strive to make functions as compact as they can be.
+(The \texttt{salutation()} function \textit{is} as compact as it can be,
+actually: there's no way to shorten it without changing what it does.)
+
+\index{return value}
+\index{return statement@\texttt{return} statement}
+
+This function, as you can see, has a veritable crap ton of \texttt{return}
+statements -- six in fact. But only one will ever be reached, because as soon
+as one \textit{is} reached, the function is officially finished, and returns
+that value.
+
+\section{Returning nothing at all}
+
+\section{More complicated functions}
+
+\section{Calling a function from another function}
+
+% full name, using salutation
+
