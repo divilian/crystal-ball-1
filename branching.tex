@@ -154,6 +154,9 @@ although only the \texttt{if} part has a condition.
 And that brings up another point. Although it hardly seems worth mentioning,
 let me nevertheless emphasize this oft-overlooked truth:
 
+\index{cardinal rule@cardinal rule (of \texttt{if}/\texttt{else})}
+\label{cardinalRule}
+
 \definecolor{shadecolor}{rgb}{.9,.9,.9}
 \begin{shaded}
 Whenever an \texttt{if}/\texttt{else} statement is reached,
@@ -169,6 +172,8 @@ implicitly \textit{the exact opposite} of the \texttt{if} condition. Period. In
 
 To test whether you fully understand this point, see if you can predict the
 output of the following program, which 99\% of beginning programmers get wrong:
+
+\label{spanishFrenchPitfall}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 name = "Javier"
