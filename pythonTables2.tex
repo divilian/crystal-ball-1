@@ -213,7 +213,7 @@ print(lisas_iq)
 \section{Accessing a \texttt{DataFrame}'s metadata}
 
 \index{metadata}
-\index{index@\texttt{.index} syntax (Pandas)}
+\index{index@\texttt{.index} (little \texttt{i}) syntax}
 
 We can get some meta-information about a \texttt{DataFrame} without even
 looking at individual rows. If we want to know what the index values themselves
@@ -502,6 +502,10 @@ max    36.000000  200.000000  52000.000000
 Neat! We get the number of values, the mean, the standard deviation, and all
 the quartiles for each of the numeric columns. Lots of dashboard information at
 a glance!
+
+% TODO: maybe move this section to its own chapter, after the two functions
+% ones? After all, it often makes sense to use a function to perform the
+% recoding for a single row.
 
 \section{Recoding and transforming}
 
