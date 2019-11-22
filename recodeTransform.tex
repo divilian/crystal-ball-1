@@ -10,13 +10,18 @@ separately. Or perhaps you need to reframe a variable by binning it into
 meaningful subdivisions -- categorizing a raw column of salaries into ``high,''
 ``medium,'' and ``low'' wage earners, for instance.
 
+\index{derived column}
+\index{column (of a table)}
+
 In data science, these activities are known as \textbf{recoding} and/or
 \textbf{transforming}. There's not a sharp division between the two; usually I
 think of recoding as converting a single variable to one with different units
 (as in the dollars-to-yen and high/medium/low earners examples) and
 transforming as creating a new variable entirely out of a combination of
 columns (like miles per gallon). In both cases, though, we'll be creating and
-adding new columns to a \texttt{DataFrame}.
+adding new columns to a \texttt{DataFrame}. These columns are sometimes called
+\textbf{derived columns} since they're based on (derived from) existing columns
+rather than containing independent information.
 
 \section{Recoding with simple operations}
 
@@ -28,11 +33,10 @@ Each row of this data set represents one player's performance in a particular
 row (Megan Rapinoe and Rose Lavelle), and several rows for the same game (the
 first four rows are all from the June 28th game, for instance):
 
-\pagebreak
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=lines,framesep=3mm]
-last,first,date,in_time,out_time,goals,asst,tackles,fouls
+last,first,date,in_time,out_time,goals,asst,tackles,shots
 Morgan,Alex,28-Jun-2019,0.0,90.0,0,0,2,1
-Rapinoe,Megan,28-Jun-2019,0.0,74.0,2,0,2,2
+Rapinoe,Megan,28-Jun-2019,0.0,74.0,2,0,2,3
 Press,Christen,28-Jun-2019,74.0,90.0,0,0,1,0
 Lavelle,Rose,28-Jun-2019,0.0,90.0,0,1,3,0
 Lavelle,Rose,7-Jul-2019,0.0,90.0,1,0,4,1
@@ -55,9 +59,9 @@ print(wc)
 \vspace{-.2in}
 
 \begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-     last    first   date in_mins in_secs out_mins out_secs goals asst tackles fouls
+     last    first   date in_mins in_secs out_mins out_secs goals asst tackles shots
 0  Morgan     Alex 28-Jun       0       0       90        0     0    0       2     1
-1 Rapinoe    Megan 28-Jun       0       0       74       27     2    0       2     2
+1 Rapinoe    Megan 28-Jun       0       0       74       27     2    0       2     3
 2   Press Christen 28-Jun      74      27       90        0     0    0       1     0
 3 Lavelle     Rose 28-Jun       0       0       90        0     0    1       3     0
 4 Lavelle     Rose  7-Jul       0       0       90        0     1    0       4     1
@@ -121,9 +125,9 @@ print(wc)
 \vspace{-.2in}
 
 \begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-     last    first   date goals asst tackles fouls in_time out_time
+     last    first   date goals asst tackles shots in_time out_time
 0  Morgan     Alex 28-Jun     0    0       2     1    0.00    90.00
-1 Rapinoe    Megan 28-Jun     2    0       2     2    0.00    74.45
+1 Rapinoe    Megan 28-Jun     2    0       2     3    0.00    74.45
 2   Press Christen 28-Jun     0    0       1     0   74.45    90.00
 3 Lavelle     Rose 28-Jun     0    1       3     0    0.00    90.00
 4 Lavelle     Rose  7-Jul     1    0       4     1    0.00    90.00
@@ -148,15 +152,15 @@ Now that we've converted the awkward minutes-and-seconds columns to just
 Pandas makes this easy:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-wc['mins_played'] = wc['out_time'] - wc['in_time']
+wc['mins_played'] = wc.out_time - wc.in_time
 print(wc)
 \end{Verbatim}
 \vspace{-.2in}
 
 \begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-     last    first   date goals asst tackles fouls in_time out_time mins_played
+     last    first   date goals asst tackles shots in_time out_time mins_played
 0  Morgan     Alex 28-Jun     0    0       2     1    0.00    90.00       90.00
-1 Rapinoe    Megan 28-Jun     2    0       2     2    0.00    74.45       74.45
+1 Rapinoe    Megan 28-Jun     2    0       2     3    0.00    74.45       74.45
 2   Press Christen 28-Jun     0    0       1     0   74.45    90.00       15.55
 3 Lavelle     Rose 28-Jun     0    1       3     0    0.00    90.00       90.00
 4 Lavelle     Rose  7-Jul     1    0       4     1    0.00    90.00       90.00
@@ -187,9 +191,9 @@ del wc['tackles']
 \vspace{-.2in}
 
 \begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-     last    first   date goals asst fouls in_time out_time mins_played tkl_per_90
+     last    first   date goals asst shots in_time out_time mins_played tkl_per_90
 0  Morgan     Alex 28-Jun     0    0     1    0.00    90.00       90.00       2.00
-1 Rapinoe    Megan 28-Jun     2    0     2    0.00    74.45       74.45       2.42
+1 Rapinoe    Megan 28-Jun     2    0     3    0.00    74.45       74.45       2.42
 2   Press Christen 28-Jun     0    0     0   74.45    90.00       15.55       5.79
 3 Lavelle     Rose 28-Jun     0    1     0    0.00    90.00       90.00       3.00
 4 Lavelle     Rose  7-Jul     1    0     1    0.00    90.00       90.00       4.00
@@ -221,27 +225,27 @@ grouped_wc = wc.groupby(['last','first'])
 \end{Verbatim}
 
 We then take our new, temporary \texttt{grouped\_wc} variable and extract the
-\texttt{goals}, \texttt{asst}, \texttt{fouls}, \texttt{tackles}, and
+\texttt{goals}, \texttt{asst}, \texttt{shots}, \texttt{tackles}, and
 \texttt{mins\_played} columns from it, \textbf{summing} each of them to produce
 the per-player values in the result:
 
 \index{by\_player@\texttt{by\_player}}
 
 \begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
-by_player = grouped_wc[['goals','asst','fouls','tackles','mins_played']].sum()
+by_player = grouped_wc[['goals','asst','shots','tackles','mins_played']].sum()
 \end{Verbatim}
 
 This yields:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-                  goals  asst  fouls  tackles  mins_played
+                  goals  asst  shots  tackles  mins_played
 last    first                                             
 Dunn    Crystal       0     1      2        1        38.46
 Lavelle Rose          1     1      1        7       180.00
 Lloyd   Carli         0     0      0        1         6.73
 Morgan  Alex          0     0      1        2        90.00
 Press   Christen      0     0      0        1        15.55
-Rapinoe Megan         3     1      4        5       157.72
+Rapinoe Megan         3     1      5        5       157.72
 \end{Verbatim}
 
 Now, we're ready to compute a per-game analysis as before, but this time for
@@ -255,63 +259,199 @@ del by_player['tackles']
 \vspace{-.2in}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-                  goals  asst  fouls  mins_played  tkl_per_90
+                  goals  asst  shots  mins_played  tkl_per_90
 last    first                                                
 Dunn    Crystal       0     1      2        38.46        2.34
 Lavelle Rose          1     1      1       180.00        3.50
 Lloyd   Carli         0     0      0         6.73       13.37
 Morgan  Alex          0     0      1        90.00        2.00
 Press   Christen      0     0      0        15.55        5.79
-Rapinoe Megan         3     1      4       157.72        2.85
+Rapinoe Megan         3     1      5       157.72        2.85
 \end{Verbatim}
 
+\section{Transforming with more complex operations}
 
-\index{starter@\texttt{starter}}
-\index{where@\texttt{where()} function (NumPy)}
+\index{vectorized@``vectorized'' operation}
 
+In all the above examples, we took advantage of Pandas vectorized operations.
+With just a single line of code like ``\texttt{wc[\textquotesingle
+mins\_played\textquotesingle] = wc.out\_time - wc.in\_time}'', we could compute
+our entire new transformed column in one fell swoop.
 
+\index{loop}
 
-% START HERE: instead of np.where, use a function with an if statement.
+Sometimes, we're not so lucky. In particular, if the computation of the
+transformed column is more complicated than just numeric operations -- like, if
+it involves branches, loops, or calling other functions -- we normally can't
+compute it all at once. Instead, we have to resort to a loop.
 
-Before removing the \texttt{in\_time} and \texttt{out\_time} columns (which we
-could keep around, but I want this to fit on the page) let's do something extra
-snazzy. We might also be interested in which players \textit{started} which
-games (as opposed to being a mid-game substitute). Obviously, a starter is
-someone who entered the game at time 0. To create a new column for this, let's
-use the NumPy \texttt{where()} function, which I find immeasurably useful.
+Pandas makes this procedure a bit awkward in my opinion. But once you learn the
+pattern, it's not hard to imitate. Here's the pattern for creating a
+transformed/recoded column that requires more complex operations:
 
-The \texttt{np.where()} function works as follows. You give it three arguments.
-The first is a query condition, using the same query syntax we learned back in
-section~\ref{seriesQueries}. The second and third arguments are the values you
-want to use \textit{if the query evaluates to \texttt{True}, or \texttt{False},
-respectively}, for a particular row. Check it out:
+\definecolor{shadecolor}{rgb}{.9,.9,.9}
+\begin{shaded}
+\begin{compactenum}
+\item Create a \textbf{function} that will compute the transformed value for a
+\textit{single} row. Its arguments should be whatever column values are
+necessary to derive the new value, and its return value should be the desired
+transformation.
+\item Create an \textit{empty} NumPy array to hold the row-by-row results, and
+make sure it's the right type.
+\item Write a loop that will iterate through all the rows of the original
+\texttt{DataFrame}. For each row, pass the appropriate values to the function,
+and then \textit{append} the return value to the ever-growing NumPy array.
+\item Finally, slap that NumPy array on to the \texttt{DataFrame} as a new
+column.
+\end{compactenum}
 
-\begin{samepage}
+\end{shaded}
+
+Here's a couple examples. First, suppose we want to compute a shooting
+percentage for each player; in other words, how many goals they scored per shot
+they took. Now you might think we could simply use vectorized operations:
+
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-wc['starter'] = np.where(wc['in_time'] == 0, True, False)
-del wc['in_time']
-del wc['out_time']
-print(wc)
+wc['shots_per_goal'] = wc.goals / wc.shots
 \end{Verbatim}
-\end{samepage}
+
+\index{cardinal sin (division by zero)}
+
+The problem is, for players who never attempted a shot in the game, this would
+result in dividing by zero, a cardinal sin. Sports convention says that if a
+player makes 0 goals in 0 attempts, their shooting percentage is 0.00, even
+though mathematically-speaking this is undefined.
+
+Very well, following our procedure from above, we'll first define a function
+\texttt{shooting\_perc()}:
+
+\index{shooting\_perc@\texttt{shooting\_perc()}}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+def shooting_perc(goals, shots):
+    if shots == 0:
+        return 0.0
+    else:
+        return np.round(goals / shots * 100, 1)
+\end{Verbatim}
+
+\index{s\_perc@\texttt{s\_perc}}
+Then, we create an empty NumPy array. Here's how:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+s_perc = np.array([])
+\end{Verbatim}
+
+\index{array@\texttt{array()} (NumPy)}
+Looks weird, I know. But remember, the \texttt{array()} function (review
+p.~\pageref{arrayFunction}) takes a boxie-enclosed list of elements. If we
+enclose \textit{nothing} inside the boxies, that effectively makes it an empty
+list.
+
+And why would we want to do that? Because we need to continually add to this
+array, one value for each row in the \texttt{DataFrame}. At the end, there must
+be \textit{exactly} as many elements in \texttt{s\_perc} as there are rows in
+\texttt{wc}, otherwise we won't be able to add it as a new column.
+
+Here's the loop (step 3 from the shaded box):
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+for row in wc.itertuples():
+    new_s_perc = shooting_perc(row.goals, row.shots)
+    s_perc = np.append(s_perc, new_s_perc)
+\end{Verbatim}
+
+I've chosen to create a temporary variable here (\texttt{new\_s\_perc}) for
+readability. The first line of the loop body says to take the current
+\texttt{row}'s \texttt{goals} and \texttt{shots} values, and send them as
+arguments to the \texttt{shooting\_perc()} function. That function, which we
+defined above, will return us a single number which is the shooting percentage
+for \textit{that row}. The second line then appends that single
+\texttt{new\_s\_perc} value to the end of the ever-growing \texttt{s\_perc}
+array.
+
+Finally, we add this new column to the \texttt{wc} \texttt{DataFrame} proper:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+wc['s_perc'] = s_perc
+\end{Verbatim}
+
+which gives us:
 
 \begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-     last    first   date goals asst tackles fouls mins_played starter
-0  Morgan     Alex 28-Jun     0    0       2     1       90.00    True
-1 Rapinoe    Megan 28-Jun     2    0       2     2       74.45    True
-2   Press Christen 28-Jun     0    0       1     0       15.55   False
-3 Lavelle     Rose 28-Jun     0    1       3     0       90.00    True
-4 Lavelle     Rose  7-Jul     1    0       4     1       90.00    True
-5 Rapinoe    Megan  7-Jul     1    1       3     2       83.27    True
-6   Lloyd    Carli  7-Jul     0    0       1     0        6.73   False
-7    Dunn  Crystal 23-Jun     0    1       1     2       38.46   False
+     last    first   date goals asst shots in_time out_time mins_played s_perc
+0  Morgan     Alex 28-Jun     0    0     1    0.00    90.00       90.00    0.0
+1 Rapinoe    Megan 28-Jun     2    0     3    0.00    74.45       74.45   66.7
+2   Press Christen 28-Jun     0    0     0   74.45    90.00       15.55    0.0
+3 Lavelle     Rose 28-Jun     0    1     0    0.00    90.00       90.00    0.0
+4 Lavelle     Rose  7-Jul     1    0     1    0.00    90.00       90.00  100.0
+5 Rapinoe    Megan  7-Jul     1    1     2    0.00    83.27       83.27   50.0
+6   Lloyd    Carli  7-Jul     0    0     0   83.27    90.00        6.73    0.0
+7    Dunn  Crystal 23-Jun     0    1     2   42.62    81.08       38.46    0.0
 \end{Verbatim}
+
+Rose Lavelle's July 7th game was the only perfect shooting performance in this
+data set -- who knew?
+
+\bigskip
+
+We'll complete this chapter with a slightly more complex example, but which
+still follows the shaded box pattern.
+
+\index{starter@\texttt{starter}}
+Say we're also interested in which players \textit{started} which games (as
+opposed to being a mid-game substitute). Obviously, a starter is someone who
+entered the game at time 0. To create a new column for this, we'll need our
+function to return the boolean value \texttt{True} if the player's
+\texttt{in\_time} value was zero, and \texttt{False} otherwise. Here's
+the complete code snippet for this transformation:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+def starter_func(in_time):
+    if in_time == 0:
+        return True
+    else:
+        return False
+
+starter = np.array([]).astype(bool)
+
+for row in wc.itertuples():
+    starter = np.append(starter, starter_func(row.in_time))
+
+wc['starter'] = starter
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+     last    first   date goals asst tackles shots mins_played s_perc starter
+0  Morgan     Alex 28-Jun     0    0       2     1       90.00    0.0    True
+1 Rapinoe    Megan 28-Jun     2    0       2     3       74.45   66.7    True
+2   Press Christen 28-Jun     0    0       1     0       15.55    0.0   False
+3 Lavelle     Rose 28-Jun     0    1       3     0       90.00    0.0    True
+4 Lavelle     Rose  7-Jul     1    0       4     1       90.00  100.0    True
+5 Rapinoe    Megan  7-Jul     1    1       3     2       83.27   50.0    True
+6   Lloyd    Carli  7-Jul     0    0       1     0        6.73    0.0   False
+7    Dunn  Crystal 23-Jun     0    1       1     2       38.46    0.0   False
+\end{Verbatim}
+
+\index{boolean value}
+\index{float@\texttt{float}}
+
+One subtle point that is easy to miss: when we first created the empty
+\texttt{starter} array, we typed ``\texttt{.astype(bool)}'' at the end. This is
+because by default, the values of a new empty array will be \textbf{float}s.
+This worked fine for the shooting percentage example, because that's actually
+what we wanted, but here we want \texttt{True}/\texttt{False} values instead
+(for ``starter'' and ``non-starter.'')
 
 Pretty cool, huh? The original \texttt{DataFrame} had the information we
 wanted, but not in the form we really needed it. What we wanted was not the
 entry time and exit time of each player (both in minutes and seconds) but
 rather the total time that player was on the pitch, and whether or not they
-started the game.
+started the game. We also wanted to convert several of the raw statistics into
+per-complete game numbers, and to compute meaningful ratios like shooting
+percentage or fouls per assist.
+
+\bigskip
 
 Recoding and transforming turn out to be common tasks for a simple reason:
 \textit{whoever collects a data set can rarely predict how an analyst will
