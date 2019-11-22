@@ -1,14 +1,36 @@
 
 \chapter{Recoding and transforming}
 
+It's often the case that although a \texttt{DataFrame} contains the raw
+information you need, it's not exactly in the form you need for your analysis.
+Perhaps the data is in different units than you need -- meters instead of feet;
+dollars instead of yen. Or perhaps you need some \textit{combination} of
+available quantities -- miles per gallon instead of just miles and gallons
+separately. Or perhaps you need to reframe a variable by binning it into
+meaningful subdivisions -- categorizing a raw column of salaries into ``high,''
+``medium,'' and ``low'' wage earners, for instance.
+
+In data science, these activities are known as \textbf{recoding} and/or
+\textbf{transforming}. There's not a sharp division between the two; usually I
+think of recoding as converting a single variable to one with different units
+(as in the dollars-to-yen and high/medium/low earners examples) and
+transforming as creating a new variable entirely out of a combination of
+columns (like miles per gallon). In both cases, though, we'll be creating and
+adding new columns to a \texttt{DataFrame}.
+
+\section{Recoding with simple operations}
+
 \index{US Women's National Team}
 
-It's often the case that although a \texttt{DataFrame} contains the information
-you need for your analysis, it's not exactly in the form you need it. Consider
-the following soccer data set called \texttt{worldcup2019.csv}:
+Consider the following soccer data set called \texttt{worldcup2019.csv}.
+Each row of this data set represents one player's performance in a particular
+2019 World Cup game. Notice that we have a couple of players with more than one
+row (Megan Rapinoe and Rose Lavelle), and several rows for the same game (the
+first four rows are all from the June 28th game, for instance):
 
+\pagebreak
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=lines,framesep=3mm]
-last,first,date,in_time,out_time,goals,assists,tackles,fouls
+last,first,date,in_time,out_time,goals,asst,tackles,fouls
 Morgan,Alex,28-Jun-2019,0.0,90.0,0,0,2,1
 Rapinoe,Megan,28-Jun-2019,0.0,74.0,2,0,2,2
 Press,Christen,28-Jun-2019,74.0,90.0,0,0,1,0
@@ -21,36 +43,31 @@ Dunn,Crystal,23-Jun-2019,42.0,81.0,0,1,1,2
 
 \index{set\_index@\texttt{.set\_index()} method (Pandas)}
 
-This particular \texttt{.csv} file doesn't really have a meaningful index
-column. None of the columns are expected to be unique. So we'll leave off the
-``\texttt{.set\_index()}'' method call when we read it in:
+The data set doesn't really have a meaningful index column, since none of the
+columns are expected to be unique. So we'll leave off the
+``\texttt{.set\_index()}'' method call when we read it in to Python:
 
 \begin{samepage}
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 wc = pd.read_csv('worldcup2019.csv')
 print(wc)
 \end{Verbatim}
 \vspace{-.2in}
 
 \begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-      last     first    date  in_mins  in_secs  out_mins  out_secs  goals  assists  tackles  fouls
-0   Morgan      Alex  28-Jun        0        0        90         0      0        0        2      1
-1  Rapinoe     Megan  28-Jun        0        0        74        27      2        0        2      2
-2    Press  Christen  28-Jun       74       27        90         0      0        0        1      0
-3  Lavelle      Rose  28-Jun        0        0        90         0      0        1        3      0
-4  Lavelle      Rose   7-Jul        0        0        90         0      1        0        4      1
-5  Rapinoe     Megan   7-Jul        0        0        83        16      1        1        3      2
-6    Lloyd     Carli   7-Jul       83       16        90         0      0        0        1      0
-7     Dunn   Crystal  23-Jun       42       37        81         5      0        1        1      2
+     last    first   date in_mins in_secs out_mins out_secs goals asst tackles fouls
+0  Morgan     Alex 28-Jun       0       0       90        0     0    0       2     1
+1 Rapinoe    Megan 28-Jun       0       0       74       27     2    0       2     2
+2   Press Christen 28-Jun      74      27       90        0     0    0       1     0
+3 Lavelle     Rose 28-Jun       0       0       90        0     0    1       3     0
+4 Lavelle     Rose  7-Jul       0       0       90        0     1    0       4     1
+5 Rapinoe    Megan  7-Jul       0       0       83       16     1    1       3     2
+6   Lloyd    Carli  7-Jul      83      16       90        0     0    0       1     0
+7    Dunn  Crystal 23-Jun      42      37       81        5     0    1       1     2
 \end{Verbatim}
 \end{samepage}
 
 (As you can see, Pandas put in a numeric index column for us.)
-
-Each row of this \texttt{DataFrame} represents one player in one 2019 World Cup
-game. Notice we have a couple of players with more than one row (Megan Rapinoe
-and Rose Lavelle), and several rows for the same game (the first four rows are
-all from the June 28th game, for instance).
 
 Let's zero in on the columns with \texttt{mins} and \texttt{secs} in the names.
 These columns show us the minute and second that the player went \texttt{in} to
@@ -69,15 +86,17 @@ in just 150 minutes, we could reasonably say that the second player was a more
 prolific scorer in that World Cup.
 
 \index{recoding}
+\index{round@\texttt{round()} function (NumPy)}
 
 This is hard to do with the data in the form that it stands. So we'll
 \textbf{recode} a few of the columns. Let's collapse the minutes and seconds
-for each of the two clock times into a single value, in minutes:
+for each of the two clock times into a single value, in minutes. For
+readability, we'll also round this number to two decimal places using the
+\texttt{round()} function we met on p.~\pageref{round}:
 
-% TODO: round to two decimal places
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-wc['in_time'] = wc['in_mins'] + (wc['in_secs'] / 60)
-wc['out_time'] = wc['out_mins'] + (wc['out_secs'] / 60)
+wc['in_time'] = np.round(wc['in_mins'] + (wc['in_secs'] / 60),2)
+wc['out_time'] = np.round(wc['out_mins'] + (wc['out_secs'] / 60),2)
 \end{Verbatim}
 
 \index{vectorized@``vectorized'' operation}
@@ -88,6 +107,7 @@ to the \texttt{in\_mins} value. Pandas makes this super easy here, since we can
 just write out those operations once, and it will compute it for every single
 row!
 
+\medskip
 Let's delete the old, superfluous columns now and see what we've got:
 
 \begin{samepage}
@@ -100,25 +120,32 @@ print(wc)
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-      last     first    date  goals  assists  tackles  fouls  in_time  out_time
-0   Morgan      Alex  28-Jun      0        0        2      1     0.00     90.00
-1  Rapinoe     Megan  28-Jun      2        0        2      2     0.00     74.45
-2    Press  Christen  28-Jun      0        0        1      0    74.45     90.00
-3  Lavelle      Rose  28-Jun      0        1        3      0     0.00     90.00
-4  Lavelle      Rose   7-Jul      1        0        4      1     0.00     90.00
-5  Rapinoe     Megan   7-Jul      1        1        3      2     0.00     83.27
-6    Lloyd     Carli   7-Jul      0        0        1      0    83.27     90.00
-7     Dunn   Crystal  23-Jun      0        1        1      2    42.62     81.08
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+     last    first   date goals asst tackles fouls in_time out_time
+0  Morgan     Alex 28-Jun     0    0       2     1    0.00    90.00
+1 Rapinoe    Megan 28-Jun     2    0       2     2    0.00    74.45
+2   Press Christen 28-Jun     0    0       1     0   74.45    90.00
+3 Lavelle     Rose 28-Jun     0    1       3     0    0.00    90.00
+4 Lavelle     Rose  7-Jul     1    0       4     1    0.00    90.00
+5 Rapinoe    Megan  7-Jul     1    1       3     2    0.00    83.27
+6   Lloyd    Carli  7-Jul     0    0       1     0   83.27    90.00
+7    Dunn  Crystal 23-Jun     0    1       1     2   42.62    81.08
 \end{Verbatim}
 \end{samepage}
 
+This is much less unwieldy than dealing with minutes and seconds separately.
+
+\section{Transforming with simple operations}
+
 \index{transforming}
 
-This is much less unwieldy than dealing with minutes and seconds separately.
-All we need to do now is \textbf{transform} our data by computing a new
-quantity entirely: the {total number of minutes played} for each player in each
-game. Again, Pandas makes this easy:
+\index{mins\_played@\texttt{mins\_played}}
+
+Now that we've converted the awkward minutes-and-seconds columns to just
+``\texttt{time}'' columns, all we need to do to complete our analysis is
+\textbf{transform} this data by computing a new quantity entirely: the
+\textit{total number of minutes played} for each player in each game. Again,
+Pandas makes this easy:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 wc['mins_played'] = wc['out_time'] - wc['in_time']
@@ -126,20 +153,123 @@ print(wc)
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-      last     first    date  goals  assists  tackles  fouls  in_time  out_time  mins_played
-0   Morgan      Alex  28-Jun      0        0        2      1     0.00     90.00        90.00
-1  Rapinoe     Megan  28-Jun      2        0        2      2     0.00     74.45        74.45
-2    Press  Christen  28-Jun      0        0        1      0    74.45     90.00        15.55
-3  Lavelle      Rose  28-Jun      0        1        3      0     0.00     90.00        90.00
-4  Lavelle      Rose   7-Jul      1        0        4      1     0.00     90.00        90.00
-5  Rapinoe     Megan   7-Jul      1        1        3      2     0.00     83.27        83.27
-6    Lloyd     Carli   7-Jul      0        0        1      0    83.27     90.00         6.73
-7     Dunn   Crystal  23-Jun      0        1        1      2    42.62     81.08        38.46
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+     last    first   date goals asst tackles fouls in_time out_time mins_played
+0  Morgan     Alex 28-Jun     0    0       2     1    0.00    90.00       90.00
+1 Rapinoe    Megan 28-Jun     2    0       2     2    0.00    74.45       74.45
+2   Press Christen 28-Jun     0    0       1     0   74.45    90.00       15.55
+3 Lavelle     Rose 28-Jun     0    1       3     0    0.00    90.00       90.00
+4 Lavelle     Rose  7-Jul     1    0       4     1    0.00    90.00       90.00
+5 Rapinoe    Megan  7-Jul     1    1       3     2    0.00    83.27       83.27
+6   Lloyd    Carli  7-Jul     0    0       1     0   83.27    90.00        6.73
+7    Dunn  Crystal 23-Jun     0    1       1     2   42.62    81.08       38.46
 \end{Verbatim}
+
+\index{tackles-per-game}
+\index{tkl\_per\_90@\texttt{tkl\_per\_90}}
+
+Voil\`{a}. We now have the time-on-field for each player, which gives us a
+whole new avenue of exploration. For example, any of the counting stats (goals,
+assists, \textit{etc.}) can be converted into a ``per-minute'' version, showing
+us how productive a player was while on the field. Let's do that for
+\texttt{tackles}, and multiply by 90 to obtain a ``tackles-per-90-minutes''
+statistic\footnote{I'm choosing 90 minutes here because that's how long a
+regulation-length soccer match is. Therefore, our new \texttt{tkl\_per\_90}
+column gives us ``number-of-tackles-per-complete-game,'' which is easier to
+interpret than ``tackles-per-\textit{minute},'' which would be a miniscule
+number for any player.}:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+wc['mins_played'] = wc['out_time'] - wc['in_time']
+wc['tkl_per_90'] = np.round(wc['tackles'] / wc['mins_played'] * 90,2)
+del wc['tackles']
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+     last    first   date goals asst fouls in_time out_time mins_played tkl_per_90
+0  Morgan     Alex 28-Jun     0    0     1    0.00    90.00       90.00       2.00
+1 Rapinoe    Megan 28-Jun     2    0     2    0.00    74.45       74.45       2.42
+2   Press Christen 28-Jun     0    0     0   74.45    90.00       15.55       5.79
+3 Lavelle     Rose 28-Jun     0    1     0    0.00    90.00       90.00       3.00
+4 Lavelle     Rose  7-Jul     1    0     1    0.00    90.00       90.00       4.00
+5 Rapinoe    Megan  7-Jul     1    1     2    0.00    83.27       83.27       3.24
+6   Lloyd    Carli  7-Jul     0    0     0   83.27    90.00        6.73      13.37
+7    Dunn  Crystal 23-Jun     0    1     2   42.62    81.08       38.46       2.34
+\end{Verbatim}
+
+\subsection{Transforming grouped data}
+
+The above example computed tackles-per-game all right, but it still left us
+with one row for every player-performance. (In other words, the results had
+\textit{two} rows for Rose Lavelle, one giving her \texttt{tkl\_per\_90} for
+the June 28th game, and one giving it for the July 7th game.)
+
+\index{groupby@\texttt{.groupby()} method (Pandas)}
+
+We might instead be interested in a player-by-player analysis: overall in the
+entire month-long World Cup, which players had the most tackles-per-game? This
+is easy to do with the \texttt{.groupby()} method that we first encountered in
+section~\ref{groupby} (p.~\pageref{groupby}). First, we group the rows by the
+first \textit{two} columns (since first-and-last-names-together are needed to
+uniquely identify a single player):
+
+\index{grouped\_wc@\texttt{grouped\_wc}}
+
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+grouped_wc = wc.groupby(['last','first'])
+\end{Verbatim}
+
+We then take our new, temporary \texttt{grouped\_wc} variable and extract the
+\texttt{goals}, \texttt{asst}, \texttt{fouls}, \texttt{tackles}, and
+\texttt{mins\_played} columns from it, \textbf{summing} each of them to produce
+the per-player values in the result:
+
+\index{by\_player@\texttt{by\_player}}
+
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+by_player = grouped_wc[['goals','asst','fouls','tackles','mins_played']].sum()
+\end{Verbatim}
+
+This yields:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+                  goals  asst  fouls  tackles  mins_played
+last    first                                             
+Dunn    Crystal       0     1      2        1        38.46
+Lavelle Rose          1     1      1        7       180.00
+Lloyd   Carli         0     0      0        1         6.73
+Morgan  Alex          0     0      1        2        90.00
+Press   Christen      0     0      0        1        15.55
+Rapinoe Megan         3     1      4        5       157.72
+\end{Verbatim}
+
+Now, we're ready to compute a per-game analysis as before, but this time for
+each player's entire World Cup games:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+by_player['tkl_per_90'] = (np.round(by_player['tackles'] /
+    by_player['mins_played'] * 90,2))
+del by_player['tackles']
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+                  goals  asst  fouls  mins_played  tkl_per_90
+last    first                                                
+Dunn    Crystal       0     1      2        38.46        2.34
+Lavelle Rose          1     1      1       180.00        3.50
+Lloyd   Carli         0     0      0         6.73       13.37
+Morgan  Alex          0     0      1        90.00        2.00
+Press   Christen      0     0      0        15.55        5.79
+Rapinoe Megan         3     1      4       157.72        2.85
+\end{Verbatim}
+
 
 \index{starter@\texttt{starter}}
 \index{where@\texttt{where()} function (NumPy)}
+
+
 
 % START HERE: instead of np.where, use a function with an if statement.
 
@@ -163,20 +293,19 @@ del wc['in_time']
 del wc['out_time']
 print(wc)
 \end{Verbatim}
-\vspace{-.2in}
-
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-      last     first    date  goals  assists  tackles  fouls  mins_played  starter
-0   Morgan      Alex  28-Jun      0        0        2      1        90.00     True
-1  Rapinoe     Megan  28-Jun      2        0        2      2        74.45     True
-2    Press  Christen  28-Jun      0        0        1      0        15.55    False
-3  Lavelle      Rose  28-Jun      0        1        3      0        90.00     True
-4  Lavelle      Rose   7-Jul      1        0        4      1        90.00     True
-5  Rapinoe     Megan   7-Jul      1        1        3      2        83.27     True
-6    Lloyd     Carli   7-Jul      0        0        1      0         6.73    False
-7     Dunn   Crystal  23-Jun      0        1        1      2        38.46    False
-\end{Verbatim}
 \end{samepage}
+
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+     last    first   date goals asst tackles fouls mins_played starter
+0  Morgan     Alex 28-Jun     0    0       2     1       90.00    True
+1 Rapinoe    Megan 28-Jun     2    0       2     2       74.45    True
+2   Press Christen 28-Jun     0    0       1     0       15.55   False
+3 Lavelle     Rose 28-Jun     0    1       3     0       90.00    True
+4 Lavelle     Rose  7-Jul     1    0       4     1       90.00    True
+5 Rapinoe    Megan  7-Jul     1    1       3     2       83.27    True
+6   Lloyd    Carli  7-Jul     0    0       1     0        6.73   False
+7    Dunn  Crystal 23-Jun     0    1       1     2       38.46   False
+\end{Verbatim}
 
 Pretty cool, huh? The original \texttt{DataFrame} had the information we
 wanted, but not in the form we really needed it. What we wanted was not the

@@ -5,7 +5,7 @@ import scipy.stats
 import io
 
 wc = pd.read_csv(io.StringIO('''
-last,first,date,in_mins,in_secs,out_mins,out_secs,goals,assists,tackles,fouls
+last,first,date,in_mins,in_secs,out_mins,out_secs,goals,asst,tackles,fouls
 Morgan,Alex,28-Jun,0,0,90,0,0,0,2,1
 Rapinoe,Megan,28-Jun,0,0,74,27,2,0,2,2
 Press,Christen,28-Jun,74,27,90,0,0,0,1,0
@@ -25,7 +25,16 @@ del wc['out_secs']
 
 wc['mins_played'] = wc['out_time'] - wc['in_time']
 
-wc['starter'] = np.where(wc['in_time'] == 0, True, False)
-del wc['in_time']
-del wc['out_time']
+grouped_wc = wc.groupby(['last','first'])
+by_player = grouped_wc[['goals','asst','fouls','tackles','mins_played']].sum()
+
+print(by_player)
+
+by_player['tkl_per_90'] = np.round(by_player['tackles'] / by_player['mins_played'] * 90,2)
+del by_player['tackles']
+print(by_player)
+
+#wc['starter'] = np.where(wc['in_time'] == 0, True, False)
+#del wc['in_time']
+#del wc['out_time']
 print(wc)
