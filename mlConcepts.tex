@@ -110,3 +110,114 @@ performance \textit{does} tell you \textit{something} valuable about future
 possibilities, else there'd be no point in trying to learn from it. And the
 fact that we apply our past lessons in altering our future behavior is
 undeniable.
+
+\section{Supervised vs.~unsupervised learning}
+
+\index{supervised ML@``supervised'' ML}
+\index{unsupervised ML@``unsupervised'' ML}
+
+Now let's dive further down to some more technical and fine-grained
+distinctions. There are two main categories of machine ``learning'':
+\textbf{supervised} and \textbf{unsupervised}. I think these terms are
+ridiculous and misleading, by the way, but they're what we're stuck with so
+let's learn what they mean.
+
+\index{target attribute}
+\index{objects (of a study)}
+\index{mood}
+\index{happy@\textsf{happy}}
+\index{angry@\textsf{angry}}
+\index{frightened@\textsf{frightened}}
+\index{defensive@\textsf{defensive}}
+\index{embarrassed@\textsf{embarrassed}}
+
+In a supervised learning setting, our goal is to predict the value of some
+\textbf{target attribute} of some object of study. As an example, let's say we
+want to predict someone's \textit{mood} based only on their facial expression
+and body language. ``Mood'' might be a categorical variable with values
+``\textsf{happy},'' ``\textsf{angry},'' ``\textsf{bored},'' \textit{etc.}
+
+\index{training data}
+\index{squinty eyes}
+
+To do this prediction, we'll use a bunch of previously observed examples. These
+past examples, \textit{for which the person's true mood is known}, are
+collectively called our \textbf{training data}. We remember seeing one person
+with a smile on their face and their eyes slightly squinted, and later
+discovered that they were \textsf{happy}. We remember another person with a
+smile but with wide open eyes, and learned that they, too, were \textsf{happy}.
+We also remember someone with clenched fists and raised eyebrows, and they
+turned out to be \textsf{frightened}. A different person with clenched fists
+but squinted eyes was later revealed to be \textsf{angry}. And so on.
+
+Supervised machine learning is about how to extrapolate from past examples in a
+principled way, in order to make predictions about future examples whose true
+value (mood, say) is \textit{not} known. The task is to say, ``okay, there's a
+person down the hallway whose face is slightly flushed and whose arms are
+tightly crossed. Are they likely to be \textsf{happy}, \textsf{defensive},
+\textsf{angry}, \textsf{embarrassed}, or something else? Let's apply what we've
+learned from past examples to guess at the answer.''
+
+It's called ``supervised'' precisely because the ``true answer'' for the target
+attribute is known for the training data.
+
+Now suppose we \textit{didn't} know the true answer for our training examples.
+Say we've observed and recorded the eyebrow position, the mouth configuration,
+whether the face was flushed or pale or in between, \textit{etc.}, for a bunch
+of people we've encountered in the past, but we actually never learned what
+their mood was. What then?
+
+This is an unsupervised learning setting. Predicting a person's mood based on
+this kind of information turns out to be nearly hopeless. If we don't know what
+anyone else's mood was, how can we predict what this new person's mood is? But
+all is not lost -- we may still be able to form some conclusions about what
+\textit{types} of moods there are. For example, we might notice that generally
+speaking, raised eyebrows tend to be accompanied by certain other indicators.
+In many past examples, they've appeared together with an open mouth and a rigid
+posture. In other examples, raised eyebrows instead appeared with lips
+tightly-pressed together and the forehead slightly tilted forward. We don't
+know which moods these collections of features might correspond to, since our
+training data didn't have any information about moods. But we might still infer
+the presence of a couple of distinct raised-eyebrow moods, since they are so
+commonly accompanied by either one of two groups of other features.
+
+\subsection{Classification, regression, and clustering}
+
+\index{prediction}
+\index{classification}
+\index{classifier}
+\index{regression}
+\index{scales of measure}
+\index{categorical variable}
+\index{function}
+
+In the supervised setting, our most common machine learning activities will be
+\textbf{classification} and \textbf{regression}. In each one, our job is to
+predict the value of the target attribute for a new object, based on the
+previous example objects we've seen. The only difference is the scale of
+measure of the target variable: if it's categorical, we're performing
+classification, and our goal is to build a \textbf{classifier}: an algorithm
+(basically, a Python function) that can \textbf{classify} future examples by
+guessing their target value. If the target variable is numeric, then we have
+regression, and our goal is to make the closest guess we can to the true target
+value.
+
+For example, if we have some census and earnings data for a region, and our
+goal is to predict whether or not someone in that region will be a homeowner or
+a renter, we're performing classification. If our goal instead is to predict
+their annual salary, we're doing regression.
+
+\index{clustering}
+\index{IMDB}
+
+In the unsupervised setting, the most common task is \textbf{clustering}:
+finding groups of related objects, with similar attribute values, in order to
+discern how many basic types of objects there are, and what their typical value
+ranges are. That's exactly what we did with the mood data, above, in the
+absence of information about past moods. Another example would be to look at
+the attributes of various movies on IMDB and discern ``what basic types of
+films there are.'' We may discover that movies naturally break down into
+blockbuster action films, period dramas, romantic comedies, and a few other
+common genres. There will always be objects that defy categorization, and exist
+on the boundaries of defined clusters, but it's still profoundly insightful to
+discover the presence of common patterns that bring structure to the data.
