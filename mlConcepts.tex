@@ -207,6 +207,16 @@ goal is to predict whether or not someone in that region will be a homeowner or
 a renter, we're performing classification. If our goal instead is to predict
 their annual salary, we're doing regression.
 
+By the way, let me make clear that the types of the \textit{other} variables
+we're considering (\textit{i.e.}, other than the target) don't play in to
+whether we're doing classification or regression: only the target does. If I'm
+using race (categorical), gender (categorical), age (numeric), and college
+degree (categorical) to predict \textit{salary} (numeric), then this is a
+\textit{regression} problem, even though the majority of the variables are
+categorical. If I were to use the same four variables to predict
+\textit{political affiliation} (categorical), then it would be a classification
+problem, even though we had a numeric variable as a predictor.
+
 \index{clustering}
 \index{IMDB}
 
@@ -221,3 +231,10 @@ blockbuster action films, period dramas, romantic comedies, and a few other
 common genres. There will always be objects that defy categorization, and exist
 on the boundaries of defined clusters, but it's still profoundly insightful to
 discover the presence of common patterns that bring structure to the data.
+
+\bigskip
+
+Machine learning is a big field, and each aspect has its own techniques and
+deserves its own treatment. For the rest of this book, we're going to
+concentrate only on \textbf{supervised} learning, specifically the task of
+\textbf{classification}.
