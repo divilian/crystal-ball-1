@@ -42,3 +42,71 @@ hit in his first two years in the majors, we're making a specific prediction
 rather than inferring a general truth -- this, too, is potentially quite
 valuable, as it may lead us to decide to sign the player or look at different
 options.
+
+\section{Deductive vs.~inductive reasoning}
+
+\index{deductive reasoning}
+\index{inductive reasoning}
+\index{Holmes, Sherlock}
+
+This chapter contains a lot of vocabulary terms. Before we dive in to the
+ML-specific ones, I think it's important to take a step back and make a more
+general point about the kind of ``learning'' we'll be doing. There are at least
+two different ways that human beings reach conclusions: \textbf{deductively}
+and \textbf{inductively}. Deductive reasoning is associated most prominently
+with Sherlock Holmes in the public mind. Through sheer application of
+irrefutable logic, Holmes and his companion Watson deduced new facts from known
+facts in their quest to catch the criminal. Their logic was seemingly
+air-tight, since everything they deduced followed directly and irresistibly
+from what came before.
+
+There's a subdiscipline of Philosophy called Logic which covers exactly such
+matters. Syllogisms, \textit{modus ponens}, first-order predicate calculus:
+these are all concepts you'll learn if you take an introductory course in
+Logic. And the nice thing about deduction is that as long as you follow the
+rules, \textit{your conclusions will always be dependably correct.}
+
+Inductive reasoning, on the other hand, does \textit{not} always lead to 100\%
+reliably correct conclusions. This may give you pause, and wonder why anyone
+would ever use it. The reason is that in the vast majority of cases, deductive
+reasoning simply isn't applicable to your situation, and induction is the only
+case.
+
+Induction is about \textit{reasoning from examples}. Lots of examples. Living
+in the world as we do, we observe plenty of examples of how people and things
+behave, and we start to identify certain general patterns in what we've
+observed. One thing I noticed long ago is that when I smile and say hi to a
+person, they normally smile and say hi back. But when I smile and say hi to a
+dog, or a bush, or a vending machine, I'm normally met with stony silence.
+
+From this, I've \textbf{induced} the general rule that people respond to
+greetings but other objects don't. Now this is \textit{not} 100\% reliably
+true. Even in my own experience, there have been times when I've greeted
+someone walking down the hallway and been outright ignored. And for all I know,
+there may be some vending machines out there who might respond if someone talks
+to them -- with technological advancements in voice recognition and synthesis,
+it's probably just a matter of time before they do. But the point is that
+\textit{learning this general principle about greetings has served me very well
+in life.} I don't normally talk to inanimate objects, but I do to people, and
+this has helped me function in society. Even if a rule \textit{isn't} accurate
+in absolutely every situation, it can still be very, very important.
+ 
+If you do a quick scan of your brain, I believe you'll find that the vast
+majority of the things that you ``know'' about life were arrived at
+inductively, rather than deductively. If you ask a friend for money, he'll
+probably say yes; if you ask a stranger, he'll probably say no. If your friend
+does say yes, he'll probably expect the favor to be returned at a later point;
+if the stranger says yes, he probably won't. If you don't study for a test,
+you'll probably do poorly, and likewise if you wait until the last day to start
+your 5-page paper. None of these conclusions can be proven deductively, and in
+fact all of them have exceptions; but not to know these things is to be at a
+serious disadvantage in trying to make decisions.
+
+I say all this because \textit{everything in ML is about induction, not
+deduction.} As we'll see, the name of the game in ML is looking at lots and
+lots of past examples, and making future predictions based on them. It's true
+that ``past performance is no guarantee of future success,'' but past
+performance \textit{does} tell you \textit{something} valuable about future
+possibilities, else there'd be no point in trying to learn from it. And the
+fact that we apply our past lessons in altering our future behavior is
+undeniable.
