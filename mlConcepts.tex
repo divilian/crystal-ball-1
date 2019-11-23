@@ -1,3 +1,44 @@
 
 \chapter{Machine Learning: concepts}
 
+When ordinary people hear the words ``Data Science,'' I'll bet the first images
+that come to mind are of the closely-related fields of \textbf{data mining} and
+\textbf{machine learning (ML)}, even if they don't know those terms. After all,
+this is where all the sexy tech is, and the success stories too: Netflix
+magically knowing which movies you'll like, grocery chains using data from
+loyalty cards to optimally place products; the Oakland A's scouring minor
+league stats to build a champion team with chump change
+(see:~\textit{Moneyball}). There are also creepier applications of this
+technology: Google placing personalized eye-catching ads in front of you using
+data they mined from your email text, or Cambridge Analytica projecting from
+voter personalities to the best ways to micro-target them.
+
+All these examples have one thing in common: they actually \textit{make} the
+discoveries and predictions from the data. They're the coup de gr\^{a}ce. They
+take place after we've already acquired our data, imported it to an analysis
+environment (like Python), stored it in the appropriate data structures (like
+associative arrays or tables), recoded/transformed/pre-processed it as
+necessary, and explored it enough to know what we want to ask. All that stuff
+was mere prep work. This chapter is where we begin to really rock-and-roll.
+
+\section{Data mining vs.~machine learning}
+\index{inference}
+\index{prediction}
+\index{machine learning (ML)}
+\index{data mining}
+
+The terms ``data mining'' and ``ML'' have a lot of sloppy overlap, but one
+distinction we can pick out is this. If someone says they're doing data mining,
+their goal is normally \textbf{inference}: deriving high-level strategic
+insights based on patterns in the data. Discovering that amateur pitching
+performances translate more reliably to the major leagues than amateur batting
+performances do, generally speaking, is an inference, and a potentially
+valuable find.
+
+If someone says they're doing ML, on the other hand, their goal is normally
+\textbf{prediction}: making an educated guess about how a specific case will
+turn out. When we forecast how many home runs we think a college prospect will
+hit in his first two years in the majors, we're making a specific prediction
+rather than inferring a general truth -- this, too, is potentially quite
+valuable, as it may lead us to decide to sign the player or look at different
+options.
