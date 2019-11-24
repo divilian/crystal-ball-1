@@ -251,19 +251,65 @@ print(test)
 18   38  Mechanicsville    Fredericksburg                   6  Redskins
 \end{Verbatim}
 
-That code says, in English: ``set \texttt{test} to contains only those rows of
-\texttt{fans} whose index is \textit{not} present in any of the
-\texttt{training} \texttt{DataFrame}'s indices.'' As you can verify through
+That code says, in English: ``create a new variable \texttt{test} that contains
+only those rows of \texttt{fans} whose index is \textit{not} present in any of
+the \texttt{training} \texttt{DataFrame}'s indices.'' As you can verify through
 visual inspection, the result does have exactly the 6 rows that were missing
 from \texttt{training}.
 
+\section{``The prior''}
 
+\index{prior@``the prior''}
 
-%So far this picture has been very general. We haven't said anything about
-%
-%
-%I love the word ``training'' for this, by the way.
-%
-%
-%
-%``The prior''
+One more piece of lingo before we dive into a particular classification
+technique next chapter. And that's known as ``the \textbf{prior}'' of a data
+set.
+
+\index{Bayesian reasoning}
+\index{posterior@posterior}
+
+The term comes from something called \textbf{Bayesian reasoning}, which is a
+whole subject (and a super cool one!) in its own right. All you need to know
+here is the concept of two different quantities: the \textbf{prior}, and the
+\textbf{posterior}.
+
+In common usage, the word ``prior'' means ``beforehand,'' and so it does here:
+the prior is your best judgment about what the target value of a new example
+might be \textit{before you actually look at the feature values in that
+example.} ``Posterior,'' on the other hand, means ``afterwards,'' and means
+your best judgment about the target value after duly taking into consideration
+all the feature values.
+
+For example, you may have noticed that in my made-up data set, above, I had a
+lot of Redskins fans. This is because I live in the D.C.~area, and happen to
+know a lot of Redskins fans. Out of my 20 labeled examples, a whopping twelve
+of them, in fact, had \texttt{Redskins} as their value in the \texttt{team}
+column.
+
+Thus, consider the following question. Suppose you knew nothing about a person
+except that they were one of Stephen's friends. Which NFL team do you think
+they'd support? Assuming this data set is representative of Stephen's friends,
+you'd say: ``I'd predict they'd be a Redskins fan, and I'd estimate that I'd
+have about a 60\% chance of being right ($\frac{12}{20}$).'' This is the
+\textit{prior}. You're not taking into account anything about their age, where
+they were born, \textit{etc.}; in fact, you weren't even told those things.
+Instead, you're just ``using the prior'' and treating everyone the same.
+
+It would be a different story if I told you that this person was born in New
+York City. Then you might squint your eyes at my data set and realize that
+there are only two New Yorkers in it, and neither one is a Redskins fan:
+they're both Giants fans! Now you might very well move away from your prior
+assumption. ``Sure, most of Stephen's friends are Redskins fans, so `Redskins'
+is a reasonable guess, but now that you've told me they're from NY, that very
+well might change my mind. Now, my guess is `Giants'.''
+
+I keep saying ``might'' and ``may'' because different kinds of classifiers work
+in different ways. Some of them may choose to take advantage of some features
+but not others; some may just stick with the prior in certain situations. The
+notion of ``the prior'' is mainly useful as a baseline for comparison: it's the
+best you can do given no other possibly correlating information. The name of
+the game in classification, of course, is to intelligently \textit{use} that
+other information to make more informed guesses, and to beat the prior. One of
+many ways to approach this is the decision tree classification algorithm, which
+we'll look at in detail next.
+
