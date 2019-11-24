@@ -157,3 +157,113 @@ only way to assess how well the classifier \textbf{generalizes} to new data
 that it hasn't yet seen (which, of course, is the whole point).
 
 
+\subsection{Splitting the difference}
+
+Okay, so given that we have to split our precious labeled examples into two
+sets, one for training and one for testing, how much do we devote to each? It
+turns out that there are some sophisticated techniques (beyond the scope of
+this book, but stay tuned for Volume II) in which we can cleverly re-use
+portions of the data for different purposes, and effectively make use of nearly
+all of it for training.
+
+\index{rule of thumb (for training/test data)}
+But for our introductory approach here, we'll just use a \textbf{rule of thumb:
+70\% for training data, and the other 30\% for test data}.
+
+\index{shuffle (\texttt{DataFrame} rows}
+\index{randomization!of training and test data}
+As I mentioned earlier, we'll normally \textbf{shuffle} the rows randomly
+before dividing them into these two groups, just in case there's any pattern to
+the order in which they appear. For example, in our NFL fan data set, it might
+turn out that the data came to us sequenced in a way such that people living on
+the east coast were at the beginning of the \texttt{DataFrame} and those living
+out west were at the end. Any arrangement like this would spell doom for our
+classification endeavor. For one thing, we wouldn't be training on any west
+coast people, and so our classifier would be oblivious to what those data
+points looked like. For another thing, we'd \textit{only} be using west
+coasters to \textit{test} our classifier, meaning that whatever accuracy
+measure we computed is likely to be way off. \textbf{Randomizing} the data is
+the sure way around this.
+
+\index{sample@\texttt{.sample()} (Pandas)}
+
+Here's some code to create training and test sets. The \texttt{.sample()}
+method of a \texttt{DataFrame} lets you choose some percentage of its rows 
+randomly. Its \texttt{frac} argument is a number between 0 and 1 and specifies
+what fraction of the rows you want. Using the above rule of thumb, let's choose
+70\% of them for our training data:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+training = fans.sample(frac=.7)
+print(training)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+    age        hometown current_residence  years_in_residence      team
+8    52       Arlington    Fredericksburg                  17  Redskins
+15   63        New York           Orlando                  17    Giants
+11   29  Fredericksburg           Seattle                  21  Seahawks
+19   32       Warrenton           Orlando                   1  Redskins
+2    47       Allegheny       Chevy Chase                  13  Redskins
+7    31       Warrenton   Charlottesville                   6      Jets
+0    29       Warrenton         Warrenton                  29  Redskins
+5    32       Warrenton        Winchester                  11  Redskins
+4    51   Orange County          Dumfries                  23  Redskins
+9    60  Tyson's Corner      Falls Church                   4   Cowboys
+10   17  Fredericksburg    Fredericksburg                  17  Redskins
+1    39         Lubbock         Arlington                   2   Cowboys
+13   35  Mechanicsville           Orlando                   8  Redskins
+6    39        Dumfries             Miami                   5  Redskins
+\end{Verbatim}
+
+Notice that the numeric index values (far left) are in no particular order,
+since that's the point of taking a random sample. Also notice that there are
+only 14 rows in this \texttt{DataFrame} instead of the full 20 that were in
+\texttt{fans}.
+
+\index{not (query condition)}
+\index{squiggle (tilde, or ``\texttt{\textasciitilde}'')}
+\index{~@\texttt{\textasciitilde} (squiggle)}
+\index{query}
+\index{index@\texttt{.index} (little \texttt{i}) syntax}
+
+Now, we want our test set. The trick here is to say: ``give me all the rows of
+\texttt{fans} that were \textit{not} selected for the \texttt{training} set.''
+By building a query with the squiggle operator (``\texttt{\textasciitilde}'',
+meaning ``not'') in conjunction with the ``\texttt{.isin()}'' method, we can
+create a new \texttt{DataFrame} called ``\texttt{test}'' that has exactly these
+rows:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+test = fans[~fans.index.isin(training.index)]
+print(test)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+    age        hometown current_residence  years_in_residence      team
+3    31       Littleton         Littleton                   3   Broncos
+12   37        Richmond          Richmond                  37  Redskins
+14   19        New York          New York                  19    Giants
+16   42      Alexandria          Manassas                  10  Redskins
+17   22       Allegheny        Harrisburg                   1  Steelers
+18   38  Mechanicsville    Fredericksburg                   6  Redskins
+\end{Verbatim}
+
+That code says, in English: ``set \texttt{test} to contains only those rows of
+\texttt{fans} whose index is \textit{not} present in any of the
+\texttt{training} \texttt{DataFrame}'s indices.'' As you can verify through
+visual inspection, the result does have exactly the 6 rows that were missing
+from \texttt{training}.
+
+
+
+%So far this picture has been very general. We haven't said anything about
+%
+%
+%I love the word ``training'' for this, by the way.
+%
+%
+%
+%``The prior''
