@@ -5,7 +5,7 @@ import scipy.stats
 import io
 
 students = pd.read_csv(io.StringIO('''
-major,age,gender,VG
+Major,Age,Gender,VG
 PSYC,22,F,No
 MATH,20,F,No
 PSYC,19,F,No
@@ -27,7 +27,7 @@ PSYC,19,F,Yes
 ))
 
 students = pd.read_csv(io.StringIO('''
-major,age,gender,VG
+Major,Age,Gender,VG
 PSYC,old,F,No
 MATH,middle,F,No
 PSYC,middle,F,No
