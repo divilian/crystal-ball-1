@@ -126,7 +126,144 @@ Our training data now looks like this:
 
 and we're now officially ready to consider decision trees.
 
+\section{Decision Trees}
 
-%
-%
+\index{decision tree}
+\index{root (of a decision tree)}
+
+First, let's get our head around what a decision tree \textit{is}. Our
+inaugural example is shown in Figure~\ref{fig:decisionTree}. The first thing
+you'll notice is that it has a branching structure that branches...down. I'm
+not sure why Data Scientists draw trees growing \textit{down} while the rest of
+the world (including trees themselves: go ahead and look outside) grow up, but
+this is the convention so we'll just deal with it. To make it even more
+comical, the oval at the top of the tree is called the \textbf{root} of the
+tree. Really.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{decisionTree.png}
+\caption{A decision tree (not a particularly good one, as it'll turn out) for
+the videogame data set.}
+\label{fig:decisionTree}
+\end{figure}
+
+\index{branch (of a decision tree)}
+\index{leaf (of a decision tree)}
+\index{node (of a decision tree)}
+
+Continuing full bore with the botany analogy, the lines connecting the various
+shapes are, as you might suspect, called \textbf{branches}, and the darker
+rectangles are called \textbf{leaves}. One non-botanic bit of lingo is the name
+for the other ovals: they're called \textbf{nodes}.
+
+\subsection{Classifying with a decision tree}
+
+Okay. Now what does a decision tree ``mean?'' Geekily-put, it's the pictorial
+codification of an algorithm for classification. Not so geekily, it's a map
+that tells your classifier what rules to follow as it forms its prediction for
+an example data point.
+
+You simply start at the root, considering feature values at each node, and
+following the matching branch down the tree. When you reach a leaf, the
+prediction you give is written on the leaf node. It's that simple.
+
+\begin{itemize}
+
+\item[\leftpointright] First example: suppose we have a 24-year-old male
+Psychology major. We want to know whether he's likely to play videogames. The
+decision tree in Figure~\ref{fig:decisionTree} tells us to first consider his
+\textsf{Major}. Since this is \texttt{PSYC}, we're done: we're immediately at a
+leaf. Our prediction for this guy is \texttt{No}, he probably doesn't play
+videogames.
+
+\item[\leftpointright] Second example: we have an 18-year-old Math major who
+doesn't identify with either of the binary genders. Starting again at the root,
+we now follow the middle branch for \texttt{MATH}. Now, we look at the person's
+gender. Since it is \texttt{O}, we follow the right branch, and give a
+prediction of \texttt{Yes}, we predict they \textit{do} play videogames.
+
+\item[\leftpointright] Third example: we now have a 22-year-old female Computer
+Science major. Do we think she would play videogames? The root tells us to look
+at her \textsf{Major} first, which means we go right; then we look at her
+\textsf{Age}, and since she's positively ancient we go right again; and
+finally, her \textsf{Gender} tells us to predict \texttt{No}, she's probably
+not a gamer.
+
+\end{itemize}
+
+Most students find this interpretation very straightforward.
+
+\subsection{Decision Trees in Python}
+
+\index{nested if statements@nested \texttt{if} statements}
+\index{indentation}
+
+Now to actually automate something, of course, we write code rather than draw
+pictures. What would Figure~\ref{fig:decisionTree} look like in Python code?
+It's actually pretty simple, although there's a lot of nested indentation. See
+if you can follow the flow in Figure~\ref{fig:pythonDT}.
+
+\begin{figure}[h]
+\centering
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm,xleftmargin=2cm,xrightmargin=2cm]
+def predict(major, age, gender):
+    if major == 'PSYC':
+        return 'No'
+    elif major == 'MATH':
+        if gender == 'M':
+            return 'No'
+        elif gender == 'F':
+            return 'Yes'
+        elif gender == 'O':
+            return 'Yes'
+    elif major == 'CPSC':
+        if age == 'young':
+            return 'Yes'
+        elif gender == 'middle':
+            return 'No'
+        elif gender == 'old':
+            if gender == 'M':
+                return 'Yes'
+            elif gender == 'F':
+                return 'No'
+            elif gender == 'O':
+                return 'Yes'
+\end{Verbatim}
+\caption{A Python implementation of the decision tree in
+Figure~\ref{fig:decisionTree}.}
+\label{fig:pythonDT}
+\end{figure}
+
+\index{predict@\texttt{predict()}}
+
+We're defining a function called \texttt{predict()} that takes three arguments,
+one for each feature value. The eye-popping set of
+\texttt{if}/\texttt{elif}/\texttt{else} statements looks daunting at first, but
+when you scrutinize it you'll realize it perfectly reflects the structure of
+the purple diagram. Each time we go down one level of the tree, we indent one
+tab to the right. The body of the ``\texttt{if major == 'PSYC':}'' statement is
+very short because the left-most branch of the tree (for Psychology) is very
+simple. The ``\texttt{elif major == 'CPSC':}'' body, by contrast, has lots of
+nested internal structure precisely because the right-most branch of the tree
+(for Computer Science) is complex. \textit{Etc.}
+
+\begin{samepage}
+And if we call our function, it will give us exactly the same predictions we
+calculated by hand earlier:
+
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+print(predict('PSYC','M','old'))
+print(predict('MATH','O','young'))
+print(predict('CPSC','F','old'))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+No
+Yes
+No
+\end{Verbatim}
+\end{samepage}
+
 %I love the word ``training'' for this, by the way.
