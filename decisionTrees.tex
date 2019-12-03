@@ -464,9 +464,89 @@ each group was more ``pure,'' or simply, more alike. \textsf{Gender} gave us a
 \textsf{Gender} really is correlated with videogame use, and this shows up in
 purer splits. Contrast this with the situation when we split on \textsf{Major}
 first, and we ended up with a yucky 4-to-4 ratio on the \texttt{CPSC} branch.
-That's the worst of all possible worlds: learning someone's a Computer Science
-major doesn't tell you jack about their videogame use, which means it's pretty
-useless to split on.
-%I love the word ``training'' for this, by the way.
+An even split is the worst of all possible worlds: here, it means learning
+someone's a Computer Science major doesn't tell you jack about their videogame
+use. That in turn means it's pretty useless to split on.
+
+\subsection{Lather, rinse, repeat}
+
+\index{turtle}
+
+So far, we've done all that work just to figure out which feature to put at the
+root of our tree. Now, we progress down each of the branches and do the exact
+same thing: figure out what to put at each branch. We'll continue on and on
+like this for the entire tree. It's turtles all the way down.
+
+% To keep this chapter at least somewhat brief, we'll do just one more layer of
+% the tree.
+
+Let's consider the left branch of Figure~\ref{fig:genderOnTop}. What do we do
+with males? There are now only two remaining features to split on. (It wouldn't
+make sense to split on \textsf{Gender} again, since the only people who will
+reach the left branch are males anyway: there'd be nothing to split on.)
+
+Thus we could put either \textsf{Major} or \textsf{Age} at that left branch. To
+figure out which one is better, we'll do the same thing we did before, only
+with one slight change: now, we need to consider \textit{only males} in our
+analysis.
+
+We augment our primo line of code from above with a query at the beginning:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+students[students.Gender=="M"].groupby('Major').VG.value_counts()
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Major  VG 
+CPSC   Yes    3
+MATH   No     1
+       Yes    1
+PSYC   Yes    1
+Name: VG, dtype: int64
+\end{Verbatim}
+
+Wow, cool: the \texttt{CPSC} and \texttt{PSYC} folks are perfectly homogeneous
+now, and if we end up deciding to split on \textsf{Major} here, we can put
+permanent dark purple squares for each of those majors declaring ``Yes.'' In
+all, splitting here gives us 5 out of 6 correct. The tree-in-progress we'd end
+up with is in Figure~\ref{fig:maleMajorSplit}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\textwidth]{maleMajorSplit.png}
+\caption{The tree-in-progress if we choose to split on \textsf{Major} in the
+male branch.}
+\label{fig:maleMajorSplit}
+\end{figure}
+
+Our other choice, of course, is to split on \textsf{Age} instead:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+students[students.Gender=="M"].groupby('Age').VG.value_counts()
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Age     VG 
+middle  No     1
+        Yes    1
+old     Yes    1
+young   Yes    3
+Name: VG, dtype: int64
+\end{Verbatim}
+
+Again, 5 out of 6 correct. Here, \texttt{middle}-aged students are the only
+heterogeneous group; the \texttt{old} folks and \texttt{young}-uns are clean
+splits. With this choice, our tree would appear as in
+Figure~\ref{fig:maleAgeSplit}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\textwidth]{maleAgeSplit.png}
+\caption{On the other hand, the tree-in-progress if we choose to split on
+\textsf{Age} in the male branch instead.}
+\label{fig:maleAgeSplit}
+\end{figure}
 
 % split a numerical attribute into categorical
