@@ -18,7 +18,7 @@ Here's a (fictitious) domain problem that we'll use to demonstrate the
 principles in this chapter. Say we own a videogame business, and we want to
 send full-color product catalogs to unsuspecting college students, so that they
 will buy our games and keep us in business (while meanwhile failing out of
-school due to playing all the time).
+school due to playing games all the time).
 
 Now full-color catalogs are expensive to print and ship, so we want to be smart
 about this. We definitely don't want to send a bunch of catalogs to students
@@ -29,7 +29,7 @@ catalogs to only \textit{those} students.
 Suppose that through nefarious means, we have acquired the following data set:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm,xleftmargin=4.3cm,xrightmargin=4.2cm]
-   major  age gender   VG
+   Major  Age Gender   VG
 0   PSYC   22      F   No
 1   MATH   20      F   No
 2   PSYC   19      F   No
@@ -66,10 +66,10 @@ videogamer.} Glance over this \texttt{DataFrame} for a moment.
 \index{value\_counts@\texttt{.value\_counts()} method (Pandas)}
 
 As you remember from section~\ref{prior}, before we even think about features,
-we might as well the target variable itself, and ask ourselves ``given no other
-information about a student, what would be our gut feel about their videogame
-status?'' Our pal the \texttt{.value\_counts()} method is perfect to compute
-this:
+we might take a minute to just look at the target variable itself. We ask
+ourselves ``given no other information about a student, what would be our gut
+feel about their videogame status?'' Our pal the \texttt{.value\_counts()}
+method is perfect to compute this:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 print(students.VG.value_counts())
@@ -96,7 +96,7 @@ classify each of our students into three buckets: ``\texttt{young}'' (18 or
 younger), ``\texttt{middle}'' (19-21), and ``\texttt{old}''
 (22+).\footnote{\index{Swift@Swift, Taylor} Believe it or not, a time will come in
 your life when 22 years of age does not remotely seem ``old.'' For undergrads,
-though, I can see why 22 would seem on the grey side, Taylor Swift's song
+though, I can see why 22 would seem on the grey side, the Taylor Swift song
 notwithstanding.} For the moment, don't ask why we chose three age categories
 instead of two or four, and don't ask why we chose those particular split
 points. We just did. More on that later.
@@ -104,7 +104,7 @@ points. We just did. More on that later.
 Our training data now looks like this:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm,xleftmargin=4cm,xrightmargin=4cm]
-   major     age gender   VG
+   Major     Age Gender   VG
 0   PSYC     old      F   No
 1   MATH  middle      F   No
 2   PSYC  middle      F   No
@@ -135,10 +135,10 @@ First, let's get our head around what a decision tree \textit{is}. Our
 inaugural example is shown in Figure~\ref{fig:decisionTree}. The first thing
 you'll notice is that it has a branching structure that branches...down. I'm
 not sure why Data Scientists draw trees growing \textit{down} while the rest of
-the world (including trees themselves: go ahead and look outside) grow up, but
-this is the convention so we'll just deal with it. To make it even more
-comical, the oval at the top of the tree is called the \textbf{root} of the
-tree. Really.
+the world (including trees themselves: look outside if you don't believe me)
+has them growing \textit{up}, but this is the convention so we'll just deal
+with it. To make it even more comical, the oval at the top of the tree is
+called the \textbf{root} of the tree. Really.
 
 \begin{figure}[ht]
 \centering
@@ -173,21 +173,22 @@ prediction you give is written on the leaf node. It's that simple.
 \item[\leftpointright] First example: suppose we have a 24-year-old male
 Psychology major. We want to know whether he's likely to play videogames. The
 decision tree in Figure~\ref{fig:decisionTree} tells us to first consider his
-\textsf{major}. Since this is \texttt{PSYC}, we're done: we're immediately at a
-leaf. Our prediction for this guy is \texttt{No}, he probably doesn't play
-videogames.
+\textsf{Major}, since that's the root. Now because this guy's major is
+\texttt{PSYC}, we take the left branch and are immediately done: we've already
+reached a leaf. Our prediction for this guy will be \texttt{No}, he probably
+doesn't play videogames.
 
 \item[\leftpointright] Second example: we have an 18-year-old Math major who
 doesn't identify with either of the binary genders. Starting again at the root,
 we now follow the middle branch for \texttt{MATH}. Now, we look at the person's
-gender. Since it is \texttt{O}, we follow the right branch, and give a
-prediction of \texttt{Yes}, we predict they \textit{do} play videogames.
+\textsf{Gender}. Since it is \texttt{O}, we follow the right branch, and give a
+prediction of \texttt{Yes}: we predict they \textit{do} play videogames.
 
 \item[\leftpointright] Third example: we now have a 22-year-old female Computer
 Science major. Do we think she would play videogames? The root tells us to look
-at her \textsf{major} first, which means we go right; then we look at her
-\textsf{age}, and since she's positively ancient we go right again; and
-finally, her \textsf{gender} tells us to predict \texttt{No}, she's probably
+at her \textsf{Major} first, which means we go right; then we look at her
+\textsf{Age}, and since she's positively ancient we go right again; and
+finally, her \textsf{Gender} tells us to predict \texttt{No}, she's probably
 not a gamer.
 
 \end{itemize}
@@ -242,14 +243,15 @@ one for each feature value. The eye-popping set of
 \texttt{if}/\texttt{elif}/\texttt{else} statements looks daunting at first, but
 when you scrutinize it you'll realize it perfectly reflects the structure of
 the purple diagram. Each time we go down one level of the tree, we indent one
-tab to the right. The body of the ``\texttt{if major == 'PSYC':}'' statement is
+tab to the right. The body of the ``\texttt{if major == \textquotesingle
+PSYC\textquotesingle :}'' statement is
 very short because the left-most branch of the tree (for Psychology) is very
-simple. The ``\texttt{elif major == 'CPSC':}'' body, by contrast, has lots of
+simple. The ``\texttt{elif major == \textquotesingle CPSC\textquotesingle :}'' body, by contrast, has lots of
 nested internal structure precisely because the right-most branch of the tree
 (for Computer Science) is complex. \textit{Etc.}
 
 \begin{samepage}
-And if we call our function, it will give us exactly the same predictions we
+If we call our function, it will give us exactly the same predictions we
 calculated by hand earlier:
 
 \begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
@@ -275,9 +277,9 @@ build?
 There are lots of different choices, even for our little videogame example. We
 could put any of the three features at the root. For each branch from the root,
 we could put either of the other features, or we could stop with a leaf. And
-the leaf could be a \texttt{Yes} leaf or a \texttt{No} leaf. \textit{Etc.} How
-can we know what a \textit{good} tree might be -- \textit{i.e.}, a tree that
-classifies new points more or less correctly?
+the leaf could be a \texttt{Yes} leaf or a \texttt{No} leaf. That's a lot of
+``coulds.'' How can we know what a \textit{good} tree might be --
+\textit{i.e.}, a tree that classifies new points more or less correctly?
 
 \index{training data}
 \index{inductive reasoning}
@@ -309,10 +311,10 @@ move, you're likely to discover that as soon as you take her pawn, she turns
 around and takes your rook because she's lured you into a trap.
 
 A greedy algorithm for chess does exactly that, however. It just grabs whatever
-morsel is in front of it without considering the consequences. That may seem
-really dumb -- and it is, for chess -- but for certain other problems it turns
-out to be a decent approach. And decision tree induction is one of those. The
-reason is that for any real-sized data set, \textit{the number of possible
+morsel is in front of it without considering the fuller consequences. That may
+seem really dumb -- and it is, for chess -- but for certain other problems it
+turns out to be a decent approach. And decision tree induction is one of those.
+The reason is that for any real-sized data set, \textit{the number of possible
 trees to consider is absolutely overwhelming.} There's simply not enough time
 left in the universe to look at them all -- and that's not an exaggeration. So
 you have to find \textit{some} way of picking a tree without actually
@@ -324,26 +326,26 @@ best-looking feature at each level is a pretty good way to do that.
 Now what does that mean, anyway: ``choosing the immediate best feature?'' We're
 going to define it as follows: the best feature to put at any given node is
 \textit{the one which, if we did no further branching from that node but
-instead put all leaves, would classify the most training points correctly.}
-Let's see how this works for the videogame example.
+instead put all leaves below it, would classify the most training points
+correctly.} Let's see how this works for the videogame example.
 
 \index{value\_counts@\texttt{.value\_counts()} method (Pandas)}
 \index{groupby@\texttt{.groupby()} method (Pandas)}
 
-Our left-most feature in the \texttt{DataFrame} is \textsf{major}, so let's
-consider that one first. Suppose we put \textsf{major} at the root of the tree,
-and then made each of its branches lead to leaves. What should we guess for
-each major? Well, we can answer that with another clever use of
+Our left-most feature in the \texttt{DataFrame} is \textsf{Major}, so let's
+consider that one first. Suppose we put \textsf{Major} at the root of the tree,
+and then made each of its branches lead to leaves. What value should we predict
+for each of the majors? Well, we can answer that with another clever use of
 \texttt{.value\_counts()}, this time conjoining it with a call to
 \texttt{.groupby()}. Check out this primo line of code:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-students.groupby('major').VG.value_counts()
+students.groupby('Major').VG.value_counts()
 \end{Verbatim}
 \vspace{-.2in}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-major  VG 
+Major  VG 
 PSYC   No     3
        Yes    2
 MATH   No     3
@@ -354,47 +356,47 @@ Name: VG, dtype: int64
 \end{Verbatim}
 
 Stare hard at that code and at its output. You'll realize that all these pieces
-are things you already know, and we're just combining them in new ways. The
-line of code says ``take the entire \texttt{students} \texttt{DataFrame}, but
-treat each of the majors as a separate group. And what do we do with each
-group? Well, we count the values of the \texttt{VG} column for those rows.''
+are things you already know: we're just combining them in new ways. That line
+of code says ``take the entire \texttt{students} \texttt{DataFrame}, but treat
+each of the majors as a separate group. And what do we do with each group?
+Well, we count the values of the \texttt{VG} column for those rows.''
 
 We can answer ``how many would we get right?'' by reading right off that chart.
-For the \texttt{PSYC} majors, there are two videogamers and three who are not.
-Clearly, then, if we presented a Psychology major to this decision tree, it
-ought to predict '\texttt{No}', and that prediction would be correct for 3 out
-of the 5 Psychology majors on record. For the \texttt{MATH} majors, we would
-again predict '\texttt{No}', and we'd be correct 3 out of \textit{4} times.
-Finally, for the \texttt{CPSC} majors, we have 4 \texttt{Yes}es and 4
+For the \texttt{PSYC} majors, there are two who play videogames and three who
+do not. Clearly, then, if we presented a Psychology major to this decision
+tree, it ought to predict '\texttt{No}', and that prediction would be correct
+for 3 out of the 5 Psychology majors on record. For the \texttt{MATH} majors,
+we would again predict '\texttt{No}', and we'd be correct 3 out of \textit{4}
+times. Finally, for the \texttt{CPSC} majors, we have 4 \texttt{Yes}es and 4
 \texttt{No}s, so that's not much help. We essentially have to pick randomly
 since the training data doesn't guide us to one answer or the other. Let's
 choose '\texttt{Yes}' for our Computer Science answer, just so it's different
 than the others. The best one-level decision tree that would result from
-putting \textsf{major} at the top is therefore depicted in
+putting \textsf{Major} at the top is therefore depicted in
 Figure~\ref{fig:majorOnTop}. It gets \textbf{ten} out of the seventeen training
 points correct (59\%). Your reaction is probably ``Big whoop -- we got that
 good a score just using the prior, and ignoring all the features!'' Truth.
-Don't lose hope, though: \textsf{major} was only one of our three choices.
+Don't lose hope, though: \textsf{Major} was only one of our three choices.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.6\textwidth]{majorOnTop.png}
-\caption{A one-level decision tree if we put the \textsf{major} feature at the
+\caption{A one-level decision tree if we put the \textsf{Major} feature at the
 root -- it would classify \textbf{ten} of the seventeen training points
 correctly.}
 \label{fig:majorOnTop}
 \end{figure}
 
 Let's repeat this analysis for the other two features and see if either one
-fares any better. Here's the query for \textsf{age}:
+fares any better. Here's the query for \textsf{Age}:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-students.groupby('age').VG.value_counts()
+students.groupby('Age').VG.value_counts()
 \end{Verbatim}
 \vspace{-.2in}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-age     VG 
+Age     VG 
 middle  No     6
         Yes    2
 old     Yes    2
@@ -411,22 +413,22 @@ tree in Figure~\ref{fig:ageOnTop}. It gets \textbf{eleven} points right (65\%)
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.6\textwidth]{ageOnTop.png}
-\caption{A one-level decision tree if we chose the \textsf{age} feature for the
+\caption{A one-level decision tree if we chose the \textsf{Age} feature for the
 root -- it would classify \textbf{eleven} of the seventeen training points
 correctly.}
 \label{fig:ageOnTop}
 \end{figure}
 
-Finally, we could put \textsf{gender} at the root. Here's the query for it:
+Finally, we could put \textsf{Gender} at the root. Here's the query for it:
 
 \begin{samepage}
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-students.groupby('gender').VG.value_counts()
+students.groupby('Gender').VG.value_counts()
 \end{Verbatim}
 \vspace{-.2in}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-gender  VG 
+Gender  VG 
 F       No     8
         Yes    2
 M       Yes    5
@@ -436,33 +438,35 @@ Name: VG, dtype: int64
 \end{Verbatim}
 \end{samepage}
 
-Paydirt! Splitting on the \textsf{gender} feature first, as shown in
+Paydirt! Splitting on the \textsf{Gender} feature first, as shown in
 Figure~\ref{fig:genderOnTop}, gets us a whopping \textbf{fourteen} points correct,
 or over 82\%. This is clearly the winner, since we're being greedy and not
-bothering to look further downstream anyway. So \textsf{gender} at the root it
+bothering to look further downstream anyway. So \textsf{Gender} at the root it
 is.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.6\textwidth]{genderOnTop.png}
-\caption{A one-level decision tree if we chose the \textsf{gender} feature for
+\caption{A one-level decision tree if we chose the \textsf{Gender} feature for
 the root. It would classify \textbf{fourteen} of the seventeen training points
 correctly -- easily the best of the three choices.}
 \label{fig:genderOnTop}
 \end{figure}
 
 It's worth taking a moment to look at those \texttt{.value\_counts()} outputs
-and see if you can develop some intuition about why \textsf{gender} worked so
-much better at the root than the other two features. The reason is that for
-this data set, \textsf{gender} split the data into groups that were more
+and see if you can develop some intuition about why \textsf{Gender} worked so
+much better at the root than the other two features did. The reason is that for
+this data set, \textsf{Gender} split the data into groups that were more
 \textbf{homogeneous} than the other splits gave. Homogeneous here means that
 each group was more ``pure,'' or simply, more alike. \textsf{Gender} gave us a
 5-to-1 lopsided ratio on the \texttt{M} branch, and an even more lopsided
 2-to-8 ratio on the \texttt{F} branch. Intuitively, this means that
-\textsf{gender} really is correlated with videogame use, and this shows up in
-purer splits. Contrast this with the situation when we split on \textsf{major}
+\textsf{Gender} really is correlated with videogame use, and this shows up in
+purer splits. Contrast this with the situation when we split on \textsf{Major}
 first, and we ended up with a yucky 4-to-4 ratio on the \texttt{CPSC} branch.
 That's the worst of all possible worlds: learning someone's a Computer Science
 major doesn't tell you jack about their videogame use, which means it's pretty
 useless to split on.
 %I love the word ``training'' for this, by the way.
+
+% split a numerical attribute into categorical
