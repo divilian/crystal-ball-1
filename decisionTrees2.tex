@@ -405,11 +405,110 @@ depicted in Figure~\ref{fig:maleAgeMiddleWithPsyc}.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\textwidth]{maleAgeMiddleWithPsyc.png}
+\includegraphics[width=0.7\textwidth]{maleAgeMiddleWithPsyc.png}
 \caption{The decision tree we're in the process of inducing, with the left
 branch entirely completed.}
 \label{fig:maleAgeMiddleWithPsyc}
 \end{figure}
 
+\subsubsection{Finishing up the rest of the tree}
+
+The rest of the process is just the same stuff done over and over.\footnote{If
+you're wondering whether there's a way to automate this, the answer is a
+resounding \textbf{yes}! There are many packages in Python and other languages
+which will automatically build a decision tree from a training set; the
+\texttt{DecisionTreeClassifier} from the \texttt{scikit-learn} package is one
+of them. This exercise of learning how to build a decision tree manually is so
+you can understand the concepts of what's going on under the hood -- kind of
+like you learn how to add numbers in grade school even though you'll normally
+use a calculator later on in life.} At each branch of the tree, we take the
+subset of the training points that remain (\textit{i.e.}, the training points
+that match the path from the root thus far, and are therefore applicable), and
+decide what to branch on next. When we get to a completely homogeneous group,
+we stop and put a leaf there. The end result of all these efforts is the final
+decision tree for the videogame data set, in Figure~\ref{fig:completeVgTree},
+and its Python equivalent in Figure~\ref{fig:completeVgTreePython}.
+
+\index{contradiction (in a training set)}
+
+One interesting aspect of our final tree is the
+female$\rightarrow$\texttt{PSYC}$\rightarrow$\texttt{middle}-aged branch.
+You'll see that this leaf is labeled ``Yes(?)'' in the diagram. Why the
+question mark? Because this is the one case where we have a
+\textbf{contradiction} in our training data. Check out lines 2 and 16 back on
+p.~\pageref{vgDataSet}. They each reflect a \texttt{middle}-aged female
+Psychology major, but with \textit{different} labels: the first one is not a
+videogame player, but the second one is.
+
+I always thought the term ``contradiction'' was amusing here. Two similar
+people don't have exactly the same hobbies -- so what? Is that really so
+surprising? Do all middle-aged female Psychology majors have to be identical?
+
+Of course not. But you can also see things from the decision tree's point of
+view. The \textit{only} things it knows about people are those three
+attributes, and so as far as the decision tree is concerned, the people on
+lines 2 and 16 really \textit{are} indistinguishable. When contradictions
+occur, we have no choice but to fall back on some sort of majority-rules
+strategy: if out of seven otherwise-identical people, two play videogames and
+five do not, we'd predict ``No'' in that branch. In the present case, we can't
+even do \textit{that} much, because we have exactly one of each. So I'll just
+flip a coin again. (\texttt{*flip*}) It came up heads, so we'll go with
+``Yes.''
+
+Notice that in this situation, the resulting tree will actually misclassify one
+or more \textit{training} points. If we called our function in
+Figure~\ref{fig:completeVgTreePython} and passed it our person from line 2
+(\texttt{\textquotesingle PSYC\textquotesingle}, \texttt{\textquotesingle
+middle\textquotesingle}, \texttt{\textquotesingle F\textquotesingle}), it would
+return \texttt{"Yes"} even though line 2 is not a gamer. Furthermore,
+contradictions are the \textit{only} situation in which this will ever happen;
+if the data is contradiction-free, then every training point will be classified
+correctly by the decision tree.
+
+Paradoxically, it turns out that's not necessarily a good thing, as we'll
+discover in Volume II of this series. For now, though, we'll simply declare
+victory.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\textwidth]{completeVgTree.png}
+\caption{The final decision tree for the videogame data set.}
+\label{fig:completeVgTree}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm,xleftmargin=2cm,xrightmargin=2cm]
+def predict(major, age, gender):
+    if gender == 'M':
+        if age == 'young':
+            return 'Yes'
+        elif age == 'middle':
+            if major == 'PSYC':
+                return 'Yes'
+            elif major == 'MATH' or major == 'CPSC':
+                return 'No'
+        elif age == 'old':
+            return 'Yes'
+    elif gender == 'F':
+        if major == 'MATH':
+            return 'No'
+        elif major == 'CPSC':
+            if age == 'young' or age == 'middle':
+                return 'No'
+            elif age == 'old':
+                return 'Yes'
+        elif major == 'PSYC':
+            if age == 'young' or age == 'old':
+                return 'No'
+            elif age == 'middle':
+                return 'Yes'  # Here's our "contradiction"
+    elif gender == 'O':
+        return 'No'
+\end{Verbatim}
+\caption{The final decision tree for the videogame data set, as a Python
+function.}
+\label{fig:completeVgTreePython}
+\end{figure}
 
 % split a numerical attribute into categorical
