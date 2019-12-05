@@ -484,9 +484,9 @@ def predict(major, age, gender):
         if age == 'young':
             return 'Yes'
         elif age == 'middle':
-            if major == 'PSYC':
+            if major == 'PSYC' or major == 'CPSC':
                 return 'Yes'
-            elif major == 'MATH' or major == 'CPSC':
+            elif major == 'MATH':
                 return 'No'
         elif age == 'old':
             return 'Yes'

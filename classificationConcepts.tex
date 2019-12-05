@@ -101,6 +101,8 @@ predict it so we can send catalogs likely to be well-received.
 
 \subsection{Thou shalt not reuse}
 
+\label{cantTestOnTrainingData}
+
 Now one common question -- which leads to a \textit{super} important point --
 is this: why can't we use \textit{all} the labeled examples as training data?
 After all, if we have 1000 labeled examples we've had to work hard (or pay
@@ -186,6 +188,7 @@ measure we computed is likely to be way off. \textbf{Randomizing} the data is
 the sure way around this.
 
 \index{sample@\texttt{.sample()} (Pandas)}
+\label{sampleRows}
 
 Here's some code to create training and test sets. The \texttt{.sample()}
 method of a \texttt{DataFrame} lets you choose some percentage of its rows 

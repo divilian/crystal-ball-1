@@ -1,3 +1,176 @@
 
 \chapter{Evaluating a classifier}
 
+Once we've built a classifier -- whether it's a decision tree, or any of
+numerous other kinds -- the next step is to evaluate it to see how well it
+performs. This will determine whether we deem it accurate enough to set it
+loose in the field, and if so, how accurate we can expect its predictions to
+be.
+
+At the risk of repeating myself (recall my stern lecture from
+section~\ref{cantTestOnTrainingData}) you must evaluate your classifier by
+testing it on data that was \textit{not} used to train it. On
+p.~\pageref{sampleRows} we learned how to randomly divide a data set into
+separate training and test sets.
+
+Suppose we've done that. Suppose the \texttt{students} \texttt{DataFrame} from
+chapters~\ref{ch:decisionTrees1} and \ref{ch:decisionTrees2} was the result of
+randomly choosing 70\% of the labeled examples from an original data set, and
+that we have preserved the remaining 30\% of the rows in a \texttt{DataFrame}
+called \texttt{students\_test}, which contains:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm,xleftmargin=4.2cm,xrightmargin=4.1cm]
+  Major     Age Gender   VG
+0  CPSC   young      F   No
+1  CPSC     old      O   No
+2  MATH     old      F   No
+3  CPSC  middle      M   No
+4  PSYC  middle      F  Yes
+5  PSYC   young      F   No
+6  MATH     old      M  Yes
+7  CPSC  middle      M  Yes
+\end{Verbatim}
+
+Our question is: ``how well does our classifier do on this test data?''
+
+\section{What ``doing well'' means}
+
+\index{accuracy, classification}
+\index{classification!accuracy}
+
+The most common (and simplest) way to measure a classifier's performance is to
+simply count how many of the test points it correctly classifies, and divide by
+the total number of test points. This gives us the classification
+\textbf{accuracy} as a fraction between 0 and 1 (or, if we want to multiply by
+100, a ``percentage accuracy'' from 0\% to 100\%.) It's possible to do this
+because, as you'll remember, our test data is comprised of \textit{labeled}
+examples, just like our training data is. Therefore, we know the ``right
+answer'' for each test point, and we can simply compare it to our classifier's
+prediction.
+
+Even though this is the most common approach, it's worth taking a moment to
+consider alternatives. The key assumption of this accuracy measure is that
+\textit{all kinds of prediction errors are equal.} In the videogame case, we're
+saying that mistakenly labeling a videogamer as a non-videogamer is ``just as
+bad'' as mistakenly labeling a non-videogamer as a videogamer. And that might
+be just the right thing for our gaming company to do.
+
+But consider other settings. Suppose that our classifier's inputs are features
+from an MRI image, and our prediction is ``cancer'' or ``no cancer.'' Now, it's
+a much different story. Mistakenly predicting that a certain patient has cancer
+when they actually don't might throw a needless scare into them. That's bad.
+But it's far worse in the other direction: mistakenly giving a clean bill of
+health to a patient who actually has early stage cancer risks losing a life. In
+cases like this, we would need to penalize our classifier more harshly for
+false negatives than for false positives.
+
+It's also a different story when the labels aren't equally represented. Recall
+the NFL fan prediction problem from Figure~\ref{fig:labeledTrainTest}
+(p.~\pageref{fig:labeledTrainTest}). Consider if we performed fan prediction in
+a city like Dallas, which is comprised of (say) 99\% Cowboys fans and only 1\%
+Redskins fans. If we were to penalize a classifier equally for
+mistaken-Cowboy-predictions and mistaken-Redskin-predictions, a one-line
+classifier could earn a pretty good score:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+def predict(age, hometown, current_residence, years_in_residence):
+    return "Cowboys"
+\end{Verbatim}
+ 
+It's not even worth trying hard to ferret out the few Redskins fans if we're
+going to be docked a full point every time we dare to predict one. They're just
+too rare. The only way to get a classifier to be bold and try to identify the
+tiny population of Redskins fans is to penalize it more heavily for missing
+them than for falsely identifying them.
+
+Anyway, for the rest of this chapter, we'll use the vanilla ``count all
+prediction mistakes equally'' approach, but it's worth remembering that this
+doesn't make sense in all situations.
+
+\section{Calculating classifier accuracy in Python}
+
+Calculating your classifier's accuracy is actually a snap. Once your
+classifier's code is in a function, you just need a loop.
+
+Return to the videogame example from last chapter, and the decision tree
+classifier we wrote on p.~\pageref{fig:completeVgTreePython}. We'll use a
+counter variable, initialized to zero, that will keep track of our number of
+correct predictions. We'll then loop through each row of the test set, feeding
+that row's features to the classifier function. If the return value from the
+classifier matches the value of that row's target, ka-ching! We increment our
+counter to increase our score. If it doesn't, we don't. At the end, we divide
+by the number of test points to get our percentage. Simple!
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+count = 0
+for row in students_test.itertuples():
+    if predict(row.Major, row.Age, row.Gender) == row.VG:
+        count += 1
+
+accuracy = count / len(students_test) * 100
+print("Our accuracy on the test set was {}%.".format(accuracy,
+    count, len(students_test)))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Our accuracy on the test set was 87.5%.
+\end{Verbatim}
+
+If we want more detail, we could print a message for each prediction, and flag
+the incorrect ones for easy identification:
+
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+count = 0
+for row in students_test.itertuples():
+    if predict(row.Major, row.Age, row.Gender) == row.VG:
+        print("  Predicted {}/{}/{} right!".format(row.Major,row.Age,row.Gender))
+        count += 1
+    else:
+        print("X Predicted {}/{}/{} wrong. :(".format(row.Major,row.Age,row.Gender))
+
+accuracy = count / len(students_test) * 100
+print("Our accuracy on the test set was {}% ({}/{}).".format(accuracy,
+    count, len(students_test)))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+  Predicted CPSC/young/F right!
+  Predicted CPSC/old/O right!
+  Predicted MATH/old/F right!
+X Predicted CPSC/middle/M wrong. :(
+  Predicted PSYC/middle/F right!
+  Predicted PSYC/young/F right!
+  Predicted MATH/old/M right!
+  Predicted CPSC/middle/M right!
+Our accuracy on the test set was 87.5% (7/8).
+\end{Verbatim}
+
+Not too shabby. As you can see, the only test point we missed was the male
+\texttt{middle}-aged \texttt{CPSC} major, which our classifier figured would
+be a videogamer. Live and learn.
+
+The data size here is laughably small so that I can fit everything on the page.
+But it's worth considering these three quantities anyway:
+
+\begin{center}
+\begin{tabular}{r|c}
+Classifier's performance on training set & 94.1\% (16/17) \\
+\hline
+Classifier's performance on test set & 82.5\% (7/8) \\
+\hline
+Just using the prior on test set & 62.5\% (5/8) \\
+\end{tabular}
+\end{center}
+
+\index{contradiction (in a training set)}
+
+These three quantities will nearly always be in this order from top to bottom.
+When we test our classifier on the very data it was trained on, we get an
+inflated view of its accuracy -- for decision trees, recall, it will always be
+100\% less any contradictions. Testing it on the data it has not yet seen gives
+the truer (more realistic) picture. Finally, your classifier had better
+outperform just using the prior (here, choosing ``No'' because the majority of
+training points were ``No'') or this whole thing is a pretty useless
+enterprise!
