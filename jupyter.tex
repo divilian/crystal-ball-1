@@ -1,7 +1,4 @@
 
-% TODO: have them do "Run All" from the Cell" menu, and never shift-enter
-% anything.
-
 \chapter{A trip to Jupyter}
 
 \label{programmingEnvironment}
@@ -57,12 +54,12 @@ or \texttt{\#\#\#}), and so forth.\footnote{For a complete list of formatting
 options, see
 \url{https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet}.} When
 you type in a Markdown cell, you see the raw text and formatting; to actually get Jupyter to
-\textbf{render} your cell and make it pretty, you \textbf{run} the cell by
-pressing \textbf{Shift-Enter} while your cursor is inside it.
+\textbf{render} your cells and make them pretty, you choose ``Run All'' from
+the ``Cell'' menu.
 
 \index{cell!Code}
 \item{\textbf{Code.}} The most important cells are ``Code'' cells which contain (duh)
-code. When executed (again with \textbf{Shift-Enter}) they actually carry out
+code. When executed (again, by choosing ``Run All'' from the ``Cell'' menu) they actually carry out
 the Python instructions you have typed in that cell, and display any results.
 
 \end{description}
@@ -89,9 +86,10 @@ to highlight and edit the top cell, that dropdown would change to
 \includegraphics[width=0.85\textwidth]{firstNotebook2.png}
 \medskip
 \caption{A Jupyter Notebook with one Markdown cell and one Code cell. In the
-top image, the two cells have been edited but not yet Shift-Enter-ed -- hence
+top image, the two cells have been edited but not yet ``run'' -- hence
 the Markdown formatting is unrendered and the code has not been executed. The
-bottom pane shows both cells after they've been Shift-Entere-ed.}
+bottom pane shows both cells after the use has chosen ``Run All'' from the
+``Cell'' menu.}
 \label{fig:jupyterNotebook}
 \end{figure}
 
@@ -100,9 +98,10 @@ bottom pane shows both cells after they've been Shift-Entere-ed.}
 \index{output}
 \index{*@\texttt{*} (splat)}
 \index{splat}
-The top figure shows the two cells before the user has pressed Shift-Enter: all
+The top figure shows the two cells before the user has done a ``Run All'' from
+the ``Cell'' menu: all
 the Markdown is unrendered (see the literal splats and hashtags) and the code
-is just sitting there. After Shift-Enter-ing both cells, the picture changes:
+is just sitting there. After ``Run All,'' the picture changes:
 you see the formatted message in the top cell, and the \textbf{output} of the
 Python code snippet after it runs. (The latter is easy to miss; stare at that
 bottom picture and find the ``\texttt{Our country is 243 years old!}'' message.
@@ -110,9 +109,9 @@ That's the ``output.'') We haven't yet covered what that Python code means
 (that's the main subject of this book) but you can probably guess a great deal
 about what it's doing.
 
-(Incidentally, you can see that when you Shift-Enter the bottom cell to run the
-code, Jupyter also creates a new empty cell at the end of the Notebook for you
-to type in. I find this annoying, but whatever.)
+%(Incidentally, you can see that when you Shift-Enter the bottom cell to run the
+%code, Jupyter also creates a new empty cell at the end of the Notebook for you
+%to type in. I find this annoying, but whatever.)
 
 \section{Code and output}
 
@@ -131,8 +130,8 @@ print("Our country is {} years old!".format(usa_age))
 That box means ``this stuff goes in a Code cell of a Notebook.''
 
 When I write the corresponding output (\textit{i.e.}, what gets printed on the
-page immediately below the code cell when the user highlights the cell and
-presses Shift-Enter), I'll write it like this:
+page immediately below the code cell when ``Run All'' is chosen from the
+``Cell'' menu) , I'll write it like this:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 Our country is 243 years old!
