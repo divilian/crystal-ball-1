@@ -493,7 +493,7 @@ print(message.format(price_of_Christian_Louboutin_shoes))
 Take note of how we write ``\texttt{message.format}'' instead of just
 ``\texttt{format}''. This is because \texttt{.format()} is a method, not a
 function. We say that we are calling \texttt{.format()} ``on''
-\texttt{message}, and passing \texttt{price\_of\_Christian\_Louboutin\_shoes}
+\texttt{message}, and passing \texttt{price\_of\_}\ \texttt{Christian\_Louboutin\_shoes}
 as an argument.\footnote{Btw, in this book, whenever I refer to a method, I'll
 be sure to put a dot before its name. For example, it's not the
 ``\texttt{format()}'' method, but the ``\texttt{.format()}'' method.} Also be
@@ -514,16 +514,23 @@ output. Those variables are then included as arguments to the
 Honey, I spent $895.95 today!
 \end{Verbatim}
 
-\pagebreak
 Often, instead of creating a new variable name to hold the pre-formatted
 string, we'll just \texttt{print()} it literally, like this:
 
 \begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
-print("Honey, I spent ${} today!".format(price_of_Christian_Louboutin_shoes))
+print("Honey, I spent ${} today!".format(
+    price_of_Christian_Louboutin_shoes))
 \end{Verbatim}
 
-(We're still actually calling \texttt{.format()} on a variable here, it's just
-that we haven't bothered to name the variable.)
+We're still actually calling \texttt{.format()} on a variable here, it's just
+that we haven't bothered to name the variable. Also, notice that our code was
+too long to fit on one line nicely, so we broke it in two, and indented the
+second line to make it clear that ``\texttt{price\_of\_}...'' wasn't starting
+\index{bananas (parentheses)}
+\index{()@\texttt{()} (bananas)}
+its own new line. Crucially, all the bananas are still paired up, two-by-two,
+even though the left bananas are on a different line than the corresponding
+right bananas.
 
 \bigskip
 Finally, here's a longer example with more variables:
@@ -532,7 +539,8 @@ Finally, here's a longer example with more variables:
 name = "Pedro Pascal"
 num_items = 3
 cost = 91.73
-print("Customer {} bought {} items worth ${}.".format(name, num_items, cost))
+print("Customer {} bought {} items worth ${}.".format(name,
+    num_items, cost))
 \end{Verbatim}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]

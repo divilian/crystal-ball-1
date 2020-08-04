@@ -1,5 +1,5 @@
 
-\chapter{Exploratory Data Analysis: univariate}
+\chapter[EDA: univariate]{Exploratory Data Analysis: univariate}
 \label{ch:edaUnivariate}
 
 \index{Exploratory Data Analysis (EDA)}
@@ -32,7 +32,7 @@ the general features of a data set so you can see the forest instead of just a
 bunch of trees. Which type of summary information is appropriate depends on
 whether you're dealing with categorical or numeric data.
 
-\section{Categorical data: counts of occurrences}
+\section[Categorical: counts of occurrences]{Categorical data: counts of occurrences}
 
 \label{categoricalDataValueCounts}
 
@@ -123,7 +123,8 @@ NumPy method. If you find yourself with a NumPy array instead, you can just
 (p.~\pageref{wrap}):
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-my_array = np.array(['red','blue','red','green','green','green','blue'])
+my_array = np.array(['red','blue','red','green','green',
+    'green','blue'])
 print(pd.Series(my_array).value_counts())
 \end{Verbatim}
 
@@ -181,6 +182,7 @@ How would I calculate, say, the .7-quantile? First, sort the numbers:
 and then spread out the quantiles ``evenly'' from 0 to 1:
 
 \begin{center}
+\scriptsize
 \renewcommand{\arraystretch}{.7}
 \begin{tabular}{rccccccccccc}
 value: & 22k& 35k& 35k& 45k& 51k& 53k& 54k& 64k& 67k& 94k& 8M\\
@@ -496,7 +498,8 @@ We'll read that into a \texttt{Series} using our technique from
 p.~\pageref{read_csv}:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-gdp = pd.read_csv('gdp.csv', squeeze=True, index_col=0, header=None)
+gdp = pd.read_csv('gdp.csv', squeeze=True, index_col=0,
+    header=None)
 print(gdp)
 \end{Verbatim}
 \vspace{-.3in}
@@ -610,13 +613,14 @@ faves.value_counts().plot(kind='bar',color="orange")
 \index{sort\_index@\texttt{.sort\_index()} method (Pandas)}
 \index{value\_counts@\texttt{.value\_counts()} method (Pandas)}
 
-The \texttt{.sort\_values()} method wasn't needed here, since
+The \texttt{.sort\_values()} method wasn't needed here, because our friend
 \texttt{.value\_counts()} already returns its answer in decreasing numerical
 order. If we wanted the bars in alphabetical order instead, we'd just sort the
 \texttt{Series} by index before plotting:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-faves.value_counts().sort_index().plot(kind='bar',color="purple")
+faves.value_counts().sort_index().plot(kind='bar',
+    color="purple")
 \end{Verbatim}
 
 \begin{figure}[ht]
@@ -848,7 +852,7 @@ plot the low end. Let's use a query (recall section~\ref{seriesQueries} from
 p.~\pageref{seriesQueries}) to filter out \textit{only} the videos with 1000
 plays or fewer, and then plot a histogram of that:
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 unpopular_video_plays = num_plays[num_plays <= 1000]
 unpopular_video_plays.plot(kind='hist', color="green")
 \end{Verbatim}

@@ -1,5 +1,5 @@
 
-\chapter[Decision trees for classification (1 of 2)]{\huge\selectfont{Decision
+\chapter[Decision trees (1 of 2)]{\huge\selectfont{Decision
 trees for classification (1 of 2)}}
 \label{ch:decisionTrees1}
 
@@ -38,25 +38,25 @@ catalogs to only \textit{those} students.
 
 Suppose that through nefarious means, we have acquired the following data set:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm,xleftmargin=4.3cm,xrightmargin=4.2cm]
-   Major  Age Gender   VG
-0   PSYC   22      F   No
-1   MATH   20      F   No
-2   PSYC   19      F   No
-3   CPSC   20      M  Yes
-4   MATH   18      M  Yes
-5   CPSC   20      F   No
-6   CPSC   19      O   No
-7   CPSC   17      M  Yes
-8   PSYC   18      F   No
-9   CPSC   20      F   No
-10  MATH   18      F   No
-11  CPSC   22      F  Yes
-12  MATH   21      M   No
-13  CPSC   23      M  Yes
-14  PSYC   17      M  Yes
-15  CPSC   18      F   No
-16  PSYC   19      F  Yes
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm,xleftmargin=2.8cm,xrightmargin=2.7cm]
+    Major  Age Gender   VG
+ 0   PSYC   22      F   No
+ 1   MATH   20      F   No
+ 2   PSYC   19      F   No
+ 3   CPSC   20      M  Yes
+ 4   MATH   18      M  Yes
+ 5   CPSC   20      F   No
+ 6   CPSC   19      O   No
+ 7   CPSC   17      M  Yes
+ 8   PSYC   18      F   No
+ 9   CPSC   20      F   No
+ 10  MATH   18      F   No
+ 11  CPSC   22      F  Yes
+ 12  MATH   21      M   No
+ 13  CPSC   23      M  Yes
+ 14  PSYC   17      M  Yes
+ 15  CPSC   18      F   No
+ 16  PSYC   19      F  Yes
 \end{Verbatim}
 
 \index{Psychology}
@@ -84,7 +84,7 @@ method is perfect to compute this:
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 print(students.VG.value_counts())
 \end{Verbatim}
-\vspace{-.2in}
+\vspace{-.4in}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 N    10
@@ -94,8 +94,9 @@ Name: VG, dtype: int64
 
 So if we're smart, we'd guess ``no'' for such mysterious persons, but we could
 only expect to be right about $\frac{10}{17}^\textrm{ths}$, or 59\%, of the
-time.
+time. Not great, although better than a coin flip.
 
+\smallskip
 \subsection{Sticking with categorical features}
 
 \index{categorical variable}
@@ -113,28 +114,29 @@ points. We just did. More on that later.
 
 % TODO: this is probably where to put the bin-into-categorical stuff.
 
+\smallskip
 Our training data now looks like this:
 \label{vgDataSet}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm,xleftmargin=4cm,xrightmargin=4cm]
-   Major     Age Gender   VG
-0   PSYC     old      F   No
-1   MATH  middle      F   No
-2   PSYC  middle      F   No
-3   CPSC  middle      M  Yes
-4   MATH   young      M  Yes
-5   CPSC  middle      F   No
-6   CPSC  middle      O   No
-7   CPSC   young      M  Yes
-8   PSYC   young      F   No
-9   CPSC  middle      F   No
-10  MATH   young      F   No
-11  CPSC     old      F  Yes
-12  MATH  middle      M   No
-13  CPSC     old      M  Yes
-14  PSYC   young      M  Yes
-15  CPSC   young      F   No
-16  PSYC  middle      F  Yes
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm,xleftmargin=2.3cm,xrightmargin=2.5cm]
+    Major     Age Gender   VG
+ 0   PSYC     old      F   No
+ 1   MATH  middle      F   No
+ 2   PSYC  middle      F   No
+ 3   CPSC  middle      M  Yes
+ 4   MATH   young      M  Yes
+ 5   CPSC  middle      F   No
+ 6   CPSC  middle      O   No
+ 7   CPSC   young      M  Yes
+ 8   PSYC   young      F   No
+ 9   CPSC  middle      F   No
+ 10  MATH   young      F   No
+ 11  CPSC     old      F  Yes
+ 12  MATH  middle      M   No
+ 13  CPSC     old      M  Yes
+ 14  PSYC   young      M  Yes
+ 15  CPSC   young      F   No
+ 16  PSYC  middle      F  Yes
 \end{Verbatim}
 
 and we're now officially ready to consider decision trees.

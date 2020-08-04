@@ -21,16 +21,16 @@ randomly choosing 70\% of the labeled examples from an original data set, and
 that we have preserved the remaining 30\% of the rows in a \texttt{DataFrame}
 called \texttt{students\_test}, which contains:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm,xleftmargin=4.2cm,xrightmargin=4.1cm]
-  Major     Age Gender   VG
-0  CPSC   young      F   No
-1  CPSC     old      O   No
-2  MATH     old      F   No
-3  CPSC  middle      M   No
-4  PSYC  middle      F  Yes
-5  PSYC   young      F   No
-6  MATH     old      M  Yes
-7  CPSC  middle      M  Yes
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm,xleftmargin=2.4cm,xrightmargin=2.5cm]
+   Major     Age Gender   VG
+ 0  CPSC   young      F   No
+ 1  CPSC     old      O   No
+ 2  MATH     old      F   No
+ 3  CPSC  middle      M   No
+ 4  PSYC  middle      F  Yes
+ 5  PSYC   young      F   No
+ 6  MATH     old      M  Yes
+ 7  CPSC  middle      M  Yes
 \end{Verbatim}
 
 Our question is: ``how well does our classifier do on this test data?''
@@ -74,8 +74,8 @@ Redskins fans. If we were to penalize a classifier equally for
 mistaken-Cowboy-predictions and mistaken-Redskin-predictions, a one-line
 classifier could earn a pretty good score:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-def predict(age, hometown, current_residence, years_in_residence):
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+def predict(age, hometown, current_residence, yrs_in_residence):
     return "Cowboys"
 \end{Verbatim}
  
@@ -89,7 +89,7 @@ Anyway, for the rest of this chapter, we'll use the vanilla ``count all
 prediction mistakes equally'' approach, but it's worth remembering that this
 doesn't make sense in all situations.
 
-\section{Calculating classifier accuracy in Python}
+\section{Calculating accuracy in Python}
 
 Calculating your classifier's accuracy is actually a snap. Once your
 classifier's code is in a function, you just need a loop.
@@ -103,7 +103,7 @@ classifier matches the value of that row's target, ka-ching! We increment our
 counter to increase our score. If it doesn't, we don't. At the end, we divide
 by the number of test points to get our percentage. Simple!
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 count = 0
 for row in students_test.itertuples():
     if predict(row.Major, row.Age, row.Gender) == row.VG:
@@ -113,31 +113,35 @@ accuracy = count / len(students_test) * 100
 print("Our accuracy on the test set was {}%.".format(accuracy,
     count, len(students_test)))
 \end{Verbatim}
-\vspace{-.2in}
+\vspace{-.3in}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 Our accuracy on the test set was 87.5%.
 \end{Verbatim}
 
+\smallskip
+
 If we want more detail, we could print a message for each prediction, and flag
 the incorrect ones for easy identification:
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 count = 0
 for row in students_test.itertuples():
     if predict(row.Major, row.Age, row.Gender) == row.VG:
-        print("  Predicted {}/{}/{} right!".format(row.Major,row.Age,row.Gender))
+        print("  Predicted {}/{}/{} right!".format(row.Major,
+            row.Age, row.Gender))
         count += 1
     else:
-        print("X Predicted {}/{}/{} wrong. :(".format(row.Major,row.Age,row.Gender))
+        print("X Predicted {}/{}/{} wrong. :(".format(row.Major,
+            row.Age, row.Gender))
 
 accuracy = count / len(students_test) * 100
-print("Our accuracy on the test set was {}% ({}/{}).".format(accuracy,
-    count, len(students_test)))
+print("Our accuracy on the test set was {}% ({}/{}).".format(
+    accuracy, count, len(students_test)))
 \end{Verbatim}
-\vspace{-.2in}
+\vspace{-.3in}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
   Predicted CPSC/young/F right!
   Predicted CPSC/old/O right!
   Predicted MATH/old/F right!

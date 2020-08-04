@@ -50,7 +50,7 @@ the customer's favorite team, rather than their rival.
 \centering
 \fbox{
 \mbox{
-\includegraphics[width=1.05\textwidth]{footballML.png}
+\includegraphics[width=1\textwidth]{footballML.png}
 }}
 \smallskip
 \caption{Some labeled examples, divided into training and test sets.}
@@ -116,10 +116,10 @@ field.'' Clearly, before we base major business decisions on the results of our
 automated predictor, we need to have some idea of how accurate its predictions
 are.
 
-It's then commonly countered: ``well, sure, but why not then re-use those data
-points for testing? Instead of splitting the 1000 examples into training points
-and test points, why not just use all 1000 for training, and then test the
-classifier on all 1000 points? What's not to like?''
+It's then often countered: ``sure, but why not then re-use that data for
+testing? Instead of splitting the 1000 examples into training points and test
+points, why not just use all 1000 for training, and then test the classifier on
+all 1000 points? What's not to like?''
 
 This is where the super important point comes in, and it's so important that
 I'll put it all in boldface. It turns out that \textbf{you absolutely
@@ -202,7 +202,8 @@ print(training)
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+% TODO: purge data set of Redskins
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
     age        hometown current_residence  years_in_residence      team
 8    52       Arlington    Fredericksburg                  17  Redskins
 15   63        New York           Orlando                  17    Giants
@@ -238,13 +239,13 @@ meaning ``not'') in conjunction with the ``\texttt{.isin()}'' method, we can
 create a new \texttt{DataFrame} called ``\texttt{test}'' that has exactly these
 rows:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 test = fans[~fans.index.isin(training.index)]
 print(test)
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
     age        hometown current_residence  years_in_residence      team
 3    31       Littleton         Littleton                   3   Broncos
 12   37        Richmond          Richmond                  37  Redskins

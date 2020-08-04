@@ -9,7 +9,7 @@
 
 % indexing, slices
 
-\chapter[Associative arrays in Python (2 of 3)]{\huge\selectfont{Associative
+\chapter[\small Assoc.~arrays in Python (2 of 3)]{\LARGE\selectfont{Associative
 arrays in Python (2 of 3)}}
 \label{ch:assocArraysInPython2}
 
@@ -52,7 +52,7 @@ Pssst...Peter is really Spidey.
 \index{uniqueness!of keys in assoc.~array}
 
 This is why it's important that the \textit{keys} of an associative array be
-unique, even though the \textit{values} often aren't. If we type
+unique. If we type
 ``\texttt{alter\_egos[\textquotesingle Peter\textquotesingle]},'' we need to
 get back one well-defined answer, not an ambiguous set of
 alternatives.\footnote{Pandas, which tries to be All Things To All
@@ -64,7 +64,7 @@ major pain, because now when you look up a value in the \texttt{Series}, you
 don't know whether you'll get back a single item or another \texttt{Series},
 which means you have to check to see which one it is, and then write different
 code to handle the two cases...yick. Just stay far, far away. Make all your
-keys unique.}
+keys unique.} The values, on the other hand, may very well not be unique.
 
 To overwrite the value for a key with a new value, just treat it as a variable
 and go:
@@ -132,10 +132,10 @@ Don't get mad when I tell you that all of the above operations work
 the ``return a modified copy'' style we've seen recently. Hence all of these
 attempts are \textit{wrong}:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-alter_egos = del alter_egos['Tony']                   <--- WRONG!
-alter_egos = alter_egos['Bruce'] = 'Batman'           <--- WRONG!
-alter_egos = alter_egos['Diana'] = 'Wonder Woman'     <--- WRONG!
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+alter_egos = del alter_egos['Tony']                 <--- WRONG!
+alter_egos = alter_egos['Bruce'] = 'Batman'         <--- WRONG!
+alter_egos = alter_egos['Diana'] = 'Wonder Woman'   <--- WRONG!
 \end{Verbatim}
 
 You don't ``change a value and get a new \texttt{Series}''; you just
@@ -292,7 +292,7 @@ If we do want Pandas to assume a certain default value, we have to change
 tactics a bit and go with the \texttt{add()} function (or \texttt{sub()},
 \texttt{mul()}, or \texttt{div()}):
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 new_salaries = pd.Series.add(salaries, raises, fill_value=0)
 print(new_salaries)
 \end{Verbatim}
@@ -354,11 +354,11 @@ It can sometimes be useful to do string concatenation as well, for instance if
 we had employee first names and last names in two \texttt{Series}es with their
 employee ID as the index:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-firsts = pd.Series(['Hannibal', 'Clarice', 'Multiple', 'Buffalo'],
-    index=[666, 1993, 47, 988])
-lasts = pd.Series(['Starling', 'Crawford', 'Lecter', 'Bill', 'Miggs'],
-    index=[1993, 1650, 666, 988, 47])
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+firsts = pd.Series(['Hannibal', 'Clarice', 'Multiple',
+    'Buffalo'], index=[666, 1993, 47, 988])
+lasts = pd.Series(['Starling', 'Crawford', 'Lecter', 'Bill',
+    'Miggs'], index=[1993, 1650, 666, 988, 47])
 print(firsts + " " + lasts)
 \end{Verbatim}
 
@@ -521,7 +521,7 @@ Another useful feature of both \texttt{.sort\_X} methods is the ability to
 (with or without also including the ``\texttt{inplace=True}'' argument; they
 are combinable with a comma) you produce the reverse order:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 heroes_smart_to_dumb = anti_vamps.sort_values(ascending=False)
 print(heroes_smart_to_dumb)
 \end{Verbatim}
@@ -597,7 +597,8 @@ Figure~\ref{fig:handySeries}.
 
 \begin{figure}[ht]
 \centering
-\begin{tabular}{c|p{3.3in}}
+\footnotesize
+\begin{tabular}{c|p{3.1in}}
 Function & Description \\
 \hline
 
@@ -615,11 +616,12 @@ value. \\
 \texttt{Series} \textsl{ser} as ordered, get a specific numbered (from 0)
 key. \\
 
-\textsl{ser}\texttt{[\textquotesingle Firehouse\textquotesingle] =} (\textsl{something}) & Set the value for a key of
+\textsl{ser}\texttt{[\textquotesingle Firehouse\textquotesingle] =}
+\textsl{...} & Set the value for a key of
 the \texttt{Series} \textsl{ser}. \\
 
 \textsl{ser}\texttt{[\textquotesingle New Rest\textquotesingle] =}
-(\textsl{something}) & Add an additional key/value pair to the \texttt{Series}
+\textsl{...} & Add an additional key/value pair to the \texttt{Series}
 \textsl{ser}. (Same syntax as the previous.) \\
 
 \textsl{ser} \texttt{+ 13} & Add a quantity to each value of \textsl{ser},

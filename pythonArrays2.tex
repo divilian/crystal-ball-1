@@ -25,18 +25,18 @@ To learn how long an array is (\textit{i.e.}, how many elements) we use the
 Figure~\ref{fig:arraysInMemory} (p.~\pageref{fig:arraysInMemory}) and consider
 this code:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 num_players = len(roster)
 big_number = len(photo_likes)
 print("There are {} players on the USWNT.".format(num_players))
 print(big_number)
-print("We've had {} presidential elections.".format(len(prez_elections)))
+print("We've had {} elections.".format(len(prez_elections)))
 \end{Verbatim}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 There are 24 players on the USWNT.
 40000000000
-We've had 59 elections for president.
+We've had 59 elections.
 \end{Verbatim}
 
 \index{overloading}
@@ -64,13 +64,14 @@ with the index number:
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 print(prez_elections[0])
 third_year = usa_years[2]
-print("{} was the third year of our country.".format(third_year))
-print("The highest-numbered player is {}".format(roster[len(roster)-1]))
+print("{} was the 3rd year of U.S.A.".format(third_year))
+print("The highest-numbered player is {}".format(
+    roster[len(roster)-1]))
 \end{Verbatim}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 1788.0
-1778 was the third year of our country.
+1778 was the 3rd year of U.S.A.
 The highest-numbered player is Christen Press.
 \end{Verbatim}
 
@@ -144,7 +145,7 @@ instead of atomic data? The answer is: something super cool and useful.
 Consider the following code:
 
 \label{vectorizedArrayIntExample}
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single]
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 num_likes_today = np.array([6,61,0,0,14])
 num_likes_tomorrow = num_likes_today + 3
 print(num_likes_tomorrow)
@@ -279,12 +280,12 @@ Sometimes, however, you \textit{do} want to produce an entire separate copy of
 an array, so you can modify the copy yet preserve the original. To do so, you
 use the \texttt{.copy()} method:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 orig_beatles = np.array(['John', 'Paul', 'George', 'Pete'])
 beatles = orig_beatles.copy()
 beatles[3] = 'Ringo'
 print("The Beatles were originally {}.".format(orig_beatles))
-print("But the ones we all know and love were {}.".format(beatles))
+print("But the ones we all know were {}.".format(beatles))
 \end{Verbatim}
 
 Look carefully at that second line: it makes all the difference. Instead of
@@ -293,9 +294,9 @@ making the new variable \texttt{beatles} point to the same array in memory that
 \texttt{beatles} point to that new copy. The final memory picture is thus as
 per Figure~\ref{fig:copyNotRef}, and the output is of course:
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 The Beatles were originally ['John' 'Paul' 'George' 'Pete'].
-But the ones we all know and love were ['John' 'Paul' 'George' 'Ringo'].
+But the ones we all know were ['John' 'Paul' 'George' 'Ringo'].
 \end{Verbatim}
 
 \begin{figure}[ht]
@@ -371,8 +372,8 @@ section, \texttt{np.sort()} \textit{returns a modified copy} of its argument
 rather than changing it in place. To illustrate:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-nfl_teams = np.array(["Redskins", "Patriots", "Broncos", "Chargers",
-    "Steelers"])
+nfl_teams = np.array(["Redskins", "Patriots", "Broncos",
+    "Chargers", "Steelers"])
 sorted_teams = np.sort(nfl_teams)
 print(nfl_teams)
 print(sorted_teams)
@@ -463,10 +464,10 @@ print("more_clowns is: {}".format(more_clowns))
 print("all_clowns is: {}".format(all_clowns))
 \end{Verbatim}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 clowns is: ['Bozo' 'Krusty']
 more_clowns is: ['Pennywise' 'Happy Slappy' 'Skelton']
-all_clowns is: ['Ronald McDonald' 'Skelton' 'Pennywise' 'Krusty' 'Bozo']
+all_clowns is: ['Ronald' 'Skelton' 'Pennywise' 'Krusty' 'Bozo']
 \end{Verbatim}
 
 % TODO: memory picture of the clowns
@@ -481,7 +482,8 @@ functions, methods, and operators in this chapter.
 
 \begin{figure}[ht]
 \centering
-\begin{tabular}{c|p{3.3in}}
+\footnotesize
+\begin{tabular}{c|p{3.1in}}
 Function & Description \\
 \hline
 
@@ -532,6 +534,8 @@ of \textsl{arr}. (Numerical or alphabetical, depending on the \texttt{.dtype}.)
 \label{fig:handyNumPy}
 \end{figure}
 
+\pagebreak
+\bigskip
 \subsubsection{The answer}
 
 \index{42 (Life, Universe, Everything)}

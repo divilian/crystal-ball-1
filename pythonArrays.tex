@@ -105,7 +105,7 @@ give it all the values explicitly. Here's the code to reproduce the
 Figure~\ref{fig:array} examples:
 
 \begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
-followees = np.array(['@katyperry','@rihanna','@Cristiano','@TheEllenShow'])
+followees = np.array(['@katyperry','@rihanna','@TheEllenShow'])
 balances = np.array([1526.73, 98774.91, 1000000, 4963.12, 123.19])
 \end{Verbatim}
 
@@ -450,7 +450,7 @@ Okay, finally back to NumPy code. If all the stars are aligned, we can write
 this code in a \texttt{funWithArrays.ipynb} cell to read the soccer roster into
 an \texttt{ndarray}:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 roster = np.loadtxt("uswnt.txt", dtype=object, delimiter="###")
 \end{Verbatim}
 
@@ -496,8 +496,8 @@ print(roster)
 \end{Verbatim}
 
 \label{rosterNames}
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-['Alyssa Naeher' 'Mallory Pugh' 'Samantha Mewis' 'Becky Sauerbrunn'
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+['Alyssa Naeher' 'Mallory Pugh' 'Sam Mewis' 'Becky Sauerbrunn'
  "Kelly O'Hara" 'Morgan Brian' 'Abby Dahlkemper' 'Julie Ertz'
  'Lindsey Horan' 'Carli Lloyd' 'Ali Krieger' 'Tierna Davidson'
  'Alex Morgan' 'Emily Sonnett' 'Megan Rapinoe' 'Rose Lavelle'

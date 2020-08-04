@@ -1,5 +1,5 @@
 
-\chapter[Associative arrays in Python (3 of 3)]{\huge\selectfont{Associative
+\chapter[\small Assoc.~arrays in Python (3 of 3)]{\LARGE\selectfont{Associative
 arrays in Python (3 of 3)}}
 \label{ch:assocArraysInPython3}
 
@@ -20,7 +20,7 @@ Study this code snippet and its output to test your understanding of this:
 
 \index{understanding@\texttt{understanding}}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 understanding = pd.Series([15,4,13,3,7], index=[4,10,2,12,9])
 print(understanding)
 print("The min is {}.".format(understanding.min()))
@@ -29,7 +29,7 @@ print("The idxmin is {}.".format(understanding.idxmin()))
 print("The idxmax is {}.".format(understanding.idxmax()))
 \end{Verbatim}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 4     15
 10     4
 2     13
@@ -53,14 +53,14 @@ of \texttt{12}, and the largest value (the \texttt{15}) has a key of
 If we did actually want the lowest (or highest) key, we could use the
 \texttt{.index} syntax (see p.~\pageref{dotIndex}) to achieve that:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-print("The lowest key is {}.".format(understanding.index.min()))
-print("The highest key is {}.".format(understanding.index.max()))
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+print("The lowest key: {}.".format(understanding.index.min()))
+print("The highest key: {}.".format(understanding.index.max()))
 \end{Verbatim}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-The lowest key is 2.
-The highest key is 12.
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+The lowest key: 2.
+The highest key: 12.
 \end{Verbatim}
 
 And remember that ``lowest''/``highest'' for string data means alphabetical
@@ -114,7 +114,7 @@ had nothing to do with the query: our query was about \textit{values}.
 We could change this, if we were interested in putting a restriction on
 \textit{keys} instead, using the \texttt{.index} syntax:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 index_more_than_five = understanding[understanding.index > 5]
 print(index_more_than_five)
 \end{Verbatim}
@@ -210,7 +210,7 @@ Symbol & Meaning \\
 Here are some more examples to test your understanding. Make sure you
 understand why each output is what it is.
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 understanding = pd.Series([15,4,13,3,7], index=[4,10,2,12,9])
 print(understanding[understanding <= 7])
 \end{Verbatim}
@@ -284,9 +284,9 @@ used as a verb here.)
 The way to achieve this is as follows. The syntax is nutty, so pay close
 attention:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-betw_5_and_14 = understanding[(understanding > 5) & (understanding < 14)]
-print(betw_5_and_14)
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+x = understanding[(understanding > 5) & (understanding < 14)]
+print(x)
 \end{Verbatim}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
@@ -310,9 +310,9 @@ It can be tricky to figure out whether you want an \textbf{and} or an
 English usage. Let's see what happens if we switch the ``\texttt{\&}'' symbol to
 a ``\texttt{|}'' (pronounced ``pipe''):
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-different_ex = understanding[(understanding > 5) | (understanding < 14)]
-print(different_ex)
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+y = understanding[(understanding > 5) | (understanding < 14)]
+print(y)
 \end{Verbatim}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
@@ -333,9 +333,9 @@ greater than five, or less than fourteen, or both. (Think deeply.)
 Even though in this example it didn't do anything exciting, an ``\textbf{or}''
 does sometimes return a useful result. Consider this example:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-useful = understanding[(understanding.index > 10) | (understanding > 5)]
-print(useful)
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+z = understanding[(understanding.index > 10) | (understanding > 5)]
+print(z)
 \end{Verbatim}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
@@ -360,9 +360,9 @@ sign, which is pronounced ``tilde,'' ``twiddle,'' or ``squiggle.'' It
 corresponds to the English word \textbf{not}, although in an unusual place in
 the sentence. Here's an example:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-ex = understanding[~(understanding.index > 10) | (understanding > 10)]
-print(ex)
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+a = understanding[~(understanding.index > 10) | (understanding > 10)]
+print(a)
 \end{Verbatim}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
@@ -380,9 +380,9 @@ are shown above.
 
 Changing the ``or'' back to an ``and'' here gives us this output instead:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-ex2 = understanding[~(understanding.index > 10) | (understanding > 10)]
-print(ex2)
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+b = understanding[~(understanding.index > 10) | (understanding > 10)]
+print(b)
 \end{Verbatim}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
@@ -407,7 +407,7 @@ strings, letters in certain positions, and case (upper/lower).
 
 Let's return to the Marvel-themed series from section~\ref{marvelSeries}:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 alter_egos = pd.Series(['Hulk','Spidey','Iron Man','Thor'],
     index=['Bruce','Peter','Tony','Thor'])
 \end{Verbatim}
@@ -447,7 +447,7 @@ dtype: object
 
 or all the keys whose first character is a \texttt{T}:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 to_a_tee = alter_egos[alter_egos.index.str.startswith('T')]
 print(to_a_tee)
 \end{Verbatim}
@@ -462,13 +462,14 @@ dtype: object
 or all entries where either the value is greater than five letters long or the
 key is the same as the value:
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
-huh = alter_egos[(alter_egos.str.len() > 5) | (alter_egos.index == alter_egos)]
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+huh = alter_egos[(alter_egos.str.len() > 5) |
+    (alter_egos.index == alter_egos)]
 print(huh)
 \end{Verbatim}
 \vspace{-.3in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 Peter    Spidey
 Thor       Thor
 dtype: object
@@ -481,7 +482,8 @@ in Figure~\ref{fig:stringQueryFunctions}.
 
 \begin{figure}[ht]
 \centering
-\begin{tabular}{c|p{3.3in}}
+\footnotesize
+\begin{tabular}{c|p{2.8in}}
 Function & Description \\
 \hline
 
@@ -514,7 +516,7 @@ A couple things before we move on. You've noticed that in all the above
 examples, it was necessary to type the \texttt{Series} variable name several
 times:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
 understanding[(understanding < 12) | (understanding > 18)]
 alter_egos[(alter_egos.str.isupper()) & (alter_egos.str.len() < 10)]
 \end{Verbatim}
@@ -527,7 +529,7 @@ understanding[understanding < 12 | > 18]
 \end{Verbatim}
 
 This seems to make perfect sense, especially since it mimics the natural
-English sentence exactly: ``give me all values where \texttt{understanding} is
+English sentence: ``give me all values where \texttt{understanding} is
 \textit{less than 12 or greater than 18}.'' Unfortunately, it doesn't work like
 that in Python. The rule is: each side of an \textsl{and} or an \textsl{or}
 must be a complete sentence. The phrase ``\texttt{understanding} is greater

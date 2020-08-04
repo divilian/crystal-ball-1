@@ -78,29 +78,31 @@ math expression:
 
 \begin{align*}
 \textrm{gpa} = \frac{
-\textrm{creds}_1 \cdot \textrm{gradepts}_1 +
-\textrm{creds}_2 \cdot \textrm{gradepts}_2}
+\textrm{creds}_1 \cdot \textrm{gpts}_1 +
+\textrm{creds}_2 \cdot \textrm{gpts}_2}
 {\textrm{creds}_1 + \textrm{creds}_2}
 \end{align*}
 
 should look like this in Python:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-gpa = (creds1 * gradepts1 + creds2 * gradepts2) / (creds1 + creds2)
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+gpa = (creds1 * gpts1 + creds2 * gpts2) / (creds1 + creds2)
 \end{Verbatim}
 
 and that this one:
 
 \begin{align*}
 a = \frac{\lbrack x^2y(4-z) + (x+q)\cdot y \rbrack \times 2^{15y+2z}}
-{19x^3 - (2yz)^{(y-1)^2}}
+{19x^3 - (yz)^{(y-1)^2}}
 \end{align*}
 
 should look like this:
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
-a = ( ((x**2)*y*(4-z) + (x+q)*y) * 2**(15*y+2*z) ) / ( 19*(x**3) - (2*y*z)**((y-1)**2) )
+\begin{Verbatim}[fontsize=\tiny,samepage=true,frame=single,framesep=3mm]
+a = (((x**2)*y*(4-z) + (x+q)*y) * 2**(15*y+2*z)) / (19*(x**3) - (y*z)**((y-1)**2))
 \end{Verbatim}
+
+\vspace{-.15in}
 
 If so, you're good to go. It's tedious, but not complicated.
 
@@ -128,6 +130,7 @@ changing their \textbf{case} (upper/lower). See Figure~\ref{fig:stringOps} for
 a list.
 
 \begin{figure}[ht]
+\small
 \centering
 \begin{tabular}{c | l}
 \hline
@@ -139,7 +142,7 @@ Method/operator & Operation \\
 \texttt{.strip()} & remove leading and trailing whitespace \\
 \texttt{.upper()} & convert to all uppercase \\
 \texttt{.lower()} & convert to all lowercase \\
-\texttt{.title()} & convert to ``title case'' (initial capital on each word) \\
+\texttt{.title()} & convert to ``title case'' (capitalize each word) \\
 \hline
 \end{tabular}
 \smallskip

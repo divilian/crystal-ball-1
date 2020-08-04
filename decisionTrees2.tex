@@ -1,8 +1,9 @@
 
-\chapter[Decision trees for classification (2 of 2)]{\huge\selectfont{Decision
+\chapter[Decision trees (2 of 2)]{\huge\selectfont{Decision
 trees for classification (2 of 2)}}
 \label{ch:decisionTrees2}
 
+\smallskip
 \section{Decision Trees in Python}
 
 \index{nested if statements@nested \texttt{if} statements}
@@ -17,7 +18,7 @@ flow in Figure~\ref{fig:pythonDT}.
 
 \begin{figure}[h]
 \centering
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm,xleftmargin=2cm,xrightmargin=2cm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm,xleftmargin=1cm,xrightmargin=1cm]
 def predict(major, age, gender):
     if major == 'PSYC':
         return 'No'
@@ -179,7 +180,7 @@ we would again predict '\texttt{No}', and we'd be correct 3 out of \textit{4}
 times. Finally, for the \texttt{CPSC} majors, we have 4 \texttt{Yes}es and 4
 \texttt{No}s, so that's not much help. We essentially have to pick randomly
 since the training data doesn't guide us to one answer or the other. Let's
-choose '\texttt{Yes}' for our Computer Science answer, just so it's different
+choose `\texttt{Yes}' for our Computer Science answer, just so it's different
 than the others. The best one-level decision tree that would result from
 putting \textsf{Major} at the top is therefore depicted in
 Figure~\ref{fig:majorOnTop}. It gets \textbf{ten} out of the seventeen training
@@ -189,7 +190,7 @@ Don't lose hope, though: \textsf{Major} was only one of our three choices.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.6\textwidth]{majorOnTop.png}
+\includegraphics[width=0.9\textwidth]{majorOnTop.png}
 \caption{A one-level decision tree if we put the \textsf{Major} feature at the
 root -- it would classify \textbf{ten} of the seventeen training points
 correctly.}
@@ -222,7 +223,7 @@ tree in Figure~\ref{fig:ageOnTop}. It gets \textbf{eleven} points right (65\%)
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.6\textwidth]{ageOnTop.png}
+\includegraphics[width=0.8\textwidth]{ageOnTop.png}
 \caption{A one-level decision tree if we chose the \textsf{Age} feature for the
 root -- it would classify \textbf{eleven} of the seventeen training points
 correctly.}
@@ -256,7 +257,7 @@ elect to put \textsf{Gender} at the root of our tree.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.6\textwidth]{genderOnTop.png}
+\includegraphics[width=0.8\textwidth]{genderOnTop.png}
 \caption{A one-level decision tree if we chose the \textsf{Gender} feature for
 the root. It would classify \textbf{fourteen} of the seventeen training points
 correctly -- easily the best of the three choices.}
@@ -305,7 +306,7 @@ analysis.
 We augment our primo line of code from above with a query at the beginning, so
 that our counts include only males:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 students[students.Gender=="M"].groupby('Major').VG.value_counts()
 \end{Verbatim}
 \vspace{-.2in}
@@ -336,7 +337,7 @@ male branch.}
 \begin{samepage}
 Our other choice, of course, is to split on \textsf{Age} instead:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 students[students.Gender=="M"].groupby('Age').VG.value_counts()
 \end{Verbatim}
 \vspace{-.2in}
@@ -478,7 +479,7 @@ victory.
 
 \begin{figure}[ht]
 \centering
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm,xleftmargin=2cm,xrightmargin=2cm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm,xleftmargin=.2cm,xrightmargin=.2cm]
 def predict(major, age, gender):
     if gender == 'M':
         if age == 'young':

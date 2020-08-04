@@ -20,7 +20,7 @@ work with at a time.
 Let's return to the Simpsons example from p.~\pageref{finalSimpsons}, which is
 reproduced here:
 
-\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
        species  age gender            fave     IQ          hair   salary
 name                                                                    
 Homer    human   36      M            beer   74.0          none  52000.0
@@ -43,7 +43,7 @@ adults = simpsons[simpsons.age > 18]
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
       species  age gender            fave     IQ          hair   salary
 name                                                                   
 Homer   human   36      M            beer   74.0          none  52000.0
@@ -63,12 +63,12 @@ We can also provide compound conditions in just the same way as before
 (section~\ref{seriesCompoundQueries}, p.~\pageref{seriesCompoundQueries}). If
 we want only human children, we say:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
 kids = simpsons[(simpsons.age <= 18) & (simpsons.species == "human")]
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
        species  age gender        fave     IQ   hair  salary
 name                                                        
 Bart     human   10      M  skateboard   90.0   buzz     0.0
@@ -80,12 +80,12 @@ Maggie   human    1      F    pacifier  100.0  curly     0.0
 \index{kids@\texttt{old\_andor\_wise}}
 whereas if we want everybody who's smart and/or old, we say:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
 old_andor_wise = simpsons[(simpsons.IQ > 100) | (simpsons.age > 30)]
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
       species  age gender            fave     IQ          hair   salary
 name                                                                   
 Homer   human   36      M            beer   74.0          none  52000.0
@@ -115,7 +115,7 @@ Name: fave, dtype: object
 \index{double boxies@``double boxies''}
 while tacking on \textit{double} boxies gives us column\textbf{s}:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 print(simpsons[simpsons.age > 18][['fave','gender','IQ']])
 \end{Verbatim}
 \vspace{-.2in}
@@ -128,8 +128,8 @@ Marge  helping others      F  120.0
 \end{Verbatim}
 
 Note that in the first of these cases, we got a \textit{\texttt{Series}} back,
-whereas in the second (with the double boxies) we got a multi-column
-\texttt{DataFrame}.
+whereas in the second (with the double boxies) we got a \texttt{DataFrame} with
+multiple columns.
 
 Combining all these operations takes practice, but lets you slice and dice a
 \texttt{DataFrame} up in innumerable different ways.
@@ -229,9 +229,10 @@ the loop body a \texttt{Series} representing \textit{the current row}.
 all the rows in sequence.'') We can access individual elements of it by using
 column names and the dot (or boxie) syntax, as follows:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 for row in simpsons.itertuples():
-    print("A certain {}-year old has {} hair.".format(row.age, row.hair))
+    print("A certain {}-year old has {} hair.".format(row.age,
+        row.hair))
 \end{Verbatim}
 \vspace{-.2in}
 
@@ -258,7 +259,7 @@ use the name of the index column. Instead, we have to literally say
 
 To illustrate:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
 for family_member in simpsons.itertuples():
     print("{} Simpson, {} years of age, has {} hair.".format(
         family_member.Index, family_member.age, family_member.hair))

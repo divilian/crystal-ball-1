@@ -33,7 +33,8 @@ The main branching statement in Python and most languages is the
  8: if IQ > 100:
  9:     print("Wow, you're smart! Read a book.")
 10:     IQ = IQ + 5
-11: print("{}'s IQ is {} and he has ${}.".format(name, IQ, cash_on_hand))
+11: print("{}'s IQ is {} and he has ${}.".format(name,
+12:     IQ, cash_on_hand))
 \end{Verbatim}
 \vspace{-.2in}
 
@@ -74,7 +75,7 @@ to be \texttt{False}. Then, \textit{only if} the condition is true will the
 body of the \texttt{if} statement execute. Otherwise, it'll be skipped over.
 
 Thus, the lines of the above program execute in this order: 1, 2, 3, 4, 5, 6,
-7, 8, 11. Lines 9 and 10 are skipped entirely, since Horace's IQ wasn't above
+7, 8, 11/12. Lines 9 and 10 are skipped entirely, since Horace's IQ wasn't above
 average. Observe that the \texttt{cash\_on\_hand} variable was updated inside
 the body of the first \texttt{if} statement, but that \texttt{IQ} was not.
 
@@ -131,9 +132,10 @@ if IQ > 100:
     print("Wow, you're smart! Read a book.")
     IQ = IQ + 5
 else:
-    print("You're currently not that smart, but read a book and get smarter.")
+    print("You're currently not that smart. Read a book!")
     IQ = IQ + 10
-print("{}'s IQ is {} and she has ${}.".format(name, IQ, cash_on_hand))
+print("{}'s IQ is {} and she has ${}.".format(name, IQ,
+    cash_on_hand))
 \end{Verbatim}
 \vspace{-.2in}
 
@@ -144,9 +146,9 @@ Wow, you're smart! Read a book.
 Gladys's IQ is 125 and she has $2000.
 \end{Verbatim}
 
-You can see that ``\texttt{I wish you well!}'' was printed, since
+You can see that ``\texttt{I wish you well!}'' was printed. This is because
 \texttt{cash\_on\_hand} was \textit{not} greater than 5000 (as required by the
-\texttt{if} condition), and that the ``\dots\texttt{you're smart!}\dots''
+\texttt{if} condition). Also, the ``\dots\texttt{you're smart!}\dots''
 message was printed but not the ``\dots\texttt{not that smart}\dots'' one.
 Both the \texttt{if} part and the \texttt{else} part have an indented body,
 although only the \texttt{if} part has a condition.
@@ -409,7 +411,7 @@ is where we're going to get a lot of mileage.
 Let's return to Springfield. Our \texttt{simpsons} \texttt{DataFrame} from
 p.~\pageref{finalSimpsons} looked like this:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
        species  age gender            fave     IQ          hair   salary
 name                                                                    
 Homer    human   36      M            beer   74.0          none  52000.0
@@ -443,14 +445,14 @@ SLH likes nan.
 But combining this with branching techniques gives us more power. We could, for
 example, print only the females:
 
-\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
 for row in simpsons.itertuples():
     if row.gender == "F":
         print("{} likes {}.".format(row.Index, row.fave))
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 Marge likes helping others.
 Lisa likes saxophone.
 Maggie likes pacifier.
@@ -458,16 +460,17 @@ Maggie likes pacifier.
 
 or give different messages for different age ranges:
 
-\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
 for row in simpsons.itertuples():
     if row.age >= 18:
-        print("{} earns ${} outside the home.".format(row.Index, row.salary))
+        print("{} earns ${} outside the home.".format(row.Index,
+            row.salary))
     else:
         print("Aw, {}'s just a kid.".format(row.Index))
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 Homer earns $52000.0 outside the home.
 Marge earns $0.0 outside the home.
 Aw, Bart's just a kid.
@@ -478,22 +481,22 @@ Aw, SLH's just a kid.
 
 or combine these things in innumerable ways:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
 for row in simpsons.itertuples():
-    if row.species == "human":
-        if row.IQ > 115:
-            print("We'd like to nominate {} for a Nobel prize.".format(
-                row.Index))
-        elif row.IQ >= 90:
-            print("You can trust {} with a {}, or even a penknife.".format(
-                row.Index, row.fave))
-        else:
-            print("Hmm. No comment.")
-        if row.salary > 0:
-            print("The {}-year-old {} is gainfully employed.".format(
-                row.age, row.Index))
-    else:
-        print("Hey...{} is some kind of animal!".format(row.Index))
+   if row.species == "human":
+      if row.IQ > 115:
+         print("We'd like to nominate {} for a Nobel prize.".format(
+            row.Index))
+      elif row.IQ >= 90:
+         print("You can trust {} with a {}, or even a knife.".format(
+            row.Index, row.fave))
+      else:
+         print("Hmm. No comment.")
+      if row.salary > 0:
+         print("The {}-year-old {} is gainfully employed.".format(
+            row.age, row.Index))
+   else:
+      print("Hey...{} is some kind of animal!".format(row.Index))
 \end{Verbatim}
 \vspace{-.2in}
 
@@ -501,9 +504,9 @@ for row in simpsons.itertuples():
 Hmm. No comment.
 The 36-year-old Homer is gainfully employed.
 We'd like to nominate Marge for a Nobel prize.
-You can trust Bart with a skateboard, or even a penknife.
+You can trust Bart with a skateboard, or even a knife.
 We'd like to nominate Lisa for a Nobel prize.
-You can trust Maggie with a pacifier, or even a penknife.
+You can trust Maggie with a pacifier, or even a knife.
 Hey...SLH is some kind of animal!
 \end{Verbatim}
 

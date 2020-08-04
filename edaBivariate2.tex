@@ -1,5 +1,5 @@
 
-\chapter{Exploratory Data Analysis: bivariate (2 of 2)}
+\chapter[EDA: bivariate]{Exploratory Data Analysis: bivariate (2 of 2)}
 \label{ch:edaBivariate2}
 
 \section{Three bivariate scenarios}
@@ -169,7 +169,7 @@ All the other stuff in that output are fine-grained details that statisticians
 like to pore over. For us, the only thing we need to see from a $\chi^2$ (or
 any other) test is the $p$-value.
 
-\section{One categorical and one numeric variable}
+\section[One categorical, one numeric variable]{One categorical and one numeric variable}
 
 Next let's consider the case where we want to test for an association between
 one categorical and one numeric variable. This is the ``\texttt{gender}
@@ -256,7 +256,7 @@ To run the $t$-test, we first need a \texttt{Series} with just the
 \texttt{female} salaries. These two \texttt{Series}es are \textit{not} usually
 the same size. Let's use a query to get those:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 female_salaries = people[people.gender=="female"]['salary']
 male_salaries = people[people.gender=="male"]['salary']
 \end{Verbatim}
@@ -272,8 +272,8 @@ scipy.stats.ttest_ind(female_salaries, male_salaries)
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-Ttest_indResult(statistic=0.5241138589648577, pvalue=0.6002226372421067)
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Ttest_indResult(statistic=0.52411385896, pvalue=0.60022263724)
 \end{Verbatim}
 
 This output is a bit more readable than the $\chi^2$ was. The second number in
@@ -284,15 +284,15 @@ males and females.}
 Just to complete the thought, let's run this on the \texttt{followers} variable
 instead:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 female_followers = people[people.gender=="female"]['followers']
 male_followers = people[people.gender=="male"]['followers']
 scipy.stats.ttest_ind(female_salaries, male_salaries)
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-Ttest_indResult(statistic=9.861473026659873, pvalue=9.857302431746571e-23)
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Ttest_indResult(statistic=9.8614730266, pvalue=9.8573024317e-23)
 \end{Verbatim}
 
 \textbf{Warning!} When you first look at that $p$-value, you may be tempted to

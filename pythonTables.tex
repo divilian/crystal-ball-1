@@ -21,7 +21,7 @@ Unlike NumPy arrays and Pandas \texttt{Series}es, which we learned several
 different ways to create, we're only going to learn one way to create a
 \texttt{DataFrame}. That's because \texttt{DataFrame}s are normally big enough
 that it's just too tedious to ever type them in manually. Instead, we'll read
-them from an external source; namely, a \texttt{.csv} file.
+them from an external source; a \texttt{.csv} file.
 
 \index{read\_csv@\texttt{read\_csv()} function (Pandas)}
 \index{davieses@\texttt{davieses}}
@@ -32,6 +32,7 @@ won't need to specify as many arguments. Let's say we have a
 ``\texttt{davieses.csv}'' file with these contents:
 
 \index{file!\texttt{.csv}}
+\vspace{-.2in}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=lines,framesep=3mm]
 person,age,gender,height,instrument
@@ -44,9 +45,9 @@ Johnny,15,M,69,euphonium
 
 We can read it into a \texttt{DataFrame} with this code:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-my_first_data_frame = pd.read_csv("davieses.csv").set_index('person')
-print(my_first_data_frame)
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+my_first_df = pd.read_csv("davieses.csv").set_index('person')
+print(my_first_df)
 \end{Verbatim}
 \vspace{-.2in}
 
@@ -130,6 +131,7 @@ you notice anything odd about it?
 \index{Santa's Little Helper}
 \index{file!\texttt{.csv}}
 
+\vspace{-.15in}
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=lines,framesep=3mm]
 name,species,age,gender,fave,IQ,hair,salary
 Homer,human,36,M,beer,74,,52000
@@ -139,6 +141,7 @@ Lisa,human,8,F,saxophone,200,curly,
 Maggie,human,1,F,pacifier,100,curly,
 SLH,dog,4,M,,,shaggy,
 \end{Verbatim}
+\vspace{-.15in}
 
 \index{double comma@``double comma''}
 
@@ -163,7 +166,7 @@ simpsons = pd.read_csv("simpsons.csv").set_index('name')
 
 the result looks like this:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
        species  age gender            fave     IQ          hair   salary
 name                                                                    
 Homer    human   36      M            beer   74.0           NaN  52000.0
@@ -234,7 +237,7 @@ print(simpsons.fillna("none"))
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
        species  age gender            fave    IQ          hair salary
 name                                                                 
 Homer    human   36      M            beer    74          none  52000
@@ -262,7 +265,7 @@ print(simpsons)
 
 \label{finalSimpsons}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
        species  age gender            fave     IQ          hair   salary
 name                                                                    
 Homer    human   36      M            beer   74.0          none  52000.0
@@ -299,9 +302,9 @@ the following chapters.
 
 \section{Removing rows/columns}
 
-Finally, there are times when after reading a \texttt{.csv} file into a
-\texttt{DataFrame}, you want to manually delete certain rows and/or columns
-that are not going to be of interest.
+Finally, after reading a \texttt{.csv} file into a \texttt{DataFrame}, there
+are times when you want to manually delete certain rows and/or columns that are
+not going to be of interest.
 
 
 \begin{samepage}

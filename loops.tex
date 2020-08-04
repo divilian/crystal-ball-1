@@ -79,12 +79,12 @@ is what makes the code non-linear.
 
 Let's start with the first aggregate data type we learned, a NumPy array.
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
- 1: villains = np.array(['Jafar','Ursula','Maleficent','Gaston'])
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+ 1: villains = np.array(['Jafar','Ursula','Scar','Gaston'])
  2: print("Here we go!")
- 3: for villain in villains:
- 4:     print("Oooo, {} is scary!".format(villain))
- 5:     print("({} has {} letters.)".format(villain, len(villain)))
+ 3: for v in villains:
+ 4:     print("Oooo, {} is scary!".format(v))
+ 5:     print("({} has {} letters.)".format(v, len(v)))
  6: print("Whew!")
 \end{Verbatim}
 
@@ -140,7 +140,7 @@ Now the reason this is important is that a \texttt{for} loop works as follows:
 \itemsep.1em
 \item First, create a new variable (on the left-hand side of the memory
 picture) named whatever comes immediately after the word ``\texttt{for}''. (In
-this example, the name of this new variable will be \texttt{villain}.)
+this example, the name of this new variable will be \texttt{v}.)
 \item Then, for \textit{each} element of the array, in succession:
     \begin{compactenum}
     \itemsep.1em
@@ -171,11 +171,11 @@ program this far before hitting the pause button:
 \index{loop variable}
 
 Memory at this instant is depicted in Figure~\ref{fig:loopsMemory}. The second
-time we executed line 3, we set \texttt{villain} (sometimes called the
+time we executed line 3, we set \texttt{v} (sometimes called the
 \textbf{loop variable}, by the way) to the second element of the array,
 \texttt{"Ursula"}. We're just about to execute line 4 for the second time. Note
 that the \texttt{villains} array is unaffected by this entire loop process:
-only our temporary, made-up loop variable (\texttt{villain}) gets a new value
+only our temporary, made-up loop variable (\texttt{v}) gets a new value
 each time.
 
 \begin{figure}[ht]
@@ -194,8 +194,8 @@ Oooo, Jafar is scary!
 (Jafar has 5 letters.)
 Oooo, Ursula is scary!
 (Ursula has 6 letters.)
-Oooo, Maleficent is scary!
-(Maleficent has 10 letters.)
+Oooo, Scar is scary!
+(Scar has 10 letters.)
 Oooo, Gaston is scary!
 (Gaston has 6 letters.)
 Whew!
@@ -221,9 +221,10 @@ you've got!
 
 \index{Marvel comics}
 
+\pagebreak
 Here's the Marvel \texttt{Series} regurgitated yet again:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 alter_egos = pd.Series(['Hulk','Spidey','Iron Man','Thor'],
     index=['Bruce','Peter','Tony','Thor'])
 \end{Verbatim}
@@ -256,7 +257,7 @@ Notice that ``looping through the \texttt{Series}'' effectively means ``looping
 through the \textit{values} of the \texttt{Series},'' not the keys. What if we
 want to loop through the keys instead?
 
-\section{Iterating through the keys of a \texttt{Series}}
+\section[\small Iterating through keys of a \texttt{Series}]{Iterating through the keys of a \texttt{Series}}
 
 \index{iteration}
 \index{index@\texttt{.index} (little \texttt{i}) syntax}
@@ -289,7 +290,7 @@ contents. But it's really up to you: it has nothing to do with the name of the
 \texttt{Series} itself. (Yeah, I know the Marvel identities aren't secret
 anymore, but I'm old school.)
 
-\section{Iterating through the keys \textit{and} values of a \texttt{Series}}
+\section[\small Iterating through keys/values of a \texttt{Series}]{Iterating through the keys \textit{and} values of a \texttt{Series}}
 
 \index{items@\texttt{.items()} (Pandas)}
 
@@ -315,10 +316,11 @@ you want to use for the key is listed first.
 The rest of the loop follows logically from this, with both variables available
 inside the loop body:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 print("We're now going to recognize some outstanding citizens.")
 for secret_identity, hero in alter_egos.items():
-    print("{}, known to his friends as {}.".format(hero, secret_identity))
+    print("{}, known to his friends as {}.".format(hero,
+        secret_identity))
     print("The crowd screams: 'YAY {}!'".format(hero.upper()))
 print("Thanks, everyone, for your service.")
 \end{Verbatim}
@@ -342,11 +344,13 @@ Thanks, everyone, for your service.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.9\textwidth]{loopsMemory2.png}
+\includegraphics[width=1\textwidth]{loopsMemory2.png}
 \caption{A snapshot of memory immediately after the \textit{third} execution
 of the loop header in the \texttt{alter\_egos} program.}
 \label{fig:loopsMemory2}
 \end{figure}
+
+\pagebreak
 
 \section{Wrapping up}
 

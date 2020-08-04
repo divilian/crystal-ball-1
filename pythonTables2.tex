@@ -230,10 +230,11 @@ Index(['Homer', 'Marge', 'Bart', 'Lisa', 'Maggie', 'SLH'],
 \end{Verbatim}
 
 That weird-looking output tells us several things. First, the index of this
-\texttt{DataFrame} consists of \texttt{string}s (recall that's what
-``\texttt{dtype='object'}'' means; see p.~\pageref{dtypeRules}.) Second, the
-\textit{name} of the index column is, ironically, ``\texttt{name}''. (It could
-be named anything at all, of course.) Third, the actual index values are
+\texttt{DataFrame} consists of \texttt{string}s (remember from
+p.~\pageref{dtypeRules} that's what ``\texttt{dtype=\textquotesingle
+object\textquotesingle}'' means). Second,
+the \textit{name} of the index column is, ironically, ``\texttt{name}''. (It
+could be named anything at all, of course.) Third, the actual index values are
 \texttt{Homer}, \texttt{Marge}, and all the rest.
 
 \index{columns@\texttt{.columns} (Pandas)}
@@ -247,8 +248,8 @@ print(simpsons.columns)
 \vspace{-.2in}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-Index(['species', 'age', 'gender', 'fave', 'IQ', 'hair', 'salary'],
-    dtype='object')
+Index(['species', 'age', 'gender', 'fave', 'IQ', 'hair',
+    'salary'], dtype='object')
 \end{Verbatim}
 
 Interestingly, this too is an ``\texttt{Index}'' beast, also comprised of
@@ -314,7 +315,7 @@ print(simpsons.sort_index())
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
        species  age gender            fave     IQ          hair   salary
 name                                                                    
 Bart     human   10      M      skateboard   90.0          buzz      0.0
@@ -341,7 +342,7 @@ print(simpsons.sort_index('IQ')
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
        species  age gender            fave     IQ          hair   salary
 name                                                                    
 SLH        dog    4      M             NaN   30.0        shaggy      0.0
@@ -370,7 +371,7 @@ print(simpsons.sort_values(['gender','hair','IQ']))
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
        species  age gender            fave     IQ          hair   salary
 name                                                                    
 Maggie   human    1      F        pacifier  100.0         curly      0.0
@@ -399,7 +400,7 @@ print(simpsons.sort_values(['gender','hair','IQ'],
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
        species  age gender            fave     IQ          hair   salary
 name                                                                    
 Bart     human   10      M      skateboard   90.0          buzz      0.0
@@ -432,7 +433,7 @@ each column is a \texttt{Series}:
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 print(simpsons['IQ'].median())
 \end{Verbatim}
-\vspace{-.2in}
+\vspace{-.4in}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 95.0
@@ -443,7 +444,7 @@ print(simpsons['IQ'].median())
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 print(simpsons['salary'].sum())
 \end{Verbatim}
-\vspace{-.2in}
+\vspace{-.4in}
 
 \index{sum method@\texttt{.sum()} method (Pandas)}
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
@@ -459,7 +460,7 @@ You can also, believe it or not, compute the sum/mean/max/etc on the entire
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 print(simpsons.mean())
 \end{Verbatim}
-\vspace{-.2in}
+\vspace{-.4in}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 age         15.500000

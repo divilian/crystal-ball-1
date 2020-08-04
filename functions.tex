@@ -14,10 +14,10 @@ most trouble.
 Now you might be thinking, ``hey waitaminit, we've known about functions since
 all the way back on p.~\pageref{function}. This is something new?'' Yes it is.
 Previously in this book, we've done a lot of \textit{calling} functions -- from
-\texttt{len()} to \texttt{np.append()} to \texttt{pd.read\_csv()} to
-\texttt{scipy.stats.chi2\_contingency()} -- that someone else has written for
-us. In this chapter, we look behind the curtain and join the production staff:
-we write our \textit{own} functions.
+simple ones like \texttt{len()} and \texttt{np.append()} to complex ones like
+\texttt{pd.read\_csv()} to \texttt{scipy.stats.chi2\_contingency()} -- that
+someone else has written for us. By contrast, in this chapter, we look behind
+the curtain and join the production staff: we write our \textit{own} functions.
 
 \section{Why do all this}
 
@@ -70,7 +70,7 @@ appropriate time.
 \index{wheel, reinventing}
 
 One other advantage to this approach, by the way, is that functions are
-\textbf{reusable}. Think of how many different programmers all over the world
+\textbf{reusable}. Think of how many programmers all over the world
 have had reason to call \texttt{np.sort()}, or \texttt{scipy.stats.pearsonr()}!
 The same function becomes applicable in a variety of different contexts, so
 that nobody has to reinvent the wheel.
@@ -223,7 +223,7 @@ Consider this example:
 \index{Superbowl III}
 \index{Namath, Joe}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 jets_touchdowns = 1
 jets_field_goals = 3
 jets_total = football_score(jets_touchdowns, jets_field_goals)
@@ -262,7 +262,7 @@ flexible decoupling of variable names.
 To reinforce the lesson, note too that you can call a function without even
 having variables in the main program at all:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 x = football_score(5, 2)
 print("Some mythical team scored {} points today.".format(x))
 \end{Verbatim}
@@ -292,7 +292,7 @@ you can totally pass aggregate data as well. Suppose we'd like to be able to
 easily compute the IQR (recall p.~\pageref{IQR}) of a univariate data set.
 Writing a function to do that is a snap:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 def IQR(some_data):
     return some_data.quantile(.75) - some_data.quantile(.25)
 \end{Verbatim}
@@ -303,7 +303,7 @@ def IQR(some_data):
 We can now call it on anything we like, like our examples from
 p.~\pageref{YouTubeData} and p.~\pageref{NCAAData}:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
 print("The IQR of the YouTube plays data is {}".format(IQR(num_plays)))
 print("The IQR of the NCAA scoring data is {}".format(IQR(pts)))
 \end{Verbatim}
@@ -315,8 +315,8 @@ The IQR of the NCAA scoring data is 15.
 \end{Verbatim}
 
 Again, we named the function's own argument (\texttt{some\_data}) something
-totally different than the variables it was called with (\texttt{num\_plays}
-and \texttt{pts}). This is a happy and healthy thing.
+different than the variables it was called with (\texttt{num\_plays} first, and
+then \texttt{pts}). This is a happy and healthy thing.
 
 \section{Returning text}
 
@@ -324,7 +324,7 @@ So far, our functions have returned numeric answers. But they can certainly
 return text as well. Here's a function which assembles a person's full name out
 of his or her constituent components:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 def full_name(last_name, first_name, middle_initial):
     return first_name + " " + middle_initial + ". " + last_name
 
@@ -334,15 +334,20 @@ her_full_name = full_name("Clinton", "Hillary", "R")
 print("Your author's full name is: {}".format(my_full_name))
 print("Another person's full name is: {}".format(her_full_name))
 \end{Verbatim}
-\vspace{-.2in}
+\vspace{-.5in}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 Your author's full name is: Stephen C. Davies
 Another person's full name is: Hillary R. Clinton
 \end{Verbatim}
 
+\smallskip
+
 (Recall from p.~\pageref{concatenatingStrings} that the ``\texttt{+}'' operator
 is used for the concatenation of strings.)
+
+\bigskip
+\bigskip
 
 \section{Returning \texttt{True} or \texttt{False}}
 
@@ -428,7 +433,8 @@ def salutation(gender, marital_status, degree):
 
 my_salutation = salutation("male", "married", "PhD")
 print("Why hello, {} Davies.".format(my_salutation))
-print("And hello, {} Davies.".format(salutation("female", "married", "BS")))
+print("And hello, {} Davies.".format(salutation("female",
+    "married", "BS")))
 \end{Verbatim}
 \vspace{-.2in}
 
@@ -467,7 +473,7 @@ cheer_for("Mary Washington")
 cheer_for("Lady Eagles")
 cheer_for("Christopher Newport")
 \end{Verbatim}
-\vspace{-.2in}
+\vspace{-.5in}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 Go Mary Washington go!!
@@ -479,6 +485,8 @@ Here, instead of ``\texttt{something = cheer\_for(...)}'' we type plain-old
 ``\texttt{cheer\_for(...)}''. That's because there's no return value to
 capture, so there's no point in setting it equal to anything. We call the
 function just to enjoy its messages.
+
+\bigskip
 
 \section{Calling a function from another function}
 
@@ -498,7 +506,7 @@ including one or more calls to other functions! Check out this bad boy:
 \index{Dr.}
 \index{Mr./Mrs./Miss/Ms./Mx.}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 def greet(first_n, last_n, middle_i, gender, status, deg, lang):
     sal = salutation(gender, status, deg)
     if lang == "Swedish":
@@ -512,10 +520,10 @@ def greet(first_n, last_n, middle_i, gender, status, deg, lang):
     full = full_name(last_n, first_n, middle_i)
     print("{}, {} {}!".format(greeting, sal, full))
 
-greet("Greta", "Thunberg", "F", "female", "single", "none", "Swedish")
-greet("Maria", "Sharapova", "S", "female", "single", "none", "Russian")
-greet("Garry", "Kasparov", "K", "male", "married", "BA", "Russian")
-greet("Angela", "Merkel", "D", "female", "married", "PhD", "German")
+greet("Greta","Thunberg","F","female","single","none","Swedish")
+greet("Maria","Sharapova","S","female","single","none","Russian")
+greet("Garry","Kasparov","K","male","married","BA","Russian")
+greet("Angela","Merkel","D","female","married","PhD","German")
 \end{Verbatim}
 \vspace{-.2in}
 

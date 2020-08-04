@@ -18,10 +18,12 @@ Actually, no. And that brings me to the first mission-critical lesson of the
 semester, which is a bane to all students who don't deeply grasp it. The lesson
 is:
 
+\begin{framed}
 \begin{quote}
 \textbf{The code itself is only a means to an end. The purpose of the code is
 to read or write what's in memory.}
 \end{quote}
+\end{framed}
 
 \index{memory}
 \index{environment}
@@ -150,7 +152,8 @@ it's an \texttt{int}.
 its value. So far, we don't know how to do much with that other than print:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-print("The {} board has {} pins.".format(another_board, pin_count))
+print("The {} board has {} pins.".format(another_board,
+    pin_count))
 \end{Verbatim}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]

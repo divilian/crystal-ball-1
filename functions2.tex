@@ -43,21 +43,21 @@ All that took a lot longer to explain than the corresponding Python function:
 
 \index{bb\_pts@\texttt{bb\_pts()}}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 def bb_pts(fgm, threep_fgm, ftm):
-    return ((fgm - threep_fgm) * 2) + (threep_fgm * 3) + (ftm * 1)
+    return ((fgm - threep_fgm) * 2) + (threep_fgm * 3) + ftm
 
 torys_pts = bb_pts(6, 0, 1)
 print("Tory scored {} points.".format(torys_pts))
-print("Emily scored {} points.".format(bb_pts(6, 5, 5)))
-print("The Lady Eagles scored {} points!".format(bb_pts(28, 8, 11)))
+print("Emily scored {} points.".format(bb_pts(6,5,5)))
+print("Lady Eagles scored {} points!".format(bb_pts(28,8,11)))
 \end{Verbatim}
 \vspace{-.2in}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 Tory scored 13 points.
 Emily scored 22 points.
-The Lady Eagles scored 75 points!
+Lady Eagles scored 75 points!
 \end{Verbatim}
 
 \index{PEMDAS}
@@ -78,9 +78,9 @@ this sort of thing with a function like this:
 \index{low\_cutoff@\texttt{low\_cutoff}}
 \index{high\_cutoff@\texttt{high\_cutoff}}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-def mean_no_outliers(data, low_cutoff, high_cutoff):
-    return data[(data >= low_cutoff) & (data <= high_cutoff)].mean()
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+def mean_no_outliers(a, low_cutoff, high_cutoff):
+    return a[(a >= low_cutoff) & (a <= high_cutoff)].mean()
 
 our_class = np.array([20,18,19,18,22,21,76,20,22,22,21,18])
 print("The average age (excluding outliers) is {}.".format(
@@ -108,8 +108,9 @@ two decimals with NumPy's \texttt{round()} function:
 \label{round}
 
 \begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
-def mean_no_outliers(data, low_cutoff, high_cutoff):
-    return np.round(data[(data >= low_cutoff) & (data <= high_cutoff)].mean(),2)
+def mean_no_outliers(a, low_cutoff, high_cutoff):
+    return np.round(a[
+        (a >= low_cutoff) & (a <= high_cutoff)].mean(),2)
 
 print("The average age (excluding outliers) is {}.".format(
     mean_no_outliers(our_class, 0, 30)))
@@ -124,9 +125,9 @@ At this point you might think this function is getting pretty big for a
 one-liner. I agree. Let's split it up and use some temporary variables to make
 it more readable:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-def mean_no_outliers(data, low_cutoff, high_cutoff):
-    filtered_data = data[(data >= low_cutoff) & (data <= high_cutoff)]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+def mean_no_outliers(a, low_cutoff, high_cutoff):
+    filtered_data = a[(a >= low_cutoff) & (a <= high_cutoff)]
     filtered_average = np.round(filtered_data)
     return np.round(filtered_average,2)
 \end{Verbatim}
@@ -145,13 +146,14 @@ semester, and drop the lowest two scores. That could be done with:
 \index{quiz\_avg@\texttt{quiz\_avg()}}
 \index{Filbert}
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 def quiz_avg(quizzes):
     dropped_lowest_two = np.sort(quizzes)[2:len(quizzes)]
     return dropped_lowest_two.mean()
 
 filberts_quizzes = np.array([7,9,10,7,0,8,4,10])
-print("Filbert's avg score was {}.".format(quiz_avg(filberts_quizzes)))
+print("Filbert's avg score was {}.".format(quiz_avg(
+    filberts_quizzes)))
 \end{Verbatim}
 \vspace{-.2in}
 
@@ -180,7 +182,7 @@ me entries number 2 through the end of the array.'' And that's exactly what the
 doctor ordered to omit the first two.
 \end{compactitem}
 
-\medskip
+\smallskip
 
 \subsubsection{Searching for values: \texttt{any\_zeros()}}
 
@@ -203,7 +205,7 @@ own good.
 
 Here's the \texttt{gradebook} \texttt{DataFrame} this professor is using:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
            Q1  Q2  Q3  Q4  lab1  lab2  lab3  lab4  lab5
 student                                                
 Filbert     7   9  10   7    15    19    14    20    20
@@ -222,7 +224,8 @@ follows:
 \begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 def print_harass_list(gradebook):
     for row in gradebook.itertuples():
-        if any_zeros(np.array([row.lab1,row.lab2,row.lab3,row.lab4,row.lab5])):
+        if any_zeros(np.array([row.lab1, row.lab2, row.lab3,
+            row.lab4, row.lab5])):
             print("Better check up on {}.".format(row.Index))
 \end{Verbatim}
 

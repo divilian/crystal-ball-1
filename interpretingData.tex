@@ -152,9 +152,9 @@ in the first place. The others are all ways of producing that same association
 we picked up in the data.
 
 \begin{figure}[ht]
-\small
+\footnotesize
 \centering
-\begin{tabular}{|c|c|p{3.3in}|}
+\begin{tabular}{|c|c|p{2in}|}
 \hline
 Symbology & Name & Example \\
 \hline
@@ -184,7 +184,7 @@ get more dates, but it's not because of the antiperspirant \textit{per se};
 it's because they don't have an unpleasant odor. \\
 \hline
 \multirow[c]{3}{*}{$A \not\rightarrow B$} & \multirow[c]{3}{*}{spurious
-association} & Although for many years the outcome of the Washington Redskins
+association} & Although for many years the outcome of the Washington football
 game immediately preceding a Presidential election predicted the election's
 outcome, that was by coincidence. \\
 \hline
@@ -195,6 +195,7 @@ association between $A$ and $B$ exists.}
 \label{fig:causalityTypes}
 \normalsize
 \end{figure}
+\vspace{-.15in}
 
 \section{Confounding factors}
 
@@ -213,6 +214,14 @@ don't run out and buy ice cream to cope with their anxiety about shark attacks.
 Neither $A \rightarrow B$ nor $B \rightarrow A$, but a third variable -- hot
 days -- influence both of them.
 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{causalDiagram.png}
+\caption{A hypothesis as to causality: eating barbecued foods increases one's
+risk for certain types of cancer.}
+\label{fig:causalDiagram}
+\end{figure}
+
 \index{causal diagram}
 \index{barbecue}
 \index{cancer}
@@ -224,14 +233,6 @@ discovered that \textit{eating barbecue can increase your risk of cancer.}
 Pictorially, this claim is illustrated in the \textbf{causal diagram} in
 Figure~\ref{fig:causalDiagram}, which shows our i.v.~and our d.v.~; the arrow
 means exactly what it meant earlier.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.6\textwidth]{causalDiagram.png}
-\caption{A hypothesis as to causality: eating barbecued foods increases one's
-risk for certain types of cancer.}
-\label{fig:causalDiagram}
-\end{figure}
 
 Unlike sharks and ice cream, this one seems plausible. And I'm not claiming to
 have read enough about their study to tell whether the researchers' claim is
@@ -247,7 +248,7 @@ were the correct one of the underlying phenomenon, then the correlation we
 thought were picking up between barbecue and cancer was actually due to fat
 content.
 
-\begin{figure}[ht]
+\begin{figure}[hb]
 \centering
 \includegraphics[width=0.4\textwidth]{causalDiagram2.png}
 \includegraphics[width=0.5\textwidth]{causalDiagram3.png}
@@ -261,7 +262,7 @@ Perhaps barbecue is more popular culturally in some areas of the country (say,
 the South, where I certainly see it eaten a lot), and perhaps those areas have
 other environmental factors that can lead to cancer. In this case, the
 ``South'' confounder indirectly affects the d.v.~(via another variable,
-representing the environment) but it still affects it.
+the environment) but it still affects it.
 
 It's not hard to think of others. These were just the first two that came to
 mind. The point is that it's really hard to be sure you've thought of all of
@@ -271,7 +272,7 @@ them!
 \subsection{Paranoia and overparanoia}
 
 All this should lead you to be somewhat paranoid, but not
-\textit{over}paranoid. Confounding variables can definitely lead us to make
+\textit{over}\-paranoid. Confounding variables can definitely lead us to make
 mistakes in our reasoning, but perhaps they're not \textit{quite} as common as
 you think. Understand that a confounding factor is \textit{not} simply any
 other factor that affects the dependent variable. Instead, for a variable to be
@@ -284,6 +285,7 @@ from $A$ (sex) to $B$ (height), not the other way around. (Clearly people don't
 spontaneously ``turn male'' because they reach a certain height.) So my
 thinking on the subject is summed up in Figure~\ref{fig:sexHeight}.
 
+\vspace{-.15in}
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.6\textwidth]{sexHeight.png}
@@ -292,6 +294,7 @@ a causal role in determining their height.}
 \label{fig:sexHeight}
 \end{figure}
 
+\smallskip
 Now let me show you what I mean by ``overparanoia.'' What if someone said,
 ``but wait, Stephen, not so fast! You've got potential confounding variables
 out the wazoo! Why, surely heredity plays some role in a person's height --
@@ -367,6 +370,7 @@ logs on to pinterest each day.}
 \label{fig:hairPinterest}
 \end{figure}
 
+\medskip
 Now of course this follicle stuff is bogus. I'm using an extreme example to
 make a point. Quick, can you come up with a possible confounding factor? Yeah,
 drr: \textit{gender}. It's undoubtedly true that women tend to (but don't

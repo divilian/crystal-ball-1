@@ -1,7 +1,7 @@
 
 % Somewhere: .map() for recoding
 
-\chapter[Associative arrays in Python (1 of 3)]{\huge\selectfont{Associative
+\chapter[\small Assoc.~arrays in Python (1 of 3)]{\LARGE\selectfont{Associative
 arrays in Python (1 of 3)}}
 \label{ch:assocArraysInPython1}
 
@@ -168,7 +168,7 @@ that rich stuff.
 
 The way to do this is simple:
 
-\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 my_numpy_array = np.array(['Ghost','Pumpkin','Vampire','Witch'])
 my_pandas_enhanced_thang = pd.Series(my_numpy_array)
 \end{Verbatim}
@@ -214,8 +214,8 @@ bit awkward since it has several mandatory arguments if you want to deal with
 \texttt{Series}es. Here's how it works:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-wait_times = pd.read_csv('disney_rides.csv', index_col=0, squeeze=True,
-    header=None)
+wait_times = pd.read_csv('disney_rides.csv', index_col=0,
+    squeeze=True, header=None)
 \end{Verbatim}
 
 \index{header row (of a \texttt{.csv} file)}
