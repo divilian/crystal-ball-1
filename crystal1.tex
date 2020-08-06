@@ -43,7 +43,7 @@
 
 % Blurb.com
 % Blueprints is 312 pages
-% Crystal Ball 1 is 302 pages, pushed to 312
+% Crystal Ball 1 is 302 pages, pushed to 306
 
 \setstocksize{9.25in}{6.125in}
 \settrimmedsize{9in}{6in}{*}
@@ -160,7 +160,18 @@ Data Science}\\
 \include{decisionTrees2}
 \include{evaluatingAClassifier}
 
+% Add empty page to get to a multiple of 12 (306 total pages).
+\begingroup
+  \null
+  \newpage
+\endgroup
 \backmatter
 \printindex
+
+% Add empty (number-less) pages to get to a multiple of 12 (306 total pages).
+\shipout\null
+\shipout\null
+\shipout\null
+\shipout\null
 
 \end{document}
