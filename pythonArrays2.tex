@@ -371,8 +371,12 @@ as an object. Like many Python functions, including the ones in the next
 section, \texttt{np.sort()} \textit{returns a modified copy} of its argument
 rather than changing it in place. To illustrate:
 
+\index{Ravens, Baltimore}
+\index{Patriots, New England}
+\index{Broncos, Denver}
+\index{Steelers, Pittsburgh}
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-nfl_teams = np.array(["Redskins", "Patriots", "Broncos",
+nfl_teams = np.array(["Ravens", "Patriots", "Broncos",
     "Chargers", "Steelers"])
 sorted_teams = np.sort(nfl_teams)
 print(nfl_teams)
@@ -380,8 +384,8 @@ print(sorted_teams)
 \end{Verbatim}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-['Redskins' 'Patriots' 'Broncos' 'Chargers' 'Steelers']
-['Broncos' 'Chargers' 'Patriots' 'Redskins' 'Steelers']
+['Ravens' 'Patriots' 'Broncos' 'Chargers' 'Steelers']
+['Broncos' 'Chargers' 'Patriots' 'Ravens' 'Steelers']
 \end{Verbatim}
 
 \index{return value}

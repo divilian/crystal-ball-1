@@ -50,7 +50,7 @@ the customer's favorite team, rather than their rival.
 \centering
 \fbox{
 \mbox{
-\includegraphics[width=1\textwidth]{footballML.png}
+\includegraphics[width=1\textwidth]{footballML.pdf}
 }}
 \smallskip
 \caption{Some labeled examples, divided into training and test sets.}
@@ -202,23 +202,22 @@ print(training)
 \end{Verbatim}
 \vspace{-.2in}
 
-% TODO: purge data set of Redskins
 \begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
     age        hometown current_residence  years_in_residence      team
-8    52       Arlington    Fredericksburg                  17  Redskins
+8    52       Arlington    Fredericksburg                  17    Ravens
 15   63        New York           Orlando                  17    Giants
 11   29  Fredericksburg           Seattle                  21  Seahawks
-19   32       Warrenton           Orlando                   1  Redskins
-2    47       Allegheny       Chevy Chase                  13  Redskins
+19   32       Warrenton           Orlando                   1    Ravens
+2    47       Allegheny       Chevy Chase                  13    Ravens
 7    31       Warrenton   Charlottesville                   6      Jets
-0    29       Warrenton         Warrenton                  29  Redskins
-5    32       Warrenton        Winchester                  11  Redskins
-4    51   Orange County          Dumfries                  23  Redskins
+0    29       Warrenton         Warrenton                  29    Ravens
+5    32       Warrenton        Winchester                  11    Ravens
+4    51   Orange County          Dumfries                  23    Ravens
 9    60  Tyson's Corner      Falls Church                   4   Cowboys
-10   17  Fredericksburg    Fredericksburg                  17  Redskins
+10   17  Fredericksburg    Fredericksburg                  17    Ravens
 1    39         Lubbock         Arlington                   2   Cowboys
-13   35  Mechanicsville           Orlando                   8  Redskins
-6    39        Dumfries             Miami                   5  Redskins
+13   35  Mechanicsville           Orlando                   8    Ravens
+6    39        Dumfries             Miami                   5    Ravens
 \end{Verbatim}
 
 Notice that the numeric index values (far left) are in no particular order,
@@ -248,11 +247,11 @@ print(test)
 \begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
     age        hometown current_residence  years_in_residence      team
 3    31       Littleton         Littleton                   3   Broncos
-12   37        Richmond          Richmond                  37  Redskins
+12   37        Richmond          Richmond                  37    Ravens
 14   19        New York          New York                  19    Giants
-16   42      Alexandria          Manassas                  10  Redskins
+16   42      Alexandria          Manassas                  10    Ravens
 17   22       Allegheny        Harrisburg                   1  Steelers
-18   38  Mechanicsville    Fredericksburg                   6  Redskins
+18   38  Mechanicsville    Fredericksburg                   6    Ravens
 \end{Verbatim}
 
 That code says, in English: ``create a new variable \texttt{test} that contains
@@ -286,15 +285,14 @@ your best judgment about the target value after duly taking into consideration
 all the feature values.
 
 For example, you may have noticed that in my made-up data set, above, I had a
-lot of Redskins fans. This is because I live in the D.C.~area, and happen to
-know a lot of Redskins fans. Out of my 20 labeled examples, a whopping twelve
-of them, in fact, had \texttt{Redskins} as their value in the \texttt{team}
-column.
+lot of Ravens fans. This is because I live in the D.C.~area, and happen to know
+a lot of Ravens fans. Out of my 20 labeled examples, a whopping twelve of them,
+in fact, had \texttt{Ravens} as their value in the \texttt{team} column.
 
 Thus, consider the following question. Suppose you knew nothing about a person
 except that they were one of Stephen's friends. Which NFL team do you think
 they'd support? Assuming this data set is representative of Stephen's friends,
-you'd say: ``I'd predict they'd be a Redskins fan, and I'd estimate that I'd
+you'd say: ``I'd predict they'd be a Ravens fan, and I'd estimate that I'd
 have about a 60\% chance of being right ($\frac{12}{20}$).'' This is the
 \textit{prior}. You're not taking into account anything about their age, where
 they were born, \textit{etc.}; in fact, you weren't even told those things.
@@ -302,9 +300,9 @@ Instead, you're just ``using the prior'' and treating everyone the same.
 
 It would be a different story if I told you that this person was born in New
 York City. Then you might squint your eyes at my data set and realize that
-there are only two New Yorkers in it, and neither one is a Redskins fan:
+there are only two New Yorkers in it, and neither one is a Ravens fan:
 they're both Giants fans! Now you might very well move away from your prior
-assumption. ``Sure, most of Stephen's friends are Redskins fans, so `Redskins'
+assumption. ``Sure, most of Stephen's friends are Ravens fans, so `Ravens'
 is a reasonable guess, but now that you've told me they're from NY, that very
 well might change my mind. Now, my guess is `Giants'.''
 

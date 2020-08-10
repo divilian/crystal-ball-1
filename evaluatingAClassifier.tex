@@ -66,12 +66,14 @@ health to a patient who actually has early stage cancer risks losing a life. In
 cases like this, we would need to penalize our classifier more harshly for
 false negatives than for false positives.
 
+\index{Cowboys, Dallas}
+\index{Ravens, Baltimore}
 It's also a different story when the labels aren't equally represented. Recall
 the NFL fan prediction problem from Figure~\ref{fig:labeledTrainTest}
 (p.~\pageref{fig:labeledTrainTest}). Consider if we performed fan prediction in
 a city like Dallas, which is comprised of (say) 99\% Cowboys fans and only 1\%
-Redskins fans. If we were to penalize a classifier equally for
-mistaken-Cowboy-predictions and mistaken-Redskin-predictions, a one-line
+Ravens fans. If we were to penalize a classifier equally for
+mistaken-Cowboy-predictions and mistaken-Ravens-predictions, a one-line
 classifier could earn a pretty good score:
 
 \begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
@@ -79,10 +81,10 @@ def predict(age, hometown, current_residence, yrs_in_residence):
     return "Cowboys"
 \end{Verbatim}
  
-It's not even worth trying hard to ferret out the few Redskins fans if we're
+It's not even worth trying hard to ferret out the few Ravens fans if we're
 going to be docked a full point every time we dare to predict one. They're just
 too rare. The only way to get a classifier to be bold and try to identify the
-tiny population of Redskins fans is to penalize it more heavily for missing
+tiny population of Ravens fans is to penalize it more heavily for missing
 them than for falsely identifying them.
 
 Anyway, for the rest of this chapter, we'll use the vanilla ``count all
