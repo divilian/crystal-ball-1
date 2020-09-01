@@ -1,7 +1,4 @@
 
-% note that "variable" means something different in this chapter. Not a single
-% value, but multiple measurements.
-
 % Give the hierarchy of categorical -> ord -> int -> rat, and how each one
 % subsumes the other
 
@@ -28,30 +25,34 @@ particular combination actually relates to something meaningful.
 \index{variable}
 \index{variable!aggregate}
 \label{variableDifferent}
+
 Every variable\footnote{Note that our use of the term \textbf{variable} in this
 chapter is different than how we used it in chapter~\ref{ch:atomicData}
 (\textit{e.g.}, p.~\pageref{sec:envsAndVariables}) and throughout
-chapter~\ref{ch:calculations}. Here, a variable is normally some measurable
-aspect of \textit{every} object in our study. We might recruit participants to
-a research experiment, and record their race, weight, and favorite breakfast
-cereal. These are our three variables. Each of the three constitutes
-\textit{many} values, since our participants have many races, weights, and
-cereals. In programming terms, they will eventually become \textbf{aggregate} data types
-of some kind.} we collect can have various values, and the nature of
-information it contains can be described by its \textbf{scale of measure}.
-There are four of these\footnote{According to psychologist Stanley Smith
-Stevens in 1946. Other researchers have developed related, but different,
-scales of measure.}, and each one determines which %kinds of
-operations are ``legal'' (\textit{i.e.}, sensible) with that variable.
+chapter~\ref{ch:calculations}. In this chapter, a variable is normally some
+measurable aspect of \textit{every} object in our study. We might recruit
+participants to a research experiment, and record their race, weight, and
+favorite breakfast cereal. These would be our three variables. Each of the
+three will constitute \textit{many} values, since our group of participants
+will have many races, weights, and cereals. In programming terms, they will
+eventually become \textbf{aggregate} data types of some kind.} we collect can
+have various values, and the nature of information it contains can be described
+by its \textbf{scale of measure}. There are four such scales of
+measure\footnote{According to psychologist Stanley Smith Stevens in 1946. Other
+researchers have developed related, but different, scales of measure.}, and
+each one determines which
+kinds of operations are ``legal'' (\textit{i.e.}, sensible) with that
+variable.
 
 \index{categorical variable}
 \index{nominal variable}
 \subsection{Categorical/nominal}
 
-The first one is the simplest, although it actually has two different names in
-common use: \textbf{categorical} or \textbf{nominal} variables. It is the scale
-of variables that represent ``one of a set of choices,'' where no choice is
-``higher'' or ``greater'' than any other.
+The first kind is the simplest, although it actually has two different names in
+common use: they're called both \textbf{categorical} variables and
+\textbf{nominal} variables. These variables represent one of a set of
+predefined choices, where no choice is ``higher'' or ``greater'' than any
+other.
 
 \index{order}
 An example would be a \texttt{fave\_color} variable that holds the value of a
@@ -65,7 +66,7 @@ Political affiliation would be another categorical variable. Its values (like
 \texttt{"Democrat"}, \texttt{"Republican"}, and \texttt{"Green"}) aren't in any
 particular order. (Although you might think of the traditional left-to-right
 political spectrum, that's only one dimension of political party, and perhaps
-not even the most important one.) Other examples include film's genre, a
+not even the most important one.) Other examples include a film's genre, a
 student's nationality, and a football player's position.
 
 Now you might be tempted to think, ``hmm...all the categorical examples so far
@@ -76,13 +77,13 @@ numeric can actually be categorical in disguise.
 
 Consider the uniform number of an athlete. I might be interested in asking,
 ``which uniform number had the greatest professional athletes who chose it?''
-24 is a good candidate: Willie Mays, Ken Griffey Jr., and Kobe Bryant all wore
-that jersey number. Or maybe \#7 is the winner, with Mickey Mantle, John Elway,
-and Cristiano Ronaldo. Either way, though, all that matters in this analysis is
-\textit{which} uniform number an athlete chose, not ``how high'' or ``how
-great'' that number is compared to others. No one in their right mind would say
-that Peyton Manning (\#18) was ``twice the player'' Mia Hamm was (\#9), because
-uniform numbers aren't really ``numbers'' at all: they're more like labels.
+\#24 is a good candidate: Willie Mays, Ken Griffey Jr., and Kobe Bryant all
+wore that jersey number. Or maybe \#7 is the winner, with Mickey Mantle, John
+Elway, and Cristiano Ronaldo. Either way, though, all that matters in this
+analysis is \textit{which} uniform number an athlete chose, not how high that
+number is compared to others. No one in their right mind would say that Peyton
+Manning (\#18) was ``twice the player'' Mia Hamm was (\#9), because uniform
+numbers aren't really \textit{numbers} at all: they're more like labels.
 
 \subsubsection{Legal operations for categorical/nominal variables}
 
@@ -91,7 +92,7 @@ uniform numbers aren't really ``numbers'' at all: they're more like labels.
 \index{measure of central tendency}
 When a variable is on a categorical scale, about the only things you can do are
 compare for equality/inequality, count the occurrences of different values, and
-compute something called the \textbf{mode} of the set.
+compute something called the \textbf{mode} of the values.
 
 \label{mode}
 The mode simply means the value that occurs \textit{the most often}. It's the
@@ -141,7 +142,9 @@ education, and so unlike categorical variables, it \textit{does} make sense to
 compare them along greater-than-or-less-than lines.
 
 \index{median}
+\index{middlest value@``middlest'' value}
 
+\medskip
 In addition to the mode, another measure of central tendency available for
 ordinal variables is the \textbf{median}. I think of the median as the
 ``middlest'' value: if you line up all the occurrences in a row -- in order of
@@ -150,20 +153,25 @@ respondents give these answers: \texttt{"Bachelors"}, \texttt{"HS"},
 \texttt{"HS"}, \texttt{"Masters"}, \texttt{"Masters"}, \texttt{"Bachelors"},
 and \texttt{"HS"}. To compute the median, we line them all up in order:
 
+\vspace{-.15in}
 \begin{center}
 \small
 \texttt{"HS"  "HS"  "HS"  "Bachelors"  "Bachelors"  "Masters"  "Masters"}
 \end{center}
+\vspace{-.15in}
 
 and find the middlest one, which is \texttt{"Bachelors"}. So \texttt{"HS"} is
 the mode of this variable, and \texttt{"Bachelors"} is the median.
 
+\medskip
 Other examples of ordinal variables include an NCAA basketball team's top-25
 ranking, a taxpayer's tax bracket, and survey questions asking whether you
 \texttt{"strongly disagree"}, \texttt{"disagree"}, are \texttt{"neutral"},
 \texttt{"agree"}, or \texttt{"strongly agree"} with a certain statement.
 
-Again, a list. For \textit{ordinal} variables, these are okay:
+\medskip
+Again, a list of do's and don't's. For \textit{ordinal} variables, these are
+okay:
 
 \begin{compactitem}
 \item[\leftthumbsup] ``Is his education level the same as her education level?''
@@ -174,7 +182,8 @@ this question?''
 employees?''
 \end{compactitem}
 
-and these are \textit{not}:
+\pagebreak
+while these are \textit{not}:
 
 \begin{compactitem}
 \item[\leftthumbsdown] ``Which looks like the bigger mismatch on paper: Duke
@@ -200,7 +209,7 @@ that Duke and Georgetown, the \#1 and \#2 teams in the country, are considered
 twenty teams on the list are considered very close, to the point where experts
 disagree wildly on what order they should be in. If this is the case, then
 mighty Duke vs.~(comparatively) lowly Kentucky might be an enormous mismatch,
-while Villanova and Gonzaga is considered a tossup.
+while Villanova and Gonzaga might be considered a tossup.
 
 \index{order}
 \index{spacing}
@@ -217,7 +226,7 @@ movie on a scale of \texttt{"POOR"}, \texttt{"FAIR"}, \texttt{"GOOD"}, and
 \texttt{"EXCELLENT"}, the difference between \texttt{"POOR"} and
 \texttt{"GOOD"} is likely to be a lot greater than that between \texttt{"FAIR"}
 and \texttt{"EXCELLENT"}. This is true even though the ``difference'' between
-them seems exactly the same: ``two ranking's worth.'' The fact is that humans
+them seems exactly the same: two ranking's worth. The fact is that humans
 don't interpret those four adjectives as exactly equally spaced, and therefore
 it's a fallacy to interpret their results as though they did.
 
@@ -225,8 +234,8 @@ Which leads to the third and last item: trying to take the ``average'' (adding
 up all the scores and dividing by the total). It's tempting to say, ``let's
 treat \texttt{"POOR"} as a 1, \texttt{"FAIR"} as a 2, \texttt{"GOOD"} as a 3,
 and \texttt{"EXCELLENT"} as a 4. Then, we can just take the mean of all the
-results to get the average rating! What's not to like?'' What's not to like is
-that by assigning those numbers, you added spurious information and thereby
+results to get the average rating! What's not to like?'' Here's what's not to
+like. By assigning those numbers, you added spurious information and thereby
 twisted the respondent's meaning into something they didn't necessarily intend.
 They very likely didn't think of the four options as equally-spaced
 numerically, and so this average is quite bogus. Instead, take the median.
@@ -255,9 +264,9 @@ This allows us to ask questions like ``are Dallas and Fort Worth farther apart
 than Minneapolis and St.~Paul are?'' or ``is the temperature swing between
 daytime and nighttime wider in Colorado than in Virginia?'' (Hint: yes.) Note
 that we couldn't legally ask such questions of an ordinal variable, since there
-was no way to really know how large the difference between \textbf{"GOOD"} and
-\textbf{"EXCELLENT"} was, as opposed to that between \textbf{"FAIR"} and
-\textbf{"GOOD"}.
+was no way to really know how large the difference between \texttt{"GOOD"} and
+\texttt{"EXCELLENT"} was, as opposed to that between \texttt{"FAIR"} and
+\texttt{"GOOD"}.
 
 Another example of an interval scale variable, besides the aforementioned
 temperature, is the year an event takes place. We can say, for example, that
@@ -277,7 +286,7 @@ Here's our list of goods (for interval scale variables):
 \begin{compactitem}
 \item[\leftthumbsup] ``Was today's high temperature the same as yesterday's?''
 \item[\leftthumbsup] ``Was Beethoven born before or after Napoleon?''
-\item[\leftthumbsup] ``How many cities are at $40\deg$ latitude?''
+\item[\leftthumbsup] ``How many cities are at $40\degree$ latitude?''
 \item[\leftthumbsup] ``What's the median year of birth for current U.S. Senators?''
 \item[\leftthumbsup] ``Which is experiencing more global warming
 (temperature difference) -- Greenland or France?''
@@ -345,20 +354,21 @@ Same thing with longitude. While latitude plausibly has a meaningful zero point
 (``twice as far from the center of the planet'') longitude clearly does not.
 Saying a city is ``twice as east'' as another is plain nonsense. That's because
 the zero point for longitude is arbitrary: it's set at the Greenwich, England,
-or some nonsense like that. Clearly only relative differences between longitude
-have any meaning.
+of all things. Clearly only relative differences between longitude have any
+meaning.
 
-And the same thing with temperature. If yesterday was $40\deg$, and today was
-$80\deg$, it's tempting to say that ````whew! It's twice as hot today!'' To see
-that this is nonsense, consider that we could (and probably should, actually)
-change to use the metric system like the rest of the world does, and measure
-temperature in Celsius. Now if we did that, clearly we wouldn't start
+And the same thing with temperature. If yesterday's high was $40\degree$, and
+today's is $80\degree$, it's tempting to say ``whew! It's twice as hot today!''
+To see that this is gibberish, though, consider what would happen if we changed
+to use the metric system like the rest of the civilized world does, and
+measured temperature in Celsius. Now if we did that, clearly we wouldn't start
 experiencing heat waves or cold spells as a result! Hey we're just changing our
 units, bro, not influencing the atmosphere. But realize that in Celsius,
-yesterday's $40\deg$F day would become $4.4\deg$C, and today's $80\deg$F would
-be $26.7\deg$C. So now, by changing our units, we would have to say ``oh golly,
-I guess it's actually over \textit{six times} as hot today!'' This is why
-multiplying and dividing with interval scale variables leads to madness.
+yesterday's $40\degree$F day would become $4.4\degree$C, and today's
+$80\degree$F would be $26.7\degree$C. So now, by changing our units, we would
+have to say ``oh golly, I guess it's actually over \textit{six times} as hot
+today!'' This is why multiplying and dividing with interval scale variables
+leads to madness.
 
 
 \index{ratio variable}
