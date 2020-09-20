@@ -22,9 +22,9 @@ them.
 \index{element}
 \index{len@\texttt{len()}}
 
-We can use the same \texttt{len()} function in yet a third way: to ascertain
-the number of key/value pairs in a series. Using the Figure~\ref{fig:Series}
-example (p.~\pageref{fig:Series}):
+We can use the \texttt{len()} function, which we've already learned two uses
+for, in yet a third way: to ascertain the number of key/value pairs in a
+series. Using the Figure~\ref{fig:Series} example (p.~\pageref{fig:Series}):
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 print(len(alter_egos))
@@ -66,6 +66,7 @@ which means you have to check to see which one it is, and then write different
 code to handle the two cases...yick. Just stay far, far away. Make all your
 keys unique.} The values, on the other hand, may very well not be unique.
 
+\smallskip
 To overwrite the value for a key with a new value, just treat it as a variable
 and go:
 
@@ -124,6 +125,7 @@ dtype: object
 \end{Verbatim}
 
 Bye bye, Iron Man.
+\medskip
 
 \index{in place@``in place''}
 
@@ -258,8 +260,8 @@ dtype: float64
 \index{missing value}
 
 Convince yourself that \texttt{Dwight}'s \$68,000 salary got added to his
-\$3,500 raise, and that \texttt{Michael}'s \$113,000 was added to \$16,500,
-\textit{etc.}
+\$3,500 raise, that \texttt{Michael}'s \$113,000 salary was added to his
+\$16,500 raise, \textit{etc.}
 
 \label{NaN}
 
@@ -268,8 +270,8 @@ Don't get freaked out by those \texttt{NaN} entries just yet. The special value
 Pandas has to throw up its hands in that case. And with good cause.
 \texttt{Jim} has a current salary of \$100,200 in the first \texttt{Series},
 but has no value at all in the second one (no raise for Jim this year? Haven't
-decided what his raise will be yet? Something else?) and so Pandas shrugs and
-says ``dunno.'' We say that the \texttt{Jim} entry in the
+decided what his raise will be yet? Something else?) So Pandas does the safe
+thing, shrugs, and says ``dunno.'' We say that the \texttt{Jim} entry in the
 \texttt{new\_salaries} \texttt{Series} is a \textbf{missing value}. The same is
 true for \texttt{Robert} and \texttt{Ryan}, each of whom was present in only
 one of the two operands.
@@ -469,11 +471,12 @@ dtype: int64
 \end{Verbatim}
 
 \index{in place@``in place''}
+
 Like NumPy's \texttt{np.sort()} function (but unlike its \texttt{.sort()}
 method; refer back to Section~\ref{sortingArrays} on p.~\pageref{sortingArrays}
 for details), neither of these methods actually sort the \texttt{Series} in
-place; instead, they return sorted copies. However, they can be made to, by
-including ``\texttt{inplace=True}'' as an argument:
+place; instead, they return sorted copies. However, they can be made to work in
+place, by including ``\texttt{inplace=True}'' as an argument:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 heroes_dumb_to_smart = anti_vamps.sort_values()
@@ -516,7 +519,7 @@ Willow    200
 dtype: int64
 \end{Verbatim}
 
-Another useful feature of both \texttt{.sort\_X} methods is the ability to
+Another useful feature of both \texttt{.sort\_}X methods is the ability to
 \textit{reverse} sort. By adding ``\texttt{ascending=False}'' as an argument
 (with or without also including the ``\texttt{inplace=True}'' argument; they
 are combinable with a comma) you produce the reverse order:
@@ -579,6 +582,8 @@ Rubert     150.0
 Buffy      120.0
 dtype: float64
 \end{Verbatim}
+
+\index{homogeneous}
 
 Nothing untoward happened here because \textit{The Office} and \textit{Buffy}
 don't have any overlapping character names. Note that the values all got

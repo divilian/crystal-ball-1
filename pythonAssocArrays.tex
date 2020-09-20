@@ -11,8 +11,9 @@ arrays in Python (1 of 3)}}
 \index{importing (a package)}
 
 Our next trick is to represent associative arrays (review
-section~\ref{sec:assocArrays} if you need to) in Python. To do so, we will
-use another package, which goes by the adorable name ``Pandas'':
+section~\ref{sec:assocArrays} on p.~\pageref{sec:assocArrays} if you need to)
+in Python. To do so, we will use another package, which goes by the adorable
+name ``Pandas'':
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 import pandas as pd
@@ -55,9 +56,10 @@ Somewhat confusing is that the Pandas package calls the keys ``the
 (see p.~\ref{arrayIndex}). It's not a total loss, though, since if you think
 hard about it, you'll realize that in some sense, \textit{a regular array is
 really just an associative array with consecutive integer keys.} Oooo, deep. If
-you consider the two halves of Figure~\ref{fig:assocArraysAreArrays}, I think
+you study the two halves of Figure~\ref{fig:assocArraysAreArrays}, I think
 you'll agree.
 
+\vspace{-.2in}
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.9\textwidth]{assocArraysAreArrays.png}
@@ -115,7 +117,8 @@ This creates the \texttt{Series} shown in Figure~\ref{fig:Series}.
 Be careful to keep all your boxies and bananas straight. Note that both the
 keys \textit{and} the values are in their own sets of boxies.
 
-We can print (small) \texttt{Series}es to the screen to inspect their contents:
+We can print (smallish) \texttt{Series}es to the screen to inspect their
+contents:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 print(alter_egos)
@@ -131,7 +134,8 @@ dtype: object
 
 \index{type@\texttt{type()}}
 \index{dtype@\texttt{.dtype} (NumPy/Pandas)}
-and as we did on p.~\pageref{arrayType}, we can inquire as to both the
+
+Also, as we did on p.~\pageref{arrayType}, we can inquire as to both the
 overarching type of \texttt{alter\_egos} and also to the kind of underlying
 data it contains:
 
@@ -156,9 +160,10 @@ than that.
 
 Associative arrays, and the Pandas \texttt{Series}es we've been using to
 implement them, are inherently \textit{one}-dimensional data structures. This
-is just like the NumPy arrays we used before. Pandas Serieses also provide a
-bunch of features for manipulating, querying, computing, and even graphing
-aspects of their content. It's a lot of rich stuff on top of plain-old NumPy.
+is just like the NumPy arrays we used before. Pandas \texttt{Series}es also
+provide a bunch of features for manipulating, querying, computing, and even
+graphing aspects of their content. It's a lot of rich stuff on top of plain-old
+NumPy.
 
 \index{wrapping}
 
@@ -209,6 +214,7 @@ World rides at some point of the day.
 \label{read_csv}
 \index{read\_csv@\texttt{read\_csv()} function (Pandas)}
 
+\smallskip
 To read this into Python, we use the \texttt{pd.read\_csv()} function. It's a
 bit awkward since it has several mandatory arguments if you want to deal with
 \texttt{Series}es. Here's how it works:
@@ -230,4 +236,4 @@ labels for the two columns, then we'd skip the \texttt{header=None} part.
 Finally, ``\texttt{squeeze=True}'' tells Pandas, ``since this is so skinny
 anyway -- just two columns -- let's have \texttt{pd.read\_csv()} return us a
 \texttt{Series}, rather than a more complex \texttt{DataFrame} object (which is
-the subject of Chapter~\ref{dataframes}.)''
+the subject of Chapter~\ref{dataframes}).''
