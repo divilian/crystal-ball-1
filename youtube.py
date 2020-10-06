@@ -19,6 +19,8 @@ num_plays = pd.Series(num_plays).astype(int)
 qs = [ (q, np.floor(num_plays.quantile(q))) for q in np.arange(0,1.1,.1) ]
 for q in qs:
     print("The {:.1f}-quantile is {:.0f}.".format(q[0],q[1]))
+print("The IQR is {:.2f}.".format(num_plays.quantile(.75) -
+    num_plays.quantile(.25)))
 plt.clf()
 num_plays.plot(kind="hist", color="red")
 plt.savefig("youtube1.png")

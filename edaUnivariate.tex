@@ -378,6 +378,21 @@ is \textit{vastly} higher than everything else is. Get your head around that:
 the median number of plays was a couple hundred, but the maximum number of
 plays was nearly a \textit{million}.
 
+\smallskip
+
+Computing the IQR of this data set is as simple as finding the difference
+between the .25 and .75 quantiles:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(num_plays.quantile(.75) - num_plays.quantile(.25))
+\end{Verbatim}
+\vspace{-.3in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+399.75
+\end{Verbatim}
+
+
 \section{Numerical data: other summary statistics}
 
 \index{mean}
