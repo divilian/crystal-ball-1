@@ -99,12 +99,12 @@ print(counts / len(counts) * 100)
 \end{Verbatim}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-Taylor Swift     0.277937
-Katy Perry       0.189828
-Drake            0.186963
-Adele            0.151862
-Rihanna          0.097421
-Justin Bieber    0.095989
+Taylor Swift     27.7937
+Katy Perry       18.9828
+Drake            18.6963
+Adele            15.1862
+Rihanna          09.7421
+Justin Bieber    09.5989
 dtype: float64
 \end{Verbatim}
 
@@ -154,7 +154,7 @@ Quantiles are very revealing, but underappreciated. Most people don't seem to
 know how to interpret them. But once you figure it out, you'll realize that
 quantiles tell you almost everything possible to know about a numeric variable:
 by dialing the quantile between 0 and 1, you can tell exactly how common values
-in a certain range are.
+in certain ranges are.
 
 \index{quantile@\texttt{.quantile()} method (Pandas)}
 
@@ -653,12 +653,11 @@ appear, irrespective of which specific objects of study those values go with.
 \index{quantile}
 \index{bin (of a histogram)}
 
-My favorite plot this is the \textbf{histogram}. It's super powerful if you
-know how to read it, but underused because few people seem to know how. The
-idea is that we take a numeric, univariate data set, and divide it up into
-\textbf{bins}. Bins are sort of the reverse of quantiles: all bins have the
-\textit{same} size range, but a \textit{different} number of data points fall
-into each one.
+My favorite plot is the \textbf{histogram}. It's super powerful if you know how
+to read it, but underused because few people seem to know how. The idea is that
+we take a numeric, univariate data set, and divide it up into \textbf{bins}.
+Bins are sort of the reverse of quantiles: all bins have the \textit{same} size
+range, but a \textit{different} number of data points fall into each one.
 
 \index{football}
 \index{NCAA}
@@ -716,8 +715,8 @@ pts.plot(kind='hist')
 \end{Verbatim}
 
 The result is in Figure~\ref{fig:ncaa1}. Stare hard at it. Python has divided
-up the points into ranges: 0 through 6 points, 7 through 12 points, 13 through
-21, \textit{etc.} Each of these ranges is a bin. The height of each blue bar on
+up the points into ranges: 0 through 5 points, 6 through 11 points, 12 through
+17, \textit{etc.} Each of these ranges is a bin. The height of each blue bar on
 the plot is simply the number of games in which a team scored in that range.
 
 \begin{figure}[ht]
