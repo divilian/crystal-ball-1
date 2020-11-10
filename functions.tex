@@ -1,4 +1,8 @@
 
+% TODO: add pictures in this chapter:
+%  1. Box with inputs on left and output on right (circuit diagram -ish)
+%  2. Memory picture, with horizontal line and stack frame (show pass-by-val
+%     for atomic and pass-by-ref for aggregate).
 \chapter{Functions (1 of 2)}
 \label{ch:functions}
 
@@ -147,9 +151,12 @@ anything}, football score or otherwise. The reason? We only \textit{wrote} a
 function; we didn't actually \textit{call} it.
 
 This is sort of like building an impressive machine but then never pushing the
-``On'' button. The above code says to do three things:
+``On'' button. The above code says to do four things:
 
 \begin{compactenum}
+\index{Broncos, Denver}
+\item Create a \texttt{team\_name} variable and set its value to the string
+\texttt{"Broncos"}.
 \item Create a \texttt{num\_tds} variable and set its value to the integer 3.
 \item Create a \texttt{num\_fgs} variable and set its value to the integer 2.
 \item Create a function called \texttt{football\_score} which, \textit{if it is
@@ -170,7 +177,8 @@ num_tds = 3
 num_fgs = 2
 
 the_score = football_score(num_tds, num_fgs)
-print("The {} scored {} points.".format(team_name, the_score))
+print("The {} scored {} points.".format(team_name,
+    the_score))
 \end{Verbatim}
 \vspace{-.2in}
 
@@ -334,7 +342,7 @@ her_full_name = full_name("Clinton", "Hillary", "R")
 print("Your author's full name is: {}".format(my_full_name))
 print("Another person's full name is: {}".format(her_full_name))
 \end{Verbatim}
-\vspace{-.5in}
+\vspace{-.2in}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 Your author's full name is: Stephen C. Davies
@@ -358,48 +366,56 @@ number or text, tells her \textit{whether or not something is true.} This lets
 her use the return value of such a function as the condition of an \texttt{if}
 statement.
 
-\index{is\_positive@\texttt{is\_positive()}}
+\index{is\_old\_enough\_to\_vote@\texttt{is\_old\_enough\_to\_vote()}}
 Here's a trivial example:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-def is_positive(number):
-    if number > 0:
+def is_old_enough_to_vote(age):
+    if number >= 18:
         return True
     else:
         return False
-
-x = is_positive(13)
-if x:
-    print("Yes, 13 is positive!")
-else:
-    print("Alas, 13 isn't positive.")
-
-if is_positive(-5):
-    print("Yes, -5 is positive!")
-else:
-    print("Alas, -5 isn't positive.")
 \end{Verbatim}
-\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+x = is_old_enough_to_vote(13)
+if x:
+    print("Yes, a 13-year-old can vote!")
+else:
+    print("Alas, a 13-year-old must wait.")
+
+if is_old_enough_to_vote(19):
+    print("Yes, a 19-year-old can vote!")
+else:
+    print("Alas, a 19-year-old must wait.")
+\end{Verbatim}
+\vspace{-.4in}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-Yes, 13 is positive!
-Alas, -5 isn't positive.
+Alas, a 13-year-old must wait.
+Yes, a 19-year-old can vote!
 \end{Verbatim}
 
+\smallskip
 \index{boolean value}
 \index{Boole, George}
 The values \texttt{True} and \texttt{False} are called \textbf{boolean value}s,
 after the 19th-century mathematician George Boole. Note that in Python they
 must begin with \textit{capital} letters.
 
+\smallskip
+
 The somewhat odd-looking ``\texttt{if x:}'' line is possible because \texttt{x}
-was set to the return value of a call to \texttt{is\_positive()}, and that
-function returned a boolean value.
+was set to the return value of a call to \texttt{is\_old\_enough\_to\_vote()},
+and that function returned a boolean value.
 
 \index{return value}
 \index{return statement@\texttt{return} statement}
 \index{if/else statement@\texttt{if}/\texttt{else} statement}
-Another thing this brief example illustrates is the presence of more than one
+
+\section{Multiple return statements}
+
+Another thing the ``old enough to vote'' example illustrates is the presence of more than one
 \texttt{return} statement in a function. You might have thought this was
 useless, since on p.~\pageref{returnImmediatelyReturns} I mentioned that as
 soon as a \texttt{return} is encountered during execution, the function is
@@ -408,6 +424,8 @@ second one could never be reached, right? Wrong. The branching nature of the
 \texttt{if}/\texttt{else} statement (above) means that the first
 \texttt{return} will be skipped over in some situations (negative arguments,
 \textit{etc.}) so it's perfectly sensible to have more than one.
+
+\pagebreak
 
 \index{salutations}
 \index{salutation@\texttt{salutation()}}
@@ -436,7 +454,7 @@ print("Why hello, {} Davies.".format(my_salutation))
 print("And hello, {} Davies.".format(salutation("female",
     "married", "BS")))
 \end{Verbatim}
-\vspace{-.2in}
+\vspace{-.4in}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 Why hello, Dr. Davies.
@@ -450,17 +468,18 @@ actually: there's no way to shorten it without changing what it does.)
 
 \index{return value}
 \index{return statement@\texttt{return} statement}
+\smallskip
 
-This function, as you can see, has a veritable crap-ton of \texttt{return}
-statements -- six in fact. But only one will ever be reached, because as soon
-as one \textit{is} reached, the function is officially finished, and returns
-that value.
+The \texttt{salutation()} function, as you can see, has a veritable crap-ton of
+\texttt{return} statements -- six in fact. But only one will ever be reached,
+because as soon as one \textit{is} reached, the function is officially
+finished, and returns that value.
 
+\pagebreak
 \section{Returning nothing at all}
 
 Does it ever make sense for a function to return \textit{nothing}? Oddly, yes:
-if it has a useful side effect. One obvious one is printing something to the
-screen:
+if it has a useful side effect. One side effect is printing:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 def cheer_for(team):
