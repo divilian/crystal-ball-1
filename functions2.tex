@@ -168,16 +168,19 @@ do that, it's easy to pick out the top six to take the average, since the
 lowest two scores will be at the beginning of the (sorted) array. Two notes
 here:
 
-\index{slice}
-\index{boxies (square brackets)}
-\index{[]@\texttt{[]} (boxies)}
 
 % TODO: actually do slices in chapter arraysInPython1.
 
 \begin{compactitem}
+
 \item We use the \texttt{np.sort()} function, not the \texttt{.sort()} method,
 since we don't want to permanently change the order of \texttt{quizzes}. We
 only need a temporarily sorted copy so we can omit the lowest two entries.
+
+\index{slice}
+\index{boxies (square brackets)}
+\index{[]@\texttt{[]} (boxies)}
+
 \item That business in the boxies (``\texttt{[2:len(quizzes)]}'') is a
 \textbf{slice} (recall chapter~\ref{ch:arraysInPython1}) which says ``only give
 me entries number 2 through the end of the array.'' And that's exactly what the
