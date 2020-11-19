@@ -446,15 +446,14 @@ people don't have exactly the same hobbies -- so what? Is that really so
 surprising? Do all middle-aged female Psychology majors have to be identical?
 
 Of course not. But you can also see things from the decision tree's point of
-view. The \textit{only} things it knows about people are those three
-attributes, and so as far as the decision tree is concerned, the people on
-lines 2 and 16 really \textit{are} indistinguishable. When contradictions
-occur, we have no choice but to fall back on some sort of majority-rules
-strategy: if out of seven otherwise-identical people, two play videogames and
-five do not, we'd predict ``No'' in that branch. In the present case, we can't
-even do \textit{that} much, because we have exactly one of each. So I'll just
-flip a coin again. (\texttt{*flip*}) It came up heads, so we'll go with
-``Yes.''
+view. The only things it knows about people are those three attributes, and so
+as far as the decision tree is concerned, the people on lines 2 and 16 really
+\textit{are} indistinguishable. When contradictions occur, we have no choice
+but to fall back on some sort of majority-rules strategy: if out of seven
+otherwise-identical people, two play videogames and five do not, we'd predict
+``No'' in that branch. In the present case, we can't even do \textit{that}
+much, because we have exactly one of each. So I'll just flip a coin again.
+(\texttt{*flip*}) It came up heads, so we'll go with ``Yes.''
 
 Notice that in this situation, the resulting tree will actually misclassify one
 or more \textit{training} points. If we called our function in
