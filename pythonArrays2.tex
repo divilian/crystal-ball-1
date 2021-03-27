@@ -1,13 +1,6 @@
 
-% np.sqrt()
-% np.round( , num_decimals)
-% np query syntax
-% np.append
-% np.flip
-% two kinds of sorting
-% remove (by index  and by value?)
-
-% indexing, slices
+% TODO: np.sqrt()
+% TODO: slices
 
 \chapter{Arrays in Python (2 of 2)}
 \label{ch:arraysInPython2}
@@ -27,18 +20,22 @@ this code:
 
 \begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 num_players = len(roster)
+sam_len = len(roster[2])
 big_number = len(photo_likes)
 print("There are {} players on the USWNT.".format(num_players))
+print("Sam Mewis has {} characters in her name.".format(sam_len))
 print(big_number)
 print("We've had {} elections.".format(len(prez_elections)))
 \end{Verbatim}
 
 \begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 There are 24 players on the USWNT.
+Sam Mewis has 9 characters in her name.
 40000000000
 We've had 59 elections.
 \end{Verbatim}
 
+\label{overloading}
 \index{overloading}
 \index{return@``returning'' a value}
 \index{array!length}
@@ -398,7 +395,7 @@ picture is shown in Figure~\ref{fig:npSortArray}.
 \index{on@``on''}
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.9\textwidth]{npSortArray.png}
+\includegraphics[width=0.9\textwidth]{npSortArray.pdf}
 \medskip
 \caption{Calling the \texttt{np.sort()} function (as opposed to calling the
 \texttt{.sort()} method \textbf{on} the array) returns a sorted copy.}
@@ -414,10 +411,10 @@ modified, and in the other, a modified copy is returned.
 \section{More exotic array modifications}
 
 \index{in place@``in place''}
-Finally, there are lots of additional things you can do to an array to either
-modify its structure or rearrange its contents. Here's a few.
-\textbf{Important: all of the functions in this section return a modified copy
-of the array you pass to it. They do \textit{not} change the array in place.}
+There are lots of additional things you can do to an array to either modify its
+structure or rearrange its contents. Here's a few. \textbf{Important: all of
+the functions in this section return a modified copy of the array you pass to
+it. They do \textit{not} change the array in place.}
 
 \begin{itemize}
 \itemsep.1em
@@ -476,11 +473,74 @@ all_clowns is: ['Ronald' 'Skelton' 'Pennywise' 'Krusty' 'Bozo']
 
 % TODO: memory picture of the clowns
 
+An \textit{excellent} exercise to help cement your understanding of the ideas
+in this chapter would be to go through the above ``clowns'' code line by line,
+drawing the memory picture as you go, and then confirm that your output matches
+the actual output.
+
+\smallskip
+
+Yes, an \textit{excellent} exercise indeed!
+
+\bigskip
+
+\section[Characters within a string]{Postlude: characters within a string}
+
+\index{string}
+\index{str@\texttt{str}}
+
+These two chapters have dealt with arrays, but let me say a word at this point
+about \textit{strings}, and how they can be made to act like arrays in some
+respects.
+
+I mentioned earlier in the book (p.~\pageref{tiptoe}) that strings, though
+normally treated as atomic, sometimes tiptoe up to the ``atomic/aggregate''
+line and even cross it. In other words, we will occasionally look at individual
+parts of a string variable rather than the entire thing as one lump.
+
+\index{boxies (square brackets)}
+\index{[]@\texttt{[]} (boxies)}
+
+The way we access individual characters within a string is actually the same
+boxie notation we use for arrays. So this code:
+
+\vspace{-.15in}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+antihero = "Light Yagami"
+print(antihero[0])
+letter1 = antihero[6]
+letter2 = antihero[7]
+print("{}{}{}".format(letter1,letter2,letter1))
+\end{Verbatim}
+\vspace{-.1in}
+
+will give this output:
+
+\vspace{-.15in}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+L
+YaY
+\end{Verbatim}
+\vspace{-.1in}
+
+\index{zero@zero, starting at}
+
+As you can see, string indexes use the same starting-at-zero nonsense that
+arrays do. Hey, at least it's consistent.
+
+\bigskip
+
+\index{overloading}
+This is actually another example of overloading. Just as the \texttt{len()}
+function means two different things, depending on whether you're asking for the
+length of an array or the length of a string (recall p.~\pageref{overloading}),
+so the boxie notation means two different things. You're either getting a
+specific element out of an array, or a specific character out of a string.
 
 \section{Summary}
 
 The table in Figure~\ref{fig:handyNumPy} gives the promised summary of
-functions, methods, and operators in this chapter.
+the array functions, methods, and operators in this chapter.
 
 \setlength\extrarowheight{5pt}
 
@@ -538,8 +598,7 @@ of \textsl{arr}. (Numerical or alphabetical, depending on the \texttt{.dtype}.)
 \label{fig:handyNumPy}
 \end{figure}
 
-\pagebreak
-\bigskip
+\vfill
 \subsubsection{The answer}
 
 \index{42 (Life, Universe, Everything)}

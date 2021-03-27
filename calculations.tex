@@ -1,9 +1,4 @@
 
-% TODO:
-% memory diagrams -- diff between modifying in place and returning a copy (like
-% .strip().)
-% Show the "x = x + 5" pattern for computing a running total.
-
 \chapter{Calculations}
 \label{ch:calculations}
 
@@ -111,6 +106,93 @@ logarithms, square roots, and anything else you can think of. We'll learn all
 those at the proper time (or they're all eminently Google-able if you want to
 look them up now).
 
+\subsection{A common pattern: cumulative totals}
+
+\label{cumulativeTotal}
+\index{cumulative total}
+
+Here's a technique we'll use over and over in our code, but which can seem a
+bit jarring the first time you see it. Check out this line of code:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+balance = balance + 50
+\end{Verbatim}
+
+Now there is no universe where that statement is true \textit{mathematically}.
+(Think about it: can you come up with any number that is equal to itself plus
+fifty? I thought not.) But again, this is programming, not algebra. We're
+\textit{commanding} the \texttt{balance} variable to have a new value. And what
+is that new value? Simple: whatever its \textit{previous} value was, plus 50.
+
+The net effect is to increase \texttt{balance}'s value by 50. Follow this:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+balance = 1000
+print("In July, I had ${}.".format(balance))
+balance = balance + 50
+print("In August, I had ${}.".format(balance))
+balance = balance - 200
+balance = balance + 120
+print("In September, I had ${}.".format(balance))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+In July, I had $1000.
+In August, I had $1050.
+In September, I had $970.
+\end{Verbatim}
+
+\index{loop}
+
+You get the idea. This approach will become especially useful when we get to
+\textbf{loops} in Chapter~\ref{ch:loops}, because we'll be able to repeatedly
+\textbf{increment} a variable's value by a desired amount in automated fashion.
+
+\medskip
+
+\index{increment}
+\index{counter variable}
+A couple other things. First, a very common special case of the above is to
+increment a variable by exactly \textit{one}:
+
+\vspace{-.15in}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+number_of_home_runs = number_of_home_runs + 1
+\end{Verbatim}
+\vspace{-.15in}
+
+This allows us to count the occurrences of various things: every time somebody
+hits a home run (or whatever), the above line of code will increase the
+appropriate \textbf{counter variable}'s value by one.
+
+\smallskip
+
+Second, Python has a special alternative syntax for this incrementing
+operation. It looks weird:
+
+\vspace{-.15in}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+balance += 50
+number_of_home_runs += 1
+\end{Verbatim}
+
+\index{+=@\texttt{+=} (``plus-equals'')}
+\index{plus equals@``plus-equals'' (\texttt{+=})}
+The two characters ``\texttt{+}'' and ``\texttt{=}'' (pronounced
+``plus-equals'') allow us to shorthand this operation and avoid typing the
+variable name twice. The above two lines of code are \textit{exact} synonyms
+for these:
+
+\vspace{-.15in}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+balance = balance + 50
+number_of_home_runs = number_of_home_runs + 1
+\end{Verbatim}
+
+You can use whichever one you wish, although be aware that your fellow
+programmers may well choose the former one, so you need to understand what it
+means.
 
 \section{String operations}
 
@@ -210,13 +292,13 @@ some of them and not between others.
 By the way, here's a bit of a head-scratcher at first:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-matriculation_year = "2019"
+matriculation_year = "2021"
 graduation_year = matriculation_year + 4
 print("Imma graduate in {}!".format(graduation_year))
 \end{Verbatim}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-Imma graduate in 20194!
+Imma graduate in 20214!
 \end{Verbatim}
 
 Whoa -- wut? That's a lot of tuition. The problem here is that

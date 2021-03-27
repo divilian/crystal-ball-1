@@ -1,15 +1,4 @@
 
-% np.array([]), np.arange(), np.zeros(),
-% np.loadtxt("file", dtype=object, delimiter='!!!')
-% +, -, *, /
-% np.sqrt()
-% np.round( , num_decimals)
-% np query syntax
-
-% indexing, slices
-
-% TODO: slices!!
-
 \chapter{Arrays in Python (1 of 2)}
 \label{ch:arraysInPython1}
 
@@ -227,12 +216,13 @@ of the numerical elements of the second array got converted to \texttt{str}s.
 
 It will often be useful to create an array, possibly a large one, with all
 elements equal to \textit{zero} initially. Among other scenarios, we often need
-to use a bunch of counter variables to, well, count things. Suppose, for
-example, that we had a giant array that held the numbers of likes that each
-Instagram photo had. When someone likes a photo, that photo's appropriate
-element in the array should be \textbf{incremented} (raised in value) by one.
-Similarly, if someone unlikes it, then its value in the array should be
-\textbf{decremented} by one.
+to use a bunch of counter variables to, well, count things. (Recall our
+incrementing technique from Section~\ref{cumulativeTotal} on
+p.~\pageref{cumulativeTotal}.) Suppose, for example, that we had a giant array
+that held the numbers of likes that each Instagram photo had. When someone
+likes a photo, that photo's appropriate element in the array should be
+\textbf{incremented} (raised in value) by one. Similarly, if someone unlikes
+it, then its value in the array should be \textbf{decremented} by one.
 
 \index{zeros@\texttt{zeros()} (NumPy)}
 An easy way to do this is NumPy's \texttt{zeros()} function:
@@ -272,19 +262,19 @@ We can use NumPy's \texttt{arange()} function for this.
 Normally we pass this function two arguments, like so:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-usa_years = np.arange(1776, 2020)
+usa_years = np.arange(1776, 2022)
 print(usa_years)
 print(usa_years.dtype)
 \end{Verbatim}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-[1776 1777 1778 1779 ... 2016 2017 2018 2019]
+[1776 1777 1778 1779 ... 2018 2019 2020 2021]
 int64
 \end{Verbatim}
 
 If you read that code and output carefully, you should be surprised. We asked
-for elements in the range of 1776 to 2020, and we got...1776 through
-\textit{2019}. Huh?
+for elements in the range of 1776 to 2022, and we got...1776 through
+\textit{2021}. Huh?
 
 \index{OBOE@OBOE (off-by-one error)}
 \index{off-by-one error}
@@ -412,8 +402,8 @@ Jupyter Notebook (\texttt{funWithArrays.ipynb}). You can tell that the former
 is a plain-text file because of the \textbf{filename extension}
 ``\texttt{.txt}''.\footnote{Some operating systems like Windows, unfortunately,
 tend to ``hide'' the extension of the filenames it presents to users. You may
-think you have a file called ``\texttt{nfl2019}'' when you actually have one
-called ``\texttt{nfl2019.txt}'' or ``\texttt{nfl2019.csv},'' and Windows thinks
+think you have a file called ``\texttt{nfl2020}'' when you actually have one
+called ``\texttt{nfl2020.txt}'' or ``\texttt{nfl2020.csv},'' and Windows thinks
 it's being helpful (?!) by simply not showing you the part after the period.
 There are ways to tell Windows you're smarter than that, and that you want to
 see extensions, but these change with every version of Windows so I'll leave
