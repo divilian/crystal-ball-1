@@ -215,8 +215,6 @@ run the right statistical test.
 
 \subsection{The $t$-test}
 
-% TODO: F-test when there's more than two values for your categorical variable.
-
 \index{t-test@\textit{t}-test}
 \index{groupby@\texttt{.groupby()} method (Pandas)}
 \index{bell-curvy@``bell-curvy''}
@@ -329,6 +327,15 @@ average number of followers \underline{does} depend significantly on the gender.
 Be careful with this. It's an easy mistake to make, and can lead to
 embarrassingly wrong slides in presentations. \smiley
 
+\subsubsection{More than two groups: ANOVA}
+
+\index{ANOVA (ANalysis Of VAriance)}
+
+By the way, the $t$-test is only appropriate when your categorical variable has
+\textit{two} values (male vs.~female, for example, or vaccinated
+vs.~non-vaccinated). If there are more than two, the appropriate test to run is
+called an ``ANOVA'' (ANalysis Of VAriance). It's beyond the scope of this text,
+but it's described in any intro stats textbook and is eminently Googleable.
 
 \section{Two numeric variables}
 

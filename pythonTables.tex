@@ -38,9 +38,9 @@ won't need to specify as many arguments. Let's say we have a
 person,age,gender,height,instrument
 Dad,50,M,73,piano
 Mom,49,F,66,flute
-Lizzy,19,F,63,guitar
-TJ,18,M,71,trombone
-Johnny,15,M,69,euphonium
+Lizzy,21,F,63,guitar
+TJ,20,M,71,trombone
+Johnny,17,M,72,euphonium
 \end{Verbatim}
 
 We can read it into a \texttt{DataFrame} with this code:
@@ -54,11 +54,11 @@ print(my_first_df)
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
         age gender  height instrument
 person                               
-Dad      50      M      73      piano
+Dad      51      M      73      piano
 Mom      49      F      66      flute
-Lizzy    19      F      63     guitar
-TJ       18      M      71   trombone
-Johnny   15      M      69  euphonium
+Lizzy    21      F      63     guitar
+TJ       20      M      71   trombone
+Johnny   17      M      72  euphonium
 \end{Verbatim}
 
 \index{header row (of a \texttt{.csv} file)}
@@ -89,7 +89,6 @@ a piece of data, then ``family members play instruments'' is a piece of
 \index{read\_csv@\texttt{read\_csv()} function (Pandas)}
 \index{set\_index@\texttt{.set\_index()} method (Pandas)}
 
-% TODO: make clear that .set_index() is optional.
 Second, don't miss the ending I tacked on to the \texttt{read\_csv()} line,
 where I called the \texttt{.set\_index()} method on the \texttt{DataFrame}.
 This tells Pandas that one of the columns in the \texttt{DataFrame} should be
@@ -121,6 +120,10 @@ word ``\texttt{person}'' is printed somewhat lower than the other column names
 are. It turns out that if we want to talk about the index column specifically,
 we'll need to use a slightly different technique than we do for the other
 columns. More on that next chapter.
+
+Finally, note that calling \texttt{.set\_index()} is optional. It's perfectly
+fine to just call \texttt{pd.read\_csv()} and leave it at that. In that case,
+Pandas will use integers (starting with 0, of course) as the index/keys.
 
 \section{Missing values}
 

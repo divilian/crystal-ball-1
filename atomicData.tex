@@ -126,6 +126,8 @@ other alphabets.
 
 \index{atomic}
 \index{Avengers: Endgame@\textit{Avengers: Endgame}}
+\label{tiptoe}
+
 By the way, this third data type can tiptoe right up to the ``atomic'' line and
 sometimes cross it. In other words, we will occasionally work with text values
 \textit{non}-atomically, by splitting them up into their constituent words or
@@ -283,6 +285,7 @@ Note that the \texttt{interest\_rate} variable is indeed a \texttt{float} type
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 type(interest_rate)
 \end{Verbatim}
+\vspace{-.15in}
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 float
 \end{Verbatim}
@@ -295,13 +298,11 @@ Speaking of weird names, a Python text variable is of type \texttt{str}, which
 stands for ``\textbf{string}.'' You could think of it as a bunch of letters
 ``strung'' together like a beaded necklace.
 
-% TODO: add [] notation for accessing a character within a string.
-
 \index{quotation marks}
 \index{''@\texttt{\textquotesingle\textquotesingle} (ticks)}
 \index{""@\texttt{\char`\"\char`\"} (quotes)}
 Important: when specifying a \texttt{str} value, you must use \textbf{quotation
-marks} (either single or double). For one thing, this is how Python tells that
+marks} (either single or double). For one thing, this is how Python know that
 you intend to create a \texttt{str} as opposed to some other type. Examples:
 
 \index{lit}
@@ -319,19 +320,23 @@ url = 'http://umweagles.com'
 Notice, by the way, that a \textit{string of digits} is not the same as an
 integer. To wit:
 
+\vspace{-.15in}
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 schwarzenegger_weight = 249
 action_movie = "300"
 
 type(schwarzenegger_weight)
 \end{Verbatim}
+\vspace{-.15in}
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 int
 \end{Verbatim}
+\vspace{-.15in}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 type(action_movie)
 \end{Verbatim}
+\vspace{-.15in}
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 str
 \end{Verbatim}

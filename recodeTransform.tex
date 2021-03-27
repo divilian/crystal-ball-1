@@ -135,11 +135,20 @@ print(wc)
 7    Dunn Cryst 23-Jun   0    1    1     2  42.62   81.08
 \end{Verbatim}
 
-This is much less unwieldy than dealing with minutes and seconds separately.
+This is much less unwieldy (more wieldy?) than dealing with minutes and seconds
+separately.
 
-% TODO: give warning about changing the values of an existing DF column -- you
-% get the weird "changing on a slice/copy of a DF" warning, which sometimes
-% means it doesn't work. 
+\medskip
+
+{\small
+\index{SettingWithCopyWarning@\texttt{SettingWithCopyWarning}}
+(Incidentally, notice that the technique presented here creates \textit{new}
+columns (with new names) and then deletes the old columns. I strongly recommend
+doing it this way. If you try to change the values of an \textit{existing}
+\texttt{DataFrame} column, Pandas will often give you a strange-looking message
+informing you of a ``\texttt{SettingWithCopyWarning}''. The meaning is a bit
+esoteric, but in layman's terms it means ``your operation may not have actually
+worked.'' Avoid this problem by creating new columns instead.)}
 
 \section{Transforming with simple operations}
 

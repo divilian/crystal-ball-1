@@ -148,7 +148,7 @@ semester, and drop the lowest two scores. That could be done with:
 
 \begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
 def quiz_avg(quizzes):
-    dropped_lowest_two = np.sort(quizzes)[2:len(quizzes)]
+    dropped_lowest_two = np.sort(quizzes)[2:]
     return dropped_lowest_two.mean()
 
 filberts_quizzes = np.array([7,9,10,7,0,8,4,10])
@@ -169,8 +169,6 @@ lowest two scores will be at the beginning of the (sorted) array. Two notes
 here:
 
 
-% TODO: actually do slices in chapter arraysInPython1.
-
 \begin{compactitem}
 
 \item We use the \texttt{np.sort()} function, not the \texttt{.sort()} method,
@@ -181,11 +179,10 @@ only need a temporarily sorted copy so we can omit the lowest two entries.
 \index{boxies (square brackets)}
 \index{[]@\texttt{[]} (boxies)}
 
-\item That business in the boxies (``\texttt{[2:len(quizzes)]}'') is a
-\textbf{slice} (recall chapter~\ref{ch:arraysInPython1}) which says ``only give
-me entries number 2 through the end of the array.'' And that's exactly what the
-doctor ordered to omit the first two.
-\end{compactitem}
+\item That business in the boxies (``\texttt{[2:]}'') is a \textbf{slice}
+(recall section~\ref{slice} on p.~\pageref{slice}) which says ``only give me
+entries number 2 through the end of the array.'' And that's exactly what the
+doctor ordered to omit the first two. \end{compactitem}
 
 \smallskip
 

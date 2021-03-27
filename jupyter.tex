@@ -99,16 +99,17 @@ bottom pane shows both cells after the use has chosen ``Run All'' from the
 \index{output}
 \index{*@\texttt{*} (splat)}
 \index{splat}
+
 The top figure shows the two cells before the user has done a ``Run All'' from
-the ``Cell'' menu: all\index{run all@``Run All''} \index{cell menu@``Cell'' CoCalc menu} 
-the Markdown is unrendered (see the literal splats and hashtags) and the code
-is just sitting there. After ``Run All,'' the picture changes:
-you see the formatted message in the top cell, and the \textbf{output} of the
+the ``Cell'' menu: all\index{run all@``Run All''} \index{cell menu@``Cell''
+CoCalc menu} the Markdown is unrendered (see the literal splats and hashtags)
+and the code is just sitting there. After ``Run All,'' the picture changes: you
+see the formatted message in the top cell, and the \textbf{output} of the
 Python code snippet after it runs. (The latter is easy to miss; stare at that
-bottom picture and find the ``\texttt{Our country is 243 years old!}'' message.
+bottom picture and find the ``\texttt{Our country is 245 years old!}'' message.
 That's the ``output.'') We haven't yet covered what that Python code means
-(that's the main subject of this book) but you can probably guess a great deal
-about what it's doing.
+(that's the main subject of this book) but you can probably guess some of what
+it's doing.
 
 %(Incidentally, you can see that when you Shift-Enter the bottom cell to run the
 %code, Jupyter also creates a new empty cell at the end of the Notebook for you
@@ -122,11 +123,9 @@ what to type in those Code cells and how to interpret its output.
 From now on, whenever I give example Python code in this book, I'll write it in
 a box like this:
 
-% TODO: update year from 2019 to 2021.
-
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 founding = 1776
-usa_age = 2019 - founding
+usa_age = 2021 - founding
 print("Our country is {} years old!".format(usa_age))
 \end{Verbatim}
 
@@ -137,7 +136,7 @@ page immediately below the code cell when ``Run All'' is chosen from the
 ``Cell'' menu), I'll write it like this:
 \index{run all@``Run All''} \index{cell menu@``Cell'' CoCalc menu} 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
-Our country is 243 years old!
+Our country is 245 years old!
 \end{Verbatim}
 
 That vertical bar means ``this stuff is the printed result of executing the
