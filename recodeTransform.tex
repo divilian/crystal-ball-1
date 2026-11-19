@@ -60,7 +60,7 @@ print(wc)
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
    last first   date inmins insecs outmins outsecs gls asst tkls shots
  Morgan  Alex 28-Jun      0      0      90       0   0    0    2     1
 Rapinoe Megan 28-Jun      0      0      74      27   2    0    2     3
@@ -170,7 +170,7 @@ print(wc)
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
      last first   date gls asst tkls shots intime outtime minsplayed
 0  Morgan  Alex 28-Jun   0    0    2     1   0.00   90.00      90.00
 1 Rapinoe Megan 28-Jun   2    0    2     3   0.00   74.45      74.45
@@ -204,7 +204,7 @@ del wc['tkls']
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
      last first   date gls asst shots intime outtime minsplayed tkl_90
 0  Morgan  Alex 28-Jun   0    0     1   0.00   90.00      90.00   2.00
 1 Rapinoe Megan 28-Jun   2    0     3   0.00   74.45      74.45   2.42
@@ -306,7 +306,7 @@ transformed/recoded column that requires more complex operations:
 
 \definecolor{shadecolor}{rgb}{.9,.9,.9}
 \begin{shaded}
-\begin{compactenum}
+\begin{enumerate}[nosep]
 \item Create a \textbf{function} that will compute the transformed value for a
 \textit{single} row. Its arguments should be whatever column values are
 necessary to derive the new value, and its return value should be the desired
@@ -318,7 +318,7 @@ make sure it's the right type.
 and then \textit{append} the return value to the ever-growing NumPy array.
 \item Finally, slap that NumPy array on to the \texttt{DataFrame} as a new
 column.
-\end{compactenum}
+\end{enumerate}
 
 \end{shaded}
 
@@ -392,7 +392,7 @@ wc['s_perc'] = s_perc
 
 which gives us:
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
      last first   date gls asst shots intime outtime minsplayed s_perc
 0  Morgan  Alex 28-Jun   0    0     1   0.00   90.00      90.00    0.0
 1 Rapinoe Megan 28-Jun   2    0     3   0.00   74.45      74.45   66.7
@@ -436,7 +436,7 @@ wc['starter'] = starter
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
      last first   date gls asst tkls shots minsplayed s_perc starter
 0  Morgan  Alex 28-Jun   0    0    2     1      90.00    0.0    True
 1 Rapinoe Megan 28-Jun   2    0    2     3      74.45   66.7    True

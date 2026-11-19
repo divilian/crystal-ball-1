@@ -95,7 +95,7 @@ The first is to use the \texttt{array()} function of the NumPy package, and
 give it all the values explicitly. Here's the code to reproduce the
 Figure~\ref{fig:array} examples:
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
 followees = np.array(['@katyperry','@rihanna','@TheEllenShow'])
 balances = np.array([1526.73, 98774.91, 1000000, 4963.12, 123.19])
 \end{Verbatim}
@@ -385,7 +385,7 @@ directory.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.9\textwidth]{folder.png}
+\includegraphics[width=0.9\textwidth,alt={CoCalc file browser showing the filePractice directory directly inside the home directory, as indicated by the home icon and breadcrumb. The directory contains both uswnt.txt, a plain-text data file, and funWithArrays.ipynb, the notebook that will read it. Keeping the two files together allows the notebook to open uswnt.txt by its filename.}]{folder.png}
 \medskip
 \caption{A directory (folder) on CoCalc, which contains two files: a plain-text
 file (called \texttt{uswnt.txt}) and a Jupyter Notebook which will read from it
@@ -427,14 +427,14 @@ Python.}
 This is a good time to mention that \textit{spaces and other funny characters
 in filenames are considered evil.} You might think it looks better to call the
 notebook file ``\texttt{fun with arrays.ipynb}'' and the data file ``\texttt{US
-Women's National Team roster.txt''}, but I promise you it will lead to pain in
+Women\textquotesingle{}s National Team roster.txt''}, but I promise you it will lead to pain in
 the end, for a variety of fiddly reasons. It's better to use \textbf{camel
 case} for filenames, which is simply
 capitalizingEachSuccessive\-Word\-InAPhrase.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\textwidth]{textFile.png}
+\includegraphics[width=0.8\textwidth,alt={CoCalc text editor displaying uswnt.txt, a plain-text roster with one player name on each of 23 numbered lines. In order: Alyssa Naeher, Mallory Pugh, Samantha Mewis, Becky Sauerbrunn, Kelly O'Hara, Morgan Brian, Abby Dahlkemper, Julie Ertz, Lindsey Horan, Carli Lloyd, Ali Krieger, Tierna Davidson, Alex Morgan, Emily Sonnett, Megan Rapinoe, Rose Lavelle, Tobin Heath, Ashlyn Harris, Crystal Dunn, Allie Long, Adrianna Franch, Jessica McDonald, and Christen Press. The names are ordinary text rather than a special Python format.}]{textFile.png}
 \medskip
 \caption{The contents of a plain-text file, as rendered by CoCalc.}
 \label{fig:textFile}
@@ -461,13 +461,17 @@ the rules:
 
 \label{dtypeRules}
 \begin{center}
+\begingroup
+\par\tagpdfparaOff
+\tagpdfsetup{table/header-rows={1},table/header-columns={}}
 \begin{tabular}{c|c}
 If you want to read an array of... & ...then set \texttt{dtype} to: \\
 \hline
 \texttt{int}s & \texttt{int} \\
 \texttt{float}s & \texttt{float} \\
 \texttt{str}s & \texttt{object} \\
-\end{tabular}
+\end{tabular}\par
+\endgroup
 \end{center}
 
 So basically, you set \texttt{dtype} to the type of data you want in your
@@ -505,7 +509,7 @@ which is pretty cool.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=1\textwidth]{arraysInMemory.pdf}
+\includegraphics[width=1\textwidth,alt={Four variable names on the left point to four separate arrays on the right. prez\_elections points to a real-number sequence beginning 1788.0, 1792.0, and 1796 and continuing to 2020; photo\_likes points to a large array of 0.0 values. usa\_years points to consecutive integers beginning 1776 and ending at 2019 in this illustration, and roster points to strings beginning Alyssa Naeher, Mallory Pugh, and Sam Mewis and ending Christen Press. The arrows separate the variable names from the aggregate objects, and array elements are addressed by zero-based indices.}]{arraysInMemory.png}
 \caption{The memory picture of the four arrays we created in
 section~\ref{sec:creatingArrays}.}
 \label{fig:arraysInMemory}

@@ -103,7 +103,7 @@ parts: the \textbf{loop header} and the \textbf{loop body}. Here are the rules:
 \index{curlies (curly braces)}
 \index{\{\}@\texttt{\{\}} (curlies)}
 
-\begin{compactitem}
+\begin{itemize}[nosep]
 \item The loop header consists of the line that begins with ``\texttt{for}''.
 \item The loop body consists of \textit{all of the consecutive following lines
 that are \textbf{indented} (tabbed-over) one tab.}\footnote{Other programming
@@ -112,7 +112,7 @@ way to designate the loop body than indentation. Many (R and Java, for
 instance) use curly braces before and after the loop body so that the computer
 knows where it begins and ends. I personally like this feature of Python's, but
 there are haters, and the bottom line is you just have to get used to it.}
-\end{compactitem}
+\end{itemize}
 
 That second rule turns out to be more important than it seems at first. A very
 (\textit{very!}) common error among beginners is to ``mis-indent'' their code
@@ -122,11 +122,11 @@ heads up.
 Before we continue, stare at that code above and convince yourself of these two
 facts:
 
-\begin{compactitem}
-\item[\leftpointright] The loop header is line \textbf{3}.
-\item[\leftpointright] The loop body is lines \textbf{4 and 5}. (\textit{Not} line 4
+\begin{itemize}[nosep]
+\item The loop header is line \textbf{3}.
+\item The loop body is lines \textbf{4 and 5}. (\textit{Not} line 4
 only! \textit{Not} lines 4, 5, and 6!)
-\end{compactitem}
+\end{itemize}
 
 \medskip
 Now the reason this is important is that a \texttt{for} loop works as follows:
@@ -136,18 +136,18 @@ Now the reason this is important is that a \texttt{for} loop works as follows:
 
 \definecolor{shadecolor}{rgb}{.9,.9,.9}
 \begin{shaded}
-\begin{compactenum}
+\begin{enumerate}[nosep]
 \itemsep.1em
 \item First, create a new variable (on the left-hand side of the memory
 picture) named whatever comes immediately after the word ``\texttt{for}''. (In
 this example, the name of this new variable will be \texttt{v}.)
 \item Then, for \textit{each} element of the array, in succession:
-    \begin{compactenum}
+    \begin{enumerate}[nosep]
     \itemsep.1em
     \item Set that variable's value to the next element of the array.
     \item \textit{Execute the entire loop body.} (In this example, lines 4--5.)
-    \end{compactenum}
-\end{compactenum}
+    \end{enumerate}
+\end{enumerate}
 \end{shaded}
 
 In the \texttt{villains} example, therefore, the lines in order of execution
@@ -180,7 +180,7 @@ each time.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\textwidth]{loopsMemory.pdf}
+\includegraphics[width=0.8\textwidth,alt={Memory during the second iteration of the villains loop. The loop variable v contains the string Ursula. villains still points to the unchanged array whose zero-based entries are Jafar, Ursula, Maleficent, and Gaston; assigning the current element to v does not modify that array.}]{loopsMemory.png}
 \caption{A snapshot of memory immediately after the \textit{second} execution
 of line \textit{3} of the \texttt{villains} program.}
 \label{fig:loopsMemory}
@@ -201,7 +201,7 @@ Oooo, Gaston is scary!
 Whew!
 \end{Verbatim}
 
-Don't miss the fact that the ``\texttt{scary!}''~and ``\texttt{has $n$
+Don't miss the fact that the ``\texttt{scary!}''~and ``\texttt{has \CBMath{n}{$n$}
 letters}'' messages were printed four times each, whereas
 ``\texttt{Whew!}''~only appeared once. That has everything to do with the
 indentation: it told Python that lines 4 and 5 \textit{were} part of the loop
@@ -257,7 +257,7 @@ Notice that ``looping through the \texttt{Series}'' effectively means ``looping
 through the \textit{values} of the \texttt{Series},'' not the keys. What if we
 want to loop through the keys instead?
 
-\section[\small Iterating through keys of a \texttt{Series}]{Iterating through the keys of a \texttt{Series}}
+\section[Iterating through keys of a \texttt{Series}]{Iterating through the keys of a \texttt{Series}}
 
 \index{iteration}
 \index{index@\texttt{.index} (little \texttt{i}) syntax}
@@ -290,7 +290,7 @@ contents. But it's really up to you: it has nothing to do with the name of the
 \texttt{Series} itself. (Yeah, I know the Marvel identities aren't secret
 anymore, but I'm old school.)
 
-\section[\small Iterating through keys/values of a \texttt{Series}]{Iterating through the keys \textit{and} values of a \texttt{Series}}
+\section[Iterating through keys/values of a \texttt{Series}]{Iterating through the keys \textit{and} values of a \texttt{Series}}
 
 \index{items@\texttt{.items()} (Pandas)}
 
@@ -344,7 +344,7 @@ Thanks, everyone, for your service.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=1\textwidth]{loopsMemory2.png}
+\includegraphics[width=1\textwidth,alt={Memory during iteration over the alter\_egos Series. The current key is stored in secret\_identity as Tony, and the corresponding value is stored in hero as Iron Man. alter\_egos points to the unchanged key-value pairs Bruce: Hulk, Peter: Spidey, Tony: Iron Man, and Thor: Thor.}]{loopsMemory2.png}
 \caption{A snapshot of memory immediately after the \textit{third} execution
 of the loop header in the \texttt{alter\_egos} program.}
 \label{fig:loopsMemory2}

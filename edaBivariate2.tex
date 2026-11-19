@@ -13,11 +13,11 @@ kinds of plots and statistics are appropriate depending on the variable's scale
 of measure -- categorical or numeric. There are thus three different cases for
 bivariate analysis:
 
-\begin{compactitem}
+\begin{itemize}[nosep]
 \item Two categorical variables
 \item One categorical variable and one numeric variable
 \item Two numeric variables
-\end{compactitem}
+\end{itemize}
 
 We'll consider each case in turn. Throughout all the remaining sections, we'll
 use this fictitious data set, called \texttt{people}:
@@ -121,12 +121,12 @@ on a continuum by its height (for instance, low numbers might be dark blue and
 high numbers bright yellow, with a rainbow spectrum of number in between).
 That's sort of okay, but to be honest I prefer to just look at the numbers.
 
-\subsection{The $\chi^2$ test}
+\subsection{The \CBMath{chi squared}{$\chi^2$} test}
 
-\index{$\chi^2$@$\chi^2$ test}
+\index{chi squared test@\CBMath{chi squared}{$\chi^2$} test}
 
 The statistical test to use for two categorical variables is called the
-\textbf{$\chi^2$ test} (pronounced ``kai-squared,'' not ``chai-squared,'' by
+\textbf{\CBMath{chi squared}{$\chi^2$} test} (pronounced ``kai-squared,'' not ``chai-squared,'' by
 the way). To run it, it's convenient to first store the contingency table
 itself as a variable. I'll call it \texttt{gender\_color} since it's a table of
 the genders of people and their favorite colors:
@@ -155,14 +155,14 @@ scipy.stats.chi2_contingency(gender_color)
 
 I know, I know: that output is downright hideous. Here's the deal, though: all
 you have to do is look at \textit{the second number} in that long,
-banana-and-boxie-laden thing. \textbf{The second number is the $p$-value.} It is
-0.0. This is obviously lower than .05 (our $\alpha$), and therefore, \textit{we
+banana-and-boxie-laden thing. \textbf{The second number is the \CBMath{p}{$p$}-value.} It is
+0.0. This is obviously lower than .05 (our \CBMath{alpha}{$\alpha$}), and therefore, \textit{we
 \underline{can} conclude that \texttt{gender} and \texttt{color} are
 associated.}
 
 All the other stuff in that output are fine-grained details that statisticians
-like to pore over. For us, the only thing we need to see from a $\chi^2$ (or
-any other) test is the $p$-value.
+like to pore over. For us, the only thing we need to see from a \CBMath{chi squared}{$\chi^2$} (or
+any other) test is the \CBMath{p}{$p$}-value.
 
 \section[One categorical, one numeric variable]{One categorical and one numeric variable}
 
@@ -196,8 +196,8 @@ disadvantage.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.45\textwidth]{genderSalary.png}
-\includegraphics[width=0.45\textwidth]{genderFollowers.png}
+\includegraphics[width=0.45\textwidth,alt={Box plots of salary for the female, male, and other gender categories in the example data. Female and male distributions are very similar: both have medians around 52, boxes spanning roughly 34 to 69, and several high outliers above 120. The other category has a lower median around 45, a narrower box, and no marked outliers. The plot suggests little female-versus-male difference; statistical testing is discussed in the text.}]{genderSalary.png}
+\includegraphics[width=0.45\textwidth,alt={Box plots of social-media follower counts for the female, male, and other gender categories. Female and male distributions overlap substantially, but the female median and upper quartile are slightly higher, with a median near 21 versus about 19 for males. Both groups have many high outliers; the highest plotted female value is 120 and the highest male value is 80. The other category has a median near 20 and one high outlier near 49.}]{genderFollowers.png}
 \caption{Grouped box plots of salary (left) and number of social media
 followers (right), grouped by gender.}
 \label{fig:genderPlots}
@@ -213,19 +213,19 @@ This looks more skewed (\texttt{female}s appear to perhaps have more followers
 on average than \texttt{male}s), but of course we won't know for sure until we
 run the right statistical test.
 
-\subsection{The $t$-test}
+\subsection{The \CBMath{t}{$t$}-test}
 
 \index{t-test@\textit{t}-test}
 \index{groupby@\texttt{.groupby()} method (Pandas)}
 \index{bell-curvy@``bell-curvy''}
 
 The test we'll use for significance here is called the \textbf{\textit{t}-test}
-(sometimes ``Student's $t$-test'') and is used to determine whether the
+(sometimes ``Student's \CBMath{t}{$t$}-test'') and is used to determine whether the
 \textit{means} of two groups are significantly different.\footnote{Strictly
-speaking, the $t$-test assumes that the data sets you're comparing are ``bell
+speaking, the \CBMath{t}{$t$}-test assumes that the data sets you're comparing are ``bell
 curvy'' (or ``normally distributed,'' to be precise) and we haven't checked for
 that here. However, since we're doing \textit{exploratory} data analysis (not
-drawing up and documenting final conclusions) it's common to use a $t$-test as
+drawing up and documenting final conclusions) it's common to use a \CBMath{t}{$t$}-test as
 a quick-and-dirty just to see what's worth investigating.} Remember, we can get
 the mean salary for each of the groups by using the \texttt{.groupby()} method:
 
@@ -244,7 +244,7 @@ other     48.757000
 Females have the edge over males, 52.03 to 51.66. Our question is: is this
 ``enough'' of a difference to justify generalizing to the population?
 
-To run the $t$-test, we first need a \texttt{Series} with just the
+To run the \CBMath{t}{$t$}-test, we first need a \texttt{Series} with just the
 \texttt{male} salaries, and a different \texttt{Series} with just the
 \texttt{female} salaries. These two \texttt{Series}es are \textit{not} usually
 the same size. Let's use a query to get those:
@@ -269,7 +269,7 @@ scipy.stats.ttest_ind(female_salaries, male_salaries)
 Ttest_indResult(statistic=0.52411385896, pvalue=0.60022263724)
 \end{Verbatim}
 
-This output is a bit more readable than the $\chi^2$ was. The second number in
+This output is a bit more readable than the \CBMath{chi squared}{$\chi^2$} was. The second number in
 that output is labeled ``\texttt{pvalue}'', which is over .05, and therefore we
 conclude that \textit{there is no evidence that average salary differs between
 males and females.}
@@ -288,7 +288,7 @@ scipy.stats.ttest_ind(female_salaries, male_salaries)
 Ttest_indResult(statistic=9.8614730266, pvalue=9.8573024317e-23)
 \end{Verbatim}
 
-\textbf{Warning!} When you first look at that $p$-value, you may be tempted to
+\textbf{Warning!} When you first look at that \CBMath{p}{$p$}-value, you may be tempted to
 say ``9.857 is \textit{waaay} greater than .05, so I guess this is a `no
 evidence' result as well.'' Not so fast! If you look at the entire number --
 including the ending -- you see:
@@ -309,7 +309,7 @@ number as:
 
 \vspace{-.2in}
 \begin{center}
-$9.857302431746571 \times 10^{-23}$
+\CBMath{9.857302431746571 multiplied by ten to the power negative twenty-three}{$9.857302431746571 \times 10^{-23}$}
 \end{center}
 \vspace{-.2in}
 
@@ -317,7 +317,7 @@ which is:
 
 \vspace{-.2in}
 \begin{center}
-$.000000000000000000000009857302431746571$
+\CBMath{0.000000000000000000000009857302431746571; equivalently, 9.857302431746571 multiplied by ten to the power negative twenty-four}{$.000000000000000000000009857302431746571$}
 \end{center}
 \vspace{-.2in}
 
@@ -325,13 +325,13 @@ Wow! That's clearly waaay \textit{less than} .05, and so we can say \textit{the
 average number of followers \underline{does} depend significantly on the gender.}
 
 Be careful with this. It's an easy mistake to make, and can lead to
-embarrassingly wrong slides in presentations. \smiley
+embarrassingly wrong slides in presentations. \textnormal{(smile)}
 
 \subsubsection{More than two groups: ANOVA}
 
 \index{ANOVA (ANalysis Of VAriance)}
 
-By the way, the $t$-test is only appropriate when your categorical variable has
+By the way, the \CBMath{t}{$t$}-test is only appropriate when your categorical variable has
 \textit{two} values (male vs.~female, for example, or vaccinated
 vs.~non-vaccinated). If there are more than two, the appropriate test to run is
 called an ``ANOVA'' (ANalysis Of VAriance). It's beyond the scope of this text,
@@ -347,7 +347,7 @@ and \texttt{followers} columns are this case. Are they associated?
 
 The correct plot to visualize this is the \textbf{scatter plot}. It has an
 axis for each numeric variable, and plots one dot (or other marker) for each
-object of study: its $x$/$y$ coordinates depend on that object's value for each
+object of study: its \CBMath{x}{$x$}/\CBMath{y}{$y$} coordinates depend on that object's value for each
 variable.
 
 The Pandas code is as follows:
@@ -366,9 +366,9 @@ more money.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\textwidth]{followersSalary.png}
+\includegraphics[width=0.8\textwidth,alt={Scatter plot with social-media followers on the horizontal axis and salary on the vertical axis, one dot per person. Most people have roughly 10 to 40 followers, while salaries vary widely; many dots lie at zero salary or near the minimum follower count. The cloud has at most a weak upward trend, with a few people reaching about 120 followers or salary values near 140. The accompanying Pearson correlation quantifies the weak positive association.}]{followersSalary.png}
 \caption{A scatter plot of \texttt{followers} vs.~\texttt{salary}. Each point
-in the plot represents one person, with the $x$ and $y$ coordinates
+in the plot represents one person, with the \CBMath{x}{$x$} and \CBMath{y}{$y$} coordinates
 corresponding to his/her/their number of followers and salary.}
 \label{fig:followersSalary}
 \end{figure}
@@ -379,7 +379,7 @@ corresponding to his/her/their number of followers and salary.}
 \index{pearsonr@\texttt{pearsonr()} (SciPy)}
 
 The test we'll use to see whether this pattern is significant is the
-\textbf{Pearson correlation coefficient} (also called ``Pearson's $r$''). To
+\textbf{Pearson correlation coefficient} (also called ``Pearson's \CBMath{r}{$r$}''). To
 run it, we call SciPy's \texttt{pearsonr()} function and pass it the two
 columns:
 
@@ -393,7 +393,7 @@ scipy.stats.pearsonr(people.salary, people.followers)
 \end{Verbatim}
 
 We're given two numbers as output. The \textit{second} of these is the
-$p$-value, and remembering our pitfall from above, we're savvy enough to notice
+\CBMath{p}{$p$}-value, and remembering our pitfall from above, we're savvy enough to notice
 the \texttt{e-46} at the end and declare it significant. So we can say
 \textit{we have high confidence that a person's salary is associated with their
 number of social media followers.}
@@ -402,7 +402,7 @@ number of social media followers.}
 \index{negative correlation}
 
 Now for the first number, which is the actual ``correlation coefficient.''
-\textit{If} the second number is below $\alpha$ and therefore significant (as
+\textit{If} the second number is below \CBMath{alpha}{$\alpha$} and therefore significant (as
 it was here), you then look at the first number and see whether it's positive
 or negative. Positive numbers indicate \textbf{positive correlations}: an
 increase in one of the variables corresponds to an \textit{increase} in the

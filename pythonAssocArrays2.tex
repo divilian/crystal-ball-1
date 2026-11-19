@@ -1,5 +1,5 @@
 
-\chapter[\small Assoc.~arrays in Python (2 of 3)]{\LARGE\selectfont{Associative
+\chapter[Assoc.~arrays in Python (2 of 3)]{\LARGE\selectfont{Associative
 arrays in Python (2 of 3)}}
 \label{ch:assocArraysInPython2}
 
@@ -195,7 +195,7 @@ only easy code to write but also runs blazing fast. But the Pandas
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.9\textwidth]{vectorizedPandas.png}
+\includegraphics[width=0.9\textwidth,alt={Two Pandas Series with overlapping keys in different orders. salaries maps Michael to 113.0, Dwight to 68.0, Pam to 67.0, Jim to 100.2, and Ryan to 68.0. raises maps Dwight to 3.5, Robert to 100.0, Pam to 2.0, and Michael to 16.5. Michael, Dwight, and Pam occur in both Series; Jim and Ryan occur only in salaries, and Robert only in raises.}]{vectorizedPandas.png}
 \caption{Two \texttt{Series}es in memory}
 \label{fig:vectorizedPandas}
 \end{figure}
@@ -218,7 +218,7 @@ add corresponding elements, with matching keys, and produce a new
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\textwidth]{vectorizedPandas2.png}
+\includegraphics[width=0.8\textwidth,alt={Adding salaries and raises creates a third Series, new\_salaries, while leaving both inputs intact. Addition aligns matching keys, producing Dwight: 71.5, Michael: 129.5, and Pam: 69.0. Jim, Robert, and Ryan receive NaN because each is missing from one input; the result contains the union of the input keys.}]{vectorizedPandas2.png}
 \caption{The result of \texttt{+}'ing two \texttt{Series}es that don't have all the same keys.}
 \label{fig:vectorizedPandas2}
 \end{figure}
@@ -306,7 +306,7 @@ choose a \texttt{fill\_value} other than zero, if you wish.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\textwidth]{vectorizedPandas3.png}
+\includegraphics[width=0.8\textwidth,alt={Using pd.Series.add(salaries, raises, fill\_value=0) aligns the keys and substitutes zero for a missing addend. The new\_salaries Series contains Dwight: 71.5, Jim: 100.2, Michael: 129.5, Pam: 69.0, Robert: 100.0, and Ryan: 68.0. The salaries and raises Series remain unchanged; the entries that previously yielded NaN now retain the value supplied by the other input.}]{vectorizedPandas3.png}
 \caption{Using \texttt{add()} instead, and passing a \texttt{fill\_value}.}
 \label{fig:vectorizedPandas3}
 \end{figure}
@@ -379,7 +379,7 @@ this:
 
 \index{Buffy the Vampire Slayer@\textit{Buffy the Vampire Slayer}}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
 slayers = pd.Series([120, 72, 200], index=['Buffy','Xander','Willow'])
 anti_vamps = slayers
 good_guys = slayers.copy()
@@ -388,7 +388,7 @@ print(slayers)
 \end{Verbatim}
 \vspace{-.3in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 Buffy     120
 Xander     72
 Willow    200
@@ -396,12 +396,12 @@ Rubert    150
 dtype: int64
 \end{Verbatim}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
 print(anti_vamps)
 \end{Verbatim}
 \vspace{-.3in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 Buffy     120
 Xander     72
 Willow    200
@@ -409,12 +409,12 @@ Rubert    150
 dtype: int64
 \end{Verbatim}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
 print(good_guys)
 \end{Verbatim}
 \vspace{-.3in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 Buffy     120
 Xander     72
 Willow    200
@@ -593,6 +593,9 @@ Figure~\ref{fig:handySeries}.
 \begin{figure}[ht]
 \centering
 \footnotesize
+\begingroup
+\par\tagpdfparaOff
+\tagpdfsetup{table/header-rows={1},table/header-columns={}}
 \begin{tabular}{c|p{2.9in}}
 Function & Description \\
 \hline
@@ -654,7 +657,8 @@ Return a new \texttt{Series} with \textsl{ser1}'s and \textsl{ser2}'s key/value
 pairs smooshed together. (Bad things may happen if \textsl{ser1} and
 \textsl{ser2} share some of the same keys.) \\
 
-\end{tabular}
+\end{tabular}\par
+\endgroup
 \bigskip
 \caption{Handy functions, methods, and operators for Pandas \texttt{Series}es.}
 \label{fig:handySeries}

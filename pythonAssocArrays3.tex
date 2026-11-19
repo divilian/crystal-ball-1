@@ -1,5 +1,5 @@
 
-\chapter[\small Assoc.~arrays in Python (3 of 3)]{\LARGE\selectfont{Associative
+\chapter[Assoc.~arrays in Python (3 of 3)]{\LARGE\selectfont{Associative
 arrays in Python (3 of 3)}}
 \label{ch:assocArraysInPython3}
 
@@ -144,11 +144,11 @@ sense. See the top table in Figure~\ref{fig:queryOps}.
 \index{bang-equals (``\texttt{"!=}'')}
 
 ``Greater/less than or equal to'' isn't hard to remember, and it's a good thing
-Python doesn't require symbols like ``$\le$'' or ``$\ge$'' since those are hard
+Python doesn't require symbols like ``\CBMath{less than or equal to}{$\le$}'' or ``\CBMath{greater than or equal to}{$\ge$}'' since those are hard
 to find on your keyboard. You just type both symbols back-to-back, with no
 space. More problematic are the last two entries in the top table. The
 ``\texttt{!=}'' operator (pronounced ``bang-equals'') is used as a stand-in
-for ``$\ne$'' which also isn't keyboard friendly. And that one doesn't have a
+for ``\CBMath{not equal to}{$\ne$}'' which also isn't keyboard friendly. And that one doesn't have a
 good mnemonic; you just have to memorize it.
 
 \index{double-equals (\texttt{==})}
@@ -170,6 +170,9 @@ single most common programming error for beginners.
 \bigskip
 \underline{\textit{Simple query operators:}}\\
 \smallskip
+\begingroup
+\par\tagpdfparaOff
+\tagpdfsetup{table/header-rows={1},table/header-columns={}}
 \begin{tabular}{c|c}
 Symbol & Meaning \\
 \hline
@@ -184,12 +187,16 @@ Symbol & Meaning \\
 \texttt{!=} & \textit{not} equal to \\
 \hline
 \texttt{==} & equal to \\
-\end{tabular}
+\end{tabular}\par
+\endgroup
 
 \bigskip
 \bigskip
 \underline{\textit{Compound query operators:}}\\
 \smallskip
+\begingroup
+\par\tagpdfparaOff
+\tagpdfsetup{table/header-rows={1},table/header-columns={}}
 \begin{tabular}{c|c}
 Symbol & Meaning \\
 \hline
@@ -198,7 +205,8 @@ Symbol & Meaning \\
 \texttt{|} & or \\
 \hline
 \texttt{\textasciitilde} & not \\
-\end{tabular}
+\end{tabular}\par
+\endgroup
 
 \bigskip
 \normalsize
@@ -302,8 +310,8 @@ message if you omit them. Second, see how we combined the two with the
 result, then, was only the elements that satisfied \textit{both} conditions.
 
 \index{or (compound condition)}
-\index{pipe (vertical bar, or ``\texttt{|}'')}
-\index{|@\texttt{|} (pipe)}
+\index{pipe (vertical bar, or ``\texttt{"|}'')}
+\index{vertical bar@\texttt{"|} (pipe)}
 
 It can be tricky to figure out whether you want an \textbf{and} or an
 \textbf{or}. Unfortunately they don't always correspond to their colloquial
@@ -333,7 +341,7 @@ greater than five, or less than fourteen, or both. (Think deeply.)
 Even though in this example it didn't do anything exciting, an ``\textbf{or}''
 does sometimes return a useful result. Consider this example:
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
 z = understanding[(understanding.index > 10) | (understanding > 5)]
 print(z)
 \end{Verbatim}
@@ -360,7 +368,7 @@ sign, which is pronounced ``tilde,'' ``twiddle,'' or ``squiggle.'' It
 corresponds to the English word \textbf{not}, although in an unusual place in
 the sentence. Here's an example:
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
 a = understanding[~(understanding.index > 10) | (understanding > 10)]
 print(a)
 \end{Verbatim}
@@ -380,7 +388,7 @@ are shown above.
 
 Changing the ``or'' back to an ``and'' here gives us this output instead:
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
 b = understanding[~(understanding.index > 10) & (understanding > 10)]
 print(b)
 \end{Verbatim}
@@ -483,6 +491,9 @@ in Figure~\ref{fig:stringQueryFunctions}.
 \begin{figure}[ht]
 \centering
 \footnotesize
+\begingroup
+\par\tagpdfparaOff
+\tagpdfsetup{table/header-rows={1},table/header-columns={}}
 \begin{tabular}{c|p{2.8in}}
 Function & Description \\
 \hline
@@ -504,7 +515,8 @@ upper-case. \\
 \textsl{ser}\texttt{.str.islower()} & Request only strings that are in all
 lower-case. \\
 
-\end{tabular}
+\end{tabular}\par
+\endgroup
 \bigskip
 \caption{Common query methods for string data.}
 \label{fig:stringQueryFunctions}
@@ -516,7 +528,7 @@ A couple things before we move on. You've noticed that in all the above
 examples, it was necessary to type the \texttt{Series} variable name several
 times:
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
 understanding[(understanding < 12) | (understanding > 18)]
 alter_egos[(alter_egos.str.isupper()) & (alter_egos.str.len() < 10)]
 \end{Verbatim}

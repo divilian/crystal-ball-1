@@ -106,22 +106,22 @@ and \texttt{"yellow"}, then the mode is \texttt{"blue"}. It's that simple.
 To wrap things up, these things make sense to ask of a \textit{categorical}
 variable:
 
-\begin{compactitem}
-\item[\leftthumbsup] ``Is his favorite color the same as her favorite color?''
-\item[\leftthumbsup] ``How many people have \texttt{"red"} as their favorite
+\begin{itemize}[nosep]
+\item \textbf{Valid:} ``Is his favorite color the same as her favorite color?''
+\item \textbf{Valid:} ``How many people have \texttt{"red"} as their favorite
 color?''
-\item[\leftthumbsup] ``What's the most popular favorite color?''
-\end{compactitem}
+\item \textbf{Valid:} ``What's the most popular favorite color?''
+\end{itemize}
 
 while these do \textit{not}:
 
-\begin{compactitem}
-\item[\leftthumbsdown] ``Is his favorite color greater than her favorite
+\begin{itemize}[nosep]
+\item \textbf{Invalid:} ``Is his favorite color greater than her favorite
 color?'' (??)
-\item[\leftthumbsdown] ``What's Caitlin's favorite color minus Hannah's?'' (??)
-\item[\leftthumbsdown] ``What's the `average' favorite color in this data
+\item \textbf{Invalid:} ``What's Caitlin's favorite color minus Hannah's?'' (??)
+\item \textbf{Invalid:} ``What's the `average' favorite color in this data
 set?'' (??)
-\end{compactitem}
+\end{itemize}
 
 
 \index{ordinal variable}
@@ -173,25 +173,25 @@ ranking, a taxpayer's tax bracket, and survey questions asking whether you
 Again, a list of do's and don't's. For \textit{ordinal} variables, these are
 okay:
 
-\begin{compactitem}
-\item[\leftthumbsup] ``Is his education level the same as her education level?''
-\item[\leftthumbsup] ``How many people answered \texttt{"strongly disagree"} to
+\begin{itemize}[nosep]
+\item \textbf{Valid:} ``Is his education level the same as her education level?''
+\item \textbf{Valid:} ``How many people answered \texttt{"strongly disagree"} to
 this question?''
-\item[\leftthumbsup] ``Is UMW basketball ranked higher or lower than Messiah?''
-\item[\leftthumbsup] ``What's the median tax bracket for this group of
+\item \textbf{Valid:} ``Is UMW basketball ranked higher or lower than Messiah?''
+\item \textbf{Valid:} ``What's the median tax bracket for this group of
 employees?''
-\end{compactitem}
+\end{itemize}
 
 \pagebreak
 while these are \textit{not}:
 
-\begin{compactitem}
-\item[\leftthumbsdown] ``Which looks like the bigger mismatch on paper: Duke
+\begin{itemize}[nosep]
+\item \textbf{Invalid:} ``Which looks like the bigger mismatch on paper: Duke
 v.~Kentucky, or Villanova v.~Gonzaga?'' (??)
-\item[\leftthumbsdown] ``What's Caitlin's education level minus Hannah's?'' (??)
-\item[\leftthumbsdown] ``What's the `average' tax bracket for this group of
+\item \textbf{Invalid:} ``What's Caitlin's education level minus Hannah's?'' (??)
+\item \textbf{Invalid:} ``What's the `average' tax bracket for this group of
 employees?''
-\end{compactitem}
+\end{itemize}
 
 It's worth commenting on that second list, because you might have thought some
 of those items were completely reasonable. For example, suppose that in the
@@ -271,7 +271,7 @@ was no way to really know how large the difference between \texttt{"GOOD"} and
 Another example of an interval scale variable, besides the aforementioned
 temperature, is the year an event takes place. We can say, for example, that
 nearly two-thirds of our nation's history has occurred \textit{after} the Civil
-War ($2025-1865=160$ years, versus $1861-1776=85$ years).
+War (\CBMath{2025 minus 1865 equals 160}{$2025-1865=160$} years, versus \CBMath{1861 minus 1776 equals 85}{$1861-1776=85$} years).
 
 \index{mean}
 The quintessential measure of central tendency for interval scale is the
@@ -283,28 +283,28 @@ meaningful, numerical positions and so adding them up is okay.
 
 Here's our list of goods (for interval scale variables):
 
-\begin{compactitem}
-\item[\leftthumbsup] ``Was today's high temperature the same as yesterday's?''
-\item[\leftthumbsup] ``Was Beethoven born before or after Napoleon?''
-\item[\leftthumbsup] ``How many cities are at $40\degree$ latitude?''
-\item[\leftthumbsup] ``What's the median year of birth for current U.S. Senators?''
-\item[\leftthumbsup] ``Which is experiencing more global warming
+\begin{itemize}[nosep]
+\item \textbf{Valid:} ``Was today's high temperature the same as yesterday's?''
+\item \textbf{Valid:} ``Was Beethoven born before or after Napoleon?''
+\item \textbf{Valid:} ``How many cities are at \CBMath{forty degrees}{$40\degree$} latitude?''
+\item \textbf{Valid:} ``What's the median year of birth for current U.S. Senators?''
+\item \textbf{Valid:} ``Which is experiencing more global warming
 (temperature difference) -- Greenland or France?''
-\item[\leftthumbsup] ``What's London's latitude minus Boston's? How much
+\item \textbf{Valid:} ``What's London's latitude minus Boston's? How much
 farther north is it?''
-\item[\leftthumbsup] ``What was the average high temperature in Fredericksburg
+\item \textbf{Valid:} ``What was the average high temperature in Fredericksburg
 in September?''
-\end{compactitem}
+\end{itemize}
 
 and bads:
 
-\begin{compactitem}
-\item[\leftthumbsdown] ``Which cities are at least 20\% more east than
+\begin{itemize}[nosep]
+\item \textbf{Invalid:} ``Which cities are at least 20\% more east than
 Chicago?'' (??)
-\item[\leftthumbsdown] ``When was the first fall day which was half as hot as
+\item \textbf{Invalid:} ``When was the first fall day which was half as hot as
 it was on July 4th?'' (??)
-\item[\leftthumbsdown] ``Was Lincoln born 5\% later than Washington?'' (??)
-\end{compactitem}
+\item \textbf{Invalid:} ``Was Lincoln born 5\% later than Washington?'' (??)
+\end{itemize}
 
 \index{zero point}
 Let's consider that bads list. With an interval scale variable, we can ask
@@ -357,15 +357,15 @@ the zero point for longitude is arbitrary: it's set at the Greenwich, England,
 of all things. Clearly only relative differences between longitude have any
 meaning.
 
-And the same thing with temperature. If yesterday's high was $40\degree$, and
-today's is $80\degree$, it's tempting to say ``whew! It's twice as hot today!''
+And the same thing with temperature. If yesterday's high was \CBMath{forty degrees}{$40\degree$}, and
+today's is \CBMath{eighty degrees}{$80\degree$}, it's tempting to say ``whew! It's twice as hot today!''
 To see that this is gibberish, though, consider what would happen if we changed
 to use the metric system like the rest of the civilized world does, and
 measured temperature in Celsius. Now if we did that, clearly we wouldn't start
 experiencing heat waves or cold spells as a result! Hey we're just changing our
 units, bro, not influencing the atmosphere. But realize that in Celsius,
-yesterday's $40\degree$F day would become $4.4\degree$C, and today's
-$80\degree$F would be $26.7\degree$C. So now, by changing our units, we would
+yesterday's \CBMath{forty degrees}{$40\degree$}F day would become \CBMath{four point four degrees}{$4.4\degree$}C, and today's
+\CBMath{eighty degrees}{$80\degree$}F would be \CBMath{twenty-six point seven degrees}{$26.7\degree$}C. So now, by changing our units, we would
 have to say ``oh golly, I guess it's actually over \textit{six times} as hot
 today!'' This is why multiplying and dividing with interval scale variables
 leads to madness.
@@ -385,7 +385,7 @@ non-arbitrary standard, it makes perfect sense to say things like ``he makes
 twice as much as she does.
 
 The height of a person has a meaningful zero point as well: the ground. If
-Tyrion Lannister rises $3\frac{1}{2}$ feet from the floor, and Gregor Clegane
+Tyrion Lannister rises \CBMath{three and one half}{$3\frac{1}{2}$} feet from the floor, and Gregor Clegane
 stands a full 7 feet from that same floor, it makes all the sense in the world
 to say ``Gregor is twice as tall as Tyrion.''
 

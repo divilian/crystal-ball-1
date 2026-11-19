@@ -104,7 +104,7 @@ sexes, in fact, and have in fact noticed that trend) whereas you know in your
 heart that neither sex has an advantage in intelligence (ditto). This leads you
 to reason as follows:
 
-\begin{compactenum}
+\begin{enumerate}[nosep]
 \item ``Well of course my male volunteers were taller than the female ones.
 I've known all along that males tend to be taller in general, and this just
 confirms it!''
@@ -112,7 +112,7 @@ confirms it!''
 these particular women might have been a bit smarter than these particular men,
 but if I ran the experiment again on different volunteers, it might just as
 easily go the other way. It'd be silly to draw a grand conclusion from that.''
-\end{compactenum}
+\end{enumerate}
 
 Psychologists call this fallacy of reasoning ``\textbf{confirmation bias}.'' We
 have a natural tendency to interpret information in a way that affirms our
@@ -215,16 +215,15 @@ memorize a lot of different rules for interpreting a lot of different tests.
 So what the heck is a ``\textit{p}-value?'' There have been controversies
 galore\footnote{For instance:\\
 \vspace{-.15in}
-\begin{compactitem}
-\item Colquhoun D (2017). ``$p$-values.'' \textit{Royal Society Open Science.}
+\begin{itemize}[nosep]
+\item Colquhoun D (2017). ``\CBMath{p}{$p$}-values.'' \textit{Royal Society Open Science.}
 \textbf{4}(12): 171085.
-\item Murtaugh, Paul A. (2014). ``In defense of $p$-values.'' \textit{Ecology}.
+\item Murtaugh, Paul A. (2014). ``In defense of \CBMath{p}{$p$}-values.'' \textit{Ecology}.
 \textbf{95}(3): 611--617
 \item Wasserstein, Ronald L.; Lazar, Nicole A. (2016). ``The ASA's Statement on
-$p$-Values: Context, Process, and Purpose.'' \textit{The American Statistician.}
+\CBMath{p}{$p$}-Values: Context, Process, and Purpose.'' \textit{The American Statistician.}
 \textbf{70}(2): 129-133
-\end{compactitem}
-\vspace{-.15in}
+\end{itemize}
 }, and even entire
 books\footnote{Vickers, A. J. (2009). \textit{What is a p-value anyway?}
 Boston: Pearson.} devoted to the subject, which means that whatever I choose to
@@ -233,19 +232,19 @@ write here can be nitpicked by statisticians a dozen different ways.
 That's okay. I'm going to write it anyway, and this will serve you very well. 
 Here goes: 
 
-\index{$\alpha$ (alpha)}
-\index{alpha@alpha ($\alpha$)}
+\index{alpha symbol@\CBMath{alpha}{$\alpha$} (alpha)}
+\index{alpha@alpha (\CBMath{alpha}{$\alpha$})}
 
 \definecolor{shadecolor}{rgb}{.9,.9,.9}
 \begin{shaded}
 A \textit{p}-value is a number between 0 and 1. If you run a
 statistical test on your bivariate data, and the \textit{p}-value is
-\textbf{\textit{less than}} your $\alpha$ (``alpha'') value (normally, .05),
+\textbf{\textit{less than}} your \CBMath{alpha}{$\alpha$} (``alpha'') value (normally, .05),
 then there \textit{\textbf{is}} a statistically significant association between
 the variables. Otherwise, there isn't. End of story.
 \end{shaded}
 
-Recall from section~\ref{alpha} (p.~\pageref{alpha}) that $\alpha$ is ``where
+Recall from section~\ref{alpha} (p.~\pageref{alpha}) that \CBMath{alpha}{$\alpha$} is ``where
 to set the bar'' to detect a meaningful association. It's essentially how often
 we're willing to draw a false conclusion. For social science data (that is,
 data involving humans), you should always choose .05 to avoid controversy. For
@@ -253,10 +252,10 @@ physical science data, you should always choose .01.
 
 The bottom line is this: if you spot a possible relationship between two of
 your variables (like gender and IQ), run the appropriate statistical test (see
-next chapter) and look at the $p$-value. If it's less than $\alpha$, then the
+next chapter) and look at the \CBMath{p}{$p$}-value. If it's less than \CBMath{alpha}{$\alpha$}, then the
 difference you thought you saw officially \textit{is} ``enough.'' You can
 therefore declare ``yep, these two variables \textit{are} associated, to a
-confidence level of $\alpha$.'' If it's not less than $\alpha$, then even
+confidence level of \CBMath{alpha}{$\alpha$}.'' If it's not less than \CBMath{alpha}{$\alpha$}, then even
 though you thought you saw a meaningful tendency in the data, you can
 officially say, ``nope, it's not a stat sig diff. This is very likely just an
 artifact of the particular data points I collected in my sample. Pay of no

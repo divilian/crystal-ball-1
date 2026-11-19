@@ -9,7 +9,7 @@
 \index{programming environment}
 Python is a ridiculously popular \textbf{language} for programming and data
 science (currently the third most widely used in the world\footnote{See
-\url{https://www.tiobe.com/tiobe-index/}.}) which is one of many reasons we're
+\href{https://www.tiobe.com/tiobe-index/}{TIOBE programming language index}.}) which is one of many reasons we're
 using it for this course. The language itself is different from the
 \textbf{programming environment} used to write code in it, just as ``English''
 is different from ``Microsoft Word'' and ``Google Docs.'' A programming
@@ -41,11 +41,11 @@ There are three kinds of cells in Jupyter Notebooks:
 
 \begin{description}
 \index{cell!raw}
-\item{\textbf{Raw.}} ``Raw'' is dumb. Never use it.
+\item[Raw.] ``Raw'' is dumb. Never use it.
 \index{Markdown}
 \index{render}
 \index{cell!Markdown}
-\item{\textbf{Markdown.}} ``Markdown'' cells are for \textit{English text}, not Python
+\item[Markdown.] ``Markdown'' cells are for \textit{English text}, not Python
 code. They're mostly used to describe and annotate what you're doing in the
 code cells, like a running commentary. You can type plain-ol' text in a
 Markdown cell, plus various cutesy formatting adornments like boldface (putting
@@ -53,13 +53,13 @@ double-splats (\texttt{**}) around a word or phrase), italics (single splats),
 outline headings (prefacing a line with one or more hashtags (like \texttt{\#}
 or \texttt{\#\#\#}), and so forth.\footnote{For a complete list of formatting
 options, see
-\url{https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet}.} When
+\href{https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet}{Markdown formatting reference}.} When
 you type in a Markdown cell, you see the raw text and formatting; to actually get Jupyter to
 \textbf{render} your cells and make them pretty, you choose ``Run All'' from
 the \index{run all@``Run All''} \index{cell menu@``Cell'' CoCalc menu} ``Cell'' menu.
 
 \index{cell!Code}
-\item{\textbf{Code.}} The most important cells are ``Code'' cells which contain (duh)
+\item[Code.] The most important cells are ``Code'' cells which contain (duh)
 code. When executed (again, by choosing ``Run All'' from the ``Cell'' menu) they actually carry out
 the Python instructions you have typed in that cell, and display any results.
 
@@ -80,11 +80,11 @@ dropdown} which is kind of hidden in the middle of the page: it currently reads
 to highlight and edit the top cell, that dropdown would change to
 ``Markdown.'')
 
-\begin{figure}[!h]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=0.85\textwidth]{firstNotebook.png} \\
+\includegraphics[width=0.73\textwidth,alt={CoCalc Jupyter Notebook before execution. The first cell contains unrendered Markdown: a heading First and the sentence Our very first Jupyter notebook!, with asterisks around Jupyter notebook. The selected second cell is identified as Code in the toolbar's cell-type dropdown; it assigns founding = 1776, computes usa\_age = 2019 - founding, and prints a sentence using usa\_age. No output appears yet.}]{firstNotebook.png} \\
 \bigskip
-\includegraphics[width=0.85\textwidth]{firstNotebook2.png}
+\includegraphics[width=0.73\textwidth,alt={The same CoCalc notebook after Run All. Markdown now displays a formatted heading First and italicized Jupyter notebook in the introductory sentence. Beneath the code cell, the historical 2019 example displays the output Our country is 243 years old! An empty code cell follows.}]{firstNotebook2.png}
 \medskip
 \caption{A Jupyter Notebook with one Markdown cell and one Code cell. In the
 top image, the two cells have been edited but not yet ``run'' -- hence

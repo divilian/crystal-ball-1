@@ -275,8 +275,8 @@ This code produces:
 \end{Verbatim}
 
 Can you see why? ``Adding'' the two arrays together performed addition
-\textit{element-by-element}. The result is a new array with $38000+1000$ as the
-first element, $102000+4000$ as the second, \textit{etc.} This, too, is a
+\textit{element-by-element}. The result is a new array with \CBMath{thirty-eight thousand plus one thousand}{$38000+1000$} as the
+first element, \CBMath{one hundred two thousand plus four thousand}{$102000+4000$} as the second, \textit{etc.} This, too, is a
 lightning-fast, vectorized operation, and it too works with all the other math
 operators.
 
@@ -318,8 +318,8 @@ Note carefully: \textit{no \texttt{Beavis}}.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.49\textwidth]{refNotCopy.png}
-\includegraphics[width=0.49\textwidth]{refNotCopy2.png}
+\includegraphics[width=0.49\textwidth,alt={Before changing stooges[1], both stooges and funny\_people point to the same array containing Larry, Beavis, and Moe at indices 0, 1, and 2. The assignment funny\_people = stooges creates another reference, not another array.}]{refNotCopy.png}
+\includegraphics[width=0.49\textwidth,alt={After stooges[1] = 'Curly', the single shared array contains Larry, Curly, and Moe. Both stooges and funny\_people still point to that array, so either name observes the changed element.}]{refNotCopy2.png}
 \caption{The code on p.~\pageref{code:refNotCopy} immediately before (left
 side) and after (right side) the line ``\texttt{stooges[1] = \textquotesingle
 Curly\textquotesingle}'' is reached.}
@@ -374,7 +374,7 @@ But the ones we all know were ['John' 'Paul' 'George' 'Ringo'].
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.9\textwidth]{copyNotRef.png}
+\includegraphics[width=0.9\textwidth,alt={Two distinct arrays after explicitly copying a Beatles array. The original array, labeled old\_beatles in the illustration, contains John, Paul, George, and Pete. beatles points to a separate array containing John, Paul, George, and Ringo; replacing its fourth element leaves the original array unchanged.}]{copyNotRef.png}
 \caption{The memory picture after calling the \texttt{.copy()} method, instead
 of simply assigning to a new variable.}
 \label{fig:copyNotRef}
@@ -432,7 +432,7 @@ one is sorted, the other automatically is. They're both distinct from
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.9\textwidth]{dotSortArray.png}
+\includegraphics[width=0.9\textwidth,alt={Memory after gpas.sort(). gpas and gpas3 share the same array, now sorted as 1.17, 2.86, 3.12, 3.99. gpas2 points to an independent copy that remains in its original order, 2.86, 3.99, 3.12, 1.17. In-place sorting affects every reference to the sorted object but does not affect a separate copy.}]{dotSortArray.png}
 \caption{The state of affairs after \texttt{.sort()}ing the \texttt{gpas} array in place.}
 \label{fig:dotSortArray}
 \end{figure}
@@ -473,7 +473,7 @@ picture is shown in Figure~\ref{fig:npSortArray}.
 \index{on@``on''}
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.9\textwidth]{npSortArray.pdf}
+\includegraphics[width=0.9\textwidth,alt={Memory after sorted\_teams = np.sort(nfl\_teams). nfl\_teams points to the original, unsorted five-team array, while sorted\_teams points to a different array containing the same team names in alphabetical order. The original ordering is preserved; the illustration uses an older set of team names than the adjacent code example.}]{npSortArray.png}
 \medskip
 \caption{Calling the \texttt{np.sort()} function (as opposed to calling the
 \texttt{.sort()} method \textbf{on} the array) returns a sorted copy.}
@@ -626,6 +626,9 @@ the array functions, methods, and operators in this chapter.
 \begin{figure}[ht]
 \centering
 \footnotesize
+\begingroup
+\par\tagpdfparaOff
+\tagpdfsetup{table/header-rows={1},table/header-columns={}}
 \begin{tabular}{c|p{3.1in}}
 Function & Description \\
 \hline
@@ -671,14 +674,15 @@ of \textsl{arr}. (Numerical or alphabetical, depending on the \texttt{.dtype}.)
 
 \texttt{np.flip(}\textsl{arr}\texttt{)} &
     Return a new array with \textsl{arr} in reverse order. \\
-\end{tabular}
+\end{tabular}\par
+\endgroup
 \bigskip
 \caption{Handy NumPy functions, methods, and operators.}
 \label{fig:handyNumPy}
 \end{figure}
 
 \vfill
-\subsubsection{The answer}
+\subsection{The answer}
 
 \index{42 (Life, Universe, Everything)}
 Oh, and the answer to the puzzle on p.~\pageref{indexTest} -- and also the

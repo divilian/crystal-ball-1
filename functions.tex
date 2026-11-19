@@ -153,7 +153,7 @@ function; we didn't actually \textit{call} it.
 This is sort of like building an impressive machine but then never pushing the
 ``On'' button. The above code says to do four things:
 
-\begin{compactenum}
+\begin{enumerate}[nosep]
 \index{Broncos, Denver}
 \item Create a \texttt{team\_name} variable and set its value to the string
 \texttt{"Broncos"}.
@@ -162,7 +162,7 @@ This is sort of like building an impressive machine but then never pushing the
 \item Create a function called \texttt{football\_score} which, \textit{if it is
 ever called in the future}, will compute and return the score of a football
 game.
-\end{compactenum}
+\end{enumerate}
 
 In other words, that last step is just preparatory. It tells Python: ``by the
 way, in case you see any code later on that calls a function named
@@ -311,7 +311,7 @@ def IQR(some_data):
 We can now call it on anything we like, like our examples from
 p.~\pageref{YouTubeData} and p.~\pageref{NCAAData}:
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
 print("The IQR of the YouTube plays data is {}".format(IQR(num_plays)))
 print("The IQR of the NCAA scoring data is {}".format(IQR(pts)))
 \end{Verbatim}
