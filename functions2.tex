@@ -4,7 +4,7 @@
 Like many things in life, writing functions is best learned by example. This
 chapter will feature several more of them that you can learn from and imitate.
 
-\subsubsection{Basketball scoring: \texttt{bb\_pts()}}
+\section{Basketball scoring: \texttt{bb\_pts()}}
 
 Continuing the sports theme, the total points a basketball player scores is
 related to the number of shots she makes of various kinds. Typically, the ``box
@@ -25,7 +25,7 @@ Confusingly, (1) \textit{includes} (2). In other words, if the first number is
 \centering
 \fbox{
 \mbox{
-\includegraphics[width=0.8\textwidth]{boxScore.png}
+\includegraphics[width=0.8\textwidth,alt={Mary Washington basketball box score with columns for player, minutes, field goals made-attempted, three-pointers made-attempted, free throws made-attempted, and points. In that column order the starters are Tory Martin: 25, 6-10, 0-0, 1-4, 13; Faith St. Clair: 23, 1-2, 1-1, 0-0, 3; Maddie Shifflett: 29, 5-9, 0-2, 0-0, 10; Molly Sharman: 25, 5-8, 1-2, 2-2, 13; Emily Thompson: 33, 6-9, 5-7, 5-6, 22. The reserves are Karissa Highlander: 7, 1-4, 0-0, 0-0, 2; Hannah Stockman: 19, 2-8, 0-5, 0-0, 4; Emily Shively: 10, 0-2, 0-1, 0-0, 0; Bri Harper: 3, 1-4, 1-3, 0-0, 3; Ashley Martin: 16, 0-2, 0-1, 3-4, 3; Thora Gibbs: 10, 1-1, 0-0, 0-0, 2. Team totals are 28 of 59 field goals, including 8 of 22 three-pointers, and 11 of 16 free throws, for 75 points; the corresponding shooting percentages are 47.5, 36.4, and 68.8 percent.}]{boxScore.png}
 }
 }
 \medskip
@@ -66,7 +66,7 @@ Strictly speaking you don't need all those bananas (regular PEMDAS
 order-of-operations applies) but I think it's a good idea to include them for
 clarity and grouping.
 
-\subsubsection{``Exceptions'': \texttt{mean\_no\_outliers()} and \texttt{quiz\_avg()}}
+\section{``Exceptions'':\texorpdfstring{\\}{ }\texttt{mean\_no\_outliers()} and \texttt{quiz\_avg()}}
 
 Sometimes we want to take the straight average of a data set, but other times
 we may want to filter out any strange or exceptional cases. Let's say we're
@@ -169,7 +169,7 @@ lowest two scores will be at the beginning of the (sorted) array. Two notes
 here:
 
 
-\begin{compactitem}
+\begin{itemize}[nosep]
 
 \item We use the \texttt{np.sort()} function, not the \texttt{.sort()} method,
 since we don't want to permanently change the order of \texttt{quizzes}. We
@@ -183,11 +183,11 @@ only need a temporarily sorted copy so we can omit the lowest two entries.
 (recall section~\ref{slice} on p.~\pageref{slice}) which says ``only give me
 entries number 2 through the end of the array.'' And that's exactly what the
 doctor ordered to omit the first two.
-\end{compactitem}
+\end{itemize}
 
 \smallskip
 
-\subsubsection{Searching for values: \texttt{any\_zeros()}}
+\section{Searching for values: \texttt{any\_zeros()}}
 
 I'll end this chapter with an example which, like the ``preferred language''
 example on p.~\pageref{spanishFrenchPitfall}, flummoxes nearly every beginning
@@ -316,7 +316,7 @@ Better check up on Biff.
 Better check up on Melvin.
 \end{Verbatim}
 
-\subsubsection{Postlude: thinking algorithmically}
+\section{Postlude: thinking algorithmically}
 
 \index{algorithmic thinking}
 \index{holistic thinking}

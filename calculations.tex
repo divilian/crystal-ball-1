@@ -33,7 +33,7 @@ Python or any programming language.
 First, the easy part. Python has a number of built-in \textbf{operators} to do
 the familiar math stuff. Figure~\ref{fig:mathOps} has a table of the ones we'll
 use. A few are mildly surprising (\texttt{*} instead of \texttt{X} for
-multiplication; \texttt{/} instead of $\div$ for division, which I'll bet you
+multiplication; \texttt{/} instead of \CBMath{divided by}{$\div$} for division, which I'll bet you
 couldn't find on your keyboard anyway), and you have to remember to use only
 bananas (not boxies \texttt{[]}, curlies \texttt{\{\}}, or wakkas \texttt{<>})
 for grouping sub-expressions within a larger expression. Otherwise, it's a
@@ -41,6 +41,9 @@ piece of cake.
 
 \begin{figure}[ht]
 \centering
+\begingroup
+\par\tagpdfparaOff
+\tagpdfsetup{table/header-rows={1},table/header-columns={}}
 \begin{tabular}{c | l}
 \hline
 Operator & Operation \\
@@ -52,7 +55,8 @@ Operator & Operation \\
 \texttt{**} & exponentiation (``to the power of'')\\
 \texttt{()} & grouping \\
 \hline
-\end{tabular}
+\end{tabular}\par
+\endgroup
 \smallskip
 \caption{Python's basic math operators.}
 \label{fig:mathOps}
@@ -60,23 +64,23 @@ Operator & Operation \\
 
 All this stuff has to appear on the \textbf{right-hand side} of an equals sign,
 by the way, never on the left. That may seem surprising, since in mathematics
-the equations ``$x = y + 3$'' and ``$y + 3 = x$'' mean the same thing. Why does
+the equations ``\CBMath{x equals y plus three}{$x = y + 3$}'' and ``\CBMath{y plus three equals x}{$y + 3 = x$}'' mean the same thing. Why does
 it matter which order you write it in? The answer, you'll recall, is that in a
 program the symbol ``\texttt{=}'' doesn't mean ``\textit{is} equal to'' but
 rather ``\textit{make} equal to.'' It's not an equation; it's a command. And
-you can't command ``$y+3$'' to be equal to anything. Therefore the only thing
+you can't command ``\CBMath{y plus three}{$y+3$}'' to be equal to anything. Therefore the only thing
 permitted on the left-hand side of an equals sign is a single, plain-jane
 variable name.
 
 To test your understanding of the syntax, see if you agree that the following
 math expression:
 
-\begin{align*}
+\CBMath{gpa equals a fraction whose numerator is creds subscript one multiplied by gpts subscript one, plus creds subscript two multiplied by gpts subscript two, and whose denominator is creds subscript one plus creds subscript two.}{\begin{align*}
 \textrm{gpa} = \frac{
 \textrm{creds}_1 \cdot \textrm{gpts}_1 +
 \textrm{creds}_2 \cdot \textrm{gpts}_2}
 {\textrm{creds}_1 + \textrm{creds}_2}
-\end{align*}
+\end{align*}}
 
 should look like this in Python:
 
@@ -86,15 +90,18 @@ gpa = (creds1 * gpts1 + creds2 * gpts2) / (creds1 + creds2)
 
 and that this one:
 
-\begin{align*}
+\CBMath{a equals a fraction. Its numerator is the product of two factors. The first factor is the sum of x squared times y times the quantity four minus z, and y multiplied by the sum of x and q. The second factor is two raised to the power of the quantity fifteen times y plus two times z. Its denominator is nineteen times x cubed, minus the quantity y times z raised to an exponent equal to the square of the difference y minus one.}{\begin{align*}
 a = \frac{\lbrack x^2y(4-z) + (x+q)\cdot y \rbrack \times 2^{15y+2z}}
 {19x^3 - (yz)^{(y-1)^2}}
-\end{align*}
+\end{align*}}
 
 should look like this:
 
-\begin{Verbatim}[fontsize=\tiny,samepage=true,frame=single,framesep=3mm]
-a = (((x**2)*y*(4-z) + (x+q)*y) * 2**(15*y+2*z)) / (19*(x**3) - (y*z)**((y-1)**2))
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
+a = (
+    ((x**2)*y*(4-z) + (x+q)*y) * 2**(15*y+2*z)
+    / (19*(x**3) - (y*z)**((y-1)**2))
+)
 \end{Verbatim}
 
 \vspace{-.15in}
@@ -221,6 +228,9 @@ a list.
 \begin{figure}[ht]
 \small
 \centering
+\begingroup
+\par\tagpdfparaOff
+\tagpdfsetup{table/header-rows={1},table/header-columns={}}
 \begin{tabular}{c | l}
 \hline
 Method/operator & Operation \\
@@ -233,7 +243,8 @@ Method/operator & Operation \\
 \texttt{.lower()} & convert to all lowercase \\
 \texttt{.title()} & convert to ``title case'' (capitalize each word) \\
 \hline
-\end{tabular}
+\end{tabular}\par
+\endgroup
 \smallskip
 \caption{A few of Python's string methods.}
 \label{fig:stringOps}
@@ -468,7 +479,7 @@ first define \texttt{diva}:
 
 \vspace{-.2in}
 \begin{center}
-\includegraphics[width=0.9\textwidth]{bomb.png}
+\includegraphics[width=0.9\textwidth,alt={Initial memory state: the atomic string variable diva contains Ariana Grande. The aggregate-data side of the diagram is empty.}]{bomb.png}
 \end{center}
 
 Now say we do this:
@@ -481,7 +492,7 @@ The result is this picture:
 
 \vspace{-.2in}
 \begin{center}
-\includegraphics[width=0.9\textwidth]{bomb2.png}
+\includegraphics[width=0.9\textwidth,alt={After new\_var\_name = diva.upper(), diva still contains Ariana Grande, while a separate atomic string variable new\_var\_name contains ARIANA GRANDE. upper() returns an uppercase string without changing the original value.}]{bomb2.png}
 \end{center}
 
 And now we see the reason for it all. The contents of the \texttt{diva}

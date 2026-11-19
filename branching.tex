@@ -58,13 +58,13 @@ Just like a \texttt{for} loop, every \texttt{if} statement has a header and a
 body. And just like a \texttt{for} loop, the determining factor of which lines
 constitute the body depends on the indentation:
 
-\begin{compactitem}
-\item[\leftpointright] The first \texttt{if} statement's header is line \textbf{5}.
-\item[\leftpointright] The first \texttt{if} statement's body is lines \textbf{6 and 7}.
-\item[\leftpointright] The second \texttt{if} statement's header is line \textbf{8}.
-\item[\leftpointright] The second \texttt{if} statement's body is lines
+\begin{itemize}[nosep]
+\item The first \texttt{if} statement's header is line \textbf{5}.
+\item The first \texttt{if} statement's body is lines \textbf{6 and 7}.
+\item The second \texttt{if} statement's header is line \textbf{8}.
+\item The second \texttt{if} statement's body is lines
 \textbf{9 and 10}.
-\end{compactitem}
+\end{itemize}
 
 \index{condition (of an \texttt{if} statement)}
 
@@ -148,7 +148,7 @@ Gladys's IQ is 125 and she has $2000.
 
 You can see that ``\texttt{I wish you well!}'' was printed. This is because
 \texttt{cash\_on\_hand} was \textit{not} greater than 5000 (as required by the
-\texttt{if} condition). Also, the ``\dots\texttt{you're smart!}\dots''
+\texttt{if} condition). Also, the ``\dots\texttt{you\textquotesingle{}re smart!}\dots''
 message was printed but not the ``\dots\texttt{not that smart}\dots'' one.
 Both the \texttt{if} part and the \texttt{else} part have an indented body,
 although only the \texttt{if} part has a condition.
@@ -209,11 +209,11 @@ To understand this behavior, you have to realize that an
 multi-lingual greeting program has three components:
 
 \begin{samepage}
-\begin{compactenum}
+\begin{enumerate}[nosep]
 \item an \texttt{if} statement
 \item an \texttt{if} statement
 \item an \texttt{if}/\texttt{else} statement
-\end{compactenum}
+\end{enumerate}
 \end{samepage}
 
 \index{golden rule}
@@ -224,14 +224,14 @@ will always be executed: never both, and never neither one.} Therefore, the
 above program does this:
 
 \begin{samepage}
-\begin{compactenum}
+\begin{enumerate}[nosep]
 \item If the language is Spanish, print an ``Hola'' message. (Otherwise, do
 nothing.)
 \item If the language is French, print a ``Bonjour'' message. (Otherwise, do
 nothing.)
 \item If the language is Chinese print a ``Ni hao'' message. Otherwise, print a
 ``Hello'' message.
-\end{compactenum}
+\end{enumerate}
 \end{samepage}
 
 Once you recognize that structure, you'll realize that when step 3 is
@@ -243,6 +243,9 @@ doesn't work any other way.
 \centering
 \small
 \bigskip
+\begingroup
+\par\tagpdfparaOff
+\tagpdfsetup{table/header-rows={1},table/header-columns={}}
 \begin{tabular}{c|c}
 Operator & Meaning \\
 \hline
@@ -263,7 +266,8 @@ Operator & Meaning \\
 \texttt{or} & or \\
 \hline
 \texttt{not} & not \\
-\end{tabular}
+\end{tabular}\par
+\endgroup
 
 \bigskip
 \normalsize
@@ -411,7 +415,7 @@ is where we're going to get a lot of mileage.
 Let's return to Springfield. Our \texttt{simpsons} \texttt{DataFrame} from
 p.~\pageref{finalSimpsons} looked like this:
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
        species  age gender            fave     IQ          hair   salary
 name                                                                    
 Homer    human   36      M            beer   74.0          none  52000.0
@@ -445,14 +449,14 @@ SLH likes nan.
 But combining this with branching techniques gives us more power. We could, for
 example, print only the females:
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
 for row in simpsons.itertuples():
     if row.gender == "F":
         print("{} likes {}.".format(row.Index, row.fave))
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 Marge likes helping others.
 Lisa likes saxophone.
 Maggie likes pacifier.
@@ -460,7 +464,7 @@ Maggie likes pacifier.
 
 or give different messages for different age ranges:
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
 for row in simpsons.itertuples():
     if row.age >= 18:
         print("{} earns ${} outside the home.".format(row.Index,
@@ -470,7 +474,7 @@ for row in simpsons.itertuples():
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 Homer earns $52000.0 outside the home.
 Marge earns $0.0 outside the home.
 Aw, Bart's just a kid.
@@ -481,7 +485,7 @@ Aw, SLH's just a kid.
 
 or combine these things in innumerable ways:
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
 for row in simpsons.itertuples():
    if row.species == "human":
       if row.IQ > 115:

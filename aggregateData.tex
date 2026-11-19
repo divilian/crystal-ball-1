@@ -47,7 +47,7 @@ might call the left one ``\texttt{followees}'' and the right one
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.6\textwidth]{array.png}
+\includegraphics[width=0.6\textwidth,alt={Two homogeneous arrays with zero-based indices. The string array contains @katyperry, @rihanna, @Cristiano, and @TheEllenShow at indices 0 through 3. The real-number array contains 1526.73, 98774.91, 1000000.00, 4963.12, and 123.19 at indices 0 through 4. Each entire collection is one array variable; an index identifies a single element.}]{array.png}
 \caption{Two arrays.}
 \label{fig:array}
 \end{figure}
@@ -91,7 +91,7 @@ with a regular array. Instead, you ask ``what value is associated with the
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.9\textwidth]{assocArray.png}
+\includegraphics[width=0.9\textwidth,alt={Two associative arrays, each organized into key and value columns. City-to-team mappings are Philadelphia: Eagles, Baltimore: Ravens, Dallas: Cowboys, and New England: Patriots. Athlete-to-uniform-number mappings are Sheryl Swoops: 22, Michael Jordan: 23, Mia Hamm: 9, John Elway: 7, LeBron James: 23, Alex Morgan: 13, and Dan Marino: 13. Keys are unique within an array, while values such as 23 or 13 can repeat.}]{assocArray.png}
 \caption{Two associative arrays.}
 \label{fig:assocArray}
 \end{figure}
@@ -155,7 +155,7 @@ your head around.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\textwidth]{table.png}
+\includegraphics[width=\textwidth,alt={Pinterest data table with columns screenname, pins, followers, real name, and followers per board. In that column order, the rows are @cathiehong, 21122, 7975315, Cathie Hong, 134136.3; @bekkapalmer, 13763, 8479803, Bekka Palmer, 229641.8; @poppytalk, 21122, 8129040, Jan Halvarson, 11617.3; @ohjoy, 16097, 12645798, Joy Cho, 99074.2; @maryannrizzo, 110927, 8951932, Maryann Rizzo, 122019.8; and @stylemepretty, 162613, 5879142, Abby Leif, 80943.0. Text columns are blue, integer columns yellow, and the real-number column orange; each row represents one user and each column has one data type.}]{table.png}
 \caption{A table.}
 \label{fig:table}
 \end{figure}
@@ -191,7 +191,7 @@ millions of rows it might have -- is \textit{one} variable with a single name.
 Also, just like with associative arrays, there normally isn't any implied
 \textit{order} to the rows. Many implementations of these data types (including
 Python/Pandas) will actually let you specify ``the first row'' or ``the
-$53^{\textrm{rd}}$ row,'' but that always makes me cringe because conceptually,
+53rd row,'' but that always makes me cringe because conceptually,
 there isn't any such thing. They're just ``rows'' that are all ``in
 there.''
 
@@ -235,7 +235,7 @@ Figure~\ref{fig:aggregateMemory}.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=1\textwidth]{aggregateMemory.png}
+\includegraphics[width=1\textwidth,alt={Memory diagram with all variable names on the left and aggregate objects on the right. Atomic variables gpa and course directly hold 3.19 and the string DATA 101. camping\_gear points to a table of item, brand, weight, and quantity: tent, Coleman, 8.5, 1; lantern, Black Diamond, 1.25, 1; sleeping bag, North Face, 2.0, 3. stock\_fluctuations points to an array containing 6.0, -1.75, 4.25, 2.5, and -0.75. Both ages and people point to the same associative array, mapping Stacey to 19, Leighanne to 18, and Jeff to 21; two names can therefore share one aggregate object.}]{aggregateMemory.png}
 \caption{Where aggregate data variables -- and their variable names -- live in
 memory.}
 \label{fig:aggregateMemory}

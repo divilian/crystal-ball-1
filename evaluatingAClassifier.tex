@@ -163,13 +163,19 @@ The data size here is laughably small so that I can fit everything on the page.
 But it's worth considering these three quantities anyway:
 
 \begin{center}
+\begingroup
+\par\tagpdfparaOff
+\tagpdfsetup{table/header-rows={1},table/header-columns={}}
 \begin{tabular}{r|c}
+Evaluation & Accuracy \\
+\hline
 Classifier's performance on training set & 94.1\% (16/17) \\
 \hline
 Classifier's performance on test set & 82.5\% (7/8) \\
 \hline
 Just using the prior on test set & 62.5\% (5/8) \\
-\end{tabular}
+\end{tabular}\par
+\endgroup
 \end{center}
 
 \index{contradiction (in a training set)}

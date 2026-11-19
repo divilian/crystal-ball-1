@@ -18,13 +18,13 @@ we'll talk about the atomic elements (``cells'') themselves.
 Suppose you have a \texttt{DataFrame} called \texttt{df}. Here's how you can
 extract particular rows and columns:
 
-\begin{compactitem}
+\begin{itemize}[nosep]
 \item \texttt{df.loc[}\textsl{i}\texttt{]} -- access the \textbf{row} with
 \textbf{index} \textsl{i}
 \item \texttt{df.iloc[}\textsl{n}\texttt{]} -- access \textbf{row} number
 \textsl{n}
 \item \texttt{df[}\textsl{c}\texttt{]} -- access \textbf{column} \textsl{c}
-\end{compactitem}
+\end{itemize}
 
 \index{iloc@\texttt{.iloc} syntax (Pandas)}
 \index{loc@\texttt{.loc} syntax (Pandas)}
@@ -36,7 +36,7 @@ happens. More common is the first form: we specify the row we want by its
 index.
 
 The last one is tricky, because everyone (including me, several times a week,
-it seems) assumes that just typing (say) ``\texttt{df['Bart']}'' would give you
+it seems) assumes that just typing (say) ``\texttt{df[\textquotesingle{}Bart\textquotesingle{}]}'' would give you
 \texttt{Bart}'s row. This is probably how it \textit{ought} to work, since
 \texttt{Series}es worked that way. Alas, no: if you specify neither
 \texttt{.loc} nor \texttt{.iloc}, you're asking for a \textit{column}, not a
@@ -77,26 +77,26 @@ Btw, for any of the three options, you can provide a \textit{list} with
 multiple things you want, instead of just one thing. You do so by using
 \textit{double} boxies:
 
-\begin{compactitem}
+\begin{itemize}[nosep]
 \item \texttt{df.loc[[}\textsl{i1,i2,i3,\dots}\texttt{]]} -- access the
 row\textbf{s} with indices \textsl{i1, i2, i3,} \textit{etc.}
 \item \texttt{df.iloc[[}\textsl{n1,n2,n3,\dots}\texttt{]]} -- access the row\textbf{s}
 numbered \textsl{n1, n2, n3,} \textit{etc.}
 \item \texttt{df[[}\textsl{c1,c2,c3,\dots}\texttt{]]} -- access the
 column\textbf{s} names \textsl{c1, c2, c3,} \textit{etc.}
-\end{compactitem}
+\end{itemize}
 
 \subsection{Examples}
 
 To test your understanding of all of the above, confirm that you understand the
 following examples:
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
 print(simpsons.iloc[3])
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 species        human
 age                8
 gender             F
@@ -109,12 +109,12 @@ Name: Lisa, dtype: object
 
 \medskip
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
 print(simpsons['age'])
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 name
 Homer     36
 Marge     34
@@ -126,12 +126,12 @@ Name: age, dtype: int64
 \end{Verbatim}
 
 \medskip
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
 print(simpsons.loc[['Lisa','Maggie','Bart']])
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
        species  age gender        fave     IQ   hair  salary
 name                                                        
 Lisa     human    8      F   saxophone  200.0  curly     0.0
@@ -140,12 +140,12 @@ Bart     human   10      M  skateboard   90.0   buzz     0.0
 \end{Verbatim}
 
 \medskip
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
 print(simpsons.iloc[[1,3,4]])
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
        species  age gender            fave     IQ          hair  salary
 name                                                                   
 Marge    human   34      F  helping others  120.0  stacked tall     0.0
@@ -154,12 +154,12 @@ Maggie   human    1      F        pacifier  100.0         curly     0.0
 \end{Verbatim}
 
 \medskip
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
 print(simpsons[['age','fave','IQ']])
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
         age            fave     IQ
 name                              
 Homer    36            beer   74.0
@@ -315,7 +315,7 @@ print(simpsons.sort_index())
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
        species  age gender            fave     IQ          hair   salary
 name                                                                    
 Bart     human   10      M      skateboard   90.0          buzz      0.0
@@ -342,7 +342,7 @@ print(simpsons.sort_values('IQ')
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
        species  age gender            fave     IQ          hair   salary
 name                                                                    
 SLH        dog    4      M             NaN   30.0        shaggy      0.0
@@ -371,7 +371,7 @@ print(simpsons.sort_values(['gender','hair','IQ']))
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
        species  age gender            fave     IQ          hair   salary
 name                                                                    
 Maggie   human    1      F        pacifier  100.0         curly      0.0
@@ -400,7 +400,7 @@ print(simpsons.sort_values(['gender','hair','IQ'],
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
        species  age gender            fave     IQ          hair   salary
 name                                                                    
 Bart     human   10      M      skateboard   90.0          buzz      0.0

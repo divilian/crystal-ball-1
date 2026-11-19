@@ -93,7 +93,7 @@ Name: VG, dtype: int64
 \end{Verbatim}
 
 So if we're smart, we'd guess ``no'' for such mysterious persons, but we could
-only expect to be right about $\frac{10}{17}^\textrm{ths}$, or 59\%, of the
+only expect to be right about ten seventeenths, or 59\%, of the
 time. Not great, although better than a coin flip.
 
 \smallskip
@@ -157,7 +157,7 @@ called the \textbf{root} of the tree. Really.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.9\textwidth]{decisionTree.png}
+\includegraphics[width=0.9\textwidth,alt={Example decision tree predicting whether a student plays videogames, with Major at the root. PSYC predicts No; MATH branches on Gender, predicting No for M and Yes for F or O. CPSC branches on Age: young predicts Yes, middle predicts No, and old branches on Gender, predicting Yes for M or O and No for F. Ovals are tests, labeled branches give feature values, and rectangular leaves give Yes or No predictions.}]{decisionTree.png}
 \caption{A decision tree (not a particularly good one, as it'll turn out) for
 the videogame data set.}
 \label{fig:decisionTree}
@@ -186,7 +186,7 @@ prediction you give is written on the leaf node. It's that simple.
 \begin{itemize}
 
 \label{decisionTreeExamples}
-\item[\leftpointright] First example: suppose we have a 24-year-old male
+\item First example: suppose we have a 24-year-old male
 Psychology major. We want to know whether he's likely to play videogames. The
 decision tree in Figure~\ref{fig:decisionTree} tells us to first consider his
 \textsf{Major}, since that's the root. Now because this guy's major is
@@ -194,13 +194,13 @@ decision tree in Figure~\ref{fig:decisionTree} tells us to first consider his
 reached a leaf. Our prediction for this guy will be \texttt{No}, he probably
 doesn't play videogames.
 
-\item[\leftpointright] Second example: we have an 18-year-old Math major who
+\item Second example: we have an 18-year-old Math major who
 doesn't identify with either of the binary genders. Starting again at the root,
 we now follow the middle branch for \texttt{MATH}. Now, we look at the person's
 \textsf{Gender}. Since it is \texttt{O}, we follow the right branch, and give a
 prediction of \texttt{Yes}: we predict they \textit{do} play videogames.
 
-\item[\leftpointright] Third example: we now have a 22-year-old female Computer
+\item Third example: we now have a 22-year-old female Computer
 Science major. Do we think she would play videogames? The root tells us to look
 at her \textsf{Major} first, which means we go right; then we look at her
 \textsf{Age}, and since she's positively ancient we go right again; and

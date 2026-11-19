@@ -50,7 +50,7 @@ the customer's favorite team, rather than their rival.
 \centering
 \fbox{
 \mbox{
-\includegraphics[width=1\textwidth]{footballML.pdf}
+\includegraphics[width=.94\textwidth,alt={Annotated table of 20 football fans with five columns. Age, hometown, current residence, and years in residence are features; the rightmost team column is the target label. The upper rows are bracketed as training data and the last four rows as test data, and both groups retain their team labels. For example, row 0 describes a 29-year-old from Warrenton who has lived in Warrenton for 29 years and supports the Ravens.}]{footballML.png}
 }}
 \smallskip
 \caption{Some labeled examples, divided into training and test sets.}
@@ -72,7 +72,7 @@ picture.)
 Now here's the deal. There are \textit{three} kinds of example rows we're going
 to deal with:
 
-\begin{compactenum}
+\begin{enumerate}[nosep]
 \item \textbf{training data} -- \textit{labeled} examples which we will show to
 our classifier, and from which it will try to find useful patterns to make
 future predictions.
@@ -82,7 +82,7 @@ our classifier, but which we will use to measure how well it performs.
 \item \textbf{new data} -- \textit{unlabeled} examples that we will get in the
 future, after we've deployed our classifier in the field, and which we will
 feed to our classifier to make predictions.
-\end{compactenum}
+\end{enumerate}
 
 The purpose of the first group is to give the classifier useful information so
 it can intelligently classify.
@@ -202,7 +202,7 @@ print(training)
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
     age        hometown current_residence  years_in_residence      team
 8    52       Arlington    Fredericksburg                  17    Ravens
 15   63        New York           Orlando                  17    Giants
@@ -244,7 +244,7 @@ print(test)
 \end{Verbatim}
 \vspace{-.2in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
     age        hometown current_residence  years_in_residence      team
 3    31       Littleton         Littleton                   3   Broncos
 12   37        Richmond          Richmond                  37    Ravens
@@ -293,7 +293,7 @@ Thus, consider the following question. Suppose you knew nothing about a person
 except that they were one of Stephen's friends. Which NFL team do you think
 they'd support? Assuming this data set is representative of Stephen's friends,
 you'd say: ``I'd predict they'd be a Ravens fan, and I'd estimate that I'd
-have about a 60\% chance of being right ($\frac{12}{20}$).'' This is the
+have about a 60\% chance of being right (\CBMath{twelve twentieths}{$\frac{12}{20}$}).'' This is the
 \textit{prior}. You're not taking into account anything about their age, where
 they were born, \textit{etc.}; in fact, you weren't even told those things.
 Instead, you're just ``using the prior'' and treating everyone the same.

@@ -41,7 +41,7 @@ Our memory pictures will always be divided into exactly two ``realms,'' one on
 the left and one on the right, labeled as follows:
 
 \begin{center}
-\includegraphics[width=.7\textwidth]{memoryPicture.png}
+\includegraphics[width=.7\textwidth,alt={Template for memory diagrams, divided into two regions: Variable names and atomic data on the left, and Aggregate data on the right. The word stuff appears in each region as a placeholder for later examples.}]{memoryPicture.png}
 \label{fig:memoryPicture}
 \end{center}
 
@@ -64,7 +64,7 @@ its value.
 
 \vspace{-.2in}
 \begin{center}
-\includegraphics[width=.8\textwidth]{memoryPicture2.png}
+\includegraphics[width=.8\textwidth,alt={Memory after two assignments: pin\_count contains the integer 844 in a yellow box, and username contains the string Bekka Palmer in a blue box. Both named values are on the left; the aggregate-data region remains empty.}]{memoryPicture2.png}
 \end{center}
 
 It doesn't matter which boxes are higher or lower on the page, only that the
@@ -89,7 +89,7 @@ board_name = "Things to Make"
 
 \vspace{-.2in}
 \begin{center}
-\includegraphics[width=.8\textwidth]{memoryPicture3.png}
+\includegraphics[width=.8\textwidth,alt={Four atomic values are stored in named boxes on the left: board\_name is the string Things to Make, pin\_count is the integer 844, username is the string Bekka Palmer, and the average-impressions variable, labeled avg\_impressions in the image, is the real number 1739.3. Blue denotes strings, yellow integers, and orange real numbers. Rearranging the boxes does not change which value belongs to each name.}]{memoryPicture3.png}
 \end{center}
 
 I'm deliberately shuffling around the order of the boxes just to mess with you.
@@ -110,7 +110,7 @@ another_board = 'Pink!'
 
 \vspace{-.2in}
 \begin{center}
-\includegraphics[width=.7\textwidth]{memoryPicture4.png}
+\includegraphics[width=.7\textwidth,alt={Updated memory: board\_name remains Things to Make and username remains Bekka Palmer; pin\_count is now 845 and the average-impressions value is now 2000.97. A new string variable another\_board contains Pink! The new values replace the previous values in their boxes; the aggregate-data region is still empty.}]{memoryPicture4.png}
 \end{center}
 
 Note carefully that \textit{the previous value in the box is completely
@@ -136,7 +136,7 @@ it's an \texttt{int}.
 
 \vspace{-.2in}
 \begin{center}
-\includegraphics[width=.7\textwidth]{memoryPicture5.png}
+\includegraphics[width=.7\textwidth,alt={Memory after assignments that change data types: pin\_count now holds the real number 999.635, shown in orange, and username now holds the integer 11, shown in yellow. board\_name still contains Things to Make, the average-impressions variable contains 2000.97, and another\_board contains Pink! Both the values and types of existing variables can change.}]{memoryPicture5.png}
 \end{center}
 
 \subsection{Reading from memory}

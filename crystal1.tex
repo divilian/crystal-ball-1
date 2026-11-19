@@ -1,140 +1,73 @@
-% TODO: a chapter on "what you measure becomes your god." Refer to Cathy
-% O'Neil's writings, as well as Campbell's Law and Goodhart's Law. (I do sort
-% of mention this in the intro, though. Maybe spell it out there more?)
-%
-% TODO: how to identify and annotate specific outliers
-%
-% To compile:
-%   pdflatex crystal1.tex
-%   makeindex crystal1.idx
-%   pdflatex crystal1.tex
-\documentclass[11pt]{memoir}
-\usepackage[usenames,dvipsnames]{color}
-\usepackage{dingbat}
-\usepackage{bbding}          % for checkmark and X
-\usepackage{array}           % For double-column exercises.
-\usepackage{longtable}       % For double-column exercises.
-\usepackage[normalem]{ulem}  % For strikethrough.
-\usepackage{paralist}
-\usepackage{enumitem}        % To "resume" enumerated lists.
-\usepackage{epsfig}
-\usepackage[nokeyprefix]{refstyle}
-\usepackage{afterpage}
-\usepackage{aurical}
+% !TeX program = pdflatex
+% Accessible digital edition: pdfLaTeX, LaTeX 2025-11-01 or 2026-11-01.
+% Run: latexmk -pdf crystal1.tex
+% See ACCESSIBILITY.md for the build, validation, and Canvas workflow.
+\NeedsTeXFormat{LaTeX2e}[2025-11-01]
+\DocumentMetadata{
+  lang=en-US,
+  pdfversion=1.7,
+  pdfstandard=ua-1,
+  tagging=on,
+  tagging-setup={math/alt/use}
+}
+\documentclass[11pt,openany]{book}
+\usepackage{iftex}
+\RequirePDFTeX
 \usepackage[T1]{fontenc}
-\usepackage{varwidth}
-\usepackage{multicol}
-\usepackage{multirow}
-\usepackage{fancybox}
-\usepackage[makeidx]{hvindex}
+\usepackage{lmodern}
 \usepackage{textcomp}
+\input{glyphtounicode}
+\pdfgentounicode=1
+\usepackage{amsmath,amssymb}
+\usepackage[paperwidth=6.125in,paperheight=9.25in,
+  inner=.5in,outer=.5in,top=.85in,bottom=.8in,
+  headheight=14pt,headsep=18pt,footskip=25pt]{geometry}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage[dvipsnames]{xcolor}
 \usepackage{fancyvrb}
-\usepackage{footnote}
-\usepackage{makecell}
-\usepackage{amsmath,amsthm,amsfonts,amssymb,latexsym}
-\usepackage{MnSymbol}
-\usepackage{wasysym}
-\usepackage{gensymb}
-\usepackage{float}
-\usepackage{wrapfig}
 \usepackage{upquote}
-\usepackage{framed}
-\usepackage{xcolor}
+\usepackage[normalem]{ulem}
+\usepackage{makeidx}
 \usepackage[hidelinks]{hyperref}
-\usepackage[width=.9\textwidth,singlelinecheck=true,skip=1pt,font=small,labelfont=bf]{caption}
+\usepackage{bookmark}
+\usepackage[width=.9\textwidth,singlelinecheck=true,skip=4pt,
+  font=small,labelfont=bf]{caption}
+\input{accessibility-support.tex}
 
-% Lulu.com
-%\setstocksize{23.389cm}{15.593cm}
-%\settrimmedsize{\stockheight}{\stockwidth}{*}
-%\settrims{0pt}{0pt}
-
-% Blurb.com
-% Blueprints is 312 pages
-% Crystal Ball 1 is 302 pages, pushed to 306
-
-\setstocksize{9.25in}{6.125in}
-\settrimmedsize{9in}{6in}{*}
-\settrims{.125in}{.125in}
-
-% Amazon.com
-%\setstocksize{9in}{6in}
-%\settrimmedsize{9in}{6in}{*}
-%\settrims{0pt}{0pt}
-
-\setlxvchars
-\settypeblocksize{*}{\lxvchars}{1.618}
-
-%\setlrmargins{*}{*}{.618}
-\setlrmargins{*}{1.2cm}{.618}
-
-% Lulu.com
-%\setulmargins{110pt}{*}{*}
-
-% Blurb.com
-\setulmargins{80pt}{*}{*}
-\setheaderspaces{50pt}{*}{1.618}
-
-\checkandfixthelayout
-
-\newcommand{\freakingtilde}{\raisebox{0.5ex}{\texttildelow}}
-
-\makesavenoteenv{tabular}  % to allow footnotes in tables
-\makesavenoteenv{figure}  % to allow footnotes in tables
-
-\definecolor{darkgreen}{rgb}{0,.55,0}
-\definecolor{darkred}{rgb}{.75,0,0}
-
-
-%\captionsetup{width=.9\textwidth}
-
-%\usepackage{enumerate}
-
+\hypersetup{
+  pdftitle={{The Crystal Ball Instruction Manual, Volume One: Introduction to Data Science}},
+  pdfauthor={Stephen Davies},
+  pdfsubject={Introduction to data science and Python; accessible digital edition of version 1.2},
+  pdfkeywords={data science, Python, statistics, machine learning, accessible textbook},
+  pdfdisplaydoctitle=true,
+  bookmarksopen=true,
+  bookmarksnumbered=true,
+  bookmarksdepth=3,
+  pdflang={en-US}
+}
 
 \makeindex
-
-\newenvironment{custommargins}[2]%
-  {\addtolength{\leftskip}{#1}\addtolength{\rightskip}{#2}}{\par}
-
-%% Set left margin - The default is 1 inch, so the following
-%% command sets a 2-inch left margin.
-%\setlength{\oddsidemargin}{1in}
-%\setlength{\evensidemargin}{0in}
-%% Set width of the text - What is left will be the right margin.
-%% In this case, right margin is 8.5in - 1.25in - 6in = 1.25in.
-%\setlength{\textwidth}{5.5in}
-%
-%% Set top margin - The default is 1 inch, so the following
-%% command sets a 0.75-inch top margin.
-%\setlength{\topmargin}{.75in}
-%
-%% Set height of the text - What is left will be the bottom margin.
-%% In this case, bottom margin is 11in - 0.75in - 9.5in = 0.75in
-%\setlength{\textheight}{7.25in}
-
 \setlength{\parindent}{0pt}
-\setlength{\baselineskip}{1.5pt}
-\setlength{\parskip}{6pt}
+\setlength{\parskip}{6pt plus 1pt minus 1pt}
+\setlength{\emergencystretch}{3em}
+\definecolor{darkgreen}{rgb}{0,.4,0}
+\definecolor{darkred}{rgb}{.65,0,0}
+\newcommand{\freakingtilde}{\textasciitilde}
+\providecommand{\degree}{\ensuremath{^\circ}}
 
 \begin{document}
-
-\title{{\huge The Crystal Ball Instruction Manual}\\{\large Volume One: Introduction to
-Data Science}\\
-{\small version 1.2}}
+\frontmatter
+\title{{\huge The Crystal Ball Instruction Manual}\\[.6em]
+  {\large Volume One: Introduction to Data Science}\\[.5em]
+  {\small version 1.2}}
 \author{Stephen Davies, Ph.D.\\Computer Science Department\\University of Mary Washington}
 \date{}
 \maketitle
-
 \include{copyright}
-\frontmatter
-
 \renewcommand{\contentsname}{Contents}
-
 \setcounter{tocdepth}{0}
 \tableofcontents
-
-%\include{preface}
-
-\setcounter{chapter}{0}
 
 \mainmatter
 \include{intro}
@@ -167,18 +100,6 @@ Data Science}\\
 \include{decisionTrees2}
 \include{evaluatingAClassifier}
 
-% Add empty page to get to a multiple of 12 (306 total pages).
-\begingroup
-  \null
-  \newpage
-\endgroup
 \backmatter
 \printindex
-
-% Add empty (number-less) pages to get to a multiple of 12 (306 total pages).
-\shipout\null
-\shipout\null
-\shipout\null
-\shipout\null
-
 \end{document}

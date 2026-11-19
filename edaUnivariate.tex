@@ -43,11 +43,11 @@ whether you're dealing with categorical or numeric data.
 Let's say you had access to a poll on people's favorite pop stars. You import
 this into a big ol' Pandas \texttt{Series} called \texttt{faves}:
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
 print(faves)
 \end{Verbatim}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 0          Katy Perry
 1             Rihanna
 2       Justin Bieber
@@ -182,30 +182,25 @@ How would I calculate, say, the .7-quantile? First, sort the numbers:
 and then spread out the quantiles ``evenly'' from 0 to 1:
 
 \begin{center}
-\scriptsize
-\renewcommand{\arraystretch}{.7}
+\CBCodeSmall
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.1}
+\begingroup
+\par\tagpdfparaOff
+\tagpdfsetup{table/header-rows={1},table/header-columns={1}}
 \begin{tabular}{rccccccccccc}
-value: & 22k& 35k& 35k& 45k& 51k& 53k& 54k& 64k& 67k& 94k& 8M\\
-& $\uparrow$ &
-$\uparrow$ &
-$\uparrow$ &
-$\uparrow$ &
-$\uparrow$ &
-$\uparrow$ &
-$\uparrow$ &
-$\uparrow$ &
-$\uparrow$ &
-$\uparrow$ &
-$\uparrow$ \\
-quantile: & .0\ \ & .1\ \  & .2\ \  & .3\ \  & .4\ \  & .5\ \  & .6\ \  & .7\ \  & .8\ \  & .9\ \  & 1.0 \\
-\end{tabular}
+Quantile & .0 & .1 & .2 & .3 & .4 & .5 & .6 & .7 & .8 & .9 & 1.0 \\
+\hline
+Salary & 22k & 35k & 35k & 45k & 51k & 53k & 54k & 64k & 67k & 94k & 8M \\
+\end{tabular}\par
+\endgroup
 \end{center}
 
 Don't get picky on me. If you were picky, you could quibble at saying ``the
 .3-quantile is 45k'' since it's technically \textit{not} true that 30\% of the
 values are less than 45k: in truth, 3 out of 11 (27.3\%) of them are. Whatever,
 whatever. The point is that 45k is at the ``cut point'' that's
-$\frac{3}{10}$ths of the way through the values from min to max. Quantiles
+three tenths of the way through the values from min to max. Quantiles
 aren't about laser precision anyway: they're about understanding the general
 pattern of the data.
 
@@ -232,7 +227,7 @@ groups:
 \index{decile}
 \index{percentile}
 
-\begin{compactitem}
+\begin{itemize}[nosep]
 \item ``quartiles'': split the data into four groups, with the split points
 being the .25-, .5-, and .75-quantiles.
 \item ``quintiles'': split the data into five groups, with the split points
@@ -241,7 +236,7 @@ being the .2-, .4-, .6, and .8-quantiles.
 being the .1-, .2-, .3-, .4-, .5-, .6-, .7-, .8-, and .9-quantiles.
 \item ``percentiles'': split the data into 100 groups, with the split points
 being the .01-, .02-, .03-, ..., .98-, and .99-quantiles.
-\end{compactitem}
+\end{itemize}
 
 Be careful to understand that ``evenly-sized groups'' does not mean ``groups
 with the same-sized range,'' but rather ``groups with \textit{the same number
@@ -307,15 +302,20 @@ print(num_plays.quantile(.1))
 
 \label{pointOneQuantileEpiphany}
 Whoa. The .1-quantile is \textit{zero}. Think about what that means.
-Pictorially, sorting the data would give this:
+Sorting the data gives zero at both of these quantiles:
 
 \begin{center}
 \renewcommand{\arraystretch}{.7}
-\begin{tabular}{rccccccccccccc}
-value: & 0& 0& 0& 0& 0& 0& 0& 0& $\cdots$ & 0 & 0 & $\cdots$ \\
-& $\uparrow$ & & & & & & & & & & $\uparrow$ & \\
-quantile: & .0\ \ & & & & & & & & & & .1\ \ & \\
-\end{tabular}
+\begingroup
+\par\tagpdfparaOff
+\tagpdfsetup{table/header-rows={1},table/header-columns={}}
+\begin{tabular}{c|c}
+Quantile & Number of plays \\
+\hline
+.0 & 0 \\
+.1 & 0 \\
+\end{tabular}\par
+\endgroup
 \end{center}
 
 Put another way, that means that (at least) \textit{10\% of our videos have no
@@ -417,7 +417,7 @@ print(num_plays.mean())
 \end{Verbatim}
 
 Consider just how misleading that really is. The ``average'' number of plays is
-over 14,000. Yet the \textit{.9}-quantile was less than $\frac{1}{10}$th of that!
+over 14,000. Yet the \textit{.9}-quantile was less than one tenth of that!
 In fact, even the .97-quantile is only:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
@@ -549,12 +549,12 @@ gdp.plot(kind='bar')
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.7\textwidth]{gdp.png}
+\includegraphics[width=0.7\textwidth,alt={Bar chart of GDP in trillions, with countries in the original input order: Italy 2.26, Germany 4.42, Brazil 2.26, United States 21.41, France 3.06, Canada 1.91, Japan 5.36, China 15.54, India 3.16, and United Kingdom 3.02. The United States and China have much taller bars than the other countries, with Japan a distant third. Countries appear on the horizontal axis and GDP determines bar height.}]{gdp.png}
 \end{figure}
 
 There are a zillion ways to customize these plots, and I'll only mention a
 very, very few. A more complete list of options is available by Googling, or
-going to \url{https://matplotlib.org/3.1.1/api/\_as\_gen/matplotlib.pyplot.plot.html}
+going to \href{https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.plot.html}{Matplotlib plotting options reference}
 
 \index{sort\_values@\texttt{.sort\_values()} method (Pandas)}
 
@@ -568,7 +568,7 @@ gdp.sort_values(ascending=False).plot(kind='bar')
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.7\textwidth]{gdp2.png}
+\includegraphics[width=0.7\textwidth,alt={GDP bar chart using one color and ordering countries from the tallest bar to the shortest: United States, China, Japan, Germany, India, France, United Kingdom, Brazil, Italy, and Canada. The United States and China dominate the chart, followed by a large drop to Japan and the remaining countries. Sorting makes the relative sizes easier to compare than in the preceding unsorted chart.}]{gdp2.png}
 \end{figure}
 
 You see what I mean about ``caring about the labels/keys/index'' for this sort
@@ -590,12 +590,12 @@ next two highest) only a fraction.
 A very common special case of a bar chart is one where we combine it with the
 \texttt{.value\_counts()} method. Let's go back to Taylor vs.~Katy:
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
 print(faves)
 \end{Verbatim}
 \vspace{-.3in}
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
 0          Katy Perry
 1             Rihanna
 2       Justin Bieber
@@ -622,7 +622,7 @@ faves.value_counts().plot(kind='bar',color="orange")
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.6\textwidth]{celebs.png}
+\includegraphics[width=0.6\textwidth,alt={Bar chart of favorite-celebrity counts in descending order: Taylor Swift 388, Katy Perry 265, Drake 261, Adele 212, Rihanna 136, and Justin Bieber 134. Taylor Swift is the most frequent choice; Katy Perry and Drake have nearly equal counts, as do Rihanna and Justin Bieber. The horizontal axis names celebrities and bar height gives the number of responses.}]{celebs.png}
 \end{figure}
 
 \index{sort\_index@\texttt{.sort\_index()} method (Pandas)}
@@ -640,7 +640,7 @@ faves.value_counts().sort_index().plot(kind='bar',
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.6\textwidth]{celebs2.png}
+\includegraphics[width=0.6\textwidth,alt={The favorite-celebrity counts reordered alphabetically: Adele 212, Drake 261, Justin Bieber 134, Katy Perry 265, Rihanna 136, and Taylor Swift 388. The response counts are unchanged from the preceding chart; sorting the Series index changes only the order of the bars.}]{celebs2.png}
 \end{figure}
 
 These long lines with lots of strung-together methods are concise, but can also
@@ -721,7 +721,7 @@ mean: 23.755
 \end{Verbatim}
 
 Looks like a typical score is in the 20's, with the conference record being a
-whopping 55 points in one game. The IQR is $32-17$, or 15 points.
+whopping 55 points in one game. The IQR is \CBMath{thirty-two minus seventeen}{$32-17$}, or 15 points.
 
 We can plot a histogram of this \texttt{Series} with this code:
 
@@ -736,7 +736,7 @@ the plot is simply the number of games in which a team scored in that range.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.9\textwidth]{ncaa1.png}
+\includegraphics[width=0.9\textwidth,alt={Histogram of points scored by teams in the example NCAA football conference, with score on the horizontal axis and frequency on the vertical axis. Ten broad bins show scores concentrated in the teens through the thirties, with the tallest bin around the high twenties. Shutouts and single-digit scores occur, but scores above 40 are uncommon. The overall distribution is roughly mound-shaped, with fewer observations at the extremes.}]{ncaa1.png}
 \caption{A histogram of the historical points-per-game for teams in a certain
 NCAA football conference.}
 \label{fig:ncaa1}
@@ -778,7 +778,7 @@ you can see there's a lot more detail in the plot.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.9\textwidth]{ncaa2.png}
+\includegraphics[width=0.9\textwidth,alt={Histogram of the same NCAA football scores using 30 narrower bins. The overall concentration remains in the teens through the thirties, but the finer bins expose local peaks, a dip in the low twenties, and a distinct group near zero. These fluctuations illustrate how smaller bin widths reveal detail while making the broad shape less smooth.}]{ncaa2.png}
 \caption{The same data set as in Figure~\ref{fig:ncaa1}, but with more (and
 smaller) bins.}
 \label{fig:ncaa2}
@@ -811,13 +811,13 @@ at the quantiles and saw that the 1-quantile (max) was astronomically higher
 than the .9-quantile was. Let's see what happens when we plot a histogram
 (show in Figure~\ref{fig:youtube1}):
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
 num_plays.plot(kind='hist', color="red")
 \end{Verbatim}
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=1\textwidth]{youtube1.png}
+\includegraphics[width=1\textwidth,alt={Histogram of YouTube video play counts with a horizontal scale extending to about one million plays. Almost all observations fall in the first broad bin below roughly 100,000 plays, whose frequency exceeds 3,000; the remaining bins are barely visible. A few very popular videos stretch the scale and hide detail among the many low-play videos.}]{youtube1.png}
 \caption{A first attempt at plotting the YouTube \texttt{num\_plays} data set.}
 \label{fig:youtube1}
 \end{figure}
@@ -835,7 +835,7 @@ videos in this set have between 0 and 100,000 plays.
 Let's see if we can get more detail by increasing the number of bins (say,
 to 1000):
 
-\begin{Verbatim}[fontsize=\scriptsize,samepage=true,frame=single,framesep=3mm]
+\begin{Verbatim}[fontsize=\CBCodeSmall,samepage=true,frame=single,framesep=3mm]
 num_plays.plot(kind='hist', bins=1000, color="red")
 \end{Verbatim}
 
@@ -846,8 +846,8 @@ we're going to see any detail on the low-play videos.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=.48\textwidth]{youtube2.png}
-\includegraphics[width=.48\textwidth]{youtube3.png}
+\includegraphics[width=.48\textwidth,alt={YouTube play-count histogram with 1,000 bins but the same horizontal scale reaching about one million plays. The bulk of the observations is still compressed into a very narrow spike at the far left, now revealing that most videos have fewer than about 1,000 plays. Increasing the number of bins alone does not make the lower end readable while extreme values remain on the axis.}]{youtube2.png}
+\includegraphics[width=.48\textwidth,alt={Histogram restricted to videos with at most 1,000 plays, with play count on the horizontal axis and frequency on the vertical axis. A very tall first bin near zero represents many never-viewed or seldom-viewed videos. Away from zero, counts are concentrated in the low hundreds, with a broad hump around 150 to 300 plays and a diminishing tail toward 1,000. Filtering the plotted range reveals detail hidden in the full-range histograms.}]{youtube3.png}
 \caption{Further attempts at plotting the YouTube \texttt{num\_plays} data set.
 On the left side, we decreased the bin size to no avail. On the right side, we
 gave up on plotting the popular videos and concentrated only on the unpopular
@@ -926,7 +926,7 @@ red so you can figure out what's going on.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=1\textwidth]{ncaaboxAnnotated.png}
+\includegraphics[width=1\textwidth,alt={Annotated box plot of NCAA points per game. Arrows identify the bottom whisker as the 0-quantile or minimum, the box's lower edge as the 0.25-quantile, the internal line as the 0.5-quantile or median, the upper edge as the 0.75-quantile, and the top whisker as the 1-quantile or maximum for this example. The median is near 25 points and the middle half of the scores lies from about 17 to the low thirties. These labeled parts show how five summary values are represented in a box plot.}]{ncaaboxAnnotated.png}
 \caption{A box plot of the NCAA points data.}
 \label{fig:ncaaBox}
 \end{figure}
@@ -944,14 +944,14 @@ graphical way of showing quartiles; or, put another way, a graphical way of
 showing these five quantiles:
 
 \index{median}
-\begin{compactitem}
+\begin{itemize}[nosep]
 \item The 0-quantile (the minimum value) is the y-value of the bottom ``whisker.''
 \item The .25-quantile is the y-value of the bottom of the ``box.''
 \item The .5-quantile (the median) is the y-value of the horizontal line within
 the box.
 \item The .75-quantile is the y-value of the top of the ``box.''
 \item The 1-quantile (the maximum value) is the y-value of the top ``whisker.''
-\end{compactitem}
+\end{itemize}
 
 \index{IQR (interquartile range)}
 Using your quantile knowledge from section~\ref{quantiles}, you'll realize the
@@ -975,7 +975,7 @@ get the monstrosity in Figure~\ref{fig:youtubebox}.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\textwidth]{youtubebox.png}
+\includegraphics[width=0.8\textwidth,alt={Box plot of YouTube play counts on a vertical scale extending to about one million. The box and whiskers are compressed close to zero, while many individual outlier circles extend far above them, some approaching one million plays. The upper whisker therefore is not the overall maximum: unusually popular videos are displayed separately as outliers.}]{youtubebox.png}
 \caption{A box plot of a non-bell-curvy data set.}
 \label{fig:youtubebox}
 \end{figure}

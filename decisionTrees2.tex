@@ -194,7 +194,7 @@ Don't lose hope, though: \textsf{Major} was only one of our three choices.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.9\textwidth]{majorOnTop.png}
+\includegraphics[width=0.9\textwidth,alt={One-level videogame decision tree with Major at the root. PSYC predicts No from 2 Yes and 3 No training examples; MATH predicts No from 1 Yes and 3 No; CPSC predicts Yes from a tie of 4 Yes and 4 No. These leaf predictions correctly classify 10 of 17 training examples.}]{majorOnTop.png}
 \caption{A one-level decision tree if we put the \textsf{Major} feature at the
 root -- it would classify \textbf{ten} of the seventeen training points
 correctly.}
@@ -227,7 +227,7 @@ tree in Figure~\ref{fig:ageOnTop}. It gets \textbf{eleven} points right (65\%)
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\textwidth]{ageOnTop.png}
+\includegraphics[width=0.8\textwidth,alt={One-level videogame decision tree with Age at the root. Young predicts Yes from a tie of 3 Yes and 3 No; middle predicts No from 2 Yes and 6 No; old predicts Yes from 2 Yes and 1 No. These leaf predictions correctly classify 11 of 17 training examples.}]{ageOnTop.png}
 \caption{A one-level decision tree if we chose the \textsf{Age} feature for the
 root -- it would classify \textbf{eleven} of the seventeen training points
 correctly.}
@@ -261,7 +261,7 @@ elect to put \textsf{Gender} at the root of our tree.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\textwidth]{genderOnTop.png}
+\includegraphics[width=0.8\textwidth,alt={One-level videogame decision tree with Gender at the root. M predicts Yes from 5 Yes and 1 No training examples; F predicts No from 2 Yes and 8 No; O predicts No from 0 Yes and 1 No. These leaf predictions correctly classify 14 of 17 training examples, the best of the three candidate root features.}]{genderOnTop.png}
 \caption{A one-level decision tree if we chose the \textsf{Gender} feature for
 the root. It would classify \textbf{fourteen} of the seventeen training points
 correctly -- easily the best of the three choices.}
@@ -332,7 +332,7 @@ tree-in-progress we'd end up with is in Figure~\ref{fig:maleMajorSplit}.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.7\textwidth]{maleMajorSplit.png}
+\includegraphics[width=0.7\textwidth,alt={Partial videogame decision tree: Gender is the root and its M branch splits on Major; the F and O branches remain unfinished. Within the M branch, MATH predicts No from a tie of 1 Yes and 1 No, CPSC predicts Yes from 3 Yes and 0 No, and PSYC predicts Yes from 1 Yes and 0 No. This candidate split correctly classifies 5 of the 6 male training examples.}]{maleMajorSplit.png}
 \caption{The tree-in-progress if we choose to split on \textsf{Major} in the
 male branch.}
 \label{fig:maleMajorSplit}
@@ -363,7 +363,7 @@ Figure~\ref{fig:maleAgeSplit}.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.7\textwidth]{maleAgeSplit.png}
+\includegraphics[width=0.7\textwidth,alt={Partial videogame decision tree: Gender is the root and its M branch splits on Age; the F and O branches remain unfinished. Young predicts Yes from 3 Yes and 0 No, middle predicts No from a tie of 1 Yes and 1 No, and old predicts Yes from 1 Yes and 0 No. This candidate split correctly classifies 5 of the 6 male training examples.}]{maleAgeSplit.png}
 \caption{On the other hand, the tree-in-progress if we choose to split on
 \textsf{Age} in the male branch instead.}
 \label{fig:maleAgeSplit}
@@ -392,7 +392,7 @@ how do we know what to guess in this case?
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\textwidth]{maleAgeMiddle.png}
+\includegraphics[width=0.8\textwidth,alt={Partial videogame decision tree with Gender at the root and Age below the M branch. Young and old males predict Yes; middle-aged males are split again by Major, with MATH predicting No and CPSC predicting Yes. The PSYC branch ends in a question mark because there are no middle-aged male Psychology majors in the training data. The root's F and O branches remain unfinished.}]{maleAgeMiddle.png}
 \caption{Going one level further down after splitting on \textsf{Age} for
 males. We have data for \texttt{middle}-aged \texttt{CPSC} and \texttt{MATH}
 males...but what to do with \texttt{middle}-aged \texttt{PSYC} males?}
@@ -410,7 +410,7 @@ depicted in Figure~\ref{fig:maleAgeMiddleWithPsyc}.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.7\textwidth]{maleAgeMiddleWithPsyc.png}
+\includegraphics[width=0.7\textwidth,alt={Partial videogame decision tree with the male branch completed. From Gender M, Age young or old predicts Yes; Age middle leads to Major, where PSYC and CPSC predict Yes and MATH predicts No. The previously unknown middle-aged male PSYC case has been assigned the fallback prediction Yes. The root's F and O branches remain unfinished.}]{maleAgeMiddleWithPsyc.png}
 \caption{The decision tree we're in the process of inducing, with the left
 branch entirely completed.}
 \label{fig:maleAgeMiddleWithPsyc}
@@ -437,7 +437,7 @@ and its Python equivalent in Figure~\ref{fig:completeVgTreePython}.
 \index{contradiction (in a training set)}
 
 One interesting aspect of our final tree is the
-female$\rightarrow$\texttt{PSYC}$\rightarrow$\texttt{middle}-aged branch.
+female\CBMath{then}{$\rightarrow$}\texttt{PSYC}\CBMath{then}{$\rightarrow$}\texttt{middle}-aged branch.
 You'll see that this leaf is labeled ``Yes(?)'' in the diagram. Why the
 question mark? Because this is the one case where we have a
 \textbf{contradiction} in our training data. Check out lines 2 and 16 back on
@@ -475,7 +475,7 @@ victory.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=1\textwidth]{completeVgTree.png}
+\includegraphics[width=1\textwidth,alt={Complete videogame decision tree rooted at Gender: O predicts No, M splits on Age, and F splits on Major. For M, young and old predict Yes; middle splits on Major, with PSYC and CPSC predicting Yes and MATH predicting No. For F, MATH predicts No; CPSC splits on Age, predicting No for young or middle and Yes for old; PSYC splits on Age, predicting No for young or old and Yes for middle. The middle-aged female PSYC leaf is marked Yes with a question mark because two otherwise identical training examples have conflicting labels.}]{completeVgTree.png}
 \caption{The final decision tree for the videogame data set.}
 \label{fig:completeVgTree}
 \end{figure}

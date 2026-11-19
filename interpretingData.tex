@@ -23,17 +23,17 @@ You've undoubtedly seen countless studies that claim to reveal important truths
 about the world, such as that smoking can cause lung cancer, greenhouse gas
 emissions can cause higher global temperatures, or orgasms can cure hiccups.
 Much of the time, scientists try to find a \textbf{causal} factor that links
-one variable to another: they suspect that the value of a variable $A$ (often
+one variable to another: they suspect that the value of a variable \CBMath{A}{$A$} (often
 called the \textbf{independent variable}, or ``\textbf{i.v.}''~for short) is a
-\textit{reason}, or \textbf{cause}, of a certain value in another variable $B$
+\textit{reason}, or \textbf{cause}, of a certain value in another variable \CBMath{B}{$B$}
 (the \textbf{dependent variable}, or ``\textbf{d.v.}'').
 
-Just to avoid misunderstandings, when we claim that $A$ \textbf{causes} $B$, we
+Just to avoid misunderstandings, when we claim that \CBMath{A}{$A$} \textbf{causes} \CBMath{B}{$B$}, we
 don't normally mean that it \textit{exclusively} causes it, or even that it
 \textit{reliably} causes it. There are lots of contributing factors to lung
 cancer besides smoking, after all; and tons of smokers never develop cancer. We
-simply mean that $A$ is a contributing factor to $B$, and that the value of the
-$A$ variable exerts some, but not total, influence over the value of the $B$
+simply mean that \CBMath{A}{$A$} is a contributing factor to \CBMath{B}{$B$}, and that the value of the
+\CBMath{A}{$A$} variable exerts some, but not total, influence over the value of the \CBMath{B}{$B$}
 variable.
 
 \index{variable}
@@ -56,36 +56,36 @@ nation.
 
 The variables in question can be from any of the scales of measure from
 chapter~\ref{ch:scalesOfMeasure}. Take the smoking example, with patients as
-the object of study. We might say that independent variable $A$ is categorical,
-with values \texttt{SMOKER} and \texttt{NON-SMOKER}. The dependent variable $B$
+the object of study. We might say that independent variable \CBMath{A}{$A$} is categorical,
+with values \texttt{SMOKER} and \texttt{NON-SMOKER}. The dependent variable \CBMath{B}{$B$}
 is also categorical: \texttt{CANCER} and \texttt{NO-CANCER}. The key question
-is: do people with $A=\texttt{SMOKER}$ also have $B=\texttt{CANCER}$
+is: do people with \CBMath{A equals SMOKER}{$A=\texttt{SMOKER}$} also have \CBMath{B equals CANCER}{$B=\texttt{CANCER}$}
 \textit{more often} (a higher percentage of the time) than people with
-$A=\texttt{NON-SMOKER}$ do?
+\CBMath{A equals NON-SMOKER}{$A=\texttt{NON-SMOKER}$} do?
 
 \index{ratio variable}
 \index{interval variable}
 
 In the greenhouse gas emissions example, our objects of study might be
-\textit{years}. Our variables are both numeric, with $A$ (a measure of yearly
-greenhouse gas emissions, measured in gigatonnes $\textrm{CO}_2$) on the ratio
-scale, and $B$ (average worldwide temperature increase/decrease) on an interval
-scale. Here, the question would be: do years in which $A$ is relatively high
-typically also have $B$ relatively high? Put another way: do years in which
+\textit{years}. Our variables are both numeric, with \CBMath{A}{$A$} (a measure of yearly
+greenhouse gas emissions, measured in gigatonnes \CBMath{C O subscript two, carbon dioxide}{$\textrm{CO}_2$}) on the ratio
+scale, and \CBMath{B}{$B$} (average worldwide temperature increase/decrease) on an interval
+scale. Here, the question would be: do years in which \CBMath{A}{$A$} is relatively high
+typically also have \CBMath{B}{$B$} relatively high? Put another way: do years in which
 earthlings have released more gas into the atmosphere tend to correspond with
 years in which the global temperature increased?
 
 And of course, we might have one categorical variable and one numeric. Perhaps
-our objects of study are American adults, and while our categorical $A$
+our objects of study are American adults, and while our categorical \CBMath{A}{$A$}
 variable has values \texttt{DEMOCRAT}, \texttt{REPUBLICAN}, \texttt{OTHER}, and
-\texttt{INDEPENDENT}, our numerical $B$ is yearly income. Our question would
+\texttt{INDEPENDENT}, our numerical \CBMath{B}{$B$} is yearly income. Our question would
 be: do adherents of one political party tend to be more wealthy than those of
 another?
 
-Or, flipping sides, the independent variable $A$ could be numeric while the
-dependent variable $B$ is categorical. Our objects of study might be high
-school seniors applying to UMW. Let $A$ be the number of different colleges a
-student applied to, and $B$ a categorical variable with values
+Or, flipping sides, the independent variable \CBMath{A}{$A$} could be numeric while the
+dependent variable \CBMath{B}{$B$} is categorical. Our objects of study might be high
+school seniors applying to UMW. Let \CBMath{A}{$A$} be the number of different colleges a
+student applied to, and \CBMath{B}{$B$} a categorical variable with values
 \texttt{ADMITTED-TO-UMW} and \texttt{NOT-ADMITTED-TO-UMW}. The question of
 interest is here is: do students who apply to more colleges tend to get in to
 UMW more often?
@@ -107,18 +107,18 @@ variables merely means that they are \textbf{correlated} in some way
 statistically.\footnote{Another way to put this is to say that the variables
 are \textbf{dependent} on each other, although this is confusing because we're
 already using the word ``dependent'' to refer to one of the variables.} If
-$A=\texttt{SMOKER}$ goes with $B=\texttt{CANCER}$ more often than
-$A=\texttt{NON-SMOKER}$ does, then there \textit{is} an association between the
-two, period. If yearly income $B$ is on average higher for
-$A=\texttt{REPUBLICAN}$ than for $A=\texttt{DEMOCRAT}$, then there \textit{is}
+\CBMath{A equals SMOKER}{$A=\texttt{SMOKER}$} goes with \CBMath{B equals CANCER}{$B=\texttt{CANCER}$} more often than
+\CBMath{A equals NON-SMOKER}{$A=\texttt{NON-SMOKER}$} does, then there \textit{is} an association between the
+two, period. If yearly income \CBMath{B}{$B$} is on average higher for
+\CBMath{A equals REPUBLICAN}{$A=\texttt{REPUBLICAN}$} than for \CBMath{A equals DEMOCRAT}{$A=\texttt{DEMOCRAT}$}, then there \textit{is}
 an association between the two, period.
 
 \label{howMuchMore}
 
 (By the way, a key nuance will turn out to be: \textit{how much} more often
-does $A=\texttt{SMOKER}$ need to go with $B=\texttt{CANCER}$ in order for us to
+does \CBMath{A equals SMOKER}{$A=\texttt{SMOKER}$} need to go with \CBMath{B equals CANCER}{$B=\texttt{CANCER}$} in order for us to
 be confident that there is a true association? Or \textit{how much} more
-wealthy do the $A=\texttt{REPUBLICAN}$s need to be on average for us to have
+wealthy do the \CBMath{A equals REPUBLICAN}{$A=\texttt{REPUBLICAN}$}s need to be on average for us to have
 confidence we've identified a real link to political party? That one's a little
 tricky, and we'll postpone addressing it for now.)
 
@@ -134,64 +134,67 @@ wealth cause them to vote a certain way? Or is it neither of these, with some
 third factor (perhaps values, or life philosophy) helping determine
 \textit{both} variables?
 
-\index{$\rightarrow$@$\rightarrow$ (causality)}
+\index{causality symbol@\CBMath{causes}{$\rightarrow$} (causality)}
 
-If the first of these three is the case, we would write ``$A \rightarrow B$,''
-pronounced ``$A$ causes $B$''. If the second, we'd write, ``$B \rightarrow
-A$,'' and for the third, we'd write ``$C \rightarrow A, B$'' for some other
-(possibly yet to be determined) variable $C$. Determining which (if any) of
+If the first of these three is the case, we would write ``\CBMath{A causes B}{$A \rightarrow B$},''
+pronounced ``\CBMath{A}{$A$} causes \CBMath{B}{$B$}''. If the second, we'd write, ``\CBMath{B causes A}{$B \rightarrow
+A$},'' and for the third, we'd write ``\CBMath{C causes both A and B}{$C \rightarrow A, B$}'' for some other
+(possibly yet to be determined) variable \CBMath{C}{$C$}. Determining which (if any) of
 these is true calls for some careful thinking, intuition, and additional kinds
 of statistical tests.
 
 In fact, just to blow your mind, Figure~\ref{fig:causalityTypes} gives a
 partial list of the various types of causation that \textit{could} be the true
-explanation, once we find out that $A$ and $B$ have an association. As you can
+explanation, once we find out that \CBMath{A}{$A$} and \CBMath{B}{$B$} have an association. As you can
 see, there are a lot of ways to go wrong. Only \textit{one} of the
-possibilities is that ``$A$ actually causes $B$,'' which is what we suspected
+possibilities is that ``\CBMath{A}{$A$} actually causes \CBMath{B}{$B$},'' which is what we suspected
 in the first place. The others are all ways of producing that same association
 we picked up in the data.
 
 \begin{figure}[ht]
 \footnotesize
 \centering
-\begin{tabular}{|c|c|p{2in}|}
+\begingroup
+\par\tagpdfparaOff
+\tagpdfsetup{table/header-rows={1},table/header-columns={}}
+\begin{tabular}{|p{.22\linewidth}|p{.24\linewidth}|p{.40\linewidth}|}
 \hline
 Symbology & Name & Example \\
 \hline
-\multirow[c]{2}{*}{$A \rightarrow B$} & \multirow[c]{2}{*}{causation} & Regular
+\CBMath{A causes B}{$A \rightarrow B$} & causation & Regular
 exercise does indeed normally lead to a lower resting heart rate. \\
 \hline
-\multirow[c]{2}{*}{$B \rightarrow A$} & \multirow[c]{2}{*}{reverse causation} & Smoking doesn't cause depression;
+\CBMath{B causes A}{$B \rightarrow A$} & reverse causation & Smoking doesn't cause depression;
 depression causes smoking. \\
 \hline
-\multirow[c]{2}{*}{$C \rightarrow A, B$} & \multirow[c]{2}{*}{\makecell{external causation \\ (confounding
-factor)}} & Ice cream sales don't cause shark attacks; high temperatures boost both ice
+\CBMath{C causes both A and B}{$C \rightarrow A, B$} & external causation (confounding factor) & Ice cream sales don't cause shark attacks; high temperatures boost both ice
 cream sales and ocean swimming. \\
 \hline
-\multirow[c]{2}{*}{$A \rightarrow B$ \& $C \rightarrow B$} &
-\multirow[c]{2}{*}{multiple causation }& A liberal arts
+\CBMath{A causes B}{$A \rightarrow B$} \& \CBMath{C causes B}{$C \rightarrow B$} &
+multiple causation & A liberal arts
 education does improve critical thinking skills, but lots of other things do
 too. \\
 \hline
-\multirow[c]{2.5}{*}{$A,C \rightarrow B$} & \multirow[c]{2.5}{*}{joint causation} &
+\CBMath{A and C jointly cause B}{$A,C \rightarrow B$} & joint causation &
 Just being tall doesn't necessarily make you a good basketball player, but if
 your height is accompanied by another factor as well (athleticism), then you
 will be. \\
 \hline
-\multirow[c]{2.5}{*}{$A \rightarrow C \rightarrow B$} &
-\multirow[c]{2.5}{*}{indirect causation} & People who use antiperspirant tend to
+\CBMath{A causes C, which in turn causes B}{$A \rightarrow C \rightarrow B$} &
+indirect causation & People who use antiperspirant tend to
 get more dates, but it's not because of the antiperspirant \textit{per se};
 it's because they don't have an unpleasant odor. \\
 \hline
-\multirow[c]{3}{*}{$A \not\rightarrow B$} & \multirow[c]{3}{*}{spurious
-association} & Although for many years the outcome of the Washington football
+\CBMath{A does not cause B}{$A \not\rightarrow B$} & spurious
+association & Although for many years the outcome of the Washington football
 game immediately preceding a Presidential election predicted the election's
 outcome, that was by coincidence. \\
 \hline
-\end{tabular}
+\end{tabular}\par
+\endgroup
 \medskip
 \caption{Various types of causality that could be the underlying reason why an
-association between $A$ and $B$ exists.}
+association between \CBMath{A}{$A$} and \CBMath{B}{$B$} exists.}
 \label{fig:causalityTypes}
 \normalsize
 \end{figure}
@@ -205,18 +208,18 @@ association between $A$ and $B$ exists.}
 
 Let me speak to two of the items in the Figure~\ref{fig:causalityTypes} table
 in particular. The third one on the list, \textbf{external causation}, is a
-case where a third variable (call it $C$) comes into play. We refer to this as
+case where a third variable (call it \CBMath{C}{$C$}) comes into play. We refer to this as
 a \textbf{confounding factor} (or \textbf{confounding variable}) because it
 ``confounds'' us: causes us to interpret the meaning behind the data in an
 incorrect way. The example in the table is a famous and funny one: clearly
 sharks don't react to Ben \& Jerry's daily net profits, and people (probably)
 don't run out and buy ice cream to cope with their anxiety about shark attacks.
-Neither $A \rightarrow B$ nor $B \rightarrow A$, but a third variable -- hot
+Neither \CBMath{A causes B}{$A \rightarrow B$} nor \CBMath{B causes A}{$B \rightarrow A$}, but a third variable -- hot
 days -- influence both of them.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.6\textwidth]{causalDiagram.png}
+\includegraphics[width=0.6\textwidth,alt={Hypothesized causal diagram with an arrow from eating barbecue, the independent variable, to getting cancer, the dependent variable. The arrow represents the causal claim being examined in the text, rather than an established conclusion.}]{causalDiagram.png}
 \caption{A hypothesis as to causality: eating barbecued foods increases one's
 risk for certain types of cancer.}
 \label{fig:causalDiagram}
@@ -252,8 +255,8 @@ picking up between barbecue and cancer was actually due to fat content.
 
 \begin{figure}[hb]
 \centering
-\includegraphics[width=0.4\textwidth]{causalDiagram2.png}
-\includegraphics[width=0.5\textwidth]{causalDiagram3.png}
+\includegraphics[width=0.4\textwidth,alt={Alternative causal hypothesis: having a high-fat diet is a confounding variable, with separate arrows to eating barbecue and to getting cancer. There is no direct arrow from barbecue to cancer. The shared cause could create an association between the independent and dependent variables.}]{causalDiagram2.png}
+\includegraphics[width=0.5\textwidth,alt={Alternative causal hypothesis with living in the South labeled as a confounding variable. It points directly to eating barbecue and separately to environmental factors; environmental factors then point to getting cancer. Thus the proposed confounder affects the independent variable directly and the dependent variable through an intermediate cause.}]{causalDiagram3.png}
 \caption{Other hypotheses as to causality, each resulting in the same
 associations in the data, yet involving confounding factors.}
 \label{fig:causalDiagram23}
@@ -285,14 +288,14 @@ dependent variable.}
 
 Let me illustrate with an example. I suspect that on average, men are taller
 than women. And I further suspect that there's causality here, and that it goes
-from $A$ (sex) to $B$ (height), not the other way around. (Clearly people don't
+from \CBMath{A}{$A$} (sex) to \CBMath{B}{$B$} (height), not the other way around. (Clearly people don't
 spontaneously ``turn male'' because they reach a certain height.) So my
 thinking on the subject is summed up in Figure~\ref{fig:sexHeight}.
 
 \vspace{-.15in}
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.6\textwidth]{sexHeight.png}
+\includegraphics[width=0.6\textwidth,alt={Causal hypothesis with one arrow from biological sex, the independent variable, to height, the dependent variable. This diagram establishes the relationship being considered before additional possible causes of height are introduced.}]{sexHeight.png}
 \caption{Stephen's hypothesis: a person's biological sex (male or female) plays
 a causal role in determining their height.}
 \label{fig:sexHeight}
@@ -312,7 +315,7 @@ depicts this (supposed) scientific nightmare.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.7\textwidth]{sexHeight2.png}
+\includegraphics[width=0.7\textwidth,alt={Diagram in which biological sex, heredity, nutrition, altitude, and an unspecified factor marked with question marks each point to height. None of the added factors points to biological sex. The teaching point is that another possible cause of the dependent variable is not automatically a confounder; a confounder must also affect the independent variable.}]{sexHeight2.png}
 \caption{Oh geez -- confounding variables galore? \textbf{\textit{No!}}}
 \label{fig:sexHeight2}
 \end{figure}
@@ -368,7 +371,7 @@ Figure~\ref{fig:hairPinterest}. Study it carefully.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.6\textwidth]{hairPinterest.png}
+\includegraphics[width=0.6\textwidth,alt={Deliberately questionable causal hypothesis with one arrow from hair length, the independent variable, to Pinterest activity, the dependent variable. The accompanying discussion uses this example to introduce a possible confounder.}]{hairPinterest.png}
 \caption{A theory about how hair length impacts the number of times a person
 logs on to pinterest each day.}
 \label{fig:hairPinterest}
@@ -391,7 +394,7 @@ Figure~\ref{fig:hairPinterest2}.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.6\textwidth]{hairPinterest2.png}
+\includegraphics[width=0.6\textwidth,alt={Causal diagram adding gender as a confounding variable, with arrows from gender to both hair length and Pinterest activity. The original arrow from hair length to Pinterest activity remains in the diagram. Comparing people within the same gender group is proposed in the text as a way to investigate whether the hair-length association persists after controlling for this confounder.}]{hairPinterest2.png}
 \caption{An alternative theory that holds that a person's gender influences
 both their long-haired-ness and their pinterest-ness.}
 \label{fig:hairPinterest2}
@@ -430,7 +433,7 @@ Now I wrote the word ``tentatively'' a couple paragraphs ago, because there are
 still some caveats. For one, we don't actually know that the causality goes in
 the stated direction. Removing the gender confounder, we confirmed that there
 is still an association between hair length and pinterest, but that association
-might translate into a $B \rightarrow A$ phenomenon. Perhaps users who log on
+might translate into a \CBMath{B causes A}{$B \rightarrow A$} phenomenon. Perhaps users who log on
 to pinterest a lot see a lot of long-haired users, and (consciously or not)
 decide to grow their own hair out as a result? That actually sounds more
 plausible than the original silly theory. Either way, we can't confirm the
@@ -492,7 +495,7 @@ The catch is that controlled experiments can be very expensive to run, and in
 many cases can't be run at \textit{all}. Consider the barbecue example from
 p.~\pageref{barbecue}. To carry out a controlled experiment, we would have to:
 
-\begin{compactenum}
+\begin{enumerate}[nosep]
 \item Recruit participants to our study, and get their informed consent.
 \item Pay them some \$\$ for their trouble.
 \item For each participant, flip a coin. If it comes up heads, \textit{that
@@ -500,7 +503,7 @@ person must eat barbecue three times per week for the next ten years.} If it's
 tails, \textit{that person must never eat barbecue for the next ten years.}
 \item At the end of the ten years, measure how many barbecuers and
 non-barbecuers have cancer.
-\end{compactenum}
+\end{enumerate}
 
 There's a question of this even being ethical: if we suspect that eating
 barbecue can cause cancer, is it okay to ``force'' participants to eat it? Even
@@ -532,7 +535,7 @@ and controlled for them.
 Okay, back to Figure~\ref{fig:causalityTypes} on
 p.~\pageref{fig:causalityTypes}. The other item I'd like to point out in that
 table is the last one, which is called a \textbf{spurious association}. This is
-written as ``$A \not\rightarrow B$,'' with the arrow crossed out. And it simply
+written as ``\CBMath{A does not cause B}{$A \not\rightarrow B$},'' with the arrow crossed out. And it simply
 means ``nope, none of the above: these variables actually aren't associated at
 all.''
 
@@ -564,7 +567,7 @@ essentially ``set a bar'' somewhere, and then determine whether we got over it.
 We could say ``only if the average IQ difference is greater than 5 points will
 we conclude that there's really a difference.''
 
-\subsection{Setting $\alpha$}
+\subsection{Setting \CBMath{alpha}{$\alpha$}}
 
 \label{alpha}
 
@@ -576,12 +579,12 @@ the placement of the bar include the sample size and how variable the data is.
 The thing \textit{we} specify in the bar equation, however, is \textit{how
 often we're willing to draw a false conclusion.}
 
-\index{$\alpha$ (alpha)}
-\index{alpha@alpha ($\alpha$)}
+\index{alpha symbol@\CBMath{alpha}{$\alpha$} (alpha)}
+\index{alpha@alpha (\CBMath{alpha}{$\alpha$})}
 
-That quantity is called ``$\boldsymbol{\alpha}$'' (pronounced
+That quantity is called ``\CBMath{alpha}{$\boldsymbol{\alpha}$}'' (pronounced
 ``\textbf{alpha}'') and is a small number between 0 and 1. Normally we'll set
-$\alpha=.05$, which means: ``Python, please tell me whether the average male
+\CBMath{alpha equals zero point zero five}{$\alpha=.05$}, which means: ``Python, please tell me whether the average male
 and female IQs were \textit{different enough} for me to be confident that the
 difference was truly a male-vs-female thing, not just an idiosyncrasy of the
 people I chose for my poll. And by the way, \textit{I'm willing to be wrong 5\%
@@ -592,13 +595,13 @@ of the time? Why not 0\%? But you see, we have to put the bar somewhere. If we
 said, ``I never want to think there's an association when there's not one,''
 Python would respond, ``well fine, if you're so worried about it then I'll
 never tell you there is one.'' There has to be some kind of criterion for
-judging whether a difference is ``enough,'' and $\alpha=.05$, which is ``being
+judging whether a difference is ``enough,'' and \CBMath{alpha equals zero point zero five}{$\alpha=.05$}, which is ``being
 suckered only 1 in 20 times'' is the most common value for social sciences.
-($\alpha=.01$ is commonly used in the physical sciences.)
+(\CBMath{alpha equals zero point zero one}{$\alpha=.01$} is commonly used in the physical sciences.)
 
 So, the last entry in the Figure~\ref{fig:causalityTypes} table means ``even
-though the $A$ and $B$ variables aren't \textit{really} associated at all -- if
-we gathered some more $A$s and some more $B$s, we'd probably detect \textit{no}
+though the \CBMath{A}{$A$} and \CBMath{B}{$B$} variables aren't \textit{really} associated at all -- if
+we gathered some more \CBMath{A}{$A$}s and some more \CBMath{B}{$B$}s, we'd probably detect \textit{no}
 association -- you were fooled into thinking there was one because our random
 sample was a bit weird.'' There's really no way around this other than being
 aware it can happen, and possibly repeating our study with a different data
